@@ -1,0 +1,1 @@
+Folder where metadata file ends up. This will end up in the data package.
