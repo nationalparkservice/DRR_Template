@@ -13,6 +13,7 @@ This template is under active development to improve style and 508 compliance.
 
 # Vignettes
 [How to Use this Template (still working on this!)](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/HowToUseThisTemplate.html)
+
 [How to Create Data Packages (coming soon!)]
 
 # Report outline
