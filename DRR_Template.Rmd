@@ -1,6 +1,6 @@
 ---
 params:
-  projectDir: "N:/IMD_HTML_DRR_Template"
+  projectDir: "N:/IMD_DRR_Template"
   reportNumber: "REPORT NUMBER"                           # Optional. Only include this if publishing in the semi-official Data Release Report Series. Contact Joe if you are.
   reportRefID: 123456                                     # This should match the Data Store Reference ID for this report.
   packageAbstract: >-
@@ -42,7 +42,7 @@ link-citations: yes
 output:
   html_document:
     df_print: kable
-    fig_caption: yes
+    fig_caption: true
     dev: svg
     highlight: haddock
     keep_md: yes
@@ -108,7 +108,7 @@ pkgList <- c("devtools",
              "RODBC", 
              "EML",
              "EMLassemblyline",
-             "flextable",
+             "kableExtra",
              "english",
              "dplyr")
 inst <- pkgList %in% installed.packages()
@@ -128,7 +128,7 @@ knitr::opts_chunk$set(
    root.dir = params$projectDir,  # from YAML parameter, knitr instead of setwd()
    echo = TRUE,
    comment = " ",
-#   dev = "svg",
+   dev = "svg",
    fig.path = "figures/",
    tidy.opts = list(width.cutoff = 60),
    tidy = TRUE
@@ -320,6 +320,7 @@ Figure images should be included in-text near the initial point of reference.
 Figure captions begin with a brief title sentence summarizing the purpose of the figure as a whole, and continue with a short description of what is shown in each panel and an explanation of any symbols used. Legends must total no more than 350 words, and may contain literature references. The first sentence of the legend will be used as the title for the figure. It (the first sentence) should contain no references of any kind, including to specific figure panels, bibliographic citations or references to other figures or panels.
 
 ## Tables
+
 Authors are encouraged to provide one or more tables that provide basic
 information on the main ‘inputs’ to the study (e.g. samples, participants, or
 information sources) and the main data outputs of the study; also see the
@@ -337,13 +338,22 @@ Here, we provide four generic ‘Table 1’ examples, including two experimental
 study examples, one observational study example, and an example for an
 aggregated dataset of the type that may result from a meta-analysis. 
 
-**Table 1.** Experimental study example Data Records table. 
+```{r Table1, echo=FALSE}
+T1Subjects<-c("Mouse1","Mouse2","Mousen")
+T1Protocol1<-c("Drug Treatment","Drug Treatment","Drug Treatment")
+T1Protocol2<-c("Liver dissection","Liver dissection","Liver dissection")
+T1Protocol3<-c("RNA extraction","RNA extraction","RNA extraction")
+T1Protocol4<-c("RNA-Seq","RNA-Seq","RNA-Seq")
+T1Data<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX")
+Table1<-data.frame(T1Subjects,T1Protocol1,T1Protocol2,T1Protocol3,T1Protocol4,T1Data)
 
-| **Subjects** | **Protocol 1** | **Protocol 2**   | **Protocol 3** | **Protocol 4** | **Data** |
-|--------------|----------------|------------------|----------------|----------------|----------|
-| Mouse1       | Drug treatment | Liver dissection | RNA extraction | RNA-Seq        | GEOXXXXX |
-| Mouse2       | Drug treatment | Liver dissection | RNA extraction | RNA-Seq        | GEOXXXXX |
-| Mousen       | Drug treatment | Liver dissection | RNA extraction | RNA-Seq        | GEOXXXXX |
+kable(Table1, 
+      col.names=c("Subjects","Protocol 1","Protocol 2","Protocol 3","Protocol 4","Data"),
+      caption="**Table 1.** Experimental study example Data Records table.") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F) %>%
+  footnote(general="This table was generated using the kableExtra package.")
+
+```
 
 **Table 2.** Experimental study with replicates Data Records table.
 

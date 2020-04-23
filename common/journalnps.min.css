@@ -11,3 +11,31 @@ blockquote {
     font-size: 14px;
     border-left: 5px solid #eee;
 }
+
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td{
+    padding:5px
+}
+
+TH{
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+TD{
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+    border-bottom: 1px solid #dddddd;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(221, 221, 221);
+}
+
+caption {
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif; 
+}
+
+table {
+    border-top: 1px solid #dddddd;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: rgb(221, 221, 221);
+    border-collapse:collapse;
+

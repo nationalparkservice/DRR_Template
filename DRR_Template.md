@@ -1,6 +1,6 @@
 ---
 params:
-  projectDir: "N:/IMD_HTML_DRR_Template"
+  projectDir: "N:/IMD_DRR_Template"
   reportNumber: "REPORT NUMBER"                           # Optional. Only include this if publishing in the semi-official Data Release Report Series. Contact Joe if you are.
   reportRefID: 123456                                     # This should match the Data Store Reference ID for this report.
   packageAbstract: >-
@@ -33,7 +33,7 @@ author:
       | Managed Business Solutions (MBS), a Sealaska Company  
       | Contractor to National Park Service  
       | Natural Resource Stewardship and Science
-date: "10 April, 2020"
+date: "23 April, 2020"
 abstract: "Abstract Should go here. Multiple Lines are okay; it'll format correctly. Do not put the abstract in the text section below; this will allow For reuse of the abtract in all associated products. </br> </br>  The Abstract should succinctly describe the study, the assay(s) performed,  the resulting data, and their reuse potential, but should not make any  claims regarding new scientific findings. No references are allowed in this section. "
 editor_options:
   chunk_output_type: inline
@@ -42,7 +42,7 @@ link-citations: yes
 output:
   html_document:
     df_print: kable
-    fig_caption: yes
+    fig_caption: true
     dev: svg
     highlight: haddock
     keep_md: yes
@@ -139,7 +139,7 @@ quality assurance planning documentation.
 
 *Stock Text to include:*
 
-The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *Dataset 2 FULL TITLE* is suitable for its intendend use as of the date of processing (2020-04-10).
+The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *Dataset 2 FULL TITLE* is suitable for its intendend use as of the date of processing (2020-04-23).
 
 *Required Table*
 
@@ -264,7 +264,7 @@ pkgList <- c("devtools",
              "RODBC", 
              "EML",
              "EMLassemblyline",
-             "flextable",
+             "kableExtra",
              "english",
              "dplyr")
 inst <- pkgList %in% installed.packages()
@@ -284,7 +284,7 @@ knitr::opts_chunk$set(
    root.dir = params$projectDir,  # from YAML parameter, knitr instead of setwd()
    echo = TRUE,
    comment = " ",
-#   dev = "svg",
+   dev = "svg",
    fig.path = "figures/",
    tidy.opts = list(width.cutoff = 60),
    tidy = TRUE
@@ -301,6 +301,19 @@ save(params,file="./data/temp/reportParameters.RData")
 # Load datasets for use
 sessionInfo()
 Sys.time()
+T1Subjects<-c("Mouse1","Mouse2","Mousen")
+T1Protocol1<-c("Drug Treatment","Drug Treatment","Drug Treatment")
+T1Protocol2<-c("Liver dissection","Liver dissection","Liver dissection")
+T1Protocol3<-c("RNA extraction","RNA extraction","RNA extraction")
+T1Protocol4<-c("RNA-Seq","RNA-Seq","RNA-Seq")
+T1Data<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX")
+Table1<-data.frame(T1Subjects,T1Protocol1,T1Protocol2,T1Protocol3,T1Protocol4,T1Data)
+
+kable(Table1, 
+      col.names=c("Subjects","Protocol 1","Protocol 2","Protocol 3","Protocol 4","Data"),
+      caption="**Table 1.** Experimental study example Data Records table.") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F) %>%
+  footnote(general="This table was generated using the kableExtra package.")
 ```
 
 \pagebreak
@@ -325,9 +338,9 @@ Sys.time()
   [1] stats     graphics  grDevices utils     datasets  methods   base     
   
   other attached packages:
-   [1] english_1.2-5         flextable_0.5.9       EMLassemblyline_2.6.1
-   [4] EML_2.0.2             RODBC_1.3-16          devtools_2.2.2       
-   [7] usethis_1.5.1         knitcitations_1.0.10  RefManageR_1.2.12    
+   [1] english_1.2-5         kableExtra_1.1.0      EMLassemblyline_2.6.1
+   [4] EML_2.0.2             RODBC_1.3-16          devtools_2.3.0       
+   [7] usethis_1.6.0         knitcitations_1.0.10  RefManageR_1.2.12    
   [10] bibtex_0.4.2.2        htmltools_0.4.0       rmdformats_0.3.7     
   [13] yaml_2.2.1            rmdHelpers_1.2        dplyr_0.8.5          
   [16] texreg_1.36.23        papeR_1.0-4           xtable_1.8-4         
@@ -337,31 +350,31 @@ Sys.time()
   
   loaded via a namespace (and not attached):
    [1] colorspace_1.4-1  ellipsis_0.3.0    rio_0.5.16        rprojroot_1.3-2  
-   [5] base64enc_0.1-3   fs_1.4.1          remotes_2.1.1     fansi_0.4.1      
-   [9] lubridate_1.7.4   xml2_1.3.0        R.methodsS3_1.8.0 robustbase_0.93-6
-  [13] pkgload_1.0.2     jsonlite_1.6.1    R.oo_1.23.0       compiler_3.6.2   
-  [17] httr_1.4.1        backports_1.1.5   assertthat_0.2.1  lazyeval_0.2.2   
-  [21] cli_2.0.2         formatR_1.7       prettyunits_1.1.1 tools_3.6.2      
-  [25] gtable_0.3.0      glue_1.4.0        gmodels_2.18.1    V8_3.0.2         
-  [29] Rcpp_1.0.4        cellranger_1.1.0  vctrs_0.2.4       gdata_2.18.0     
-  [33] xfun_0.12         stringr_1.4.0     ps_1.3.2          openxlsx_4.1.4   
-  [37] testthat_2.3.2    lifecycle_0.2.0   gtools_3.8.2      jqr_1.1.0        
-  [41] DEoptimR_1.0-8    MASS_7.3-51.4     scales_1.1.0      jsonld_2.1       
-  [45] hms_0.5.3         curl_4.3          memoise_1.1.0     gridExtra_2.3    
-  [49] ggplot2_3.3.0     gdtools_0.2.2     stringi_1.4.6     desc_1.2.0       
-  [53] emld_0.4.0        pkgbuild_1.0.6    zip_2.0.4         rlang_0.4.5      
-  [57] pkgconfig_2.0.3   systemfonts_0.1.1 evaluate_0.14     purrr_0.3.3      
+   [5] fs_1.4.1          rstudioapi_0.11   remotes_2.1.1     fansi_0.4.1      
+   [9] lubridate_1.7.8   xml2_1.3.1        R.methodsS3_1.8.0 robustbase_0.93-6
+  [13] pkgload_1.0.2     jsonlite_1.6.1    R.oo_1.23.0       readr_1.3.1      
+  [17] compiler_3.6.2    httr_1.4.1        backports_1.1.6   assertthat_0.2.1 
+  [21] lazyeval_0.2.2    cli_2.0.2         formatR_1.7       prettyunits_1.1.1
+  [25] tools_3.6.2       gtable_0.3.0      glue_1.4.0        gmodels_2.18.1   
+  [29] V8_3.0.2          Rcpp_1.0.4.6      cellranger_1.1.0  vctrs_0.2.4      
+  [33] gdata_2.18.0      xfun_0.13         stringr_1.4.0     ps_1.3.2         
+  [37] rvest_0.3.5       openxlsx_4.1.4    testthat_2.3.2    lifecycle_0.2.0  
+  [41] gtools_3.8.2      jqr_1.1.0         DEoptimR_1.0-8    MASS_7.3-51.4    
+  [45] scales_1.1.0      jsonld_2.1        hms_0.5.3         curl_4.3         
+  [49] memoise_1.1.0     gridExtra_2.3     ggplot2_3.3.0     stringi_1.4.6    
+  [53] desc_1.2.0        emld_0.4.0        pkgbuild_1.0.6    zip_2.0.4        
+  [57] rlang_0.4.5       pkgconfig_2.0.3   evaluate_0.14     purrr_0.3.4      
   [61] processx_3.4.2    tidyselect_1.0.0  plyr_1.8.6        magrittr_1.5     
-  [65] bookdown_0.18     R6_2.4.1          pillar_1.4.3      haven_2.2.0      
-  [69] foreign_0.8-72    withr_2.1.2       abind_1.4-5       tibble_3.0.0     
-  [73] crayon_1.3.4      uuid_0.1-4        officer_0.3.8     grid_3.6.2       
+  [65] bookdown_0.18     R6_2.4.1          generics_0.0.2    pillar_1.4.3     
+  [69] haven_2.2.0       foreign_0.8-72    withr_2.2.0       abind_1.4-5      
+  [73] tibble_3.0.0      crayon_1.3.4      uuid_0.1-4        grid_3.6.2       
   [77] readxl_1.3.1      data.table_1.12.8 callr_3.4.3       forcats_0.5.0    
-  [81] digest_0.6.25     R.cache_0.14.0    R.utils_2.9.2     munsell_0.5.0    
-  [85] sessioninfo_1.1.1
+  [81] webshot_0.5.2     digest_0.6.25     R.cache_0.14.0    R.utils_2.9.2    
+  [85] munsell_0.5.0     viridisLite_0.3.0 sessioninfo_1.1.1
 ```
 
 ```
-  [1] "2020-04-10 17:06:53 MDT"
+  [1] "2020-04-23 06:57:08 MDT"
 ```
 
 # Additional Notes (this should not be included in reports...)
@@ -373,6 +386,7 @@ Figure images should be included in-text near the initial point of reference.
 Figure captions begin with a brief title sentence summarizing the purpose of the figure as a whole, and continue with a short description of what is shown in each panel and an explanation of any symbols used. Legends must total no more than 350 words, and may contain literature references. The first sentence of the legend will be used as the title for the figure. It (the first sentence) should contain no references of any kind, including to specific figure panels, bibliographic citations or references to other figures or panels.
 
 ## Tables
+
 Authors are encouraged to provide one or more tables that provide basic
 information on the main ‘inputs’ to the study (e.g. samples, participants, or
 information sources) and the main data outputs of the study; also see the
@@ -390,13 +404,50 @@ Here, we provide four generic ‘Table 1’ examples, including two experimental
 study examples, one observational study example, and an example for an
 aggregated dataset of the type that may result from a meta-analysis. 
 
-**Table 1.** Experimental study example Data Records table. 
-
-| **Subjects** | **Protocol 1** | **Protocol 2**   | **Protocol 3** | **Protocol 4** | **Data** |
-|--------------|----------------|------------------|----------------|----------------|----------|
-| Mouse1       | Drug treatment | Liver dissection | RNA extraction | RNA-Seq        | GEOXXXXX |
-| Mouse2       | Drug treatment | Liver dissection | RNA extraction | RNA-Seq        | GEOXXXXX |
-| Mousen       | Drug treatment | Liver dissection | RNA extraction | RNA-Seq        | GEOXXXXX |
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>**Table 1.** Experimental study example Data Records table.</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Subjects </th>
+   <th style="text-align:left;"> Protocol 1 </th>
+   <th style="text-align:left;"> Protocol 2 </th>
+   <th style="text-align:left;"> Protocol 3 </th>
+   <th style="text-align:left;"> Protocol 4 </th>
+   <th style="text-align:left;"> Data </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Mouse1 </td>
+   <td style="text-align:left;"> Drug Treatment </td>
+   <td style="text-align:left;"> Liver dissection </td>
+   <td style="text-align:left;"> RNA extraction </td>
+   <td style="text-align:left;"> RNA-Seq </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Mouse2 </td>
+   <td style="text-align:left;"> Drug Treatment </td>
+   <td style="text-align:left;"> Liver dissection </td>
+   <td style="text-align:left;"> RNA extraction </td>
+   <td style="text-align:left;"> RNA-Seq </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Mousen </td>
+   <td style="text-align:left;"> Drug Treatment </td>
+   <td style="text-align:left;"> Liver dissection </td>
+   <td style="text-align:left;"> RNA extraction </td>
+   <td style="text-align:left;"> RNA-Seq </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+</tbody>
+<tfoot>
+<tr><td style="padding: 0; border: 0;" colspan="100%"><span style="font-style: italic;">Note: </span></td></tr>
+<tr><td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> This table was generated using the kableExtra package.</td></tr>
+</tfoot>
+</table>
 
 **Table 2.** Experimental study with replicates Data Records table.
 

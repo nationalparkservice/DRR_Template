@@ -1287,6 +1287,15 @@ window.buildTabsets = function(tocID) {
 };
 
 </script>
+<script>$(document).ready(function(){
+    if (typeof $('[data-toggle="tooltip"]').tooltip === 'function') {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+    if ($('[data-toggle="popover"]').popover === 'function') {
+        $('[data-toggle="popover"]').popover();
+    }
+});
+</script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -1415,7 +1424,7 @@ h6 {
 }
 </style>
 
-<style type="text/css">.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {z-index: 2;color: #ffffff;background-color: #4b5e26;border-color: #4b5e26;}blockquote {padding: 10px 20px;margin: 0 0 20px;font-size: 14px;border-left: 5px solid #eee;}</style>
+<style type="text/css">.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {z-index: 2;color: #ffffff;background-color: #4b5e26;border-color: #4b5e26;}blockquote {padding: 10px 20px;margin: 0 0 20px;font-size: 14px;border-left: 5px solid #eee;}.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td{padding:5px}TH{font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;}TD{font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;border-bottom: 1px solid #dddddd;border-bottom-width: 1px;border-bottom-style: solid;border-bottom-color: rgb(221, 221, 221);}caption {font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif; }table {border-top: 1px solid #dddddd;border-top-width: 1px;border-top-style: solid;border-top-color: rgb(221, 221, 221);border-collapse:collapse;</style>
 
 
 
@@ -1627,7 +1636,7 @@ Fort Collins, Colorado</div><br><h4 class="author">Author 2</h4>
 <address class="author_afil">
 <div class="line-block">Managed Business Solutions (MBS), a Sealaska Company<br />
 Contractor to National Park Service<br />
-Natural Resource Stewardship and Science</div><br><h4 class="date">10 April, 2020</h4>
+Natural Resource Stewardship and Science</div><br><h4 class="date">23 April, 2020</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 Abstract Should go here. Multiple Lines are okay; it’ll format correctly. Do not put the abstract in the text section below; this will allow For reuse of the abtract in all associated products. </br> </br> The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section.
@@ -1689,7 +1698,7 @@ Abstract Should go here. Multiple Lines are okay; it’ll format correctly. Do n
 <p>The Data Quality Evaluation section should present any analyses that are needed to support the technical quality of the dataset. This section may be supported by figures and tables, as needed. <em>This is a required section</em>; authors must provide information to justify the reliability of their data. Wherever possible &amp; appropriate, data quality evaluation should be presented in the context of data standards and quality control procedures as prescribed in the project’s quality assurance planning documentation.</p>
 <p><strong>Required elements for this section</strong></p>
 <p><em>Stock Text to include:</em></p>
-<p>The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The <em>Dataset 2 FULL TITLE</em> is suitable for its intendend use as of the date of processing (2020-04-10).</p>
+<p>The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The <em>Dataset 2 FULL TITLE</em> is suitable for its intendend use as of the date of processing (2020-04-23).</p>
 <p><em>Required Table</em></p>
 <p>Summary of any data qualification codes used, their definitions, and the fields to which they apply.</p>
 <p>Possible content <strong>strongly Suggested to Include</strong></p>
@@ -1773,7 +1782,7 @@ Abstract Should go here. Multiple Lines are okay; it’ll format correctly. Do n
 <span id="cb1-38"><a href="#cb1-38"></a>             <span class="st">&quot;RODBC&quot;</span>, </span>
 <span id="cb1-39"><a href="#cb1-39"></a>             <span class="st">&quot;EML&quot;</span>,</span>
 <span id="cb1-40"><a href="#cb1-40"></a>             <span class="st">&quot;EMLassemblyline&quot;</span>,</span>
-<span id="cb1-41"><a href="#cb1-41"></a>             <span class="st">&quot;flextable&quot;</span>,</span>
+<span id="cb1-41"><a href="#cb1-41"></a>             <span class="st">&quot;kableExtra&quot;</span>,</span>
 <span id="cb1-42"><a href="#cb1-42"></a>             <span class="st">&quot;english&quot;</span>,</span>
 <span id="cb1-43"><a href="#cb1-43"></a>             <span class="st">&quot;dplyr&quot;</span>)</span>
 <span id="cb1-44"><a href="#cb1-44"></a>inst &lt;-<span class="st"> </span>pkgList <span class="op">%in%</span><span class="st"> </span><span class="kw">installed.packages</span>()</span>
@@ -1793,7 +1802,7 @@ Abstract Should go here. Multiple Lines are okay; it’ll format correctly. Do n
 <span id="cb1-58"><a href="#cb1-58"></a>   <span class="dt">root.dir =</span> params<span class="op">$</span>projectDir,  <span class="co"># from YAML parameter, knitr instead of setwd()</span></span>
 <span id="cb1-59"><a href="#cb1-59"></a>   <span class="dt">echo =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb1-60"><a href="#cb1-60"></a>   <span class="dt">comment =</span> <span class="st">&quot; &quot;</span>,</span>
-<span id="cb1-61"><a href="#cb1-61"></a><span class="co">#   dev = &quot;svg&quot;,</span></span>
+<span id="cb1-61"><a href="#cb1-61"></a>   <span class="dt">dev =</span> <span class="st">&quot;svg&quot;</span>,</span>
 <span id="cb1-62"><a href="#cb1-62"></a>   <span class="dt">fig.path =</span> <span class="st">&quot;figures/&quot;</span>,</span>
 <span id="cb1-63"><a href="#cb1-63"></a>   <span class="dt">tidy.opts =</span> <span class="kw">list</span>(<span class="dt">width.cutoff =</span> <span class="dv">60</span>),</span>
 <span id="cb1-64"><a href="#cb1-64"></a>   <span class="dt">tidy =</span> <span class="ot">TRUE</span></span>
@@ -1809,7 +1818,20 @@ Abstract Should go here. Multiple Lines are okay; it’ll format correctly. Do n
 <span id="cb1-74"><a href="#cb1-74"></a><span class="kw">save</span>(params,<span class="dt">file=</span><span class="st">&quot;./data/temp/reportParameters.RData&quot;</span>)</span>
 <span id="cb1-75"><a href="#cb1-75"></a><span class="co"># Load datasets for use</span></span>
 <span id="cb1-76"><a href="#cb1-76"></a><span class="kw">sessionInfo</span>()</span>
-<span id="cb1-77"><a href="#cb1-77"></a><span class="kw">Sys.time</span>()</span></code></pre></div>
+<span id="cb1-77"><a href="#cb1-77"></a><span class="kw">Sys.time</span>()</span>
+<span id="cb1-78"><a href="#cb1-78"></a>T1Subjects&lt;-<span class="kw">c</span>(<span class="st">&quot;Mouse1&quot;</span>,<span class="st">&quot;Mouse2&quot;</span>,<span class="st">&quot;Mousen&quot;</span>)</span>
+<span id="cb1-79"><a href="#cb1-79"></a>T1Protocol1&lt;-<span class="kw">c</span>(<span class="st">&quot;Drug Treatment&quot;</span>,<span class="st">&quot;Drug Treatment&quot;</span>,<span class="st">&quot;Drug Treatment&quot;</span>)</span>
+<span id="cb1-80"><a href="#cb1-80"></a>T1Protocol2&lt;-<span class="kw">c</span>(<span class="st">&quot;Liver dissection&quot;</span>,<span class="st">&quot;Liver dissection&quot;</span>,<span class="st">&quot;Liver dissection&quot;</span>)</span>
+<span id="cb1-81"><a href="#cb1-81"></a>T1Protocol3&lt;-<span class="kw">c</span>(<span class="st">&quot;RNA extraction&quot;</span>,<span class="st">&quot;RNA extraction&quot;</span>,<span class="st">&quot;RNA extraction&quot;</span>)</span>
+<span id="cb1-82"><a href="#cb1-82"></a>T1Protocol4&lt;-<span class="kw">c</span>(<span class="st">&quot;RNA-Seq&quot;</span>,<span class="st">&quot;RNA-Seq&quot;</span>,<span class="st">&quot;RNA-Seq&quot;</span>)</span>
+<span id="cb1-83"><a href="#cb1-83"></a>T1Data&lt;-<span class="kw">c</span>(<span class="st">&quot;GEOXXXXX&quot;</span>,<span class="st">&quot;GEOXXXXX&quot;</span>,<span class="st">&quot;GEOXXXXX&quot;</span>)</span>
+<span id="cb1-84"><a href="#cb1-84"></a>Table1&lt;-<span class="kw">data.frame</span>(T1Subjects,T1Protocol1,T1Protocol2,T1Protocol3,T1Protocol4,T1Data)</span>
+<span id="cb1-85"><a href="#cb1-85"></a></span>
+<span id="cb1-86"><a href="#cb1-86"></a><span class="kw">kable</span>(Table1, </span>
+<span id="cb1-87"><a href="#cb1-87"></a>      <span class="dt">col.names=</span><span class="kw">c</span>(<span class="st">&quot;Subjects&quot;</span>,<span class="st">&quot;Protocol 1&quot;</span>,<span class="st">&quot;Protocol 2&quot;</span>,<span class="st">&quot;Protocol 3&quot;</span>,<span class="st">&quot;Protocol 4&quot;</span>,<span class="st">&quot;Data&quot;</span>),</span>
+<span id="cb1-88"><a href="#cb1-88"></a>      <span class="dt">caption=</span><span class="st">&quot;**Table 1.** Experimental study example Data Records table.&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb1-89"><a href="#cb1-89"></a><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">bootstrap_options =</span> <span class="kw">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>, <span class="st">&quot;condensed&quot;</span>, <span class="st">&quot;responsive&quot;</span>),<span class="dt">full_width=</span>F) <span class="op">%&gt;%</span></span>
+<span id="cb1-90"><a href="#cb1-90"></a><span class="st">  </span><span class="kw">footnote</span>(<span class="dt">general=</span><span class="st">&quot;This table was generated using the kableExtra package.&quot;</span>)</span></code></pre></div>
 <div style="page-break-after: always;"></div>
 </div>
 <div id="appendix-d.-r-session-and-version-information" class="section level1" number="9">
@@ -1831,9 +1853,9 @@ Abstract Should go here. Multiple Lines are okay; it’ll format correctly. Do n
   [1] stats     graphics  grDevices utils     datasets  methods   base     
   
   other attached packages:
-   [1] english_1.2-5         flextable_0.5.9       EMLassemblyline_2.6.1
-   [4] EML_2.0.2             RODBC_1.3-16          devtools_2.2.2       
-   [7] usethis_1.5.1         knitcitations_1.0.10  RefManageR_1.2.12    
+   [1] english_1.2-5         kableExtra_1.1.0      EMLassemblyline_2.6.1
+   [4] EML_2.0.2             RODBC_1.3-16          devtools_2.3.0       
+   [7] usethis_1.6.0         knitcitations_1.0.10  RefManageR_1.2.12    
   [10] bibtex_0.4.2.2        htmltools_0.4.0       rmdformats_0.3.7     
   [13] yaml_2.2.1            rmdHelpers_1.2        dplyr_0.8.5          
   [16] texreg_1.36.23        papeR_1.0-4           xtable_1.8-4         
@@ -1843,28 +1865,28 @@ Abstract Should go here. Multiple Lines are okay; it’ll format correctly. Do n
   
   loaded via a namespace (and not attached):
    [1] colorspace_1.4-1  ellipsis_0.3.0    rio_0.5.16        rprojroot_1.3-2  
-   [5] base64enc_0.1-3   fs_1.4.1          remotes_2.1.1     fansi_0.4.1      
-   [9] lubridate_1.7.4   xml2_1.3.0        R.methodsS3_1.8.0 robustbase_0.93-6
-  [13] pkgload_1.0.2     jsonlite_1.6.1    R.oo_1.23.0       compiler_3.6.2   
-  [17] httr_1.4.1        backports_1.1.5   assertthat_0.2.1  lazyeval_0.2.2   
-  [21] cli_2.0.2         formatR_1.7       prettyunits_1.1.1 tools_3.6.2      
-  [25] gtable_0.3.0      glue_1.4.0        gmodels_2.18.1    V8_3.0.2         
-  [29] Rcpp_1.0.4        cellranger_1.1.0  vctrs_0.2.4       gdata_2.18.0     
-  [33] xfun_0.12         stringr_1.4.0     ps_1.3.2          openxlsx_4.1.4   
-  [37] testthat_2.3.2    lifecycle_0.2.0   gtools_3.8.2      jqr_1.1.0        
-  [41] DEoptimR_1.0-8    MASS_7.3-51.4     scales_1.1.0      jsonld_2.1       
-  [45] hms_0.5.3         curl_4.3          memoise_1.1.0     gridExtra_2.3    
-  [49] ggplot2_3.3.0     gdtools_0.2.2     stringi_1.4.6     desc_1.2.0       
-  [53] emld_0.4.0        pkgbuild_1.0.6    zip_2.0.4         rlang_0.4.5      
-  [57] pkgconfig_2.0.3   systemfonts_0.1.1 evaluate_0.14     purrr_0.3.3      
+   [5] fs_1.4.1          rstudioapi_0.11   remotes_2.1.1     fansi_0.4.1      
+   [9] lubridate_1.7.8   xml2_1.3.1        R.methodsS3_1.8.0 robustbase_0.93-6
+  [13] pkgload_1.0.2     jsonlite_1.6.1    R.oo_1.23.0       readr_1.3.1      
+  [17] compiler_3.6.2    httr_1.4.1        backports_1.1.6   assertthat_0.2.1 
+  [21] lazyeval_0.2.2    cli_2.0.2         formatR_1.7       prettyunits_1.1.1
+  [25] tools_3.6.2       gtable_0.3.0      glue_1.4.0        gmodels_2.18.1   
+  [29] V8_3.0.2          Rcpp_1.0.4.6      cellranger_1.1.0  vctrs_0.2.4      
+  [33] gdata_2.18.0      xfun_0.13         stringr_1.4.0     ps_1.3.2         
+  [37] rvest_0.3.5       openxlsx_4.1.4    testthat_2.3.2    lifecycle_0.2.0  
+  [41] gtools_3.8.2      jqr_1.1.0         DEoptimR_1.0-8    MASS_7.3-51.4    
+  [45] scales_1.1.0      jsonld_2.1        hms_0.5.3         curl_4.3         
+  [49] memoise_1.1.0     gridExtra_2.3     ggplot2_3.3.0     stringi_1.4.6    
+  [53] desc_1.2.0        emld_0.4.0        pkgbuild_1.0.6    zip_2.0.4        
+  [57] rlang_0.4.5       pkgconfig_2.0.3   evaluate_0.14     purrr_0.3.4      
   [61] processx_3.4.2    tidyselect_1.0.0  plyr_1.8.6        magrittr_1.5     
-  [65] bookdown_0.18     R6_2.4.1          pillar_1.4.3      haven_2.2.0      
-  [69] foreign_0.8-72    withr_2.1.2       abind_1.4-5       tibble_3.0.0     
-  [73] crayon_1.3.4      uuid_0.1-4        officer_0.3.8     grid_3.6.2       
+  [65] bookdown_0.18     R6_2.4.1          generics_0.0.2    pillar_1.4.3     
+  [69] haven_2.2.0       foreign_0.8-72    withr_2.2.0       abind_1.4-5      
+  [73] tibble_3.0.0      crayon_1.3.4      uuid_0.1-4        grid_3.6.2       
   [77] readxl_1.3.1      data.table_1.12.8 callr_3.4.3       forcats_0.5.0    
-  [81] digest_0.6.25     R.cache_0.14.0    R.utils_2.9.2     munsell_0.5.0    
-  [85] sessioninfo_1.1.1</code></pre>
-<pre><code>  [1] &quot;2020-04-10 17:06:53 MDT&quot;</code></pre>
+  [81] webshot_0.5.2     digest_0.6.25     R.cache_0.14.0    R.utils_2.9.2    
+  [85] munsell_0.5.0     viridisLite_0.3.0 sessioninfo_1.1.1</code></pre>
+<pre><code>  [1] &quot;2020-04-23 06:57:08 MDT&quot;</code></pre>
 </div>
 <div id="additional-notes-this-should-not-be-included-in-reports" class="section level1" number="10">
 <h1 number="10"><span class="header-section-number">10</span> Additional Notes (this should not be included in reports…)</h1>
@@ -1880,44 +1902,106 @@ Abstract Should go here. Multiple Lines are okay; it’ll format correctly. Do n
 <div id="example-data-record-summary-tables" class="section level3" number="10.2.1">
 <h3 number="10.2.1"><span class="header-section-number">10.2.1</span> Example Data Record Summary Tables</h3>
 <p>Here, we provide four generic ‘Table 1’ examples, including two experimental study examples, one observational study example, and an example for an aggregated dataset of the type that may result from a meta-analysis.</p>
-<p><strong>Table 1.</strong> Experimental study example Data Records table.</p>
-<table>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<strong>Table 1.</strong> Experimental study example Data Records table.
+</caption>
 <thead>
-<tr class="header">
-<th><strong>Subjects</strong></th>
-<th><strong>Protocol 1</strong></th>
-<th><strong>Protocol 2</strong></th>
-<th><strong>Protocol 3</strong></th>
-<th><strong>Protocol 4</strong></th>
-<th><strong>Data</strong></th>
+<tr>
+<th style="text-align:left;">
+Subjects
+</th>
+<th style="text-align:left;">
+Protocol 1
+</th>
+<th style="text-align:left;">
+Protocol 2
+</th>
+<th style="text-align:left;">
+Protocol 3
+</th>
+<th style="text-align:left;">
+Protocol 4
+</th>
+<th style="text-align:left;">
+Data
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td>Mouse1</td>
-<td>Drug treatment</td>
-<td>Liver dissection</td>
-<td>RNA extraction</td>
-<td>RNA-Seq</td>
-<td>GEOXXXXX</td>
+<tr>
+<td style="text-align:left;">
+Mouse1
+</td>
+<td style="text-align:left;">
+Drug Treatment
+</td>
+<td style="text-align:left;">
+Liver dissection
+</td>
+<td style="text-align:left;">
+RNA extraction
+</td>
+<td style="text-align:left;">
+RNA-Seq
+</td>
+<td style="text-align:left;">
+GEOXXXXX
+</td>
 </tr>
-<tr class="even">
-<td>Mouse2</td>
-<td>Drug treatment</td>
-<td>Liver dissection</td>
-<td>RNA extraction</td>
-<td>RNA-Seq</td>
-<td>GEOXXXXX</td>
+<tr>
+<td style="text-align:left;">
+Mouse2
+</td>
+<td style="text-align:left;">
+Drug Treatment
+</td>
+<td style="text-align:left;">
+Liver dissection
+</td>
+<td style="text-align:left;">
+RNA extraction
+</td>
+<td style="text-align:left;">
+RNA-Seq
+</td>
+<td style="text-align:left;">
+GEOXXXXX
+</td>
 </tr>
-<tr class="odd">
-<td>Mousen</td>
-<td>Drug treatment</td>
-<td>Liver dissection</td>
-<td>RNA extraction</td>
-<td>RNA-Seq</td>
-<td>GEOXXXXX</td>
+<tr>
+<td style="text-align:left;">
+Mousen
+</td>
+<td style="text-align:left;">
+Drug Treatment
+</td>
+<td style="text-align:left;">
+Liver dissection
+</td>
+<td style="text-align:left;">
+RNA extraction
+</td>
+<td style="text-align:left;">
+RNA-Seq
+</td>
+<td style="text-align:left;">
+GEOXXXXX
+</td>
 </tr>
 </tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> This table was generated using the kableExtra package.
+</td>
+</tr>
+</tfoot>
 </table>
 <p><strong>Table 2.</strong> Experimental study with replicates Data Records table.</p>
 <table style="width:100%;">
