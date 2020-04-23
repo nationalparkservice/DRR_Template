@@ -1,3 +1,24 @@
+---
+title: "HowToUse"
+author: "Joe DeVivo"
+date: "4/23/2020"
+output:
+  html_document:
+    df_print: kable
+    fig_caption: true
+    dev: svg
+    highlight: haddock
+    keep_md: yes
+    smart: no
+    theme: journal
+    css: "../common/journalnps.min.css"
+    toc: yes
+    toc_float: true
+    number_sections: true
+---
+
+
+
 Overview
 ========
 
@@ -33,6 +54,20 @@ set the fig.align parameter to “center” and the specify the figure caption
 (fig.cap parameter). Inserting figures this way will ensure that the caption is
 properly formatted and it will apply copy the caption to the figure’s “alt text”
 tag, making it 508-compliant.
+
+For example:
+
+````markdown
+```{r figure1, echo=FALSE, fig.align="center", fig.cap="**Figure 1.** Example general workflow to include in the methods section."}
+include_graphics("ProcessingWorkflow.png")
+```
+````
+Results in:
+
+<div class="figure" style="text-align: center">
+<img src="ProcessingWorkflow.png" alt="**Figure 1.** Example general workflow to include in the methods section." width="550" />
+<p class="caption">**Figure 1.** Example general workflow to include in the methods section.</p>
+</div>
 
 Tables
 ------
