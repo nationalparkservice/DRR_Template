@@ -8,7 +8,7 @@ output:
     fig_caption: true
     dev: svg
     highlight: haddock
-    keep_md: yes
+    keep_md: no
     smart: no
     theme: journal
     css: "../common/journalnps.min.css"
@@ -30,7 +30,13 @@ if (length(RRpackages[!inst]) > 0) {
 }
 lapply(RRpackages, library, character.only = TRUE)
 
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+   echo = TRUE,
+   comment = " ",
+   dev = "svg",
+   tidy.opts = list(width.cutoff = 60),
+   tidy = TRUE
+   )
 ```
 
 Overview
