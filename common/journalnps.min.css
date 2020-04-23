@@ -32,6 +32,11 @@ caption {
     font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif; 
 }
 
+.caption {
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif; 
+    text-align:left;
+}
+
 table {
     border-top: 1px solid #dddddd;
     border-top-width: 1px;

@@ -159,9 +159,13 @@ Authors should cite previous descriptions of the methods under use, but ideally 
 
 Authors are encouraged to consider creating a figure that outlines the experimental workflow(s) used to generate and analyse the data output(s) (Figure 1).
 
-<center>
-![**Figure 1.** Example general workflow to include in the methods section.](figures/ProcessingWorkflow.png)
-</center>
+
+```{r figure1, echo=FALSE, fig.align="center", fig.cap="**Figure 1.** Example general workflow to include in the methods section."}
+include_graphics("figures/ProcessingWorkflow.png")
+
+```
+
+
 
 ## Data Collection and Sample Processing Methods (optional)
 Include a description of field methods and sample processing 
@@ -340,7 +344,7 @@ aggregated dataset of the type that may result from a meta-analysis.
 
 ```{r Table1, echo=FALSE}
 T1Subjects<-c("Mouse1","Mouse2","Mousen")
-T1Protocol1<-c("Drug Treatment","Drug Treatment","Drug Treatment")
+T1Protocol1<-c("Drug treatment","Drug treatment","Drug treatment")
 T1Protocol2<-c("Liver dissection","Liver dissection","Liver dissection")
 T1Protocol3<-c("RNA extraction","RNA extraction","RNA extraction")
 T1Protocol4<-c("RNA-Seq","RNA-Seq","RNA-Seq")
@@ -355,29 +359,54 @@ kable(Table1,
 
 ```
 
-**Table 2.** Experimental study with replicates Data Records table.
+```{r Table2, echo=FALSE}
+Source<-c("CellCulture1","CellCulture1","CellCulture1","CellCulture1","CellCulture1","CellCulture1")
+Protocol1<-c("Drug treatment","Drug treatment","Drug treatment","Drug treatment","Drug treatment","Drug treatment")
+Protocol2<-c("RNA extraction","RNA extraction","RNA extraction","RNA extraction","RNA extraction","RNA extraction")
+Samples<-c("TechnicalRep1a","TechnicalRep2a","TechnicalRep3a","TechnicalRep1b","TechnicalRep2b","TechnicalRep3b")
+Protocol3<-c("Microarray hybridization","Microarray hybridization","Microarray hybridization","Microarray hybridization","Microarray hybridization","Microarray hybridization")
+Data<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX")
+Table<-data.frame(Source,Protocol1,Protocol2,Samples,Protocol3,Data)
 
-| **Source**   | **Protocol 1** | **Protocol 2** | **Samples**    | **Protocol 3**           | **Data** |
-|--------------|----------------|----------------|----------------|--------------------------|----------|
-| CellCulture1 | Drug treatment | RNA extraction | TechnicalRep1a | Microarray hybridization | GEOXXXXX |
-| CellCulture1 | Drug treatment | RNA extraction | TechnicalRep2a | Microarray hybridization | GEOXXXXX |
-| CellCulture1 | Drug treatment | RNA extraction | TechnicalRep3a | Microarray hybridization | GEOXXXXX |
-| CellCulture2 | Drug treatment | RNA extraction | TechnicalRep1b | Microarray hybridization | GEOXXXXX |
-| CellCulture2 | Drug treatment | RNA extraction | TechnicalRep2b | Microarray hybridization | GEOXXXXX |
-| CellCulture2 | Drug treatment | RNA extraction | TechnicalRep3b | Microarray hybridization | GEOXXXXX |
+kable(Table, 
+      col.names=c("Subjects","Protocol 1","Protocol 2","Samples","Protocol 3","Data"),
+      caption="**Table 2.** Experimental study with replicates Data Records table.") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
 
-**Table 3.** Observational study example Data Records table.
 
-| **Sample**      | **Geographical location** | **Geoposition**               | **Protocol**                       | **Data**  |
-|-----------------|---------------------------|-------------------------------|------------------------------------|-----------|
-| Body of water 1 | location name             | latitude, longitude, altitude | Measurement of surface temperature | dataFile1 |
-| Body of water 2 | location name             | latitude, longitude, altitude | Measurement of surface temperature | dataFile2 |
-| Body of water n | location name             | latitude, longitude, altitude | Measurement of surface temperature | dataFile3 |
+```
 
-**Table 4.** Data aggregation study example Data Records table.
+```{r Table3, echo=FALSE}
+Sample<-c("Body of water 1","Body of water 2","Body of water n")
+geoloc<-c("location name","location name","location name")
+geopos<-c("latitude, longitude, altitude","latitude, longitude, altitude","latitude, longitude, altitude")
+protocol<-c("Measurement of surface temperature","Measurement of surface temperature","Measurement of surface temperature")
+data<-c("dataFile1","dataFile2","dataFile3")
+Table<-data.frame(Sample,geoloc,geopos,protocol,data)
 
-| **Source**     | **Sample** | **Sample number**                | **Temporal range**                            | **Protocol 1**              | **Protocol 2**                 | **Data**  |
-|----------------|------------|----------------------------------|-----------------------------------------------|-----------------------------|--------------------------------|-----------|
-| Database URL 1 | Dataset 1  | Number of samples in the dataset | Range of measurements reported in the dataset | Data assimilation procedure | Method to generate output data | dataFile1 |
-| Database URL 1 | Dataset 2  | Number of samples in the dataset | Range of measurements reported in the dataset | Data assimilation procedure | Method to generate output data | dataFile1 |
-| Database URL 2 | Dataset n  | Number of samples in the dataset | Range of measurements reported in the dataset | Data assimilation procedure | Method to generate output data | dataFile2 |
+kable(Table, 
+      col.names=c("Sample","Geographical Location","Geoposition","Protocol","Data"),
+      caption="**Table 3.** Observational study example Data Records table.") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
+
+
+```
+
+```{r Table4, echo=FALSE}
+c1<-c("Database URL 1","Database URL 1","Database URL 2")
+c2<-c("Dataset 1","Dataset 2","Dataset n")
+c3<-c("Number of samples in the dataset","Number of samples in the dataset","Number of samples in the dataset")
+c4<-c("Range of measurements reported in the dataset","Range of measurements reported in the dataset","Range of measurements reported in the dataset")
+c5<-c("Data assimilation procedure","Data assimilation procedure","Data assimilation procedure")
+c6<-c("Method to generate output data","Method to generate output data","Method to generate output data")
+c7<-c("dataFile1","dataFile1","dataFile2")
+Table<-data.frame(c1,c2,c3,c4,c5,c6,c7)
+
+kable(Table, 
+      col.names=c("Source","Sample","Sample Number","Temporal Range","Protocol 1","Protocol2","Data"),
+      caption="**Table 4.** Data aggregation study example Data Records table.") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
+
+
+```
+

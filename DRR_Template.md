@@ -81,9 +81,13 @@ Authors should cite previous descriptions of the methods under use, but ideally 
 
 Authors are encouraged to consider creating a figure that outlines the experimental workflow(s) used to generate and analyse the data output(s) (Figure 1).
 
-<center>
-![**Figure 1.** Example general workflow to include in the methods section.](figures/ProcessingWorkflow.png)
-</center>
+
+<div class="figure" style="text-align: center">
+<img src="figures/ProcessingWorkflow.png" alt="**Figure 1.** Example general workflow to include in the methods section." width="550" />
+<p class="caption">**Figure 1.** Example general workflow to include in the methods section.</p>
+</div>
+
+
 
 ## Data Collection and Sample Processing Methods (optional)
 Include a description of field methods and sample processing 
@@ -299,10 +303,12 @@ setwd(params$projectDir)
 # Write YAML parameters to file for consistent reuse across report and data packages
 save(params,file="./data/temp/reportParameters.RData")
 # Load datasets for use
+include_graphics("figures/ProcessingWorkflow.png")
+
 sessionInfo()
 Sys.time()
 T1Subjects<-c("Mouse1","Mouse2","Mousen")
-T1Protocol1<-c("Drug Treatment","Drug Treatment","Drug Treatment")
+T1Protocol1<-c("Drug treatment","Drug treatment","Drug treatment")
 T1Protocol2<-c("Liver dissection","Liver dissection","Liver dissection")
 T1Protocol3<-c("RNA extraction","RNA extraction","RNA extraction")
 T1Protocol4<-c("RNA-Seq","RNA-Seq","RNA-Seq")
@@ -314,6 +320,47 @@ kable(Table1,
       caption="**Table 1.** Experimental study example Data Records table.") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F) %>%
   footnote(general="This table was generated using the kableExtra package.")
+
+Source<-c("CellCulture1","CellCulture1","CellCulture1","CellCulture1","CellCulture1","CellCulture1")
+Protocol1<-c("Drug treatment","Drug treatment","Drug treatment","Drug treatment","Drug treatment","Drug treatment")
+Protocol2<-c("RNA extraction","RNA extraction","RNA extraction","RNA extraction","RNA extraction","RNA extraction")
+Samples<-c("TechnicalRep1a","TechnicalRep2a","TechnicalRep3a","TechnicalRep1b","TechnicalRep2b","TechnicalRep3b")
+Protocol3<-c("Microarray hybridization","Microarray hybridization","Microarray hybridization","Microarray hybridization","Microarray hybridization","Microarray hybridization")
+Data<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX")
+Table<-data.frame(Source,Protocol1,Protocol2,Samples,Protocol3,Data)
+
+kable(Table, 
+      col.names=c("Subjects","Protocol 1","Protocol 2","Samples","Protocol 3","Data"),
+      caption="**Table 2.** Experimental study with replicates Data Records table.") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
+
+
+Sample<-c("Body of water 1","Body of water 2","Body of water n")
+geoloc<-c("location name","location name","location name")
+geopos<-c("latitude, longitude, altitude","latitude, longitude, altitude","latitude, longitude, altitude")
+protocol<-c("Measurement of surface temperature","Measurement of surface temperature","Measurement of surface temperature")
+data<-c("dataFile1","dataFile2","dataFile3")
+Table<-data.frame(Sample,geoloc,geopos,protocol,data)
+
+kable(Table, 
+      col.names=c("Sample","Geographical Location","Geoposition","Protocol","Data"),
+      caption="**Table 3.** Observational study example Data Records table.") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
+
+
+c1<-c("Database URL 1","Database URL 1","Database URL 2")
+c2<-c("Dataset 1","Dataset 2","Dataset n")
+c3<-c("Number of samples in the dataset","Number of samples in the dataset","Number of samples in the dataset")
+c4<-c("Range of measurements reported in the dataset","Range of measurements reported in the dataset","Range of measurements reported in the dataset")
+c5<-c("Data assimilation procedure","Data assimilation procedure","Data assimilation procedure")
+c6<-c("Method to generate output data","Method to generate output data","Method to generate output data")
+c7<-c("dataFile1","dataFile1","dataFile2")
+Table<-data.frame(c1,c2,c3,c4,c5,c6,c7)
+
+kable(Table, 
+      col.names=c("Source","Sample","Sample Number","Temporal Range","Protocol 1","Protocol2","Data"),
+      caption="**Table 4.** Data aggregation study example Data Records table.") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
 ```
 
 \pagebreak
@@ -352,29 +399,30 @@ kable(Table1,
    [1] colorspace_1.4-1  ellipsis_0.3.0    rio_0.5.16        rprojroot_1.3-2  
    [5] fs_1.4.1          rstudioapi_0.11   remotes_2.1.1     fansi_0.4.1      
    [9] lubridate_1.7.8   xml2_1.3.1        R.methodsS3_1.8.0 robustbase_0.93-6
-  [13] pkgload_1.0.2     jsonlite_1.6.1    R.oo_1.23.0       readr_1.3.1      
-  [17] compiler_3.6.2    httr_1.4.1        backports_1.1.6   assertthat_0.2.1 
-  [21] lazyeval_0.2.2    cli_2.0.2         formatR_1.7       prettyunits_1.1.1
-  [25] tools_3.6.2       gtable_0.3.0      glue_1.4.0        gmodels_2.18.1   
-  [29] V8_3.0.2          Rcpp_1.0.4.6      cellranger_1.1.0  vctrs_0.2.4      
-  [33] gdata_2.18.0      xfun_0.13         stringr_1.4.0     ps_1.3.2         
-  [37] rvest_0.3.5       openxlsx_4.1.4    testthat_2.3.2    lifecycle_0.2.0  
-  [41] gtools_3.8.2      jqr_1.1.0         DEoptimR_1.0-8    MASS_7.3-51.4    
-  [45] scales_1.1.0      jsonld_2.1        hms_0.5.3         curl_4.3         
-  [49] memoise_1.1.0     gridExtra_2.3     ggplot2_3.3.0     stringi_1.4.6    
-  [53] desc_1.2.0        emld_0.4.0        pkgbuild_1.0.6    zip_2.0.4        
-  [57] rlang_0.4.5       pkgconfig_2.0.3   evaluate_0.14     purrr_0.3.4      
-  [61] processx_3.4.2    tidyselect_1.0.0  plyr_1.8.6        magrittr_1.5     
-  [65] bookdown_0.18     R6_2.4.1          generics_0.0.2    pillar_1.4.3     
-  [69] haven_2.2.0       foreign_0.8-72    withr_2.2.0       abind_1.4-5      
-  [73] tibble_3.0.0      crayon_1.3.4      uuid_0.1-4        grid_3.6.2       
-  [77] readxl_1.3.1      data.table_1.12.8 callr_3.4.3       forcats_0.5.0    
-  [81] webshot_0.5.2     digest_0.6.25     R.cache_0.14.0    R.utils_2.9.2    
-  [85] munsell_0.5.0     viridisLite_0.3.0 sessioninfo_1.1.1
+  [13] pkgload_1.0.2     jsonlite_1.6.1    png_0.1-7         R.oo_1.23.0      
+  [17] readr_1.3.1       compiler_3.6.2    httr_1.4.1        backports_1.1.6  
+  [21] assertthat_0.2.1  lazyeval_0.2.2    cli_2.0.2         formatR_1.7      
+  [25] prettyunits_1.1.1 tools_3.6.2       gtable_0.3.0      glue_1.4.0       
+  [29] gmodels_2.18.1    V8_3.0.2          Rcpp_1.0.4.6      cellranger_1.1.0 
+  [33] vctrs_0.2.4       gdata_2.18.0      xfun_0.13         stringr_1.4.0    
+  [37] ps_1.3.2          rvest_0.3.5       openxlsx_4.1.4    testthat_2.3.2   
+  [41] lifecycle_0.2.0   gtools_3.8.2      jqr_1.1.0         DEoptimR_1.0-8   
+  [45] MASS_7.3-51.4     scales_1.1.0      jsonld_2.1        hms_0.5.3        
+  [49] curl_4.3          memoise_1.1.0     gridExtra_2.3     ggplot2_3.3.0    
+  [53] stringi_1.4.6     highr_0.8         desc_1.2.0        emld_0.4.0       
+  [57] pkgbuild_1.0.6    zip_2.0.4         rlang_0.4.5       pkgconfig_2.0.3  
+  [61] evaluate_0.14     purrr_0.3.4       processx_3.4.2    tidyselect_1.0.0 
+  [65] plyr_1.8.6        magrittr_1.5      bookdown_0.18     R6_2.4.1         
+  [69] generics_0.0.2    pillar_1.4.3      haven_2.2.0       foreign_0.8-72   
+  [73] withr_2.2.0       abind_1.4-5       tibble_3.0.0      crayon_1.3.4     
+  [77] uuid_0.1-4        grid_3.6.2        readxl_1.3.1      data.table_1.12.8
+  [81] callr_3.4.3       forcats_0.5.0     webshot_0.5.2     digest_0.6.25    
+  [85] R.cache_0.14.0    R.utils_2.9.2     munsell_0.5.0     viridisLite_0.3.0
+  [89] sessioninfo_1.1.1
 ```
 
 ```
-  [1] "2020-04-23 06:57:08 MDT"
+  [1] "2020-04-23 09:46:53 MDT"
 ```
 
 # Additional Notes (this should not be included in reports...)
@@ -419,7 +467,7 @@ aggregated dataset of the type that may result from a meta-analysis.
 <tbody>
   <tr>
    <td style="text-align:left;"> Mouse1 </td>
-   <td style="text-align:left;"> Drug Treatment </td>
+   <td style="text-align:left;"> Drug treatment </td>
    <td style="text-align:left;"> Liver dissection </td>
    <td style="text-align:left;"> RNA extraction </td>
    <td style="text-align:left;"> RNA-Seq </td>
@@ -427,7 +475,7 @@ aggregated dataset of the type that may result from a meta-analysis.
   </tr>
   <tr>
    <td style="text-align:left;"> Mouse2 </td>
-   <td style="text-align:left;"> Drug Treatment </td>
+   <td style="text-align:left;"> Drug treatment </td>
    <td style="text-align:left;"> Liver dissection </td>
    <td style="text-align:left;"> RNA extraction </td>
    <td style="text-align:left;"> RNA-Seq </td>
@@ -435,7 +483,7 @@ aggregated dataset of the type that may result from a meta-analysis.
   </tr>
   <tr>
    <td style="text-align:left;"> Mousen </td>
-   <td style="text-align:left;"> Drug Treatment </td>
+   <td style="text-align:left;"> Drug treatment </td>
    <td style="text-align:left;"> Liver dissection </td>
    <td style="text-align:left;"> RNA extraction </td>
    <td style="text-align:left;"> RNA-Seq </td>
@@ -449,24 +497,149 @@ aggregated dataset of the type that may result from a meta-analysis.
 </tfoot>
 </table>
 
-**Table 2.** Experimental study with replicates Data Records table.
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>**Table 2.** Experimental study with replicates Data Records table.</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Subjects </th>
+   <th style="text-align:left;"> Protocol 1 </th>
+   <th style="text-align:left;"> Protocol 2 </th>
+   <th style="text-align:left;"> Samples </th>
+   <th style="text-align:left;"> Protocol 3 </th>
+   <th style="text-align:left;"> Data </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> CellCulture1 </td>
+   <td style="text-align:left;"> Drug treatment </td>
+   <td style="text-align:left;"> RNA extraction </td>
+   <td style="text-align:left;"> TechnicalRep1a </td>
+   <td style="text-align:left;"> Microarray hybridization </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CellCulture1 </td>
+   <td style="text-align:left;"> Drug treatment </td>
+   <td style="text-align:left;"> RNA extraction </td>
+   <td style="text-align:left;"> TechnicalRep2a </td>
+   <td style="text-align:left;"> Microarray hybridization </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CellCulture1 </td>
+   <td style="text-align:left;"> Drug treatment </td>
+   <td style="text-align:left;"> RNA extraction </td>
+   <td style="text-align:left;"> TechnicalRep3a </td>
+   <td style="text-align:left;"> Microarray hybridization </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CellCulture1 </td>
+   <td style="text-align:left;"> Drug treatment </td>
+   <td style="text-align:left;"> RNA extraction </td>
+   <td style="text-align:left;"> TechnicalRep1b </td>
+   <td style="text-align:left;"> Microarray hybridization </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CellCulture1 </td>
+   <td style="text-align:left;"> Drug treatment </td>
+   <td style="text-align:left;"> RNA extraction </td>
+   <td style="text-align:left;"> TechnicalRep2b </td>
+   <td style="text-align:left;"> Microarray hybridization </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CellCulture1 </td>
+   <td style="text-align:left;"> Drug treatment </td>
+   <td style="text-align:left;"> RNA extraction </td>
+   <td style="text-align:left;"> TechnicalRep3b </td>
+   <td style="text-align:left;"> Microarray hybridization </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+</tbody>
+</table>
 
-| **Source**   | **Protocol 1** | **Protocol 2** | **Samples**    | **Protocol 3**           | **Data** |
-|--------------|----------------|----------------|----------------|--------------------------|----------|
-| CellCulture1 | Drug treatment | RNA extraction | TechnicalRep1a | Microarray hybridization | GEOXXXXX |
-| CellCulture1 | Drug treatment | RNA extraction | TechnicalRep2a | Microarray hybridization | GEOXXXXX |
-| CellCulture1 | Drug treatment | RNA extraction | TechnicalRep3a | Microarray hybridization | GEOXXXXX |
-| CellCulture2 | Drug treatment | RNA extraction | TechnicalRep1b | Microarray hybridization | GEOXXXXX |
-| CellCulture2 | Drug treatment | RNA extraction | TechnicalRep2b | Microarray hybridization | GEOXXXXX |
-| CellCulture2 | Drug treatment | RNA extraction | TechnicalRep3b | Microarray hybridization | GEOXXXXX |
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>**Table 3.** Observational study example Data Records table.</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Sample </th>
+   <th style="text-align:left;"> Geographical Location </th>
+   <th style="text-align:left;"> Geoposition </th>
+   <th style="text-align:left;"> Protocol </th>
+   <th style="text-align:left;"> Data </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Body of water 1 </td>
+   <td style="text-align:left;"> location name </td>
+   <td style="text-align:left;"> latitude, longitude, altitude </td>
+   <td style="text-align:left;"> Measurement of surface temperature </td>
+   <td style="text-align:left;"> dataFile1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Body of water 2 </td>
+   <td style="text-align:left;"> location name </td>
+   <td style="text-align:left;"> latitude, longitude, altitude </td>
+   <td style="text-align:left;"> Measurement of surface temperature </td>
+   <td style="text-align:left;"> dataFile2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Body of water n </td>
+   <td style="text-align:left;"> location name </td>
+   <td style="text-align:left;"> latitude, longitude, altitude </td>
+   <td style="text-align:left;"> Measurement of surface temperature </td>
+   <td style="text-align:left;"> dataFile3 </td>
+  </tr>
+</tbody>
+</table>
 
-**Table 3.** Observational study example Data Records table.
-
-| **Sample**      | **Geographical location** | **Geoposition**               | **Protocol**                       | **Data**  |
-|-----------------|---------------------------|-------------------------------|------------------------------------|-----------|
-| Body of water 1 | location name             | latitude, longitude, altitude | Measurement of surface temperature | dataFile1 |
-| Body of water 2 | location name             | latitude, longitude, altitude | Measurement of surface temperature | dataFile2 |
-| Body of water n | location name             | latitude, longitude, altitude | Measurement of surface temperature | dataFile3 |
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>**Table 4.** Data aggregation study example Data Records table.</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Source </th>
+   <th style="text-align:left;"> Sample </th>
+   <th style="text-align:left;"> Sample Number </th>
+   <th style="text-align:left;"> Temporal Range </th>
+   <th style="text-align:left;"> Protocol 1 </th>
+   <th style="text-align:left;"> Protocol2 </th>
+   <th style="text-align:left;"> Data </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Database URL 1 </td>
+   <td style="text-align:left;"> Dataset 1 </td>
+   <td style="text-align:left;"> Number of samples in the dataset </td>
+   <td style="text-align:left;"> Range of measurements reported in the dataset </td>
+   <td style="text-align:left;"> Data assimilation procedure </td>
+   <td style="text-align:left;"> Method to generate output data </td>
+   <td style="text-align:left;"> dataFile1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Database URL 1 </td>
+   <td style="text-align:left;"> Dataset 2 </td>
+   <td style="text-align:left;"> Number of samples in the dataset </td>
+   <td style="text-align:left;"> Range of measurements reported in the dataset </td>
+   <td style="text-align:left;"> Data assimilation procedure </td>
+   <td style="text-align:left;"> Method to generate output data </td>
+   <td style="text-align:left;"> dataFile1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Database URL 2 </td>
+   <td style="text-align:left;"> Dataset n </td>
+   <td style="text-align:left;"> Number of samples in the dataset </td>
+   <td style="text-align:left;"> Range of measurements reported in the dataset </td>
+   <td style="text-align:left;"> Data assimilation procedure </td>
+   <td style="text-align:left;"> Method to generate output data </td>
+   <td style="text-align:left;"> dataFile2 </td>
+  </tr>
+</tbody>
+</table>
 
 **Table 4.** Data aggregation study example Data Records table.
 
