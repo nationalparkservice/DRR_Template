@@ -422,7 +422,7 @@ kable(Table,
 ```
 
 ```
-  [1] "2020-04-23 09:46:53 MDT"
+  [1] "2020-04-23 09:49:25 MDT"
 ```
 
 # Additional Notes (this should not be included in reports...)
@@ -641,10 +641,3 @@ aggregated dataset of the type that may result from a meta-analysis.
 </tbody>
 </table>
 
-**Table 4.** Data aggregation study example Data Records table.
-
-| **Source**     | **Sample** | **Sample number**                | **Temporal range**                            | **Protocol 1**              | **Protocol 2**                 | **Data**  |
-|----------------|------------|----------------------------------|-----------------------------------------------|-----------------------------|--------------------------------|-----------|
-| Database URL 1 | Dataset 1  | Number of samples in the dataset | Range of measurements reported in the dataset | Data assimilation procedure | Method to generate output data | dataFile1 |
-| Database URL 1 | Dataset 2  | Number of samples in the dataset | Range of measurements reported in the dataset | Data assimilation procedure | Method to generate output data | dataFile1 |
-| Database URL 2 | Dataset n  | Number of samples in the dataset | Range of measurements reported in the dataset | Data assimilation procedure | Method to generate output data | dataFile2 |
