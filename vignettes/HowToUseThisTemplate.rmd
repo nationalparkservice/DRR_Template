@@ -20,10 +20,26 @@ output:
 ```{r setup, include=FALSE}
 RRpackages <- c('markdown',     # links to Sundown rendering library
                 'rmarkdown',    # newer rendering via pandoc
+                'pander',       # alternative renderer for markdown,
+                                # plus better tables than just knitr
                 'knitr',
+                "dataMaid",     # for makeCodebooks
+                "R.rsp",        # dynamic generation of scientific reports
+                "kimisc",       #
+                "papeR",        # stat tables
+                "texreg",       # formatting regression results for LaTeX
+                                # or html
+                "rmdHelpers",   # misc from Mark Peterson
+                                #  thisFileName() thisFile_knit()
+                'yaml',         # format data into markdown
                 'kableExtra',
-                'yaml'         # format data into markdown
-                 )
+                'rmdformats',   # templates including automatic ToC,
+                                # also use_bookdown()
+                'htmltools',    #
+                "bibtex",
+                "RefManageR",   # BibTeX reference manager
+                "knitcitations" #
+                )
 
 inst <- RRpackages %in% installed.packages()
 if (length(RRpackages[!inst]) > 0) {
@@ -35,9 +51,14 @@ knitr::opts_chunk$set(
    echo = TRUE,
    comment = " ",
    dev = "svg",
+   fig.path = "figures/",
    tidy.opts = list(width.cutoff = 60),
    tidy = TRUE
    )
+# if ggplot, update theme to default to centered titles
+if ("ggplot2" %in% .packages()) {
+   theme_update(plot.title = element_text(hjust = 0.5))
+}
 ```
 
 # Overview
@@ -47,7 +68,7 @@ Data Release Reports are intended to document the processing of fully-QAed data 
 
 Each DRR cites source and resultant datasets that are published concurrently and cross-referenced. Associated datasets are made publicly available with the exception of data that must be protected from release as per NPS and park-specific policies.
 
-
+Data packages that are published concurrently with DRRs are intended to be independently citable scientific works that can serve as the basis for subsequent analysis and reporting by NPS or third parties.
 
 # Project Set-up
 
@@ -58,11 +79,22 @@ EMLassemblyline
 
 ## Additional Useful Packages
 
-DSTools
-IMDQC
+- **DSTools.** Package maintained by IMD with functions to retrieve data packages and other information from the NPS Data Store and other applications associated with the NPS Integrated Resource Management Applications (IRMA) portal [NPS Integrated Resource Management Applications (IRMA) portal](https://irma.nps.gov/DataStore). The DSTools package is available on github and can be installed using the following code:
+
+  ` remotes::install_github("nationalparkservice/DSTools") `
+
+- **IMDQC.** Package that contains a wuite of quality control functions that may be of use when processing datasets. Installed from github using the following code:
+
+  `remotes::install_github("nationalparkservice/IMDQC")`
+
+
 
 ## Folder Structure
 
+```{r figure1, echo=FALSE, fig.align="center", fig.cap="**Figure 1.** Standard project directory structure for data release reports."}
+include_graphics("DirectoryStructure.png")
+
+```
 
 # Creating a Reproducible Report
 
@@ -84,14 +116,14 @@ tag, making it 508-compliant.
 For example:
 
 ````markdown
-`r ''````{r figure1, echo=FALSE, fig.align="center", fig.cap="**Figure 1.** Example general workflow to include in the methods section."}
+`r ''````{r figure1, echo=FALSE, fig.align="center", fig.cap="**Figure 2.** Example general workflow to include in the methods section."}
 include_graphics("ProcessingWorkflow.png")
 ```
 ````
 
 Results in:
 
-```{r figure1, echo=FALSE, fig.align="center", fig.cap="**Figure 1.** Example general workflow to include in the methods section."}
+```{r figure2, echo=FALSE, fig.align="center", fig.cap="**Figure 2.** Example general workflow to include in the methods section."}
 include_graphics("ProcessingWorkflow.png")
 
 ```

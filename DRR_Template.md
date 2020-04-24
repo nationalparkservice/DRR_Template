@@ -33,7 +33,7 @@ author:
       | Managed Business Solutions (MBS), a Sealaska Company  
       | Contractor to National Park Service  
       | Natural Resource Stewardship and Science
-date: "23 April, 2020"
+date: "24 April, 2020"
 abstract: "Abstract Should go here. Multiple Lines are okay; it'll format correctly. Do not put the abstract in the text section below; this will allow For reuse of the abtract in all associated products. </br> </br>  The Abstract should succinctly describe the study, the assay(s) performed,  the resulting data, and their reuse potential, but should not make any  claims regarding new scientific findings. No references are allowed in this section. "
 editor_options:
   chunk_output_type: inline
@@ -143,7 +143,7 @@ quality assurance planning documentation.
 
 *Stock Text to include:*
 
-The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *Dataset 2 FULL TITLE* is suitable for its intendend use as of the date of processing (2020-04-23).
+The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *Dataset 2 FULL TITLE* is suitable for its intendend use as of the date of processing (2020-04-24).
 
 *Required Table*
 
@@ -422,7 +422,7 @@ kable(Table,
 ```
 
 ```
-  [1] "2020-04-23 09:49:25 MDT"
+  [1] "2020-04-24 05:18:07 MDT"
 ```
 
 # Additional Notes (this should not be included in reports...)
