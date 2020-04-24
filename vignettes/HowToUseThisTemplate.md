@@ -1,28 +1,38 @@
 ---
-title: "HowToUse"
-author: "Joe DeVivo"
-date: "4/23/2020"
-output:
-  html_document:
-    df_print: kable
-    fig_caption: true
-    dev: svg
-    highlight: haddock
-    keep_md: yes
-    smart: no
-    theme: journal
-    css: "../common/journalnps.min.css"
-    toc: yes
-    toc_float: true
-    number_sections: true
+date: 4/23/2020
+title: HowToUse
+author: Joe DeVivo
 ---
-
-
 
 Overview
 ========
 
-This package has been developed to help automate the publication of
+This template has been developed to help automate the publication of **Data
+Release Reports** (DRRs). Data Release Reports are created by the National Park
+Service to provide detailed descriptions of valuable research datasets,
+including the methods used to collect the data and technical analyses supporting
+the quality of the measurements. Data Release Reports focus on helping others
+reuse data, rather than presenting results, testing hypotheses, or presenting
+new interpretations, methods or in-depth analyses.
+
+Data Release Reports are intended to document the processing of fully-QAed data
+to their final (QCed) form in a reproducible and transparent manner, but may
+also serve to document provisional data to inform their use prior to
+certification. Data Release Reports document the data collection methods,
+quality standards, and processing code used to prepare and review data prior to
+release, and present the quality of resultant data in the context of fitness for
+their intended use.
+
+Each DRR cites source and resultant datasets that are published concurrently and
+cross-referenced. Associated datasets are made publicly available with the
+exception of data that must be protected from release as per NPS and
+park-specific policies.
+
+DRRs also serve as the documentation of the technical review process (and
+standards) for published datasets. Prior to publication, DRRs and accompanying
+datasets should be reviewed to ensure accuracy, completeness, and consistency
+with documented data quality standards, as well as for usability and
+reproducibility.
 
 Project Set-up
 ==============
@@ -43,7 +53,7 @@ YAML Header Information
 -----------------------
 
 Rmarkdown Startup Code Chunk
----------------------------
+----------------------------
 
 Figures
 -------
@@ -57,17 +67,15 @@ tag, making it 508-compliant.
 
 For example:
 
-````markdown
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ```{r figure1, echo=FALSE, fig.align="center", fig.cap="**Figure 1.** Example general workflow to include in the methods section."}
 include_graphics("ProcessingWorkflow.png")
 ```
-````
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Results in:
 
-<div class="figure" style="text-align: center">
-<img src="ProcessingWorkflow.png" alt="**Figure 1.** Example general workflow to include in the methods section." width="550" />
-<p class="caption">**Figure 1.** Example general workflow to include in the methods section.</p>
-</div>
+**Figure 1.** Example general workflow to include in the methods section.
 
 Tables
 ------

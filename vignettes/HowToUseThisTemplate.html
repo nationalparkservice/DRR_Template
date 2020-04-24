@@ -1288,6 +1288,15 @@ window.buildTabsets = function(tocID) {
 };
 
 </script>
+<script>$(document).ready(function(){
+    if (typeof $('[data-toggle="tooltip"]').tooltip === 'function') {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+    if ($('[data-toggle="popover"]').popover === 'function') {
+        $('[data-toggle="popover"]').popover();
+    }
+});
+</script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -1597,15 +1606,19 @@ div.tocify {
 
 <div id="overview" class="section level1" number="1">
 <h1 number="1"><span class="header-section-number">1</span> Overview</h1>
-<p>This package has been developed to help automate the publication of</p>
+<p>Data Release Reports (DRRs) are created by the National Park Service and provide detailed descriptions of valuable research datasets, including the methods used to collect the data and technical analyses supporting the quality of the measurements. Data Release Reports focus on helping others reuse data, rather than presenting results, testing hypotheses, or presenting new interpretations, methods or in-depth analyses.</p>
+<p>Data Release Reports are intended to document the processing of fully-QAed data to their final (QCed) form in a reproducible and transparent manner. Data Release Reports document the data collection methods, quality standards, and processing code used to prepare and review data prior to release, and present the quality of resultant data in the context of fitness for their intended use.</p>
+<p>Each DRR cites source and resultant datasets that are published concurrently and cross-referenced. Associated datasets are made publicly available with the exception of data that must be protected from release as per NPS and park-specific policies.</p>
 </div>
 <div id="project-set-up" class="section level1" number="2">
 <h1 number="2"><span class="header-section-number">2</span> Project Set-up</h1>
 <div id="required-packages-not-on-cran" class="section level2" number="2.1">
 <h2 number="2.1"><span class="header-section-number">2.1</span> Required Packages Not on CRAN</h2>
+<p>EMLassemblyline</p>
 </div>
 <div id="additional-useful-packages" class="section level2" number="2.2">
 <h2 number="2.2"><span class="header-section-number">2.2</span> Additional Useful Packages</h2>
+<p>DSTools IMDQC</p>
 </div>
 <div id="folder-structure" class="section level2" number="2.3">
 <h2 number="2.3"><span class="header-section-number">2.3</span> Folder Structure</h2>
@@ -1638,15 +1651,137 @@ div.tocify {
 <h2 number="3.4"><span class="header-section-number">3.4</span> Tables</h2>
 <p>Tables should be created using the kable function, with additional formatting options available via the kableExtra package. Specifying the caption in the kable function call (as opposed to inline markdown text) will ensure that the caption is appropriately formatted using the theme stylesheet. The table format has been designed to mimic the NPS graphic identity standards.</p>
 <p>In general, tables should be created with the bootstrap_options of striped, hover, condensed, and responsive, with full_width set to false.</p>
-<p>[Insert example code here]</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1"></a><span class="in">```{r Table1, echo=FALSE}</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="in">c1&lt;-c(&quot;Mouse1&quot;,&quot;Mouse2&quot;,&quot;Mousen&quot;)</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="in">c2&lt;-c(&quot;Drug treatment&quot;,&quot;Drug treatment&quot;,&quot;Drug treatment&quot;)</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="in">c3&lt;-c(&quot;Liver dissection&quot;,&quot;Liver dissection&quot;,&quot;Liver dissection&quot;)</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="in">c4&lt;-c(&quot;RNA extraction&quot;,&quot;RNA extraction&quot;,&quot;RNA extraction&quot;)</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="in">c5&lt;-c(&quot;RNA-Seq&quot;,&quot;RNA-Seq&quot;,&quot;RNA-Seq&quot;)</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="in">c6&lt;-c(&quot;GEOXXXXX&quot;,&quot;GEOXXXXX&quot;,&quot;GEOXXXXX&quot;)</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="in">Table1&lt;-data.frame(c1,c2,c3,c4,c5,c6)</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="in">kable(Table1, </span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="in">      col.names=c(&quot;Subjects&quot;,&quot;Protocol 1&quot;,&quot;Protocol 2&quot;,&quot;Protocol 3&quot;,&quot;Protocol 4&quot;,&quot;Data&quot;),</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="in">      caption=&quot;**Table 1.** Experimental study example Data Records table.&quot;) %&gt;%</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="in">  kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;),full_width=F)</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="in">```</span></span></code></pre></div>
+<p>Results in:</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<strong>Table 1.</strong> Experimental study example Data Records table.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Subjects
+</th>
+<th style="text-align:left;">
+Protocol 1
+</th>
+<th style="text-align:left;">
+Protocol 2
+</th>
+<th style="text-align:left;">
+Protocol 3
+</th>
+<th style="text-align:left;">
+Protocol 4
+</th>
+<th style="text-align:left;">
+Data
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Mouse1
+</td>
+<td style="text-align:left;">
+Drug treatment
+</td>
+<td style="text-align:left;">
+Liver dissection
+</td>
+<td style="text-align:left;">
+RNA extraction
+</td>
+<td style="text-align:left;">
+RNA-Seq
+</td>
+<td style="text-align:left;">
+GEOXXXXX
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mouse2
+</td>
+<td style="text-align:left;">
+Drug treatment
+</td>
+<td style="text-align:left;">
+Liver dissection
+</td>
+<td style="text-align:left;">
+RNA extraction
+</td>
+<td style="text-align:left;">
+RNA-Seq
+</td>
+<td style="text-align:left;">
+GEOXXXXX
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mousen
+</td>
+<td style="text-align:left;">
+Drug treatment
+</td>
+<td style="text-align:left;">
+Liver dissection
+</td>
+<td style="text-align:left;">
+RNA extraction
+</td>
+<td style="text-align:left;">
+RNA-Seq
+</td>
+<td style="text-align:left;">
+GEOXXXXX
+</td>
+</tr>
+</tbody>
+</table>
 <p>Note that rendered tables are not fully 508 compliant, but they’re close. We are currently working on extending (or contributing to) the kable package so that rendered tables are 508 compliant.</p>
 </div>
 </div>
 <div id="creating-data-packages" class="section level1" number="4">
 <h1 number="4"><span class="header-section-number">4</span> Creating Data Packages</h1>
 </div>
-<div id="using-this-template-with-reports-created-in-microsoft-word." class="section level1" number="5">
-<h1 number="5"><span class="header-section-number">5</span> Using this template with Reports Created in Microsoft Word.</h1>
+<div id="publislhing-data-release-reports-and-associated-data" class="section level1" number="5">
+<h1 number="5"><span class="header-section-number">5</span> Publislhing Data Release Reports and Associated Data</h1>
+<div id="acquiring-report-numbers" class="section level2" number="5.1">
+<h2 number="5.1"><span class="header-section-number">5.1</span> Acquiring Report Numbers</h2>
+<p>Because data release reports</p>
+</div>
+<div id="report-review-requirements" class="section level2" number="5.2">
+<h2 number="5.2"><span class="header-section-number">5.2</span> Report Review Requirements</h2>
+<p>DRRs serve as the documentation of the technical review process (and standards) for published datasets. Prior to publication, DRRs reports and accompanying datasets should be reviewed to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. Typically they do not need to be peer reviewed, but should be appropriately reviewed prior to publication. In particular it’s imperative to ensure that any summary statistics about associated data packages are correct, and all fields, codes, values, etc., are consistently used and defned among the report, data packages, and metadata. Data Release Reports should always be checked to ensure that they do not contain data that should be protected from release and/or that they identify data packages that contain such data.</p>
+</div>
+<div id="data-package-review-requirements" class="section level2" number="5.3">
+<h2 number="5.3"><span class="header-section-number">5.3</span> Data Package Review Requirements</h2>
+<p>Prior to approval of a data release report, all data packages should undergo a technical and usability review. At a minimum,</p>
+</div>
+<div id="publishing-draft-data-packages" class="section level2" number="5.4">
+<h2 number="5.4"><span class="header-section-number">5.4</span> Publishing Draft Data Packages</h2>
+</div>
+</div>
+<div id="appendix-a.-using-this-template-with-reports-created-in-microsoft-word." class="section level1" number="6">
+<h1 number="6"><span class="header-section-number">6</span> Appendix A. Using this template with Reports Created in Microsoft Word.</h1>
 </div>
 
 

@@ -21,6 +21,7 @@ output:
 RRpackages <- c('markdown',     # links to Sundown rendering library
                 'rmarkdown',    # newer rendering via pandoc
                 'knitr',
+                'kableExtra',
                 'yaml'         # format data into markdown
                  )
 
@@ -39,35 +40,40 @@ knitr::opts_chunk$set(
    )
 ```
 
-Overview
-========
+# Overview
+Data Release Reports (DRRs) are created by the National Park Service and provide detailed descriptions of valuable research datasets, including the methods used to collect the data and technical analyses supporting the quality of the measurements. Data Release Reports focus on helping others reuse data, rather than presenting results, testing hypotheses, or presenting new interpretations, methods or in-depth analyses. 
 
-This package has been developed to help automate the publication of
+Data Release Reports are intended to document the processing of fully-QAed data to their final (QCed) form in a reproducible and transparent manner. Data Release Reports document the data collection methods, quality standards, and processing code used to prepare and review data prior to release, and present the quality of resultant data in the context of fitness for their intended use. 
 
-Project Set-up
-==============
+Each DRR cites source and resultant datasets that are published concurrently and cross-referenced. Associated datasets are made publicly available with the exception of data that must be protected from release as per NPS and park-specific policies.
 
-Required Packages Not on CRAN
------------------------------
 
-Additional Useful Packages
---------------------------
 
-Folder Structure
-----------------
+# Project Set-up
 
-Creating a Reproducible Report
-==============================
 
-YAML Header Information
------------------------
+## Required Packages Not on CRAN
 
-Rmarkdown Startup Code Chunk
----------------------------
+EMLassemblyline
 
-Figures
--------
+## Additional Useful Packages
 
+DSTools
+IMDQC
+
+## Folder Structure
+
+
+# Creating a Reproducible Report
+
+
+## YAML Header Information
+
+
+## Rmarkdown Startup Code Chunk
+
+
+## Figures
 Figures should be inserted using code chunks in all cases so that figure
 settings can be set in the chunk header. The chunk header should at a minimum
 set the fig.align parameter to “center” and the specify the figure caption
@@ -82,6 +88,7 @@ For example:
 include_graphics("ProcessingWorkflow.png")
 ```
 ````
+
 Results in:
 
 ```{r figure1, echo=FALSE, fig.align="center", fig.cap="**Figure 1.** Example general workflow to include in the methods section."}
@@ -89,9 +96,7 @@ include_graphics("ProcessingWorkflow.png")
 
 ```
 
-Tables
-------
-
+## Tables
 Tables should be created using the kable function, with additional formatting
 options available via the kableExtra package. Specifying the caption in the
 kable function call (as opposed to inline markdown text) will ensure that the
@@ -101,14 +106,59 @@ has been designed to mimic the NPS graphic identity standards.
 In general, tables should be created with the bootstrap_options of striped,
 hover, condensed, and responsive, with full_width set to false.
 
-[Insert example code here]
+For example:
 
+````markdown
+`r ''````{r Table1, echo=FALSE}
+c1<-c("Mouse1","Mouse2","Mousen")
+c2<-c("Drug treatment","Drug treatment","Drug treatment")
+c3<-c("Liver dissection","Liver dissection","Liver dissection")
+c4<-c("RNA extraction","RNA extraction","RNA extraction")
+c5<-c("RNA-Seq","RNA-Seq","RNA-Seq")
+c6<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX")
+Table1<-data.frame(c1,c2,c3,c4,c5,c6)
+
+kable(Table1, 
+      col.names=c("Subjects","Protocol 1","Protocol 2","Protocol 3","Protocol 4","Data"),
+      caption="**Table 1.** Experimental study example Data Records table.") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
+```
+````
+Results in:
+
+```{r Table1, echo=FALSE}
+c1<-c("Mouse1","Mouse2","Mousen")
+c2<-c("Drug treatment","Drug treatment","Drug treatment")
+c3<-c("Liver dissection","Liver dissection","Liver dissection")
+c4<-c("RNA extraction","RNA extraction","RNA extraction")
+c5<-c("RNA-Seq","RNA-Seq","RNA-Seq")
+c6<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX")
+Table1<-data.frame(c1,c2,c3,c4,c5,c6)
+
+kable(Table1, 
+      col.names=c("Subjects","Protocol 1","Protocol 2","Protocol 3","Protocol 4","Data"),
+      caption="**Table 1.** Experimental study example Data Records table.") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
+```
 Note that rendered tables are not fully 508 compliant, but they’re close. We are
 currently working on extending (or contributing to) the kable package so that
 rendered tables are 508 compliant.
 
-Creating Data Packages
-======================
+# Creating Data Packages
 
-Using this template with Reports Created in Microsoft Word.
-===========================================================
+
+# Publislhing Data Release Reports and Associated Data
+
+## Acquiring Report Numbers
+Because data release reports 
+
+## Report Review Requirements
+DRRs serve as the documentation of the technical review process (and standards) for published datasets. Prior to publication, DRRs reports and accompanying datasets should be reviewed to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. Typically they do not need to be peer reviewed, but should be appropriately reviewed prior to publication. In particular it's imperative to ensure that any summary statistics about associated data packages are correct, and all fields, codes, values, etc., are consistently used and defned among the report, data packages, and metadata. Data Release Reports should always be checked to ensure that they do not contain data that should be protected from release and/or that they identify data packages that contain such data.
+
+## Data Package Review Requirements
+Prior to approval of a data release report, all data packages should undergo a technical and usability review. At a minimum, 
+
+## Publishing Draft Data Packages
+
+# Appendix A. Using this template with Reports Created in Microsoft Word.
+
