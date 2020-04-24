@@ -45,9 +45,7 @@ knitr::opts_chunk$set(
    comment = " ",
    dev = "svg",
    tidy.opts = list(width.cutoff = 60),
-   tidy = TRUE,
-   fig.width = 7,
-   fig.height = 5
+   tidy = TRUE
    )
 
 ```
@@ -66,25 +64,52 @@ Data packages that are published concurrently with DRRs are intended to be indep
 
 ## Required Packages Not on CRAN
 
-EMLassemblyline
+- **EMLassemblyline.** Package developed by EDI.org. As per their github repository, it's designed "for scientists and data managers who need to easily create high quality EML metadata for data publication. EMLassemblyline is a metadata builder that emphasizes auto-extraction of metadata, appends value added content, and inputs user supplied information through common interfaces thereby minimizing user effort while maximizing metadata features for data discovery and reuse."
+
+  ` remotes::install_github("EDIorg/EMLassemblyline")` 
 
 ## Additional Useful Packages
 
 - **DSTools.** Package maintained by IMD with functions to retrieve data packages and other information from the NPS Data Store and other applications associated with the NPS Integrated Resource Management Applications (IRMA) portal [NPS Integrated Resource Management Applications (IRMA) portal](https://irma.nps.gov/DataStore). The DSTools package is available on github and can be installed using the following code:
 
-  ` remotes::install_github("nationalparkservice/DSTools") `
+  `remotes::install_github("nationalparkservice/DSTools") `
 
-- **IMDQC.** Package that contains a wuite of quality control functions that may be of use when processing datasets. Installed from github using the following code:
+- **IMDQC.** Package that contains a suite of quality control functions that may be of use when processing datasets. Installed from github using the following code:
 
   `remotes::install_github("nationalparkservice/IMDQC")`
 
 
 
 ## Folder Structure
+General directory contents are as follows (Figure 1):
 ```{r figure1, echo=FALSE, fig.align="center", out.width="30%",  fig.cap="**Figure 1.** Standard project directory structure for data release reports."}
 include_graphics("./DirectoryStructure.png")
 
 ```
+
+- `common` houses files that are shared across all projects and generally should not be edited by the user. Notable files:
+
+  - `header.html` includes all of the graphic identity material at the top of the rendered report.
+  - `footer.html` includes all of the "about this report" information similar to what is found in the front matter of reports published in the NRR and NRDS series.
+  - `journalnps.min.css` includes stylesheet tweaks that modify the standard markdown "journal" theme to approxmiate NPS graphic identity standards.
+  - `DRR Word Template.docx` is intended for users who prefer to author reports in microsoft word and then convert to markdown (as opposed to authoring reports in rmarkdown). Instructions on how to use this method of DRR report creation are below.
+  
+- `data` The data folder contains three subfolders for managing datasets used and generated during report production.
+
+  - `raw` is for all source data sets used as the basis for a report. These can either be raw (non-QCed) datasets, or final citable datasets from prior works. The `getDataPackage` function from the `DSTools` package above will download and unpack datapackages into the raw directory.
+  - `temp` is intended to house datasets generated during production of the report that are retained for later use in processing (and to help save progress in analyses that require multiple steps). The starting chunk of the template will generate a `reportParameters.RData` dataset of all parameters from the YAML header for later use in the report and associated data packages.
+  - `final` is for any final datasets that are to be included in data packages.
+  
+- `dataPackages` is where the working files for *creating* data packages are held. The folder contains a single `DataPackageTemplate` folder that should be duplicated for each data package to be created. The files in the `DataPackageTemplate` folder are required of the EMLAssemblyline package, and are discussed in further detail below and the separate vignette for creating data packages. Folders and contents are as follows:
+
+  - `data_objects` is for all data files and the manifest (readme) file describing the contents of the data package.
+  - `metadata_templates` is a series of files that are either created (or must be edited) before generating the metadata.
+  - `eml` which is where the final eml file will end up.
+  - `run_EMLassemblylne_for_XX.R` script file, that will take a "final" dataset, create the metadata and manifest files, and zip them up into a data package for publication to the NPS Data Store.
+
+- `figures` contains all the figures for the data release report
+
+- `output` is where the zipped data packages from the script above are written.
 
 # Creating a Reproducible Report
 
