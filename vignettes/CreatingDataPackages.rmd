@@ -1,0 +1,54 @@
+---
+title: "Creating Data Packages"
+date: "4/23/2020"
+output:
+  html_document:
+    df_print: kable
+    fig_caption: true
+    dev: svg
+    highlight: haddock
+    keep_md: no
+    smart: no
+    theme: journal
+    css: "../common/journalnps.min.css"
+    toc: yes
+    toc_float: true
+    number_sections: true
+
+---
+
+```{r setup, include=FALSE}
+RRpackages <- c('markdown',     # links to Sundown rendering library
+                'rmarkdown',    # newer rendering via pandoc
+                'pander',       # alternative renderer for markdown,
+                                # plus better tables than just knitr
+                'knitr',
+                "devtools",
+                "R.rsp",        # dynamic generation of scientific reports
+                "rmdHelpers",   # misc from Mark Peterson
+                                #  thisFileName() thisFile_knit()
+                'yaml',         # format data into markdown
+                'kableExtra',
+                'rmdformats',   # templates including automatic ToC,
+                                # also use_bookdown()
+                'htmltools'     #
+                )
+
+inst <- RRpackages %in% installed.packages()
+if (length(RRpackages[!inst]) > 0) {
+   install.packages(RRpackages[!inst], dep = TRUE)
+}
+lapply(RRpackages, library, character.only = TRUE)
+
+knitr::opts_chunk$set(
+   echo = TRUE,
+   comment = " ",
+   dev = "svg",
+   tidy.opts = list(width.cutoff = 60),
+   tidy = TRUE
+   )
+
+```
+
+Coming soon...
+

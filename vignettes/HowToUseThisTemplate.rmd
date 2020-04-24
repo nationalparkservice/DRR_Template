@@ -116,10 +116,26 @@ include_graphics("./DirectoryStructure.png")
 - `output` is where the zipped data packages from the script above are written.
 
 # Creating a Reproducible Report
-
+The following is for users who are using the `DRR_Template.RMD` template file to generate a data release report using RMarkdown. If you are planning to author your report in MSWord, please see Appendix A below.
 
 ## YAML Header Information
+The YAML header contains a series of parameters that are used in the creation of 
+the data release report as well as the metadata and manifest files contained in 
+associated data packages. The following must be updated prior to finalization
 
+- Parameters
+  - `projectDir`. Should point to the root folder on your computer where your template lives.
+  - `reportNumber`. This is optional, and should _only_ be included if publishing in the semi-official DRR series. If not, this line can be removed as well as the `subtitle` lines below (lines 23 and 24 in the template)
+  - `reportRefID`. This is the Data Store reference ID for the report. Must be here so that it is reused in creation of the metadata and manifest files.
+  - `dataPackageXXX`. There are three parameters for each data package associated with each DRR. The RefID parameters should match the Data Store reference IDs; the Title parameter should match the title in Data Store, and the descrption should be a short title/phrase that will be used throughout the text of the report, metadata, and manifest files. Data package parameters can be added (or removed) as needed, but the template includes two by default
+  - `title`. The title of the Data Release Report.
+  - `author`. Author information should be edited to include the authors of the report. Two examples are included.
+  
+Because folks will ask...  
+
+1. The abstract is not included in the `abstract` field because if it's there it can't be easily reused in other places. This is our workaround to ensure that the abstract can be consistent across the report and data packages.
+
+2. Yes, we intended to use the `subtitle` field to hold the report number. The rmarkdown template does not have a field/placeholder for report number so (for now) this is our workaround. If you need or want a subtitle, this should be included in the title field similar to how it would be included in a citation.
 
 ## Rmarkdown Startup Code Chunk
 

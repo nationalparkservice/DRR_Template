@@ -18,18 +18,36 @@ New projects can be established using this template in one of two ways.
 # Vignettes
 [How to Use this Template (still working on this!)](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/HowToUseThisTemplate.html)
 
-[How to Create Data Packages (coming soon!)]
+[How to Create Data Packages (coming soon!)](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/CreatingDataPackages.html)
 
 # Report outline
 ## Background & Introduction
-The Background & Summary should provide an overview of the study design, the assay(s) performed, and the data generated, including any background information needed to put this study in the context of previous work and the literature, and should reference literature as needed. The section should also briefly outline the broader goals that motivated collection of the data, as well as their potential reuse value. We also encourage authors to include a figure that provides a schematic overview of the study and assay(s) design. 
+The Background & Summary should provide an overview of the study design, the assay(s) 
+performed, and the data generated, including any background information needed to 
+put this study in the context of previous work and the literature, and should reference 
+literature as needed. The section should also briefly outline the broader goals that 
+motivated collection of the data, as well as their potential reuse value. We also 
+encourage authors to include a figure that provides a schematic overview of the study 
+and assay(s) design. 
 
 ## Methods
-The Methods should include detailed text describing any steps or procedures used in producing the data, including full descriptions of the experimental design, data acquisition assays, and any computational processing (e.g. normalization, image feature extraction). See the detailed section in our submission guidelines for advice on writing a transparent and reproducible methods section. Related methods should be grouped under corresponding subheadings where possible, and methods should be described in enough detail to allow other researchers to interpret and repeat, if required, the full study. Specific data outputs should be explicitly referenced via data citation (see Data Records and Citing Data, below).
+The Methods should include detailed text describing any steps or procedures used 
+in producing the data, including full descriptions of the experimental design, 
+data acquisition assays, and any computational processing (e.g. normalization, 
+image feature extraction). See the detailed section in our submission guidelines 
+for advice on writing a transparent and reproducible methods section. Related 
+methods should be grouped under corresponding subheadings where possible, and 
+methods should be described in enough detail to allow other researchers to interpret 
+and repeat, if required, the full study. Specific data outputs should be explicitly 
+referenced via data citation (see Data Records and Citing Data, below).
 
-Authors should cite previous descriptions of the methods under use, but ideally the method descriptions should be complete enough for others to understand and reproduce the methods and processing steps without referring to associated publications. There is no limit to the length of the Methods section.
+Authors should cite previous descriptions of the methods under use, but ideally 
+the method descriptions should be complete enough for others to understand and 
+reproduce the methods and processing steps without referring to associated 
+publications. There is no limit to the length of the Methods section.
 
-Authors are encouraged to consider creating a figure that outlines the experimental workflow(s) used to generate and analyse the data output(s) (Figure 1).
+Authors are encouraged to consider creating a figure that outlines the 
+experimental workflow(s) used to generate and analyse the data output(s) (Figure 1).
 
 ### Data Collection and Sample Processing Methods (optional)
 Include a description of field methods and sample processing 
@@ -38,10 +56,17 @@ Include a description of field methods and sample processing
 Provide descriptions (with citations) of other data sources used.
 
 ### Data Processing (required if done)
-Summarize process and results of any QC processes done that manipulate, change, or qualify data.
+Summarize process and results of any QC processes done that manipulate, change, 
+or qualify data.
 
 ### Code Availability (required)
-For all studies using custom code in the generation or processing of datasets, a statement must be included in the Methods section, under the subheading "Code availability", indicating whether and how the code can be accessed, including any restrictions to access. This section should also include information on the versions of any software used, if relevant, and any specific variables or parameters used to generate, test, or process the current dataset. Actual analytical code should be provided in Appendices.
+For all studies using custom code in the generation or processing of datasets, 
+a statement must be included in the Methods section, under the subheading "Code 
+availability", indicating whether and how the code can be accessed, including 
+any restrictions to access. This section should also include information on the 
+versions of any software used, if relevant, and any specific variables or 
+parameters used to generate, test, or process the current dataset. Actual 
+analytical code should be provided in Appendices.
 
 ## Data Records (required)
 The Data Records section should be used to explain each data record associated
