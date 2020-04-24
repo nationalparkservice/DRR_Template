@@ -11,6 +11,11 @@ report that documents the collection, processing, quality control, and evaluatio
 
 This template is under active development to improve style and 508 compliance.
 
+# Vignettes
+[How to Use this Template (still working on this!)](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/HowToUseThisTemplate.html)
+
+[How to Create Data Packages (coming soon!)]
+
 # Report outline
 ## Background & Introduction
 The Background & Summary should provide an overview of the study design, the assay(s) performed, and the data generated, including any background information needed to put this study in the context of previous work and the literature, and should reference literature as needed. The section should also briefly outline the broader goals that motivated collection of the data, as well as their potential reuse value. We also encourage authors to include a figure that provides a schematic overview of the study and assay(s) design. 
