@@ -422,7 +422,7 @@ kable(Table,
 ```
 
 ```
-  [1] "2020-04-25 06:25:04 MDT"
+  [1] "2020-04-25 06:39:05 MDT"
 ```
 
 # Additional Notes (this should not be included in reports...)
