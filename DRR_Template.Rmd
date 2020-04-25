@@ -104,13 +104,13 @@ lapply(RRpackages, library, character.only = TRUE)
 
 # __________________________________
 # Now repeat for packages used in the analyses
-pkgList <- c("devtools",
-             "RODBC", 
-             "EML",
-             "EMLassemblyline",
-             "kableExtra",
-             "english",
-             "dplyr")
+pkgList <- c("devtools",        # tends to be needed/useful
+             "RODBC",           # for connection to a database. 
+             "EML",             # for data package creation and validation
+             "EMLassemblyline", # for data package creation and validation
+             "kableExtra",      # added features for table formatting. 
+             "english",         # converts numbers into english. Good for all that English stuff.
+             "dplyr")           # useful
 inst <- pkgList %in% installed.packages()
 if (length(pkgList[!inst]) > 0) {
    install.packages(pkgList[!inst], dep = TRUE, 

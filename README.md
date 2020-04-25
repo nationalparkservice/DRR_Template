@@ -15,10 +15,12 @@ New projects can be established using this template in one of two ways.
 
 2. If you just want to install a copy of the template locally for a new project, you can download a zip file of the package from [This Link](https://github.com/nationalparkservice/IMD_DRR_Template/archive/master.zip)
 
-# Vignettes
-[How to Use this Template (still working on this!)](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/HowToUseThisTemplate.html)
+# Vignettes & Examples
+[1. Data Release Report Content Guide](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/DRR_Template.html)
 
-[How to Create Data Packages (coming soon!)](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/CreatingDataPackages.html)
+[2. How to Use this Template (still working on this!)](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/HowToUseThisTemplate.html)
+
+[3. How to Create Data Packages (coming soon!)](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/CreatingDataPackages.html)
 
 # Report outline
 ## Background & Introduction

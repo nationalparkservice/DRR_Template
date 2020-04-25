@@ -1636,7 +1636,7 @@ Fort Collins, Colorado</div><br><h4 class="author">Author 2</h4>
 <address class="author_afil">
 <div class="line-block">Managed Business Solutions (MBS), a Sealaska Company<br />
 Contractor to National Park Service<br />
-Natural Resource Stewardship and Science</div><br><h4 class="date">24 April, 2020</h4>
+Natural Resource Stewardship and Science</div><br><h4 class="date">25 April, 2020</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 Abstract Should go here. Multiple Lines are okay; it’ll format correctly. Do not put the abstract in the text section below; this will allow For reuse of the abtract in all associated products. </br> </br> The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section.
@@ -1701,7 +1701,7 @@ Abstract Should go here. Multiple Lines are okay; it’ll format correctly. Do n
 <p>The Data Quality Evaluation section should present any analyses that are needed to support the technical quality of the dataset. This section may be supported by figures and tables, as needed. <em>This is a required section</em>; authors must provide information to justify the reliability of their data. Wherever possible &amp; appropriate, data quality evaluation should be presented in the context of data standards and quality control procedures as prescribed in the project’s quality assurance planning documentation.</p>
 <p><strong>Required elements for this section</strong></p>
 <p><em>Stock Text to include:</em></p>
-<p>The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The <em>Dataset 2 FULL TITLE</em> is suitable for its intendend use as of the date of processing (2020-04-24).</p>
+<p>The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The <em>Dataset 2 FULL TITLE</em> is suitable for its intendend use as of the date of processing (2020-04-25).</p>
 <p><em>Required Table</em></p>
 <p>Summary of any data qualification codes used, their definitions, and the fields to which they apply.</p>
 <p>Possible content <strong>strongly Suggested to Include</strong></p>
@@ -1781,13 +1781,13 @@ Abstract Should go here. Multiple Lines are okay; it’ll format correctly. Do n
 <span id="cb1-34"><a href="#cb1-34"></a></span>
 <span id="cb1-35"><a href="#cb1-35"></a><span class="co"># __________________________________</span></span>
 <span id="cb1-36"><a href="#cb1-36"></a><span class="co"># Now repeat for packages used in the analyses</span></span>
-<span id="cb1-37"><a href="#cb1-37"></a>pkgList &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;devtools&quot;</span>,</span>
-<span id="cb1-38"><a href="#cb1-38"></a>             <span class="st">&quot;RODBC&quot;</span>, </span>
-<span id="cb1-39"><a href="#cb1-39"></a>             <span class="st">&quot;EML&quot;</span>,</span>
-<span id="cb1-40"><a href="#cb1-40"></a>             <span class="st">&quot;EMLassemblyline&quot;</span>,</span>
-<span id="cb1-41"><a href="#cb1-41"></a>             <span class="st">&quot;kableExtra&quot;</span>,</span>
-<span id="cb1-42"><a href="#cb1-42"></a>             <span class="st">&quot;english&quot;</span>,</span>
-<span id="cb1-43"><a href="#cb1-43"></a>             <span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb1-37"><a href="#cb1-37"></a>pkgList &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;devtools&quot;</span>,        <span class="co"># tends to be needed/useful</span></span>
+<span id="cb1-38"><a href="#cb1-38"></a>             <span class="st">&quot;RODBC&quot;</span>,           <span class="co"># for connection to a database. </span></span>
+<span id="cb1-39"><a href="#cb1-39"></a>             <span class="st">&quot;EML&quot;</span>,             <span class="co"># for data package creation and validation</span></span>
+<span id="cb1-40"><a href="#cb1-40"></a>             <span class="st">&quot;EMLassemblyline&quot;</span>, <span class="co"># for data package creation and validation</span></span>
+<span id="cb1-41"><a href="#cb1-41"></a>             <span class="st">&quot;kableExtra&quot;</span>,      <span class="co"># added features for table formatting. </span></span>
+<span id="cb1-42"><a href="#cb1-42"></a>             <span class="st">&quot;english&quot;</span>,         <span class="co"># converts numbers into english. Good for all that English stuff.</span></span>
+<span id="cb1-43"><a href="#cb1-43"></a>             <span class="st">&quot;dplyr&quot;</span>)           <span class="co"># useful</span></span>
 <span id="cb1-44"><a href="#cb1-44"></a>inst &lt;-<span class="st"> </span>pkgList <span class="op">%in%</span><span class="st"> </span><span class="kw">installed.packages</span>()</span>
 <span id="cb1-45"><a href="#cb1-45"></a><span class="cf">if</span> (<span class="kw">length</span>(pkgList[<span class="op">!</span>inst]) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) {</span>
 <span id="cb1-46"><a href="#cb1-46"></a>   <span class="kw">install.packages</span>(pkgList[<span class="op">!</span>inst], <span class="dt">dep =</span> <span class="ot">TRUE</span>, </span>
@@ -1933,7 +1933,7 @@ Abstract Should go here. Multiple Lines are okay; it’ll format correctly. Do n
   [81] callr_3.4.3       forcats_0.5.0     webshot_0.5.2     digest_0.6.25    
   [85] R.cache_0.14.0    R.utils_2.9.2     munsell_0.5.0     viridisLite_0.3.0
   [89] sessioninfo_1.1.1</code></pre>
-<pre><code>  [1] &quot;2020-04-24 05:18:07 MDT&quot;</code></pre>
+<pre><code>  [1] &quot;2020-04-25 06:25:04 MDT&quot;</code></pre>
 </div>
 <div id="additional-notes-this-should-not-be-included-in-reports" class="section level1" number="10">
 <h1 number="10"><span class="header-section-number">10</span> Additional Notes (this should not be included in reports…)</h1>

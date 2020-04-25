@@ -33,7 +33,7 @@ author:
       | Managed Business Solutions (MBS), a Sealaska Company  
       | Contractor to National Park Service  
       | Natural Resource Stewardship and Science
-date: "24 April, 2020"
+date: "25 April, 2020"
 abstract: "Abstract Should go here. Multiple Lines are okay; it'll format correctly. Do not put the abstract in the text section below; this will allow For reuse of the abtract in all associated products. </br> </br>  The Abstract should succinctly describe the study, the assay(s) performed,  the resulting data, and their reuse potential, but should not make any  claims regarding new scientific findings. No references are allowed in this section. "
 editor_options:
   chunk_output_type: inline
@@ -143,7 +143,7 @@ quality assurance planning documentation.
 
 *Stock Text to include:*
 
-The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *Dataset 2 FULL TITLE* is suitable for its intendend use as of the date of processing (2020-04-24).
+The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *Dataset 2 FULL TITLE* is suitable for its intendend use as of the date of processing (2020-04-25).
 
 *Required Table*
 
@@ -264,13 +264,13 @@ lapply(RRpackages, library, character.only = TRUE)
 
 # __________________________________
 # Now repeat for packages used in the analyses
-pkgList <- c("devtools",
-             "RODBC", 
-             "EML",
-             "EMLassemblyline",
-             "kableExtra",
-             "english",
-             "dplyr")
+pkgList <- c("devtools",        # tends to be needed/useful
+             "RODBC",           # for connection to a database. 
+             "EML",             # for data package creation and validation
+             "EMLassemblyline", # for data package creation and validation
+             "kableExtra",      # added features for table formatting. 
+             "english",         # converts numbers into english. Good for all that English stuff.
+             "dplyr")           # useful
 inst <- pkgList %in% installed.packages()
 if (length(pkgList[!inst]) > 0) {
    install.packages(pkgList[!inst], dep = TRUE, 
@@ -422,7 +422,7 @@ kable(Table,
 ```
 
 ```
-  [1] "2020-04-24 05:18:07 MDT"
+  [1] "2020-04-25 06:25:04 MDT"
 ```
 
 # Additional Notes (this should not be included in reports...)

@@ -82,8 +82,6 @@ New projects can be established using this template in one of two ways.
 
   `remotes::install_github("nationalparkservice/IMDQC")`
 
-
-
 ## Folder Structure
 General directory contents are as follows (Figure 1):
 ```{r figure1, echo=FALSE, fig.align="center", out.width="30%",  fig.cap="**Figure 1.** Standard project directory structure for data release reports."}
@@ -137,7 +135,18 @@ Because folks will ask...
 
 2. Yes, we intended to use the `subtitle` field to hold the report number. The rmarkdown template does not have a field/placeholder for report number so (for now) this is our workaround. If you need or want a subtitle, this should be included in the title field similar to how it would be included in a citation.
 
-## Rmarkdown Startup Code Chunk
+## Standard Code Chunks
+In addition to the report outline and a description of content for each section, the template includes four standard code chunks.
+
+- `setup`. Pretty self explanatory, but there are two snippets for loading packages; the `RRpackages` section is a suite of packages that are used to assist with reproducible reporting. You may not need these for your report, but we have included them as part of the base recommended packages. There is a second snippet for `pkgList` that includes all project-specific packages needed. Add as necessary.
+
+- `LoadData`. Any datasets you need to load can go here. 
+
+- `DataPackages` is the chunk used to read in the scripts for generating the data packages.
+
+- `Listing`. Appendix A, by default is the code listing. This will generate all code used in generating the report and data packages.
+
+- `session-info` is the information about the versions of R and packages used in generating the report.
 
 
 ## Figures

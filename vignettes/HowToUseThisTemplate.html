@@ -1690,8 +1690,16 @@ General directory contents are as follows (Figure 1):
 <li><p>Yes, we intended to use the <code>subtitle</code> field to hold the report number. The rmarkdown template does not have a field/placeholder for report number so (for now) this is our workaround. If you need or want a subtitle, this should be included in the title field similar to how it would be included in a citation.</p></li>
 </ol>
 </div>
-<div id="rmarkdown-startup-code-chunk" class="section level2" number="3.2">
-<h2 number="3.2"><span class="header-section-number">3.2</span> Rmarkdown Startup Code Chunk</h2>
+<div id="standard-code-chunks" class="section level2" number="3.2">
+<h2 number="3.2"><span class="header-section-number">3.2</span> Standard Code Chunks</h2>
+<p>In addition to the report outline and a description of content for each section, the template includes four standard code chunks.</p>
+<ul>
+<li><p><code>setup</code>. Pretty self explanatory, but there are two snippets for loading packages; the <code>RRpackages</code> section is a suite of packages that are used to assist with reproducible reporting. You may not need these for your report, but we have included them as part of the base recommended packages. There is a second snippet for <code>pkgList</code> that includes all project-specific packages needed. Add as necessary.</p></li>
+<li><p><code>LoadData</code>. Any datasets you need to load can go here.</p></li>
+<li><p><code>DataPackages</code> is the chunk used to read in the scripts for generating the data packages.</p></li>
+<li><p><code>Listing</code>. Appendix A, by default is the code listing. This will generate all code used in generating the report and data packages.</p></li>
+<li><p><code>session-info</code> is the information about the versions of R and packages used in generating the report.</p></li>
+</ul>
 </div>
 <div id="figures" class="section level2" number="3.3">
 <h2 number="3.3"><span class="header-section-number">3.3</span> Figures</h2>
