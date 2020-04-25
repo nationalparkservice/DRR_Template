@@ -187,7 +187,8 @@ transparency requirements.
     and reporting of findings must be made publicly available except where
     prohibited by law.
 
-## Government/NPS Use Requirements
+## Government/NPS Guidelines on Use of Scientific Information
+Multiple policy and guidance documents require the use of best available science in decision-making. Additional requirements include:
 
 **SO 3369 (Promoting Open Science):** 
 
