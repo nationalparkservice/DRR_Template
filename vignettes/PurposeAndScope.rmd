@@ -189,21 +189,17 @@ transparency requirements.
 
 ## Government/NPS Use Requirements
 
-**SO 3369: Promoting Open Science.** Defines “best available science” as
-publicly-available, reproducible, and peer reviewed. Requires that any decisions
-or scientific conclusions must prioritize the use of publicly-available,
-reproducible, and peer-reviewed science. Decisions or conclusions not based on
-such must include an explanation of why the alternative is the best available
-information. Effective as of 28 September 2018 with no transition period.
+**SO 3369 (Promoting Open Science):** 
 
-**DO 11B.** The NPS will ensure that information it releases to the public or
-utilizes in management decisions will be developed from reliable data sources
-that provide the highest quality of information at each stage of information
-development. 
+* Defines “best available science” as publicly-available, reproducible, and peer reviewed. Requires that any decisions or scientific conclusions must prioritize the use of publicly-available, reproducible, and peer-reviewed science. Decisions or conclusions not based on such must include an explanation of why the alternative is the best available information. Effective as of 28 September 2018 with no transition period.
+
+**DO 11B (Ensuring Objectivity, Utility, and Integrity of Information Used and Disseminated by the National Park Service):** 
+
+* The NPS will ensure that information it releases to the public or utilizes in management decisions will be developed from reliable data sources that provide the highest quality of information at each stage of information development.
 
 ## Inventory & Monitoring Program Requirements
 
-**NPS-75.**
+**NPS-75 (Inventory and Monitoring Guidelines):**
 
 -   An annual summary report documenting the condition of park resources should
     be developed as part of the annual revision of the parks Resource Management
@@ -274,7 +270,7 @@ of general study data may be reused or contribute to other scientific work
 (observations from a deer browsing study may be contribute to an inventory or
 may be used as ancillary data to explain monitoring observations).
 
-```{r figure1, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital signs monitoring efforts. Teal-colored boxes are subject to reproducibility requirements."}
+```{r figure1, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 1.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements."}
 include_graphics("WorkflowModelGeneral.png")
 
 ```
@@ -292,7 +288,7 @@ test whether monitoring objectives have been met. Monitoring data may be reused
 for secondary purposes including synthesis reports and condition assessments,
 and portions of monitoring data may contribute to inventories.
 
-```{r figure2, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 2.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements."}
+```{r figure2, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital sign monitoring efforts. Teal-colored boxes are subject to reproducibility requirements."}
 include_graphics("WorkflowModelMonitoring.png")
 
 ```
