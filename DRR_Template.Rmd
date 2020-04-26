@@ -63,7 +63,7 @@ output:
     fig_height: 5
     fig_width: 5
     highlight: haddock
-    reference_docx: "common/NRDS_Author_Template_V3.2.docx"
+    reference_docx: "common/DRR Word Template.docx"
 ---
 
 ```{r setup, include=FALSE}
@@ -146,6 +146,12 @@ save(params,file="./data/temp/reportParameters.RData")
 
 ```{r LoadData, include=FALSE}
 # Load datasets for use
+
+if (file.exists(file="../StateTNCStatusList/data/temp/projectMetadata.RData")) {
+  load(file="../StateTNCStatusList/data/temp/projectMetadata.RData")
+} else{
+  projectMetadata<-list()
+}
 ```
 
 <hr>

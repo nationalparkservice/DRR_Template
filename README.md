@@ -21,9 +21,9 @@ This template is under active development to improve style and 508 compliance.
 
 6. Examples
 
-    a) DRR for tabular (csv) dataset of
+    a) [DRR for tabular (csv) datasets](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/DRAFT_2019_Report_NationalMeanDailyFlowsDataSummary.html) of hydrologic data used for calculating hydrologic metrics as a part of the national Environmental Settings monitoring protocol. 
     
-    b) [DRR for geospatial (file geodatabase) data](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/NPS-NRSS-DRR-2020-1.html) (custom areas of analysis used for Environmental Settings montioring protocol). Report created in microsoft word and ported to the template.
+    b) [DRR for geospatial (file geodatabase) data](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/NPS-NRSS-DRR-2020-1.html) contining custom areas of analysis used for Environmental Settings montioring protocol. Report created in microsoft word and ported to the template.
 
 7. Tips, FAQs, and Errata (coming soon)
 

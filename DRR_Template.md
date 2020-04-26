@@ -63,7 +63,7 @@ output:
     fig_height: 5
     fig_width: 5
     highlight: haddock
-    reference_docx: "common/NRDS_Author_Template_V3.2.docx"
+    reference_docx: "common/DRR Word Template.docx"
 ---
 
 
@@ -303,6 +303,12 @@ setwd(params$projectDir)
 # Write YAML parameters to file for consistent reuse across report and data packages
 save(params,file="./data/temp/reportParameters.RData")
 # Load datasets for use
+
+if (file.exists(file="../StateTNCStatusList/data/temp/projectMetadata.RData")) {
+  load(file="../StateTNCStatusList/data/temp/projectMetadata.RData")
+} else{
+  projectMetadata<-list()
+}
 include_graphics("figures/ProcessingWorkflow.png")
 
 sessionInfo()
@@ -422,7 +428,7 @@ kable(Table,
 ```
 
 ```
-  [1] "2020-04-25 06:39:05 MDT"
+  [1] "2020-04-25 18:55:48 MDT"
 ```
 
 # Additional Notes (this should not be included in reports...)

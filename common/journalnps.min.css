@@ -18,6 +18,7 @@ blockquote {
 
 TH{
     font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #000000;
 }
 
 TD{
@@ -26,15 +27,18 @@ TD{
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: rgb(221, 221, 221);
+    color: #000000;
 }
 
 caption {
-    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif; 
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #000000;
 }
 
 .caption {
     font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif; 
     text-align:left;
+    color: #000000;
 }
 
 table {
