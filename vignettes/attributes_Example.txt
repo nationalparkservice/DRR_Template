@@ -1,0 +1,9 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+staid	site number	character				
+val	mean daily flow	numeric	cubicFeetPerSecond			
+dates	date	Date		YYYY-MM-DD		
+qualcode	Qualification Code	categorical			NA	Not Applicable / No Qualification Code Present
+ProvisionalQual	Measurement is Provisional	categorical				
+EstimatedQual	Measurement is Estimated	categorical				
+InterpolatedQual	Measurment is Interpolated	categorical				
+CensoredDataQual	Measurment is Censored	categorical				

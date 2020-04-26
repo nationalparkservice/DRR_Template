@@ -15,11 +15,11 @@ This template is under active development to improve style and 508 compliance.
 
 3. [How to Use this Template](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/HowToUseThisTemplate.html)
 
-4. [How to Create Data Packages (coming soon)](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/CreatingDataPackages.html)
+4. [How to Create Data Packages](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/CreatingDataPackages.html)
 
 5. [Review Guidelines](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/DataReview.html)
 
-6. Examples (more will be provided as they are publilshed)
+6. Examples (more will be provided as they are publilshed):
 
     a) [DRR for tabular (csv) datasets](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/DRAFT_2019_Report_NationalMeanDailyFlowsDataSummary.html) of hydrologic data used for calculating hydrologic metrics as a part of the national Environmental Settings monitoring protocol. 
     
@@ -28,7 +28,7 @@ This template is under active development to improve style and 508 compliance.
 7. Tips, FAQs, and Errata (coming soon)
 
 # Getting Started
-New projects can be established using this template in one of two ways.
+New projects can be established using this template in one of two ways:
 
 1. If starting with creation of a GitHub repository, click on [This Link](https://github.com/nationalparkservice/IMD_DRR_Template/generate). This will allow you to copy the contents of the template repository to a new repository, which you can then use as the basis of a new version-controlled project within R studio. This is ideal for situations where you wish to maintain a copy of your project on GitHub.
 

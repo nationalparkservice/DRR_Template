@@ -1,0 +1,44 @@
+attributeName	code	definition
+qualcode	A e	Aproved for publication -- Processing and review completed AND value has been edited or estimated by USGS personnel and is write protected
+qualcode	P e	Provisional data subject to revision AND value has been edited or estimated by USGS personnel and is write protected
+qualcode	P Ice	Provisional data subject to revision AND Ice affected
+qualcode	A >	Aproved for publication -- Processing and review completed AND The value is known to be greater than reported value and is write protected.
+qualcode	P Eqp	Provisional data subject to revision AND Equipment Malfunction
+qualcode	P Mnt	Provisional data subject to revision AND Maintenance in progress
+qualcode	P Bkw	Provisional data subject to revision.
+qualcode	A R	Approved for publication -- Processing and review completed.
+qualcode	A [4]	Approved for publication -- Processing and review completed.
+qualcode	P [4]	Provisional data subject to revision.
+qualcode	P Rat	Provisional data subject to revision AND Rating being developed or revised
+qualcode	P Dis	Provisional data subject to revision AND Data-collection discontinued
+qualcode	A <	Aproved for publication -- Processing and review completed AND The value is known to be less than reported value and is write protected.
+qualcode	P ***	Provisional data subject to revision AND Temporarily Unavailable
+qualcode	e	Value has been edited or estimated by USGS personnel and is write protected
+qualcode	&	Value was computed from affected unit values
+qualcode	E	Value was computed from estimated unit values.
+qualcode	A	Approved for publication -- Processing and review completed.
+qualcode	P	Provisional data subject to revision.
+qualcode	<	The value is known to be less than reported value and is write protected.
+qualcode	>	The value is known to be greater than reported value and is write protected.
+qualcode	1	Value is write protected without any remark code to be printed
+qualcode	2	Remark is write protected without any remark code to be printed
+qualcode	Ssn	Parameter monitored seasonally
+qualcode	Ice	Ice affected
+qualcode	Pr	Partial-record site
+qualcode	Rat	Rating being developed or revised
+qualcode	Eqp	Equipment malfunction
+qualcode	Fld	Flood damage
+qualcode	Dis	Data-collection discontinued
+qualcode	Dry	Dry
+qualcode	--	Parameter not determined
+qualcode	Mnt	Maintenance in progress
+qualcode	ZFl	Zero flow
+qualcode	***	Temporarily unavailable
+ProvisionalQual	MPN	Measurement is not provisional
+ProvisionalQual	MPY	"USGS Qualifcation Code (qualcode) contains ""P"" denoting that the measurement is provisional"
+EstimatedQual	MEN	Measurement is not estimated
+EstimatedQual	MEY	"USGS Qualifcation Code (qualcode) contains ""e"" denoting that the measurement is estimated"
+InterpolatedQual	MfMN	Measurement was not interpolated by NPS
+InterpolatedQual	MfMY	Measurement was interpolated by NPS
+CensoredDataQual	MCN	Measurement is not considered suspect
+CensoredDataQual	MCY	"USGS qualification code (qualcode) contains ""<"" or "">"" denoting that it is known to be greater or less than the reported value and is therefore considered suspect"
