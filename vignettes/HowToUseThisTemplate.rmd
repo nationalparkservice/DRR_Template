@@ -258,7 +258,7 @@ It is possible to easily convert a report created in word into the template. To 
 
 2. Download and install the [Writage plugin](http://writage.com) for Microsoft Word. This will allow you to save your word document as a markdown (*.md) file. Do so.
 
-3. Copy your text into the template after the startup conde chunk.
+3. Copy your text into the template after the startup code chunk.
 
 4. Check your tables. When you save the file, tables are converted to markdown tables (not code chunks) and should all render just fine. Tables will be formatted using the same css styles as kable-based tables, but captions will not. Converting these is optional.
 

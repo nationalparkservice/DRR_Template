@@ -13,13 +13,13 @@ This template is under active development to improve style and 508 compliance.
 
 2. [Data Release Report Outline and Content Guide](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/DRR_Template.html)
 
-3. [How to Use this Template (still working on this!)](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/HowToUseThisTemplate.html)
+3. [How to Use this Template](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/HowToUseThisTemplate.html)
 
 4. [How to Create Data Packages (coming soon)](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/CreatingDataPackages.html)
 
-5. Review Guidelines (coming soon)
+5. [Review Guidelines](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/DataReview.html)
 
-6. Examples
+6. Examples (more will be provided as they are publilshed)
 
     a) [DRR for tabular (csv) datasets](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/DRAFT_2019_Report_NationalMeanDailyFlowsDataSummary.html) of hydrologic data used for calculating hydrologic metrics as a part of the national Environmental Settings monitoring protocol. 
     
