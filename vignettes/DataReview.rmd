@@ -70,7 +70,7 @@ A data review should consider the following:
   - Is the accuracy claimed for the data reasonable?
   - Are data anomalies or gaps explained in the metadata? Are “no data” values accurately defined? Do analysis values add up?
 - Do summary statistics of data within the dataset (fields, categories, record counts, and codes) match what is presented in the data release report?
-- Does the dataset contain data that are outside of or inconsistent with enumerated domains
+- Does the dataset contain data that are outside of or inconsistent with enumerated domains?
 
 ## Data Usability Review
 - Does the product as a whole, through its design or documentation, provide enough information so that the data and metadata can be easily accessed and used? 
@@ -79,24 +79,24 @@ A data review should consider the following:
   - Are the columns the appropriate and expected class?
   - Are the factor levels for enumerated domains imported properly?
 - Is versioning information provided, if warranted?
-- Are all fields and enumerated domains defined and understandable without reference to the protocol, report, or other external documentation.
+- Are all fields and enumerated domains defined and understandable without reference to the protocol, report, or other external documentation?
 - Does the dataset or metadata include the misuse of “reserved” codes
   - NC for anything other than “No Change”
   - NA for anything other than “Not Applicable” or “Not Available” 
-- Do qualification codes use of numbers in lieu of codes? (This may be okay in some circumstances but numbers are generally not descriptive)
+- Do qualification codes use numbers in lieu of codes? Note: this may be okay in some circumstances but numbers are generally not descriptive.
 - Do codes (qualification or otherwise) mean different things for different fields?
-- Do enumerated domains contain options that are not wholistic of all options (i.e., limited to only those values present within the data set as opposed to all that are applicable)?
-- Does the dataset use consistent units within and among fields within a database. Note: all should be SI units (preferred option), but at the very least should be consistently English or metric within a given data set unless professional norms dictate otherwise (hydrology flows are typically reported in cfs as opposed to the SI equivalent, for example).
+- Do enumerated domains contain options that are not holistic of all options (i.e., limited to only those values present within the data set as opposed to all that are applicable)?
+- Does the dataset use consistent units within and among fields within a database? Note: all should be SI units (preferred option), but at the very least should be consistently English or metric within a given data set unless professional norms dictate otherwise (hydrology flows are typically reported in cfs as opposed to the SI equivalent, for example).
 - Do codes and definitions for fields match what’s presented in the data release report?
-- Do datasets, manifests, and metadata all clearly indicate whether a dataset contains data that are protected from release? (and therefore may be incomplete or not suitable for use for some users)
+- Do datasets, manifests, and metadata all clearly indicate whether a dataset contains data that are protected from release? 
 
 # Metadata
-- Do all fields with enumerated domains have definitions for all possible (as opposed to all used) domains.
-- Are all fields are of the appropriate format for the type of data they contain (numeric, string, date, logical)
+- Do all fields with enumerated domains have definitions for all possible (as opposed to all used) domains?
+- Are all fields of the appropriate format for the type of data they contain (numeric, string, date, logical)?
 - Is the metadata in either FGDC, EML, or ISO format and does it validate as such?
-- Does the title conveys the “what, where, when, who, and (if applicable) scale” of the data?
-- Does the abstract provides a short statement that allows users to quickly evaluate the content of the dataset?
-- Is the coordinate system and datum are defined appropriately (both horizontal and vertical?
+- Does the title convey the “what, where, when, who, and (if applicable) scale” of the data?
+- Does the abstract provide a short statement that allows users to quickly evaluate the content of the dataset?
+- Are the coordinate system and datum defined appropriately (both horizontal and vertical)?
 - Is sample design information included (where appropriate)?
 - Is geographic coverage information included and appropriate for the dataset?
 - For data with biological observations, does it include the taxonomy elements for what was observed and what was surveyed?
@@ -105,12 +105,12 @@ A data review should consider the following:
 Note that the following may change as standards for manifest files are developed (and may be more than what is ultimately required).
 
 - Does the manifest file list and describe all contents in the data package?
-- Does the manifest file contain Data Store reference/links to accompanying data publication report
-- Does the manifest file contain Data Store reference/links to protocol/study plan, SOPs (optional since there may be deviations described in the report), and where applicable DQS/QAP. 
-- Does the manifest file contain Data Store reference/links to itself
+- Does the manifest file contain Data Store reference/links to accompanying data publication report?
+- Does the manifest file contain Data Store reference/links to protocol/study plan, SOPs (optional since there may be deviations described in the report), and where applicable DQS/QAP?
+- Does the manifest file contain Data Store reference/links to itself?
 
 # Special Notes for Data Packages containing Protected Data
-- Do uncensored versions of data package contain clear indications of exactly what data are to be protected from accidental release and how (and to whom) release is appropriate?
+- Do uncensored versions of data packages contain clear indications of exactly what data are to be protected from accidental release and how (and to whom) release is appropriate?
 - Does the data package report explain whether, how, and why data are obscured from release?
 - Are methods for data protection consistent with rules established by the park(s) where data were collected?
 - In general, data sets with data to be protected should have a “real” and an “obscured” version of data. Public versions should delete any “Real” data columns that are not to be made public rather than replacing values in the actual data fields.
