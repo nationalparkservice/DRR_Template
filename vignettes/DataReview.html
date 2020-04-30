@@ -1526,7 +1526,7 @@ div.tocify {
 <li>Are data anomalies or gaps explained in the metadata? Are “no data” values accurately defined? Do analysis values add up?</li>
 </ul></li>
 <li>Do summary statistics of data within the dataset (fields, categories, record counts, and codes) match what is presented in the data release report?</li>
-<li>Does the dataset contain data that are outside of or inconsistent with enumerated domains</li>
+<li>Does the dataset contain data that are outside of or inconsistent with enumerated domains?</li>
 </ul>
 </div>
 <div id="data-usability-review" class="section level2" number="1.2">
@@ -1540,30 +1540,30 @@ div.tocify {
 <li>Are the factor levels for enumerated domains imported properly?</li>
 </ul></li>
 <li>Is versioning information provided, if warranted?</li>
-<li>Are all fields and enumerated domains defined and understandable without reference to the protocol, report, or other external documentation.</li>
+<li>Are all fields and enumerated domains defined and understandable without reference to the protocol, report, or other external documentation?</li>
 <li>Does the dataset or metadata include the misuse of “reserved” codes
 <ul>
 <li>NC for anything other than “No Change”</li>
 <li>NA for anything other than “Not Applicable” or “Not Available”</li>
 </ul></li>
-<li>Do qualification codes use of numbers in lieu of codes? (This may be okay in some circumstances but numbers are generally not descriptive)</li>
+<li>Do qualification codes use numbers in lieu of codes? Note: this may be okay in some circumstances but numbers are generally not descriptive.</li>
 <li>Do codes (qualification or otherwise) mean different things for different fields?</li>
-<li>Do enumerated domains contain options that are not wholistic of all options (i.e., limited to only those values present within the data set as opposed to all that are applicable)?</li>
-<li>Does the dataset use consistent units within and among fields within a database. Note: all should be SI units (preferred option), but at the very least should be consistently English or metric within a given data set unless professional norms dictate otherwise (hydrology flows are typically reported in cfs as opposed to the SI equivalent, for example).</li>
+<li>Do enumerated domains contain options that are not holistic of all options (i.e., limited to only those values present within the data set as opposed to all that are applicable)?</li>
+<li>Does the dataset use consistent units within and among fields within a database? Note: all should be SI units (preferred option), but at the very least should be consistently English or metric within a given data set unless professional norms dictate otherwise (hydrology flows are typically reported in cfs as opposed to the SI equivalent, for example).</li>
 <li>Do codes and definitions for fields match what’s presented in the data release report?</li>
-<li>Do datasets, manifests, and metadata all clearly indicate whether a dataset contains data that are protected from release? (and therefore may be incomplete or not suitable for use for some users)</li>
+<li>Do datasets, manifests, and metadata all clearly indicate whether a dataset contains data that are protected from release?</li>
 </ul>
 </div>
 </div>
 <div id="metadata" class="section level1" number="2">
 <h1 number="2"><span class="header-section-number">2</span> Metadata</h1>
 <ul>
-<li>Do all fields with enumerated domains have definitions for all possible (as opposed to all used) domains.</li>
-<li>Are all fields are of the appropriate format for the type of data they contain (numeric, string, date, logical)</li>
+<li>Do all fields with enumerated domains have definitions for all possible (as opposed to all used) domains?</li>
+<li>Are all fields of the appropriate format for the type of data they contain (numeric, string, date, logical)?</li>
 <li>Is the metadata in either FGDC, EML, or ISO format and does it validate as such?</li>
-<li>Does the title conveys the “what, where, when, who, and (if applicable) scale” of the data?</li>
-<li>Does the abstract provides a short statement that allows users to quickly evaluate the content of the dataset?</li>
-<li>Is the coordinate system and datum are defined appropriately (both horizontal and vertical?</li>
+<li>Does the title convey the “what, where, when, who, and (if applicable) scale” of the data?</li>
+<li>Does the abstract provide a short statement that allows users to quickly evaluate the content of the dataset?</li>
+<li>Are the coordinate system and datum defined appropriately (both horizontal and vertical)?</li>
 <li>Is sample design information included (where appropriate)?</li>
 <li>Is geographic coverage information included and appropriate for the dataset?</li>
 <li>For data with biological observations, does it include the taxonomy elements for what was observed and what was surveyed?</li>
@@ -1574,15 +1574,15 @@ div.tocify {
 <p>Note that the following may change as standards for manifest files are developed (and may be more than what is ultimately required).</p>
 <ul>
 <li>Does the manifest file list and describe all contents in the data package?</li>
-<li>Does the manifest file contain Data Store reference/links to accompanying data publication report</li>
-<li>Does the manifest file contain Data Store reference/links to protocol/study plan, SOPs (optional since there may be deviations described in the report), and where applicable DQS/QAP.</li>
-<li>Does the manifest file contain Data Store reference/links to itself</li>
+<li>Does the manifest file contain Data Store reference/links to accompanying data publication report?</li>
+<li>Does the manifest file contain Data Store reference/links to protocol/study plan, SOPs (optional since there may be deviations described in the report), and where applicable DQS/QAP?</li>
+<li>Does the manifest file contain Data Store reference/links to itself?</li>
 </ul>
 </div>
 <div id="special-notes-for-data-packages-containing-protected-data" class="section level1" number="4">
 <h1 number="4"><span class="header-section-number">4</span> Special Notes for Data Packages containing Protected Data</h1>
 <ul>
-<li>Do uncensored versions of data package contain clear indications of exactly what data are to be protected from accidental release and how (and to whom) release is appropriate?</li>
+<li>Do uncensored versions of data packages contain clear indications of exactly what data are to be protected from accidental release and how (and to whom) release is appropriate?</li>
 <li>Does the data package report explain whether, how, and why data are obscured from release?</li>
 <li>Are methods for data protection consistent with rules established by the park(s) where data were collected?</li>
 <li>In general, data sets with data to be protected should have a “real” and an “obscured” version of data. Public versions should delete any “Real” data columns that are not to be made public rather than replacing values in the actual data fields.</li>
