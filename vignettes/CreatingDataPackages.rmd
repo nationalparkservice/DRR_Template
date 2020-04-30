@@ -31,6 +31,7 @@ RRpackages <- c('markdown',     # links to Sundown rendering library
                 'kableExtra',
                 'rmdformats',   # templates including automatic ToC,
                                 # also use_bookdown()
+                "remotes",      # for install_github()
                 'htmltools'     #
                 )
 
@@ -38,7 +39,11 @@ inst <- RRpackages %in% installed.packages()
 if (length(RRpackages[!inst]) > 0) {
    install.packages(RRpackages[!inst], dep = TRUE)
 }
+
 lapply(RRpackages, library, character.only = TRUE)
+
+if (! "EMLassemblyline" %in% installed.packages()) remotes::install_github("EDIorg/EMLassemblyline")
+require("EMLassemblyline")  
 
 knitr::opts_chunk$set(
    echo = TRUE,
