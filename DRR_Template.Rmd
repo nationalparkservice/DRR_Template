@@ -107,10 +107,11 @@ lapply(RRpackages, library, character.only = TRUE)
 pkgList <- c("devtools",        # tends to be needed/useful
              "RODBC",           # for connection to a database. 
              "EML",             # for data package creation and validation
-             "EMLassemblyline", # for data package creation and validation
              "kableExtra",      # added features for table formatting. 
              "english",         # converts numbers into english. Good for all that English stuff.
+             "remotes",         # for install_github()
              "dplyr")           # useful
+
 inst <- pkgList %in% installed.packages()
 if (length(pkgList[!inst]) > 0) {
    install.packages(pkgList[!inst], dep = TRUE, 
@@ -118,6 +119,9 @@ if (length(pkgList[!inst]) > 0) {
 }
 
 lapply(pkgList, library, character.only = TRUE, quietly = TRUE)
+
+if (! "EMLassemblyline" %in% installed.packages()) remotes::install_github("EDIorg/EMLassemblyline")
+require("EMLassemblyline")  
 
 # create stub of citations for packages
 pkgBibTex <- lapply(c("base", pkgList, RRpackages), citation)
