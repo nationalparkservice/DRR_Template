@@ -33,7 +33,7 @@ author:
       | Managed Business Solutions (MBS), a Sealaska Company  
       | Contractor to National Park Service  
       | Natural Resource Stewardship and Science
-date: "25 April, 2020"
+date: "06 May, 2020"
 abstract: "Abstract Should go here. Multiple Lines are okay; it'll format correctly. Do not put the abstract in the text section below; this will allow For reuse of the abtract in all associated products. </br> </br>  The Abstract should succinctly describe the study, the assay(s) performed,  the resulting data, and their reuse potential, but should not make any  claims regarding new scientific findings. No references are allowed in this section. "
 editor_options:
   chunk_output_type: inline
@@ -143,7 +143,7 @@ quality assurance planning documentation.
 
 *Stock Text to include:*
 
-The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *Dataset 2 FULL TITLE* is suitable for its intendend use as of the date of processing (2020-04-25).
+The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *Dataset 2 FULL TITLE* is suitable for its intended use as of the date of processing (2020-05-06).
 
 *Required Table*
 
@@ -225,7 +225,7 @@ U.S. Government Printing Office (GPO). 2013. Making Open and Machine Readable th
 
 \pagebreak
 
-# Appendix C. R Code Listing
+# Appendix C. Code Listing
 
 ```r
 # This setup code loads both reproducible reporting packages
@@ -267,10 +267,11 @@ lapply(RRpackages, library, character.only = TRUE)
 pkgList <- c("devtools",        # tends to be needed/useful
              "RODBC",           # for connection to a database. 
              "EML",             # for data package creation and validation
-             "EMLassemblyline", # for data package creation and validation
              "kableExtra",      # added features for table formatting. 
              "english",         # converts numbers into english. Good for all that English stuff.
+             "remotes",         # for install_github()
              "dplyr")           # useful
+
 inst <- pkgList %in% installed.packages()
 if (length(pkgList[!inst]) > 0) {
    install.packages(pkgList[!inst], dep = TRUE, 
@@ -278,6 +279,9 @@ if (length(pkgList[!inst]) > 0) {
 }
 
 lapply(pkgList, library, character.only = TRUE, quietly = TRUE)
+
+if (! "EMLassemblyline" %in% installed.packages()) remotes::install_github("EDIorg/EMLassemblyline")
+require("EMLassemblyline")  
 
 # create stub of citations for packages
 pkgBibTex <- lapply(c("base", pkgList, RRpackages), citation)
@@ -301,11 +305,11 @@ if ("ggplot2" %in% .packages()) {
 setwd(params$projectDir)
 
 # Write YAML parameters to file for consistent reuse across report and data packages
-save(params,file="./data/temp/reportParameters.RData")
+save(params,file="data/temp/reportParameters.RData")
 # Load datasets for use
 
-if (file.exists(file="../StateTNCStatusList/data/temp/projectMetadata.RData")) {
-  load(file="../StateTNCStatusList/data/temp/projectMetadata.RData")
+if (file.exists(file="data/temp/projectMetadata.RData")) {
+  load(file="data/temp/projectMetadata.RData")
 } else{
   projectMetadata<-list()
 }
@@ -371,7 +375,7 @@ kable(Table,
 
 \pagebreak
 
-# Appendix D. R Session and Version Information
+# Appendix D. Session and Version Information
 
 ```
   R version 3.6.2 (2019-12-12)
@@ -391,44 +395,44 @@ kable(Table,
   [1] stats     graphics  grDevices utils     datasets  methods   base     
   
   other attached packages:
-   [1] english_1.2-5         kableExtra_1.1.0      EMLassemblyline_2.6.1
-   [4] EML_2.0.2             RODBC_1.3-16          devtools_2.3.0       
-   [7] usethis_1.6.0         knitcitations_1.0.10  RefManageR_1.2.12    
-  [10] bibtex_0.4.2.2        htmltools_0.4.0       rmdformats_0.3.7     
-  [13] yaml_2.2.1            rmdHelpers_1.2        dplyr_0.8.5          
-  [16] texreg_1.36.23        papeR_1.0-4           xtable_1.8-4         
-  [19] car_3.0-7             carData_3.0-3         kimisc_0.4           
-  [22] R.rsp_0.43.2          dataMaid_1.4.0        knitr_1.28           
-  [25] pander_0.6.3          rmarkdown_2.1         markdown_1.1         
+   [1] EMLassemblyline_2.6.1 remotes_2.1.1         english_1.2-5        
+   [4] kableExtra_1.1.0      EML_2.0.2             RODBC_1.3-16         
+   [7] devtools_2.3.0        usethis_1.6.0         knitcitations_1.0.10 
+  [10] RefManageR_1.2.12     bibtex_0.4.2.2        htmltools_0.4.0      
+  [13] rmdformats_0.3.7      yaml_2.2.1            rmdHelpers_1.2       
+  [16] dplyr_0.8.5           texreg_1.36.23        papeR_1.0-4          
+  [19] xtable_1.8-4          car_3.0-7             carData_3.0-3        
+  [22] kimisc_0.4            R.rsp_0.43.2          dataMaid_1.4.0       
+  [25] knitr_1.28            pander_0.6.3          rmarkdown_2.1        
+  [28] markdown_1.1         
   
   loaded via a namespace (and not attached):
    [1] colorspace_1.4-1  ellipsis_0.3.0    rio_0.5.16        rprojroot_1.3-2  
-   [5] fs_1.4.1          rstudioapi_0.11   remotes_2.1.1     fansi_0.4.1      
-   [9] lubridate_1.7.8   xml2_1.3.1        R.methodsS3_1.8.0 robustbase_0.93-6
-  [13] pkgload_1.0.2     jsonlite_1.6.1    png_0.1-7         R.oo_1.23.0      
-  [17] readr_1.3.1       compiler_3.6.2    httr_1.4.1        backports_1.1.6  
-  [21] assertthat_0.2.1  lazyeval_0.2.2    cli_2.0.2         formatR_1.7      
-  [25] prettyunits_1.1.1 tools_3.6.2       gtable_0.3.0      glue_1.4.0       
-  [29] gmodels_2.18.1    V8_3.0.2          Rcpp_1.0.4.6      cellranger_1.1.0 
-  [33] vctrs_0.2.4       gdata_2.18.0      xfun_0.13         stringr_1.4.0    
-  [37] ps_1.3.2          rvest_0.3.5       openxlsx_4.1.4    testthat_2.3.2   
-  [41] lifecycle_0.2.0   gtools_3.8.2      jqr_1.1.0         DEoptimR_1.0-8   
-  [45] MASS_7.3-51.4     scales_1.1.0      jsonld_2.1        hms_0.5.3        
-  [49] curl_4.3          memoise_1.1.0     gridExtra_2.3     ggplot2_3.3.0    
-  [53] stringi_1.4.6     highr_0.8         desc_1.2.0        emld_0.4.0       
-  [57] pkgbuild_1.0.6    zip_2.0.4         rlang_0.4.5       pkgconfig_2.0.3  
-  [61] evaluate_0.14     purrr_0.3.4       processx_3.4.2    tidyselect_1.0.0 
-  [65] plyr_1.8.6        magrittr_1.5      bookdown_0.18     R6_2.4.1         
-  [69] generics_0.0.2    pillar_1.4.3      haven_2.2.0       foreign_0.8-72   
-  [73] withr_2.2.0       abind_1.4-5       tibble_3.0.0      crayon_1.3.4     
-  [77] uuid_0.1-4        grid_3.6.2        readxl_1.3.1      data.table_1.12.8
-  [81] callr_3.4.3       forcats_0.5.0     webshot_0.5.2     digest_0.6.25    
-  [85] R.cache_0.14.0    R.utils_2.9.2     munsell_0.5.0     viridisLite_0.3.0
-  [89] sessioninfo_1.1.1
+   [5] fs_1.4.1          rstudioapi_0.11   fansi_0.4.1       lubridate_1.7.8  
+   [9] xml2_1.3.1        R.methodsS3_1.8.0 robustbase_0.93-6 pkgload_1.0.2    
+  [13] jsonlite_1.6.1    png_0.1-7         R.oo_1.23.0       readr_1.3.1      
+  [17] compiler_3.6.2    httr_1.4.1        backports_1.1.6   assertthat_0.2.1 
+  [21] lazyeval_0.2.2    cli_2.0.2         formatR_1.7       prettyunits_1.1.1
+  [25] tools_3.6.2       gtable_0.3.0      glue_1.4.0        gmodels_2.18.1   
+  [29] V8_3.0.2          Rcpp_1.0.4.6      cellranger_1.1.0  vctrs_0.2.4      
+  [33] gdata_2.18.0      xfun_0.13         stringr_1.4.0     ps_1.3.2         
+  [37] openxlsx_4.1.4    testthat_2.3.2    rvest_0.3.5       lifecycle_0.2.0  
+  [41] gtools_3.8.2      jqr_1.1.0         DEoptimR_1.0-8    MASS_7.3-51.4    
+  [45] scales_1.1.0      jsonld_2.1        hms_0.5.3         curl_4.3         
+  [49] memoise_1.1.0     gridExtra_2.3     ggplot2_3.3.0     stringi_1.4.6    
+  [53] highr_0.8         desc_1.2.0        emld_0.4.0        pkgbuild_1.0.6   
+  [57] zip_2.0.4         rlang_0.4.5       pkgconfig_2.0.3   evaluate_0.14    
+  [61] purrr_0.3.4       processx_3.4.2    tidyselect_1.0.0  plyr_1.8.6       
+  [65] magrittr_1.5      bookdown_0.18     R6_2.4.1          generics_0.0.2   
+  [69] pillar_1.4.3      haven_2.2.0       foreign_0.8-72    withr_2.2.0      
+  [73] abind_1.4-5       tibble_3.0.0      crayon_1.3.4      uuid_0.1-4       
+  [77] grid_3.6.2        readxl_1.3.1      data.table_1.12.8 callr_3.4.3      
+  [81] forcats_0.5.0     webshot_0.5.2     digest_0.6.25     R.cache_0.14.0   
+  [85] R.utils_2.9.2     munsell_0.5.0     viridisLite_0.3.0 sessioninfo_1.1.1
 ```
 
 ```
-  [1] "2020-04-25 18:55:48 MDT"
+  [1] "2020-05-06 20:01:48 MDT"
 ```
 
 # Additional Notes (this should not be included in reports...)

@@ -80,7 +80,7 @@ Once the script is finalized for a dataset, it can be re-run in its entirety to 
 4. `datapackageTitle`. Parameter containing the official title of the data package (params$dataPackage1Title).
 5. `datapackageDescription`. parameter containing the data package description (params$dataPackage1Description).
 
-# Step 3. Create the CSV file.
+# Step 3. Create the Delimited File.
 1. Run all the lines in Step 3. This will take the data frame and write it to the `data_objects` directory as a csv file with the appropriate name.
 
 # Step 4. Review or Edit the "Easy" Template Files
@@ -211,7 +211,7 @@ kable(Table4,
 
 ```
 
-# Step 7. Set Geographic Coverate
+# Step 7. Set Geographic Coverage
 
 - Option 1. Use the default in the template script, which is to just include a description of the area covered. If you do this, delete the **geographic_coverage.txt** file before creating the EML file.
 - Option 2 (preferred when appropriate for the data). Edit the geographic_coverage.txt file. This will require you to query the dataset to identify locations. A function to do this is included in the EMLassemblyline package:

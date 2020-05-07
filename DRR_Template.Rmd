@@ -231,7 +231,7 @@ quality assurance planning documentation.
 
 *Stock Text to include:*
 
-The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *`r params$dataPackage2Title `* is suitable for its intendend use as of the date of processing (`r Sys.Date()`).
+The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *`r params$dataPackage2Title `* is suitable for its intended use as of the date of processing (`r Sys.Date()`).
 
 *Required Table*
 
@@ -313,13 +313,13 @@ U.S. Government Printing Office (GPO). 2013. Making Open and Machine Readable th
 
 \pagebreak
 
-# Appendix C. R Code Listing
+# Appendix C. Code Listing
 ```{r Listing, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
 ```
 
 \pagebreak
 
-# Appendix D. R Session and Version Information
+# Appendix D. Session and Version Information
 ```{r session-info, echo=FALSE, cache=FALSE}
 sessionInfo()
 Sys.time()
