@@ -145,14 +145,14 @@ if ("ggplot2" %in% .packages()) {
 setwd(params$projectDir)
 
 # Write YAML parameters to file for consistent reuse across report and data packages
-save(params,file="./data/temp/reportParameters.RData")
+save(params,file="data/temp/reportParameters.RData")
 ```
 
 ```{r LoadData, include=FALSE}
 # Load datasets for use
 
-if (file.exists(file="../StateTNCStatusList/data/temp/projectMetadata.RData")) {
-  load(file="../StateTNCStatusList/data/temp/projectMetadata.RData")
+if (file.exists(file="data/temp/projectMetadata.RData")) {
+  load(file="data/temp/projectMetadata.RData")
 } else{
   projectMetadata<-list()
 }

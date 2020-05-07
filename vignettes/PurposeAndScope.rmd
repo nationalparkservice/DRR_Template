@@ -52,20 +52,20 @@ knitr::opts_chunk$set(
 
 # Background
 Recognizing the broad move toward open science, we’ve seen the following changes
-in expectations since the inception of the I&M program.
+in expectations (outside NPS) since the inception of the I&M program.
 
 -   Broad adoption of open-data and open-by-default practices.
 
 -   A move in the scientific disciplines toward considering and publishing data
     sets as independently-citable scientific works.
 
--   Routine assignment of DOIs to dataset to facilitate location, reuse, and
+-   Routine assignment of digital object identifiers (DOIs) to dataset to facilitate location, reuse, and
     citation of specific data
 
 -   Increased transparency and reproducibility in the processing and analysis of
     data.
 
--   Establishment of peer reviewed journals dedicated to publishing data sets
+-   Establishment of peer reviewed "data journals" dedicated to publishing data sets
     and associated documentation designed to facilitate their reuse.
 
 -   Expectation that science-based decisions are based on peer-reviewed,
@@ -76,7 +76,7 @@ journals dedicated to facilitate reuse of reproducible scientific data, in
 recognition that the primary reason IMD data are collected is to support
 science-based decisions.
 
-Note that publication in a data release report series (not required) is distinct
+Note that publication in a data release report series (not mandated) is distinct
 from requirements to document data collection, processing, and quality
 evaluation (mandated; see below). The establishment of a data release report
 series is intended to facilitate and encourage this type of reporting in a
@@ -86,7 +86,7 @@ A template for creating data release reports to be published in the DRR series
 and associated data packages is located at
 <https://github.com/nationalparkservice/IMD_DRR_Template>. We have also
 developed procedures for authoring DRR reports in Microsoft Word and porting
-them to the appropriate format.
+them to the appropriate format.  (Plesser 2017).
 
 # Definitions
 
@@ -94,7 +94,11 @@ them to the appropriate format.
 methods of analysis could be evaluated by an independent third party to arrive
 at the same, or substantially similar, conclusion as the original study or
 information, and that the scientific assessment can be repeated to obtain
-similar results.
+similar results (Plesser 2017).  A study is reproducible if you can take the original data and the
+computer code used to analyze the data and reproduce all of the numerical findings
+from the study. This may initially sound like a trivial task but experience has shown that
+it’s not always easy to achieve this seemingly minimal standard (ASA 2017). 
+
 
 **Transparency.** Full disclosure of the methods used to obtain, process,
 analyze, and review scientific data and other information products, the
@@ -131,7 +135,7 @@ transparency requirements.
 
 ## Government/NPS Reporting Requirements
 
-**DO 11, 11B, OMB M-05-03 (Peer review and information quality):**
+**[DO11B-a](https://www.nps.gov/subjects/policy/upload/DO_11B_10-16-2002.pdf), [DO 11B-b](https://irma.nps.gov/DataStore/DownloadFile/474958), [OMB M-05-03](https://www.whitehouse.gov/wp-content/uploads/2017/11/2005-M-05-03-Issuance-of-OMBs-Final-Information-Quality-Bulletin-for-Peer-Review-December-16-2004.pdf) (Peer review and information quality):**
 
 -   Scientific information must be appropriately reviewed prior to use in
     decision-making, regulatory processes, or dissemination to the public,
@@ -147,7 +151,7 @@ transparency requirements.
     extent practicable, through accurate documentation, use of appropriate
     review, and verification of information quality.
 
-**OMB M-19-15 (Updates to Implementing the Information Quality Act):**
+**[OMB M-19-15](https://www.whitehouse.gov/wp-content/uploads/2019/04/M-19-15.pdf) (Updates to Implementing the Information Quality Act):**
 
 -   Federal agencies must collect, use, and disseminate information that is fit
     for its intended purpose.
@@ -190,17 +194,17 @@ transparency requirements.
 ## Government/NPS Guidelines on Use of Scientific Information
 Multiple policy and guidance documents require the use of best available science in decision-making. Additional requirements include:
 
-**SO 3369 (Promoting Open Science):** 
+**[SO 3369](https://www.doi.gov/sites/doi.gov/files/elips/documents/so_3369_promoting_open_science.pdf) (Promoting Open Science):** 
 
 * Defines “best available science” as publicly-available, reproducible, and peer reviewed. Requires that any decisions or scientific conclusions must prioritize the use of publicly-available, reproducible, and peer-reviewed science. Decisions or conclusions not based on such must include an explanation of why the alternative is the best available information. Effective as of 28 September 2018 with no transition period.
 
-**DO 11B (Ensuring Objectivity, Utility, and Integrity of Information Used and Disseminated by the National Park Service):** 
+**[DO 11B](https://www.nps.gov/subjects/policy/upload/DO_11B_10-16-2002.pdf) (Ensuring Objectivity, Utility, and Integrity of Information Used and Disseminated by the National Park Service):** 
 
 * The NPS will ensure that information it releases to the public or utilizes in management decisions will be developed from reliable data sources that provide the highest quality of information at each stage of information development.
 
 ## Inventory & Monitoring Program Requirements
 
-**NPS-75 (Inventory and Monitoring Guidelines):**
+**[NPS-75](https://irma.nps.gov/DataStore/Reference/Profile/622933) (Inventory and Monitoring Guidelines):**
 
 -   An annual summary report documenting the condition of park resources should
     be developed as part of the annual revision of the parks Resource Management
@@ -214,9 +218,9 @@ Multiple policy and guidance documents require the use of best available science
 
 -   Reporting requirements as per IMD directive
 
-**IMD Reporting and Analysis Guidance**
+**[IMD Reporting and Analysis Guidance](https://irma.nps.gov/DataStore/Reference/Profile/2252934)**
 
--   Annual Analyses Required of all Monitoring Protocols: Conduct an annual data
+-   Annual Analyses Required of all Monitoring Protocols: Conduct an annual data review
     to address whether there is any unexpected variability or outliers, and
     whether any protocol changes or additional studies may be needed. Part of
     the review must assess the data against standards defined in the protocol
@@ -255,8 +259,8 @@ requirements), this means that by default:
 -   All IMD data should be published with information fully describing how data
     were collected, processed, and evaluated.
 
--   All data should be published in open formats that support the FAIR
-    principles (Findable, Accessible, Interoperable, and Resuable).
+-   All data should be published in open formats that support the [FAIR
+    principles](https://www.go-fair.org/fair-principles/) (Findable, Accessible, Interoperable, and Resuable).
 
 # Scope (for the NPS Inventory & Monitoring Program)
 
@@ -308,4 +312,8 @@ may also support other scientific work and decision support.
 include_graphics("WorkflowModelInventories.png")
 
 ```
+
+American Statistical Association (ASA). 2017. Recommendations to funding agencies for supporting reproducible research. https://www.amstat.org/asa/files/pdfs/POL-ReproducibleResearchRecommendations.pdf. 
+
+Plesser, H. E. 2017. Reproducibiliyt vs. replicability: a brief history of a confused termonology. Front Neuroinform. 11:76. https://dx.doi.org/10.3389%2Ffninf.2017.00076.
 
