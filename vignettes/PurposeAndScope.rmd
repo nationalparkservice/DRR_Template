@@ -86,7 +86,7 @@ A template for creating data release reports to be published in the DRR series
 and associated data packages is located at
 <https://github.com/nationalparkservice/IMD_DRR_Template>. We have also
 developed procedures for authoring DRR reports in Microsoft Word and porting
-them to the appropriate format.  (Plesser 2017).
+them to the appropriate format.  
 
 # Definitions
 
@@ -97,7 +97,7 @@ information, and that the scientific assessment can be repeated to obtain
 similar results (Plesser 2017).  A study is reproducible if you can take the original data and the
 computer code used to analyze the data and reproduce all of the numerical findings
 from the study. This may initially sound like a trivial task but experience has shown that
-it’s not always easy to achieve this seemingly minimal standard (ASA 2017). 
+it’s not always easy to achieve this seemingly minimal standard (ASA 2017, Plesser 2017).
 
 
 **Transparency.** Full disclosure of the methods used to obtain, process,
@@ -315,5 +315,5 @@ include_graphics("WorkflowModelInventories.png")
 
 American Statistical Association (ASA). 2017. Recommendations to funding agencies for supporting reproducible research. https://www.amstat.org/asa/files/pdfs/POL-ReproducibleResearchRecommendations.pdf. 
 
-Plesser, H. E. 2017. Reproducibiliyt vs. replicability: a brief history of a confused termonology. Front Neuroinform. 11:76. https://dx.doi.org/10.3389%2Ffninf.2017.00076.
+Plesser, H. E. 2017. Reproducibility vs. replicability: a brief history of a confused termonology. Front Neuroinform. 11:76. https://dx.doi.org/10.3389%2Ffninf.2017.00076.
 
