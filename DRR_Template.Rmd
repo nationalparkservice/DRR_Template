@@ -98,7 +98,7 @@ RRpackages <- c('markdown',     # links to Sundown rendering library
 
 inst <- RRpackages %in% installed.packages()
 if (length(RRpackages[!inst]) > 0) {
-   install.packages(RRpackages[!inst], dep = TRUE)
+   install.packages(RRpackages[!inst], dep = TRUE, repos = "https://cloud.r-project.org")
 }
 lapply(RRpackages, library, character.only = TRUE)
 
