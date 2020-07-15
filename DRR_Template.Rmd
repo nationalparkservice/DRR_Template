@@ -1,6 +1,6 @@
 ---
 params:
-  projectDir: "N:/IMD_DRR_Template"
+  projectDir: "N:/IMD_DRR_Template"                       # You will have to update this directory to match your project directory before knitting.
   reportNumber: "REPORT NUMBER"                           # Optional. Only include this if publishing in the semi-official Data Release Report Series. Contact Joe if you are.
   reportRefID: 123456                                     # This should match the Data Store Reference ID for this report.
   packageAbstract: >-
