@@ -19,8 +19,6 @@
 # 10. Run full script until no errors.
 # 11. Validate the resultant eml file using https://knb.ecoinformatics.org/emlparser/ 
 
-# Note: between different computers and instances of R, the way that 'paths' are treated can change. I you are having trouble loading files using 'params' paths, check what path is being passed to the 'load' function. You may need to add in a leading or trailing '/'
-
 ###### Step 1. Get everything set up. ###### General Setup Stuff
 
 # remotes::install_github("EDIorg/EMLassemblyline" # Only required if not already installed
@@ -30,8 +28,7 @@ pkgList <- c("devtools",
              "EMLassemblyline",
              "lubridate",
              "readtext",
-             "zip",
-             "miceadds" #use the load.Rdata2 function from this package to load dataset2package into packageDataFrame on line 62, base method 
+             "zip"
 )
 
 inst <- pkgList %in% installed.packages()
@@ -42,7 +39,7 @@ if (length(pkgList[!inst]) > 0) {
 
 lapply(pkgList, library, character.only = TRUE, quietly = TRUE)
 
-setwd(params$projectDir) #may need to manually load /data/temp/reportParameters.Rdata if not already loaded
+setwd(params$projectDir)
 
 ###### Step 2. Set Required Parameters #######
 dirName<-"DataPackageTemplate"                                  # Name of the directory where the data packaging scripts are stored. This should just be the directory name (such as "2018_Analysis_PORs"); not the whole path.
@@ -61,7 +58,7 @@ DataPublicationReportURL<-paste0("https://irma.nps.gov/DataStore/Reference/Profi
 publicationYear<-year(Sys.Date())                               # year of data set publication to Data Store.
 datapackageDirectoryName=paste0("dataPackages/",dirName)        # subdirectory where the data package processing files are kept 
 
-packageDataFrame<-load.Rdata2(filename=dataset2Package)
+packageDataFrame<-load(file=dataset2Package)
 
 packageURL<-paste0("https://irma.nps.gov/DataStore/Reference/Profile/",packageRefID)
 
