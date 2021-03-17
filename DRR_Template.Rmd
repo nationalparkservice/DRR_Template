@@ -41,6 +41,9 @@ csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa
 link-citations: yes
 output:
   html_document:
+    pandoc_args: [
+    "--number-offset=0,0"
+    ] #BJC 01/07/2021 Added pandoc arg becuase the title element was throwing an error
     df_print: kable
     fig_caption: true
     dev: svg
@@ -135,7 +138,7 @@ knitr::opts_chunk$set(
    dev = "svg",
    fig.path = "figures/",
    tidy.opts = list(width.cutoff = 60),
-   tidy = TRUE
+   tidy = F #BJC 01/07/2021 Changed this from T to F, was throwing a string parsing error
    )
 # if ggplot, update theme to default to centered titles
 if ("ggplot2" %in% .packages()) {
