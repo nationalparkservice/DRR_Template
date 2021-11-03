@@ -145,6 +145,10 @@ writeLines(abstract,paste0(metadataDirectory,"abstract.txt"))
 methodstext<-paste0("Methods for the generation of this data set are documented in Data Release Report ",gsub("—","--",params$reportNumber), ", available at ",DataPublicationReportURL,".")
 writeLines(methodstext,paste0(metadataDirectory,"methods.txt"))
 
+#IF USING WINDOWS: before running 'make_eml', open all metadata.txt files in notepad ++ or equivalent text editor and convert to UTF-8 
+#the abstract, methods, and potentially others default to UTF-8BOM during writing which is a windows specific unicode format and not compatible with UTF-8 readers. 
+#this solves a troublesome error that will prevent you from being able to make EML files "Error in nchar(unlist(x$template[[i]])) : invalid multibyte string, element 1"
+
 make_eml(
   path = metadataDirectory,
   data.path = dataDirectory,
