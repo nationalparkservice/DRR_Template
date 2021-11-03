@@ -39,6 +39,7 @@ if (length(pkgList[!inst]) > 0) {
 
 lapply(pkgList, library, character.only = TRUE, quietly = TRUE)
 
+load("data/temp/reportParameters.RData")
 setwd(params$projectDir)
 
 ###### Step 2. Set Required Parameters #######
@@ -153,112 +154,29 @@ make_eml(
   maintenance.description = 'completed',
   data.table = paste0(fileprefix,packageRefID,"-data.csv"),
   data.table.description = datapackageDescription,
-  data.url = packageURL,
+  data.table.url = packageURL,
   user.id = 'jcdevivo',
   user.domain = 'NPS-IMD',
   package.id = paste0(fileprefix,packageRefID,"-metadata")
 )
 
 
-#### Step 10. Create Manifest File and zip up the package ####
-
-cat("This data package was produced by the National Park Service (NPS) Inventory and Monitoring Division and can be downloaded from the [NPS Data Store](https://irma.nps.gov/DataStore/Reference/Profile/",packageRefID,").",file=manifestfilename,"\n",sep="") 
-cat("These data are provided under the Creative Commons CC0 1.0 “No Rights Reserved” (see: https://creativecommons.org/publicdomain/zero/1.0/).",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("DATA PRODUCT INFORMATION",file=manifestfilename,sep="\n",append=TRUE)
-cat("------------------------",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-# ID
-cat("ID: ",packageRefID," Data Store Code.",file=manifestfilename,"\n",sep="",append=TRUE) 
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-#Title
-cat("Title: ",datapackageTitle,file=manifestfilename,"\n",sep="",append=TRUE) 
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-#Description
-cat("Description: ",datapackageDescription,file=manifestfilename,"\n",sep="",append=TRUE) 
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-#Abstract
-cat("Abstract: ",abstract,file=manifestfilename,"\n",sep="",append=TRUE) 
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-#Brief Study Area Description
-cat("Brief Study Area Description: ",geographicDescription,file=manifestfilename,"\n",sep="",append=TRUE) 
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-#Keywords
-cat("Keywords:",unlist(themekeywords),file=manifestfilename,"\n",sep=" ",append=TRUE) 
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("Date for Data Publication: ",as.character(today()),file=manifestfilename,"\n",sep="",append=TRUE) 
-cat("This zip package was generated on: ",as.character(today()),file=manifestfilename,"\n",sep="",append=TRUE) 
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("DATA PACKAGE CONTENTS",file=manifestfilename,sep="\n",append=TRUE)
-cat("------------------------",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("This zip package contains the following documentation files:",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("- This readme file: ", fileprefix, packageRefID, "-manifest.text","\n",file=manifestfilename,sep="",append=TRUE)
-
-cat("- Machine-readable metadata file describing the data set(s): ",fileprefix, packageRefID, "-metadata.xml. This file uses the Ecological Metadata Language (EML) schema. Learn more about this format at https://knb.ecoinformatics.org/external//emlparser/docs/eml-2.1.1/index.html#N1022A.",file=manifestfilename, "\n",sep="",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("This zip package contains the following data set(s):",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("- ",fileprefix, packageRefID, "-data.csv - ", datapackageDescription,".\n",file=manifestfilename,sep="",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-
-cat("ADDITIONAL INFORMATION",file=manifestfilename,sep="\n",append=TRUE)
-cat("------------------------",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("Primary related products: The following product(s) were created concurrently with this dataset:",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("1. Data Release Report. Document describing the methods and the analysis code used to generate data set. Available at ", DataPublicationReportURL, ".", "\n",file=manifestfilename,sep="",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("CHANGE LOG",file=manifestfilename,sep="\n",append=TRUE)
-cat("------------------------",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("N/A",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("ADDITIONAL REMARKS",file=manifestfilename,sep="\n",append=TRUE)
-cat("------------------------",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("N/A",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-
-cat("NPS DATA POLICY AND CITATION GUIDELINES",file=manifestfilename,sep="\n",append=TRUE)
-cat("------------------------",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("See NPS Inventory and Monitoring Division's data policy and citation guidelines at https://irma.nps.gov/content/portal/about/.",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-
-cat("DATA QUALITY AND VERSIONING",file=manifestfilename,sep="\n",append=TRUE)
-cat("------------------------",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-cat("The data contained in this file are considered Accepted under the IMD Data Certification Guidance (https://www.google.com/url?q=https://irma.nps.gov/DataStore/Reference/Profile/2227397). Updates to the data, QA/QC and/or processing algorithms over time will occur on an as-needed basis.  Please check back to this site for updates tracked in change logs.",file=manifestfilename,sep="\n",append=TRUE)
-cat(" ",file=manifestfilename,sep="\n",append=TRUE)
-
-
-
 ### Zip up file
 
-zipr(datapackagefilename,c(datafilename,manifestfilename,metadatafilename), recurse=FALSE)
+dir.create("output") #Just in case it's not there
+
+zip::zipr(datapackagefilename,c(datafilename,metadatafilename), recurse=FALSE)
+filelist<-zip_list(datapackagefilename)
+files<-paste0(filelist$filename," (",filelist$uncompressed_size," bytes)")
+timestamp<-as.character(file.info(datapackagefilename)$mtime)
+
+# Create Manifest File
+
+cat("Manifest file for ",fileprefix,params$dataPackage1RefID,"-datapackage.zip created on ",as.character(timestamp),file=manifestfilename,"\n",sep="")
+for (i in 1:length(files)){
+  cat(files[i],file=manifestfilename,"\n",sep="",append=TRUE)
+}
+
+### Add manifest to zip file
+
+zip::zipr_append(datapackagefilename,manifestfilename, recurse=FALSE)

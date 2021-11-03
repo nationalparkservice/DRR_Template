@@ -18,7 +18,6 @@ params:
   dataPackage2RefID: 2272464                              # Data Store reference ID for data set associated with this report. You must have at least one.
   dataPackage2Title: "Dataset 2 FULL TITLE"               # Should match title in data store.
   dataPackage2Description: "SHORT TITLE FOR DATASET 1"  
-      
 title: "REPORT TITLE"
 subtitle: |
   | Data Release Report `r params$reportNumber` 
@@ -40,10 +39,7 @@ editor_options:
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
 link-citations: yes
 output:
-  html_document:
-    pandoc_args: [
-    "--number-offset=0,0"
-    ] #BJC 01/07/2021 Added pandoc arg becuase the title element was throwing an error
+  bookdown::html_document2:
     df_print: kable
     fig_caption: true
     dev: svg
@@ -54,19 +50,19 @@ output:
     css: "common/journalnps.min.css"
     toc: yes
     toc_float: true
-    number_sections: true
+    number_sections: false
     includes:
         before_body:
           - "common/header.html"
         after_body: 
           - "common/footer.html"
-  word_document:
+  bookdown::word_document2:
     df_print: kable
     fig_caption: yes
     fig_height: 5
     fig_width: 5
     highlight: haddock
-    reference_docx: "common/DRR Word Template.docx"
+    number_sections: false
 ---
 
 ```{r setup, include=FALSE}
@@ -110,7 +106,7 @@ lapply(RRpackages, library, character.only = TRUE)
 pkgList <- c("devtools",        # tends to be needed/useful
              "RODBC",           # for connection to a database. 
              "EML",             # for data package creation and validation
-             "kableExtra",      # added features for table formatting. 
+             "flextable",
              "english",         # converts numbers into english. Good for all that English stuff.
              "remotes",         # for install_github()
              "dplyr")           # useful
@@ -138,17 +134,68 @@ knitr::opts_chunk$set(
    dev = "svg",
    fig.path = "figures/",
    tidy.opts = list(width.cutoff = 60),
-   tidy = F #BJC 01/07/2021 Changed this from T to F, was throwing a string parsing error
+   tidy = TRUE
    )
 # if ggplot, update theme to default to centered titles
 if ("ggplot2" %in% .packages()) {
    theme_update(plot.title = element_text(hjust = 0.5))
 }
 
-setwd(params$projectDir)
-
 # Write YAML parameters to file for consistent reuse across report and data packages
 save(params,file="data/temp/reportParameters.RData")
+
+## General Utility Functions
+
+numbertext<-function(number){
+  if(number<20) {
+    words(number)
+  } else {
+    formatC(number,big.mark=",")
+  }
+}
+
+capitalize <- function(x) {
+ substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+ x
+}
+
+#Create Abstract File from YAML header. You may need to update this if you change the data packaging folder (or add additional ones)
+cat(params$packageAbstract,file="dataPackages\\DataPackageTemplate\\metadata_templates\\abstract.txt",sep="\n",append=FALSE)
+
+# And set a few variables from the setup script
+MemoReference<-"Grass J, Angelakis P, Bennett B, Slaughter J, Griffin D, McCutchen BK, Smiley V, Black S, Trimble B, Wilkerson D, Pennington B. 2019. Cumberland Piedmont Network Parks Protected Data Memo. (Available at https://irma.nps.gov/DataStore/Reference/Profile/2260264)"
+MemoCitation<-"Grass et al. 2019"
+FederalCodes<-c("Fed-E","Fed-T","Fed-C")
+StateNSCodes<-c("KY-T","KY-E","TN-T","TN-E","TN-T-CE","VA-LE","VA-LT","VA-LT/PDL")
+
+# Set up table template
+NPS_theme <- function(x, ...) {
+    x <- colformat_double(x, big.mark = ",", decimal.mark = ".", digits = 1)
+    x <- colformat_int(x, big.mark = ",")
+    x <- colformat_date(x,fmt_date = "%Y-%m-%d")
+    x <- set_table_properties(x, layout = "fixed")
+    x <- border_remove(x)
+    std_border <- fp_border_default(width = 1, color = "black")
+    x <-hline_bottom(x,part="body")
+    x <-hline_bottom(x,part="header")
+    x <-hline_top(x,part="header")
+    x <-bold(x,bold=TRUE,part="header")
+    x <-set_table_properties(x, width = 0, layout = "autofit")
+    x <-align_nottext_col(x, align = "right", header = TRUE, footer = TRUE)
+    x <-align_text_col(x, align = "left", header = TRUE, footer = TRUE)
+    x <-valign(x,valign="bottom",part="header")
+    x <-valign(x,valign="top",part="body")
+}
+
+set_flextable_defaults(
+  font.family = "Arial", 
+  font.size = 9,
+  font.color = "black",
+  theme_fun = NPS_theme,
+  )
+
+#Set Working Directory
+setwd(params$projectDir)
 ```
 
 ```{r LoadData, include=FALSE}
@@ -347,7 +394,7 @@ containing primary data should be submitted to an appropriate data repository.
 
 Authors may provide tables within text near the initial citation or as an
 appendix. Legends, where needed, should be included in the Word document.
-Generally, a Data Publication Report should have fewer than ten tables, but more
+Generally, a Data Release Report should have fewer than ten tables, but more
 may be allowed when needed.
 
 ### Example Data Record Summary Tables
@@ -364,12 +411,16 @@ T1Protocol4<-c("RNA-Seq","RNA-Seq","RNA-Seq")
 T1Data<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX")
 Table1<-data.frame(T1Subjects,T1Protocol1,T1Protocol2,T1Protocol3,T1Protocol4,T1Data)
 
-kable(Table1, 
-      col.names=c("Subjects","Protocol 1","Protocol 2","Protocol 3","Protocol 4","Data"),
-      caption="**Table 1.** Experimental study example Data Records table.") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F) %>%
-  footnote(general="This table was generated using the kableExtra package.")
-
+T1<-flextable(Table1)
+T1<-set_caption(T1,"Experimental study example Data Records table. [Table created using the flextable package.]")
+T1<-set_header_labels(T1,
+                      T1Subjects="Subjects",
+                      T1Protocol1="Protocol 1",
+                      T1Protocol2="Protocol 2",
+                      T1Protocol3="Protocol 3",
+                      T1Protocol4="Protocol 4",
+                      T1Data="Data")
+autofit(T1)
 ```
 
 ```{r Table2, echo=FALSE}
@@ -381,11 +432,16 @@ Protocol3<-c("Microarray hybridization","Microarray hybridization","Microarray h
 Data<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX")
 Table<-data.frame(Source,Protocol1,Protocol2,Samples,Protocol3,Data)
 
-kable(Table, 
-      col.names=c("Subjects","Protocol 1","Protocol 2","Samples","Protocol 3","Data"),
-      caption="**Table 2.** Experimental study with replicates Data Records table.") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
-
+T1<-flextable(Table)
+T1<-set_caption(T1,"Experimental study with replicates Data Records table. [Table created using the flextable package.]")
+T1<-set_header_labels(T1,
+                      Source="Subjects",
+                      Protocol1="Protocol 1",
+                      Protocol2="Protocol 2",
+                      Samples="Samples",
+                      Protocol3="Protocol 3",
+                      data="Data")
+autofit(T1)
 
 ```
 
@@ -397,12 +453,15 @@ protocol<-c("Measurement of surface temperature","Measurement of surface tempera
 data<-c("dataFile1","dataFile2","dataFile3")
 Table<-data.frame(Sample,geoloc,geopos,protocol,data)
 
-kable(Table, 
-      col.names=c("Sample","Geographical Location","Geoposition","Protocol","Data"),
-      caption="**Table 3.** Observational study example Data Records table.") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
-
-
+T1<-flextable(Table)
+T1<-set_caption(T1,"Observational study example Data Records table. [Table created using the flextable package.]")
+T1<-set_header_labels(T1,
+                      Sample="Sample",
+                      geoloc="Geographical Location",
+                      geopos="Geoposition",
+                      protocol="Protocol",
+                      data="Data")
+autofit(T1)
 ```
 
 ```{r Table4, echo=FALSE}
@@ -415,11 +474,16 @@ c6<-c("Method to generate output data","Method to generate output data","Method 
 c7<-c("dataFile1","dataFile1","dataFile2")
 Table<-data.frame(c1,c2,c3,c4,c5,c6,c7)
 
-kable(Table, 
-      col.names=c("Source","Sample","Sample Number","Temporal Range","Protocol 1","Protocol2","Data"),
-      caption="**Table 4.** Data aggregation study example Data Records table.") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
-
-
+T1<-flextable(Table)
+T1<-set_caption(T1,"Observational study example Data Records table. [Table created using the flextable package.]")
+T1<-set_header_labels(T1,
+                      c1="Source",
+                      c2="Sample",
+                      c3="Sample Number",
+                      c4="Temporal Range",
+                      c5="Protocol 1",
+                      c6="Protocol 2",
+                      c7="Data")
+autofit(T1)
 ```
 

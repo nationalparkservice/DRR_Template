@@ -1,31 +1,3 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
-
-@joe-devivo
-nationalparkservice
-/
-IMD_DRR_Template
-Template
-10
-00
- Code
- Issues 1
- Pull requests 0 Actions
- Projects 0
- Wiki
- Security 0
- Insights
- Settings
-IMD_DRR_Template/common/journalnps.min.css
- DeVivo commit
-53db06f 10 days ago
-49 lines (42 sloc)  1.21 KB
-
 .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
     z-index: 2;
     color: #ffffff;
@@ -64,7 +36,7 @@ caption {
 }
 
 .caption {
-    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif; 
     text-align:left;
     color: #000000;
 }
@@ -75,15 +47,3 @@ table {
     border-top-style: solid;
     border-top-color: rgb(221, 221, 221);
     border-collapse:collapse;
-© 2020 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About

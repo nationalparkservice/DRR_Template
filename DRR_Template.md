@@ -1,6 +1,6 @@
 ---
 params:
-  projectDir: "N:/IMD_DRR_Template"
+  projectDir: "N:/IMD_DRR_Template"                       # You will have to update this directory to match your project directory before knitting.
   reportNumber: "REPORT NUMBER"                           # Optional. Only include this if publishing in the semi-official Data Release Report Series. Contact Joe if you are.
   reportRefID: 123456                                     # This should match the Data Store Reference ID for this report.
   packageAbstract: >-
@@ -18,7 +18,6 @@ params:
   dataPackage2RefID: 2272464                              # Data Store reference ID for data set associated with this report. You must have at least one.
   dataPackage2Title: "Dataset 2 FULL TITLE"               # Should match title in data store.
   dataPackage2Description: "SHORT TITLE FOR DATASET 1"  
-      
 title: "REPORT TITLE"
 subtitle: |
   | Data Release Report REPORT NUMBER 
@@ -33,14 +32,14 @@ author:
       | Managed Business Solutions (MBS), a Sealaska Company  
       | Contractor to National Park Service  
       | Natural Resource Stewardship and Science
-date: "06 May, 2020"
+date: "03 November, 2021"
 abstract: "Abstract Should go here. Multiple Lines are okay; it'll format correctly. Do not put the abstract in the text section below; this will allow For reuse of the abtract in all associated products. </br> </br>  The Abstract should succinctly describe the study, the assay(s) performed,  the resulting data, and their reuse potential, but should not make any  claims regarding new scientific findings. No references are allowed in this section. "
 editor_options:
   chunk_output_type: inline
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
 link-citations: yes
 output:
-  html_document:
+  bookdown::html_document2:
     df_print: kable
     fig_caption: true
     dev: svg
@@ -51,19 +50,19 @@ output:
     css: "common/journalnps.min.css"
     toc: yes
     toc_float: true
-    number_sections: true
+    number_sections: false
     includes:
         before_body:
           - "common/header.html"
         after_body: 
           - "common/footer.html"
-  word_document:
+  bookdown::word_document2:
     df_print: kable
     fig_caption: yes
     fig_height: 5
     fig_width: 5
     highlight: haddock
-    reference_docx: "common/DRR Word Template.docx"
+    number_sections: false
 ---
 
 
@@ -84,7 +83,7 @@ Authors are encouraged to consider creating a figure that outlines the experimen
 
 <div class="figure" style="text-align: center">
 <img src="figures/ProcessingWorkflow.png" alt="**Figure 1.** Example general workflow to include in the methods section." width="550" />
-<p class="caption">**Figure 1.** Example general workflow to include in the methods section.</p>
+<p class="caption">(\#fig:figure1)**Figure 1.** Example general workflow to include in the methods section.</p>
 </div>
 
 
@@ -143,7 +142,7 @@ quality assurance planning documentation.
 
 *Stock Text to include:*
 
-The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *Dataset 2 FULL TITLE* is suitable for its intended use as of the date of processing (2020-05-06).
+The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *Dataset 2 FULL TITLE* is suitable for its intended use as of the date of processing (2021-11-03).
 
 *Required Table*
 
@@ -258,7 +257,7 @@ RRpackages <- c('markdown',     # links to Sundown rendering library
 
 inst <- RRpackages %in% installed.packages()
 if (length(RRpackages[!inst]) > 0) {
-   install.packages(RRpackages[!inst], dep = TRUE)
+   install.packages(RRpackages[!inst], dep = TRUE, repos = "https://cloud.r-project.org")
 }
 lapply(RRpackages, library, character.only = TRUE)
 
@@ -267,7 +266,7 @@ lapply(RRpackages, library, character.only = TRUE)
 pkgList <- c("devtools",        # tends to be needed/useful
              "RODBC",           # for connection to a database. 
              "EML",             # for data package creation and validation
-             "kableExtra",      # added features for table formatting. 
+             "flextable",
              "english",         # converts numbers into english. Good for all that English stuff.
              "remotes",         # for install_github()
              "dplyr")           # useful
@@ -302,10 +301,61 @@ if ("ggplot2" %in% .packages()) {
    theme_update(plot.title = element_text(hjust = 0.5))
 }
 
-setwd(params$projectDir)
-
 # Write YAML parameters to file for consistent reuse across report and data packages
 save(params,file="data/temp/reportParameters.RData")
+
+## General Utility Functions
+
+numbertext<-function(number){
+  if(number<20) {
+    words(number)
+  } else {
+    formatC(number,big.mark=",")
+  }
+}
+
+capitalize <- function(x) {
+ substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+ x
+}
+
+#Create Abstract File from YAML header
+cat(params$packageAbstract,file="dataPackages\\DataPackageTemplate\\metadata_templates\\abstract.txt",sep="\n",append=FALSE)
+
+# And set a few variables from the setup script
+MemoReference<-"Grass J, Angelakis P, Bennett B, Slaughter J, Griffin D, McCutchen BK, Smiley V, Black S, Trimble B, Wilkerson D, Pennington B. 2019. Cumberland Piedmont Network Parks Protected Data Memo. (Available at https://irma.nps.gov/DataStore/Reference/Profile/2260264)"
+MemoCitation<-"Grass et al. 2019"
+FederalCodes<-c("Fed-E","Fed-T","Fed-C")
+StateNSCodes<-c("KY-T","KY-E","TN-T","TN-E","TN-T-CE","VA-LE","VA-LT","VA-LT/PDL")
+
+# Set up table template
+NPS_theme <- function(x, ...) {
+    x <- colformat_double(x, big.mark = ",", decimal.mark = ".", digits = 1)
+    x <- colformat_int(x, big.mark = ",")
+    x <- colformat_date(x,fmt_date = "%Y-%m-%d")
+    x <- set_table_properties(x, layout = "fixed")
+    x <- border_remove(x)
+    std_border <- fp_border_default(width = 1, color = "black")
+    x <-hline_bottom(x,part="body")
+    x <-hline_bottom(x,part="header")
+    x <-hline_top(x,part="header")
+    x <-bold(x,bold=TRUE,part="header")
+    x <-set_table_properties(x, width = 0, layout = "autofit")
+    x <-align_nottext_col(x, align = "right", header = TRUE, footer = TRUE)
+    x <-align_text_col(x, align = "left", header = TRUE, footer = TRUE)
+    x <-valign(x,valign="bottom",part="header")
+    x <-valign(x,valign="top",part="body")
+}
+
+set_flextable_defaults(
+  font.family = "Arial", 
+  font.size = 9,
+  font.color = "black",
+  theme_fun = NPS_theme,
+  )
+
+#Set Working Directory
+setwd(params$projectDir)
 # Load datasets for use
 
 if (file.exists(file="data/temp/projectMetadata.RData")) {
@@ -325,12 +375,16 @@ T1Protocol4<-c("RNA-Seq","RNA-Seq","RNA-Seq")
 T1Data<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX")
 Table1<-data.frame(T1Subjects,T1Protocol1,T1Protocol2,T1Protocol3,T1Protocol4,T1Data)
 
-kable(Table1, 
-      col.names=c("Subjects","Protocol 1","Protocol 2","Protocol 3","Protocol 4","Data"),
-      caption="**Table 1.** Experimental study example Data Records table.") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F) %>%
-  footnote(general="This table was generated using the kableExtra package.")
-
+T1<-flextable(Table1)
+T1<-set_caption(T1,"Experimental study example Data Records table. [Table created using the flextable package.]")
+T1<-set_header_labels(T1,
+                      T1Subjects="Subjects",
+                      T1Protocol1="Protocol 1",
+                      T1Protocol2="Protocol 2",
+                      T1Protocol3="Protocol 3",
+                      T1Protocol4="Protocol 4",
+                      T1Data="Data")
+autofit(T1)
 Source<-c("CellCulture1","CellCulture1","CellCulture1","CellCulture1","CellCulture1","CellCulture1")
 Protocol1<-c("Drug treatment","Drug treatment","Drug treatment","Drug treatment","Drug treatment","Drug treatment")
 Protocol2<-c("RNA extraction","RNA extraction","RNA extraction","RNA extraction","RNA extraction","RNA extraction")
@@ -339,11 +393,16 @@ Protocol3<-c("Microarray hybridization","Microarray hybridization","Microarray h
 Data<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX")
 Table<-data.frame(Source,Protocol1,Protocol2,Samples,Protocol3,Data)
 
-kable(Table, 
-      col.names=c("Subjects","Protocol 1","Protocol 2","Samples","Protocol 3","Data"),
-      caption="**Table 2.** Experimental study with replicates Data Records table.") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
-
+T1<-flextable(Table)
+T1<-set_caption(T1,"Experimental study with replicates Data Records table. [Table created using the flextable package.]")
+T1<-set_header_labels(T1,
+                      Source="Subjects",
+                      Protocol1="Protocol 1",
+                      Protocol2="Protocol 2",
+                      Samples="Samples",
+                      Protocol3="Protocol 3",
+                      data="Data")
+autofit(T1)
 
 Sample<-c("Body of water 1","Body of water 2","Body of water n")
 geoloc<-c("location name","location name","location name")
@@ -352,12 +411,15 @@ protocol<-c("Measurement of surface temperature","Measurement of surface tempera
 data<-c("dataFile1","dataFile2","dataFile3")
 Table<-data.frame(Sample,geoloc,geopos,protocol,data)
 
-kable(Table, 
-      col.names=c("Sample","Geographical Location","Geoposition","Protocol","Data"),
-      caption="**Table 3.** Observational study example Data Records table.") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
-
-
+T1<-flextable(Table)
+T1<-set_caption(T1,"Observational study example Data Records table. [Table created using the flextable package.]")
+T1<-set_header_labels(T1,
+                      Sample="Sample",
+                      geoloc="Geographical Location",
+                      geopos="Geoposition",
+                      protocol="Protocol",
+                      data="Data")
+autofit(T1)
 c1<-c("Database URL 1","Database URL 1","Database URL 2")
 c2<-c("Dataset 1","Dataset 2","Dataset n")
 c3<-c("Number of samples in the dataset","Number of samples in the dataset","Number of samples in the dataset")
@@ -367,10 +429,17 @@ c6<-c("Method to generate output data","Method to generate output data","Method 
 c7<-c("dataFile1","dataFile1","dataFile2")
 Table<-data.frame(c1,c2,c3,c4,c5,c6,c7)
 
-kable(Table, 
-      col.names=c("Source","Sample","Sample Number","Temporal Range","Protocol 1","Protocol2","Data"),
-      caption="**Table 4.** Data aggregation study example Data Records table.") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
+T1<-flextable(Table)
+T1<-set_caption(T1,"Observational study example Data Records table. [Table created using the flextable package.]")
+T1<-set_header_labels(T1,
+                      c1="Source",
+                      c2="Sample",
+                      c3="Sample Number",
+                      c4="Temporal Range",
+                      c5="Protocol 1",
+                      c6="Protocol 2",
+                      c7="Data")
+autofit(T1)
 ```
 
 \pagebreak
@@ -378,9 +447,9 @@ kable(Table,
 # Appendix D. Session and Version Information
 
 ```
-  R version 3.6.2 (2019-12-12)
+  R version 4.0.3 (2020-10-10)
   Platform: x86_64-w64-mingw32/x64 (64-bit)
-  Running under: Windows 10 x64 (build 17134)
+  Running under: Windows 10 x64 (build 18363)
   
   Matrix products: default
   
@@ -395,44 +464,46 @@ kable(Table,
   [1] stats     graphics  grDevices utils     datasets  methods   base     
   
   other attached packages:
-   [1] EMLassemblyline_2.6.1 remotes_2.1.1         english_1.2-5        
-   [4] kableExtra_1.1.0      EML_2.0.2             RODBC_1.3-16         
-   [7] devtools_2.3.0        usethis_1.6.0         knitcitations_1.0.10 
-  [10] RefManageR_1.2.12     bibtex_0.4.2.2        htmltools_0.4.0      
-  [13] rmdformats_0.3.7      yaml_2.2.1            rmdHelpers_1.2       
-  [16] dplyr_0.8.5           texreg_1.36.23        papeR_1.0-4          
-  [19] xtable_1.8-4          car_3.0-7             carData_3.0-3        
-  [22] kimisc_0.4            R.rsp_0.43.2          dataMaid_1.4.0       
-  [25] knitr_1.28            pander_0.6.3          rmarkdown_2.1        
-  [28] markdown_1.1         
+   [1] EMLassemblyline_2.18.2 remotes_2.3.0          english_1.2-5         
+   [4] flextable_0.6.9        EML_2.0.5              RODBC_1.3-17          
+   [7] devtools_2.4.0         usethis_2.0.1          knitcitations_1.0.12  
+  [10] RefManageR_1.3.0       bibtex_0.4.2.3         htmltools_0.5.1.1     
+  [13] rmdformats_1.0.2       yaml_2.2.1             rmdHelpers_1.2        
+  [16] dplyr_1.0.5            texreg_1.37.5          papeR_1.0-5           
+  [19] xtable_1.8-4           car_3.0-10             carData_3.0-4         
+  [22] kimisc_0.4             R.rsp_0.44.0           dataMaid_1.4.0        
+  [25] knitr_1.32             pander_0.6.3           rmarkdown_2.7         
+  [28] markdown_1.1          
   
   loaded via a namespace (and not attached):
-   [1] colorspace_1.4-1  ellipsis_0.3.0    rio_0.5.16        rprojroot_1.3-2  
-   [5] fs_1.4.1          rstudioapi_0.11   fansi_0.4.1       lubridate_1.7.8  
-   [9] xml2_1.3.1        R.methodsS3_1.8.0 robustbase_0.93-6 pkgload_1.0.2    
-  [13] jsonlite_1.6.1    png_0.1-7         R.oo_1.23.0       readr_1.3.1      
-  [17] compiler_3.6.2    httr_1.4.1        backports_1.1.6   assertthat_0.2.1 
-  [21] lazyeval_0.2.2    cli_2.0.2         formatR_1.7       prettyunits_1.1.1
-  [25] tools_3.6.2       gtable_0.3.0      glue_1.4.0        gmodels_2.18.1   
-  [29] V8_3.0.2          Rcpp_1.0.4.6      cellranger_1.1.0  vctrs_0.2.4      
-  [33] gdata_2.18.0      xfun_0.13         stringr_1.4.0     ps_1.3.2         
-  [37] openxlsx_4.1.4    testthat_2.3.2    rvest_0.3.5       lifecycle_0.2.0  
-  [41] gtools_3.8.2      jqr_1.1.0         DEoptimR_1.0-8    MASS_7.3-51.4    
-  [45] scales_1.1.0      jsonld_2.1        hms_0.5.3         curl_4.3         
-  [49] memoise_1.1.0     gridExtra_2.3     ggplot2_3.3.0     stringi_1.4.6    
-  [53] highr_0.8         desc_1.2.0        emld_0.4.0        pkgbuild_1.0.6   
-  [57] zip_2.0.4         rlang_0.4.5       pkgconfig_2.0.3   evaluate_0.14    
-  [61] purrr_0.3.4       processx_3.4.2    tidyselect_1.0.0  plyr_1.8.6       
-  [65] magrittr_1.5      bookdown_0.18     R6_2.4.1          generics_0.0.2   
-  [69] pillar_1.4.3      haven_2.2.0       foreign_0.8-72    withr_2.2.0      
-  [73] abind_1.4-5       tibble_3.0.0      crayon_1.3.4      uuid_0.1-4       
-  [77] grid_3.6.2        readxl_1.3.1      data.table_1.12.8 callr_3.4.3      
-  [81] forcats_0.5.0     webshot_0.5.2     digest_0.6.25     R.cache_0.14.0   
-  [85] R.utils_2.9.2     munsell_0.5.0     viridisLite_0.3.0 sessioninfo_1.1.1
+   [1] colorspace_2.0-0  ellipsis_0.3.1    rio_0.5.26        rprojroot_2.0.2  
+   [5] base64enc_0.1-3   fs_1.5.0          fansi_0.4.2       lubridate_1.7.10 
+   [9] xml2_1.3.2        R.methodsS3_1.8.1 cachem_1.0.4      robustbase_0.93-7
+  [13] pkgload_1.2.1     jsonlite_1.7.2    png_0.1-7         R.oo_1.24.0      
+  [17] compiler_4.0.3    httr_1.4.2        assertthat_0.2.1  fastmap_1.1.0    
+  [21] lazyeval_0.2.2    cli_2.4.0         formatR_1.9       prettyunits_1.1.1
+  [25] tools_4.0.3       gtable_0.3.0      glue_1.4.2        gmodels_2.18.1   
+  [29] V8_3.4.0          Rcpp_1.0.6        cellranger_1.1.0  jquerylib_0.1.3  
+  [33] vctrs_0.3.7       gdata_2.18.0      xfun_0.22         stringr_1.4.0    
+  [37] ps_1.6.0          openxlsx_4.2.3    testthat_3.0.2    lifecycle_1.0.0  
+  [41] gtools_3.8.2      jqr_1.2.0         DEoptimR_1.0-8    MASS_7.3-53      
+  [45] scales_1.1.1      jsonld_2.2        hms_1.0.0         curl_4.3         
+  [49] memoise_2.0.0     gridExtra_2.3     ggplot2_3.3.3     gdtools_0.2.3    
+  [53] sass_0.3.1        stringi_1.5.3     highr_0.9         desc_1.3.0       
+  [57] emld_0.5.1        pkgbuild_1.2.0    zip_2.1.1         systemfonts_1.0.1
+  [61] rlang_0.4.10      pkgconfig_2.0.3   evaluate_0.14     purrr_0.3.4      
+  [65] tidyselect_1.1.0  processx_3.5.1    plyr_1.8.6        magrittr_2.0.1   
+  [69] bookdown_0.21     R6_2.5.1          generics_0.1.0    DBI_1.1.1        
+  [73] pillar_1.6.0      haven_2.4.0       foreign_0.8-80    withr_2.4.2      
+  [77] abind_1.4-5       tibble_3.1.1      crayon_1.4.1      uuid_0.1-4       
+  [81] utf8_1.2.1        officer_0.4.0     grid_4.0.3        readxl_1.3.1     
+  [85] data.table_1.14.0 callr_3.6.0       forcats_0.5.1     digest_0.6.27    
+  [89] R.cache_0.14.0    R.utils_2.10.1    munsell_0.5.0     bslib_0.2.4      
+  [93] sessioninfo_1.1.1
 ```
 
 ```
-  [1] "2020-05-06 20:01:48 MDT"
+  [1] "2021-11-03 14:09:56 MDT"
 ```
 
 # Additional Notes (this should not be included in reports...)
@@ -462,192 +533,251 @@ Here, we provide four generic ‘Table 1’ examples, including two experimental
 study examples, one observational study example, and an example for an
 aggregated dataset of the type that may result from a meta-analysis. 
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>**Table 1.** Experimental study example Data Records table.</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Subjects </th>
-   <th style="text-align:left;"> Protocol 1 </th>
-   <th style="text-align:left;"> Protocol 2 </th>
-   <th style="text-align:left;"> Protocol 3 </th>
-   <th style="text-align:left;"> Protocol 4 </th>
-   <th style="text-align:left;"> Data </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Mouse1 </td>
-   <td style="text-align:left;"> Drug treatment </td>
-   <td style="text-align:left;"> Liver dissection </td>
-   <td style="text-align:left;"> RNA extraction </td>
-   <td style="text-align:left;"> RNA-Seq </td>
-   <td style="text-align:left;"> GEOXXXXX </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Mouse2 </td>
-   <td style="text-align:left;"> Drug treatment </td>
-   <td style="text-align:left;"> Liver dissection </td>
-   <td style="text-align:left;"> RNA extraction </td>
-   <td style="text-align:left;"> RNA-Seq </td>
-   <td style="text-align:left;"> GEOXXXXX </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Mousen </td>
-   <td style="text-align:left;"> Drug treatment </td>
-   <td style="text-align:left;"> Liver dissection </td>
-   <td style="text-align:left;"> RNA extraction </td>
-   <td style="text-align:left;"> RNA-Seq </td>
-   <td style="text-align:left;"> GEOXXXXX </td>
-  </tr>
-</tbody>
-<tfoot>
-<tr><td style="padding: 0; border: 0;" colspan="100%"><span style="font-style: italic;">Note: </span></td></tr>
-<tr><td style="padding: 0; border: 0;" colspan="100%">
-<sup></sup> This table was generated using the kableExtra package.</td></tr>
-</tfoot>
-</table>
+```{=html}
+<template id="b2820581-6e98-4ee1-8b2a-1ef777423cf6"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style><div class="tabwid"><style>.cl-03fcab7e{}.cl-03ed91d4{font-family:'Arial';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-03ed91d5{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-03edb8c6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-03edb8c7{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-03ee7cc0{width:70.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03ee7cc1{width:80.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03ee7cc2{width:82.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03ee7cc3{width:64.5pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03ee7cc4{width:81.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03ee7cc5{width:58pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03ee7cc6{width:70.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03ee7cc7{width:80.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03ee7cc8{width:82.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03ee7cc9{width:64.5pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03ee7cca{width:81.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03eea3c6{width:58pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03eea3c7{width:70.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03eea3c8{width:82.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03eea3c9{width:80.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03eea3ca{width:81.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03eea3cb{width:64.5pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-03eea3cc{width:58pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-03fcab7e'>
+```
+<caption class="Table Caption">
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>**Table 2.** Experimental study with replicates Data Records table.</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Subjects </th>
-   <th style="text-align:left;"> Protocol 1 </th>
-   <th style="text-align:left;"> Protocol 2 </th>
-   <th style="text-align:left;"> Samples </th>
-   <th style="text-align:left;"> Protocol 3 </th>
-   <th style="text-align:left;"> Data </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> CellCulture1 </td>
-   <td style="text-align:left;"> Drug treatment </td>
-   <td style="text-align:left;"> RNA extraction </td>
-   <td style="text-align:left;"> TechnicalRep1a </td>
-   <td style="text-align:left;"> Microarray hybridization </td>
-   <td style="text-align:left;"> GEOXXXXX </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CellCulture1 </td>
-   <td style="text-align:left;"> Drug treatment </td>
-   <td style="text-align:left;"> RNA extraction </td>
-   <td style="text-align:left;"> TechnicalRep2a </td>
-   <td style="text-align:left;"> Microarray hybridization </td>
-   <td style="text-align:left;"> GEOXXXXX </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CellCulture1 </td>
-   <td style="text-align:left;"> Drug treatment </td>
-   <td style="text-align:left;"> RNA extraction </td>
-   <td style="text-align:left;"> TechnicalRep3a </td>
-   <td style="text-align:left;"> Microarray hybridization </td>
-   <td style="text-align:left;"> GEOXXXXX </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CellCulture1 </td>
-   <td style="text-align:left;"> Drug treatment </td>
-   <td style="text-align:left;"> RNA extraction </td>
-   <td style="text-align:left;"> TechnicalRep1b </td>
-   <td style="text-align:left;"> Microarray hybridization </td>
-   <td style="text-align:left;"> GEOXXXXX </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CellCulture1 </td>
-   <td style="text-align:left;"> Drug treatment </td>
-   <td style="text-align:left;"> RNA extraction </td>
-   <td style="text-align:left;"> TechnicalRep2b </td>
-   <td style="text-align:left;"> Microarray hybridization </td>
-   <td style="text-align:left;"> GEOXXXXX </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CellCulture1 </td>
-   <td style="text-align:left;"> Drug treatment </td>
-   <td style="text-align:left;"> RNA extraction </td>
-   <td style="text-align:left;"> TechnicalRep3b </td>
-   <td style="text-align:left;"> Microarray hybridization </td>
-   <td style="text-align:left;"> GEOXXXXX </td>
-  </tr>
-</tbody>
-</table>
+(\#tab:Table1)Experimental study example Data Records table. [Table created using the flextable package.]
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>**Table 3.** Observational study example Data Records table.</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Sample </th>
-   <th style="text-align:left;"> Geographical Location </th>
-   <th style="text-align:left;"> Geoposition </th>
-   <th style="text-align:left;"> Protocol </th>
-   <th style="text-align:left;"> Data </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Body of water 1 </td>
-   <td style="text-align:left;"> location name </td>
-   <td style="text-align:left;"> latitude, longitude, altitude </td>
-   <td style="text-align:left;"> Measurement of surface temperature </td>
-   <td style="text-align:left;"> dataFile1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Body of water 2 </td>
-   <td style="text-align:left;"> location name </td>
-   <td style="text-align:left;"> latitude, longitude, altitude </td>
-   <td style="text-align:left;"> Measurement of surface temperature </td>
-   <td style="text-align:left;"> dataFile2 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Body of water n </td>
-   <td style="text-align:left;"> location name </td>
-   <td style="text-align:left;"> latitude, longitude, altitude </td>
-   <td style="text-align:left;"> Measurement of surface temperature </td>
-   <td style="text-align:left;"> dataFile3 </td>
-  </tr>
-</tbody>
-</table>
+</caption>
+```{=html}
+<thead><tr style="overflow-wrap:break-word;"><td class="cl-03eea3cc"><p class="cl-03edb8c6"><span class="cl-03ed91d4">Subjects</span></p></td><td class="cl-03eea3c9"><p class="cl-03edb8c6"><span class="cl-03ed91d4">Protocol 1</span></p></td><td class="cl-03eea3c8"><p class="cl-03edb8c6"><span class="cl-03ed91d4">Protocol 2</span></p></td><td class="cl-03eea3ca"><p class="cl-03edb8c6"><span class="cl-03ed91d4">Protocol 3</span></p></td><td class="cl-03eea3cb"><p class="cl-03edb8c6"><span class="cl-03ed91d4">Protocol 4</span></p></td><td class="cl-03eea3c7"><p class="cl-03edb8c6"><span class="cl-03ed91d4">Data</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-03ee7cc5"><p class="cl-03edb8c7"><span class="cl-03ed91d5">Mouse1</span></p></td><td class="cl-03ee7cc1"><p class="cl-03edb8c7"><span class="cl-03ed91d5">Drug treatment</span></p></td><td class="cl-03ee7cc2"><p class="cl-03edb8c7"><span class="cl-03ed91d5">Liver dissection</span></p></td><td class="cl-03ee7cc4"><p class="cl-03edb8c7"><span class="cl-03ed91d5">RNA extraction</span></p></td><td class="cl-03ee7cc3"><p class="cl-03edb8c7"><span class="cl-03ed91d5">RNA-Seq</span></p></td><td class="cl-03ee7cc0"><p class="cl-03edb8c7"><span class="cl-03ed91d5">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-03ee7cc5"><p class="cl-03edb8c7"><span class="cl-03ed91d5">Mouse2</span></p></td><td class="cl-03ee7cc1"><p class="cl-03edb8c7"><span class="cl-03ed91d5">Drug treatment</span></p></td><td class="cl-03ee7cc2"><p class="cl-03edb8c7"><span class="cl-03ed91d5">Liver dissection</span></p></td><td class="cl-03ee7cc4"><p class="cl-03edb8c7"><span class="cl-03ed91d5">RNA extraction</span></p></td><td class="cl-03ee7cc3"><p class="cl-03edb8c7"><span class="cl-03ed91d5">RNA-Seq</span></p></td><td class="cl-03ee7cc0"><p class="cl-03edb8c7"><span class="cl-03ed91d5">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-03eea3c6"><p class="cl-03edb8c7"><span class="cl-03ed91d5">Mousen</span></p></td><td class="cl-03ee7cc7"><p class="cl-03edb8c7"><span class="cl-03ed91d5">Drug treatment</span></p></td><td class="cl-03ee7cc8"><p class="cl-03edb8c7"><span class="cl-03ed91d5">Liver dissection</span></p></td><td class="cl-03ee7cca"><p class="cl-03edb8c7"><span class="cl-03ed91d5">RNA extraction</span></p></td><td class="cl-03ee7cc9"><p class="cl-03edb8c7"><span class="cl-03ed91d5">RNA-Seq</span></p></td><td class="cl-03ee7cc6"><p class="cl-03edb8c7"><span class="cl-03ed91d5">GEOXXXXX</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="f1d679c8-0bf7-41e1-9a37-a1de25fd10f0"></div>
+<script>
+var dest = document.getElementById("f1d679c8-0bf7-41e1-9a37-a1de25fd10f0");
+var template = document.getElementById("b2820581-6e98-4ee1-8b2a-1ef777423cf6");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>**Table 4.** Data aggregation study example Data Records table.</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Source </th>
-   <th style="text-align:left;"> Sample </th>
-   <th style="text-align:left;"> Sample Number </th>
-   <th style="text-align:left;"> Temporal Range </th>
-   <th style="text-align:left;"> Protocol 1 </th>
-   <th style="text-align:left;"> Protocol2 </th>
-   <th style="text-align:left;"> Data </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Database URL 1 </td>
-   <td style="text-align:left;"> Dataset 1 </td>
-   <td style="text-align:left;"> Number of samples in the dataset </td>
-   <td style="text-align:left;"> Range of measurements reported in the dataset </td>
-   <td style="text-align:left;"> Data assimilation procedure </td>
-   <td style="text-align:left;"> Method to generate output data </td>
-   <td style="text-align:left;"> dataFile1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Database URL 1 </td>
-   <td style="text-align:left;"> Dataset 2 </td>
-   <td style="text-align:left;"> Number of samples in the dataset </td>
-   <td style="text-align:left;"> Range of measurements reported in the dataset </td>
-   <td style="text-align:left;"> Data assimilation procedure </td>
-   <td style="text-align:left;"> Method to generate output data </td>
-   <td style="text-align:left;"> dataFile1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Database URL 2 </td>
-   <td style="text-align:left;"> Dataset n </td>
-   <td style="text-align:left;"> Number of samples in the dataset </td>
-   <td style="text-align:left;"> Range of measurements reported in the dataset </td>
-   <td style="text-align:left;"> Data assimilation procedure </td>
-   <td style="text-align:left;"> Method to generate output data </td>
-   <td style="text-align:left;"> dataFile2 </td>
-  </tr>
-</tbody>
-</table>
+```
+
+```{=html}
+<template id="46ef0a4a-3f59-42e3-95e5-3843ad767014"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style><div class="tabwid"><style>.cl-04247848{}.cl-041b2ad6{font-family:'Arial';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-041b2ad7{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-041b51e6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-041b51e7{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-041b9ffc{width:85.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041b9ffd{width:80.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041b9ffe{width:116.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041b9fff{width:70.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041ba000{width:70.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041ba001{width:81.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041ba002{width:85.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041ba003{width:70.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041ba004{width:80.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041ba005{width:116.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041ba006{width:70.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041bc702{width:81.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041bc703{width:80.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041bc704{width:85.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041bc705{width:81.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041bc706{width:70.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041bc707{width:70.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-041bc708{width:116.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-04247848'>
+```
+<caption class="Table Caption">
+
+(\#tab:Table2)Experimental study with replicates Data Records table. [Table created using the flextable package.]
+
+</caption>
+```{=html}
+<thead><tr style="overflow-wrap:break-word;"><td class="cl-041bc707"><p class="cl-041b51e6"><span class="cl-041b2ad6">Subjects</span></p></td><td class="cl-041bc703"><p class="cl-041b51e6"><span class="cl-041b2ad6">Protocol 1</span></p></td><td class="cl-041bc705"><p class="cl-041b51e6"><span class="cl-041b2ad6">Protocol 2</span></p></td><td class="cl-041bc704"><p class="cl-041b51e6"><span class="cl-041b2ad6">Samples</span></p></td><td class="cl-041bc708"><p class="cl-041b51e6"><span class="cl-041b2ad6">Protocol 3</span></p></td><td class="cl-041bc706"><p class="cl-041b51e6"><span class="cl-041b2ad6">Data</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-041b9fff"><p class="cl-041b51e7"><span class="cl-041b2ad7">CellCulture1</span></p></td><td class="cl-041b9ffd"><p class="cl-041b51e7"><span class="cl-041b2ad7">Drug treatment</span></p></td><td class="cl-041ba001"><p class="cl-041b51e7"><span class="cl-041b2ad7">RNA extraction</span></p></td><td class="cl-041b9ffc"><p class="cl-041b51e7"><span class="cl-041b2ad7">TechnicalRep1a</span></p></td><td class="cl-041b9ffe"><p class="cl-041b51e7"><span class="cl-041b2ad7">Microarray hybridization</span></p></td><td class="cl-041ba000"><p class="cl-041b51e7"><span class="cl-041b2ad7">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-041b9fff"><p class="cl-041b51e7"><span class="cl-041b2ad7">CellCulture1</span></p></td><td class="cl-041b9ffd"><p class="cl-041b51e7"><span class="cl-041b2ad7">Drug treatment</span></p></td><td class="cl-041ba001"><p class="cl-041b51e7"><span class="cl-041b2ad7">RNA extraction</span></p></td><td class="cl-041b9ffc"><p class="cl-041b51e7"><span class="cl-041b2ad7">TechnicalRep2a</span></p></td><td class="cl-041b9ffe"><p class="cl-041b51e7"><span class="cl-041b2ad7">Microarray hybridization</span></p></td><td class="cl-041ba000"><p class="cl-041b51e7"><span class="cl-041b2ad7">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-041b9fff"><p class="cl-041b51e7"><span class="cl-041b2ad7">CellCulture1</span></p></td><td class="cl-041b9ffd"><p class="cl-041b51e7"><span class="cl-041b2ad7">Drug treatment</span></p></td><td class="cl-041ba001"><p class="cl-041b51e7"><span class="cl-041b2ad7">RNA extraction</span></p></td><td class="cl-041b9ffc"><p class="cl-041b51e7"><span class="cl-041b2ad7">TechnicalRep3a</span></p></td><td class="cl-041b9ffe"><p class="cl-041b51e7"><span class="cl-041b2ad7">Microarray hybridization</span></p></td><td class="cl-041ba000"><p class="cl-041b51e7"><span class="cl-041b2ad7">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-041b9fff"><p class="cl-041b51e7"><span class="cl-041b2ad7">CellCulture1</span></p></td><td class="cl-041b9ffd"><p class="cl-041b51e7"><span class="cl-041b2ad7">Drug treatment</span></p></td><td class="cl-041ba001"><p class="cl-041b51e7"><span class="cl-041b2ad7">RNA extraction</span></p></td><td class="cl-041b9ffc"><p class="cl-041b51e7"><span class="cl-041b2ad7">TechnicalRep1b</span></p></td><td class="cl-041b9ffe"><p class="cl-041b51e7"><span class="cl-041b2ad7">Microarray hybridization</span></p></td><td class="cl-041ba000"><p class="cl-041b51e7"><span class="cl-041b2ad7">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-041b9fff"><p class="cl-041b51e7"><span class="cl-041b2ad7">CellCulture1</span></p></td><td class="cl-041b9ffd"><p class="cl-041b51e7"><span class="cl-041b2ad7">Drug treatment</span></p></td><td class="cl-041ba001"><p class="cl-041b51e7"><span class="cl-041b2ad7">RNA extraction</span></p></td><td class="cl-041b9ffc"><p class="cl-041b51e7"><span class="cl-041b2ad7">TechnicalRep2b</span></p></td><td class="cl-041b9ffe"><p class="cl-041b51e7"><span class="cl-041b2ad7">Microarray hybridization</span></p></td><td class="cl-041ba000"><p class="cl-041b51e7"><span class="cl-041b2ad7">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-041ba006"><p class="cl-041b51e7"><span class="cl-041b2ad7">CellCulture1</span></p></td><td class="cl-041ba004"><p class="cl-041b51e7"><span class="cl-041b2ad7">Drug treatment</span></p></td><td class="cl-041bc702"><p class="cl-041b51e7"><span class="cl-041b2ad7">RNA extraction</span></p></td><td class="cl-041ba002"><p class="cl-041b51e7"><span class="cl-041b2ad7">TechnicalRep3b</span></p></td><td class="cl-041ba005"><p class="cl-041b51e7"><span class="cl-041b2ad7">Microarray hybridization</span></p></td><td class="cl-041ba003"><p class="cl-041b51e7"><span class="cl-041b2ad7">GEOXXXXX</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="68e40b50-bbef-4ffc-9eef-133e2c8dfc1f"></div>
+<script>
+var dest = document.getElementById("68e40b50-bbef-4ffc-9eef-133e2c8dfc1f");
+var template = document.getElementById("46ef0a4a-3f59-42e3-95e5-3843ad767014");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+```
+
+```{=html}
+<template id="966d566c-2929-4ccf-8b6a-3b64861ca201"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style><div class="tabwid"><style>.cl-04503da2{}.cl-0443bb9a{font-family:'Arial';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-0443bb9b{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-0443e2a0{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-0443e2a1{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-044409a6{width:57.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-044409a7{width:118pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-044409a8{width:125.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-044409a9{width:168.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-044409aa{width:83.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-044409ab{width:57.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-044409ac{width:118pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-044409ad{width:125.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-044409ae{width:168.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-044409af{width:83.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-044409b0{width:57.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-044430b6{width:118pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-044430b7{width:125.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-044430b8{width:168.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-044430b9{width:83.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-04503da2'>
+```
+<caption class="Table Caption">
+
+(\#tab:Table3)Observational study example Data Records table. [Table created using the flextable package.]
+
+</caption>
+```{=html}
+<thead><tr style="overflow-wrap:break-word;"><td class="cl-044430b9"><p class="cl-0443e2a0"><span class="cl-0443bb9a">Sample</span></p></td><td class="cl-044430b6"><p class="cl-0443e2a0"><span class="cl-0443bb9a">Geographical Location</span></p></td><td class="cl-044430b7"><p class="cl-0443e2a0"><span class="cl-0443bb9a">Geoposition</span></p></td><td class="cl-044430b8"><p class="cl-0443e2a0"><span class="cl-0443bb9a">Protocol</span></p></td><td class="cl-044409b0"><p class="cl-0443e2a0"><span class="cl-0443bb9a">Data</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-044409aa"><p class="cl-0443e2a1"><span class="cl-0443bb9b">Body of water 1</span></p></td><td class="cl-044409a7"><p class="cl-0443e2a1"><span class="cl-0443bb9b">location name</span></p></td><td class="cl-044409a8"><p class="cl-0443e2a1"><span class="cl-0443bb9b">latitude, longitude, altitude</span></p></td><td class="cl-044409a9"><p class="cl-0443e2a1"><span class="cl-0443bb9b">Measurement of surface temperature</span></p></td><td class="cl-044409a6"><p class="cl-0443e2a1"><span class="cl-0443bb9b">dataFile1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-044409aa"><p class="cl-0443e2a1"><span class="cl-0443bb9b">Body of water 2</span></p></td><td class="cl-044409a7"><p class="cl-0443e2a1"><span class="cl-0443bb9b">location name</span></p></td><td class="cl-044409a8"><p class="cl-0443e2a1"><span class="cl-0443bb9b">latitude, longitude, altitude</span></p></td><td class="cl-044409a9"><p class="cl-0443e2a1"><span class="cl-0443bb9b">Measurement of surface temperature</span></p></td><td class="cl-044409a6"><p class="cl-0443e2a1"><span class="cl-0443bb9b">dataFile2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-044409af"><p class="cl-0443e2a1"><span class="cl-0443bb9b">Body of water n</span></p></td><td class="cl-044409ac"><p class="cl-0443e2a1"><span class="cl-0443bb9b">location name</span></p></td><td class="cl-044409ad"><p class="cl-0443e2a1"><span class="cl-0443bb9b">latitude, longitude, altitude</span></p></td><td class="cl-044409ae"><p class="cl-0443e2a1"><span class="cl-0443bb9b">Measurement of surface temperature</span></p></td><td class="cl-044409ab"><p class="cl-0443e2a1"><span class="cl-0443bb9b">dataFile3</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="d679ac3e-de79-44d1-a96e-3c8888a5621c"></div>
+<script>
+var dest = document.getElementById("d679ac3e-de79-44d1-a96e-3c8888a5621c");
+var template = document.getElementById("966d566c-2929-4ccf-8b6a-3b64861ca201");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+```
+
+```{=html}
+<template id="068164fa-2c59-4dc7-a1d7-202cc4d6e53a"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style><div class="tabwid"><style>.cl-047cebb8{}.cl-0473021a{font-family:'Arial';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-0473021b{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-04732920{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-04732921{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-04735030{width:59.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04735031{width:155.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04735032{width:87.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04735033{width:146.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04735034{width:57.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04735035{width:211.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04735036{width:132.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04735037{width:155.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04735038{width:211.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04735039{width:87.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0473503a{width:59.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0473774a{width:57.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0473774b{width:132.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0473774c{width:146.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0473774d{width:87.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0473774e{width:59.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0473774f{width:155.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04737750{width:211.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04737751{width:132.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04737752{width:146.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04737753{width:57.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-047cebb8'>
+```
+<caption class="Table Caption">
+
+(\#tab:Table4)Observational study example Data Records table. [Table created using the flextable package.]
+
+</caption>
+```{=html}
+<thead><tr style="overflow-wrap:break-word;"><td class="cl-0473774d"><p class="cl-04732920"><span class="cl-0473021a">Source</span></p></td><td class="cl-0473774e"><p class="cl-04732920"><span class="cl-0473021a">Sample</span></p></td><td class="cl-0473774f"><p class="cl-04732920"><span class="cl-0473021a">Sample Number</span></p></td><td class="cl-04737750"><p class="cl-04732920"><span class="cl-0473021a">Temporal Range</span></p></td><td class="cl-04737751"><p class="cl-04732920"><span class="cl-0473021a">Protocol 1</span></p></td><td class="cl-04737752"><p class="cl-04732920"><span class="cl-0473021a">Protocol 2</span></p></td><td class="cl-04737753"><p class="cl-04732920"><span class="cl-0473021a">Data</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-04735032"><p class="cl-04732921"><span class="cl-0473021b">Database URL 1</span></p></td><td class="cl-04735030"><p class="cl-04732921"><span class="cl-0473021b">Dataset 1</span></p></td><td class="cl-04735031"><p class="cl-04732921"><span class="cl-0473021b">Number of samples in the dataset</span></p></td><td class="cl-04735035"><p class="cl-04732921"><span class="cl-0473021b">Range of measurements reported in the dataset</span></p></td><td class="cl-04735036"><p class="cl-04732921"><span class="cl-0473021b">Data assimilation procedure</span></p></td><td class="cl-04735033"><p class="cl-04732921"><span class="cl-0473021b">Method to generate output data</span></p></td><td class="cl-04735034"><p class="cl-04732921"><span class="cl-0473021b">dataFile1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-04735032"><p class="cl-04732921"><span class="cl-0473021b">Database URL 1</span></p></td><td class="cl-04735030"><p class="cl-04732921"><span class="cl-0473021b">Dataset 2</span></p></td><td class="cl-04735031"><p class="cl-04732921"><span class="cl-0473021b">Number of samples in the dataset</span></p></td><td class="cl-04735035"><p class="cl-04732921"><span class="cl-0473021b">Range of measurements reported in the dataset</span></p></td><td class="cl-04735036"><p class="cl-04732921"><span class="cl-0473021b">Data assimilation procedure</span></p></td><td class="cl-04735033"><p class="cl-04732921"><span class="cl-0473021b">Method to generate output data</span></p></td><td class="cl-04735034"><p class="cl-04732921"><span class="cl-0473021b">dataFile1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-04735039"><p class="cl-04732921"><span class="cl-0473021b">Database URL 2</span></p></td><td class="cl-0473503a"><p class="cl-04732921"><span class="cl-0473021b">Dataset n</span></p></td><td class="cl-04735037"><p class="cl-04732921"><span class="cl-0473021b">Number of samples in the dataset</span></p></td><td class="cl-04735038"><p class="cl-04732921"><span class="cl-0473021b">Range of measurements reported in the dataset</span></p></td><td class="cl-0473774b"><p class="cl-04732921"><span class="cl-0473021b">Data assimilation procedure</span></p></td><td class="cl-0473774c"><p class="cl-04732921"><span class="cl-0473021b">Method to generate output data</span></p></td><td class="cl-0473774a"><p class="cl-04732921"><span class="cl-0473021b">dataFile2</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="af8c6b5d-20fd-442e-9f5c-17c6bbf1b7c7"></div>
+<script>
+var dest = document.getElementById("af8c6b5d-20fd-442e-9f5c-17c6bbf1b7c7");
+var template = document.getElementById("068164fa-2c59-4dc7-a1d7-202cc4d6e53a");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+```
 
