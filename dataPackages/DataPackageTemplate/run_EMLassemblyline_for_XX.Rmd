@@ -1,0 +1,196 @@
+---
+title: "EML metadata generation"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+Complete each step in this R Markdown notebook in order to create a data package complete with EML metadata.
+
+The data package will be a zip file containing:  
+
+  1. zip file of csv data  
+  1. xml metadata file (EML format)  
+  1. data package manifest (data package info and listing of files) 
+  
+See [the EML documentation](https://eml.ecoinformatics.org/) for much more information about metadata.
+
+# Before you start
+
+## Knit the DRR
+
+Knit the DRR if you haven't yet or if you have made changes to the parameters. Then run the code below (you shouldn't need to modify it).
+
+```{r load_params}
+load(here::here("data", "temp", "reportParameters.RData"))
+```
+
+## Load packages
+
+These are the R packages that are needed. If there is an R package that you use to load your data, add it to the list. 
+
+```{r pkg_list}
+pkgList <- c("devtools",
+             "EML",
+             "EMLassemblyline",
+             "lubridate",
+             "readtext",
+             "zip",
+             "readxl",
+             "readr",
+             "dplyr"
+             # Your R package(s) here
+)
+```
+
+The `EMLassemblyline` package needs to be installed from GitHub. If you added any packages to the list above that also need to be installed from GitHub, do it below.
+
+```{r inst_from_gh}
+if (!("EMLassemblyline" %in% installed.packages())) {
+  remotes::install_github("EDIorg/EMLassemblyline")
+}
+
+# if (!("mypackage" %in% installed.packages())) {
+#   remotes::install_github("mygithubaccount/mypackagerepo")
+# }
+```
+
+Now we install packages from CRAN as needed and load everything. You shouldn't need to modify the code chunk below.
+
+```{r inst_from_cran}
+inst <- pkgList %in% installed.packages()
+if (length(pkgList[!inst]) > 0) {
+  install.packages(pkgList[!inst], dep = TRUE,
+                   repos = "https://cloud.r-project.org")
+}
+```
+
+lapply(pkgList, library, character.only = TRUE, quietly = TRUE)
+
+## Set up the data package
+
+  1. Choose a name for your data package. This will be used as the name of the data package folder, and it will be used to name files within the data package.
+  1. If you haven't already, **make a copy of the DataPackageTemplate folder and rename it to the name of the data package.**
+  1. **Rename this file to contain the name of your data package.**
+  1. Assign the data package name to a variable (below).
+  
+```{r package_name}
+  data_pkg_name <- "MyDataPackage"
+```
+
+# User-supplied information
+
+In this section, you will fill out some information that is specific to your network and your project.
+
+## Data dictionary
+
+You should have three data dictionary files.
+
+  - **data_dictionary_tables.txt** describes your data tables. It should contain columns for table name (e.g. Site, WaterQuality, etc), file name (the csv that the data is written to), and data table description.
+  - **data_dictionary_fields.txt** describes each column of each data table. It contains columns for data table, column name, column description, data type, unit (e.g. ft, m, etc), date/time format, missing value code, and missing value code description.
+  - **data_dictionary_categories.txt** provides a lookup for any codes used in the data (e.g. DPL codes). It contains columns for the column name containing the code (e.g. DPL), the code itself (e.g. C), and the definition of the code (e.g. Certified).
+  
+### File locations
+
+Verify that the locations and filenames are correct for your data dictionary files.
+
+```{r dd_paths}
+dd_tables_path <- here::here("data", "dictionary", "data_dictionary_tables.txt")  # The file path to the table data dictionary
+dd_fields_path <- here::here("data", "dictionary", "data_dictionary_fields.txt")  # The file path to the fields data dictionary
+dd_categories_path <- here::here("data", "dictionary", "data_dictionary_categories.txt")  # The file path to the categories data dictionary
+```
+
+### Column names
+
+The following are named vectors mapping the names of your data dictionary columns to the column names required by EML (or expected by this script).  
+If your data dictionary column names match the EML required columns, leave this as is.  
+Otherwise, change the column names on the **left hand side** of the equals sign to the names of the columns in your data dictionary (e.g. "my_table_col" = "Table_Name").
+
+```{r dd_columns}
+dd_tables_cols <- c("Table_Name" = "Table_Name",
+                    "File_Name" = "File_Name",
+                    "Description" = "Description"
+                    )
+dd_fields_cols <- c("tableName" = "tableName",
+                    "attributeName" = "attributeName",
+                    "attributeDefinition" = "attributeDefinition",
+                    "class" = "class",
+                    "unit" = "unit",
+                    "dateTimeFormatString" = "dateTimeFormatString",
+                    "missingValueCode" = "missingValueCode",
+                    "missingValueCodeExplanation" = "missingValueCodeExplanation")
+dd_categories_cols <- c("attributeName" = "attributeName",
+                        "code" = "code",
+                        "definition" = "definition")
+```
+
+### Read in data dictionaries
+
+If you've set everything up correctly, the code chunks below should run without modification and display your data dictionaries.
+
+**Tables dictionary**
+
+```{r table_dict}
+tables_dict <- read_tsv(here::here("data", "dictionary", "data-dictionary-tables.txt"), lazy = FALSE)
+tables_dict <- tables_dict[names(dd_tables_cols)]  # Select only expected cols
+names(tables_dict) <- dd_tables_cols  # Apply standard col names
+tables_dict
+```
+
+**Fields dictionary**
+
+```{r fields_dict}
+fields_dict <- readr::read_tsv(here::here("data", "dictionary", "data-dictionary-fields.txt"), lazy = FALSE)
+fields_dict <- fields_dict[names(dd_fields_cols)]
+names(fields_dict) <- dd_fields_cols
+fields_dict
+```
+
+**Categorical variables (codes) dictionary**
+
+```{r}
+cat_vars <- readr::read_tsv(here::here("data", "dictionary", "data-dictionary-categories.txt"), lazy = FALSE)
+cat_vars <- cat_vars[names(dd_categories_cols)]
+names(cat_vars) <- dd_categories_cols
+cat_vars
+```
+
+## Manually enter some metadata
+
+Navigate to the metadata_templates folder inside of the data package folder. There are two files that you must update and another two that you may need to change.
+
+To modify these tab separated files, open them in Excel. Make your changes, save the file, and close it. You may want to open the file in Notepad++ to verify that the encoding is UTF-8, especially if you used special characters.
+
+### Required
+
+**personnel.txt**  
+I *think* that a creator, PI, and contact are all required. These can be the same person. It's fine to omit fundingAgency and fundingNumber if they don't apply. projectTitle is only required for PI.
+
+**keywords.txt**
+A handful of keywords relating to your data. What sorts of words/phrases would you Google search to find data like yours? keywordThesaurus and keywordType are optional and can be left blank. See [the EML documentation](https://eml.ecoinformatics.org/) for more info.
+
+### Optional/as needed
+
+**custom_units.txt**
+If your data uses units that are not in the EML unit dictionary, you will need to add them as custom units. To view the EML unit dictionary, use `EMLassemblyline::view_unit_dictionary()`.
+
+**intellectual_rights.txt**
+Most of the time you can leave this as-is. Review it and make sure that Creative Commons CC0 1.0 No Rights Reserved is the appropriate license for your work.
+
+## Load your data
+
+This script figures out the data type (numeric, character, etc.) of each column in your data so that you don't have to.
+
+You just need to load your data into R before this can happen. Do this below. Data should be formatted as a named list of dataframes, where each list item is a dataframe corresponding to a CSV in data/final. The list names should match the table names in `tables_dict$Table_Name`.
+
+Make sure that the columns of each dataframe are assigned the correct data types. `read_csv` does its best to guess data types based on the first handful of rows of data, but sometimes it gets it wrong.
+
+```{r load_data}
+# This is an example of reading in NCCN landbirds data using the nccnbirds package. You'll need to write different code for your data.
+# all_data <- nccnbirds::LoadLandbirds(data_path = here::here("data", "raw"), cache = FALSE)
+```
+
+# Automated metadata generation
+
+The following code chunks should not need to be changed. I recommend running them one at a time to verify that everything is working.
+
