@@ -103,7 +103,7 @@ names(fields_dict) <- dd_fields_cols
 # Get R datatypes for data - first, get a list of all the data as dataframes, then use sapply and typeof() to get each column type
 # This code must be modified to work with your data
 # Make sure that however you load your data, the column data types are correct
-all_data <- nccnbirds::LoadLandbirds(data_path = here::here("data", "raw"), cache = FALSE)
+all_data <- nccnbirds::LoadLandbirds(data_path = here::here("data", "final"), cache = FALSE)
 
 data_types <- sapply(all_data, function(df) {sapply(df, class)})
 
