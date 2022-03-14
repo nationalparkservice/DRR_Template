@@ -160,16 +160,16 @@ geographicDescription <- "Landbird surveys in NCCN parks"
 # Generate geographic coverage
 template_geographic_coverage(
   path = here::here("dataPackages", "DataPackageTemplate", "metadata_templates"),
-  data.path = here::here("data", "raw"),
+  data.path = here::here("data", "final"),
   data.table = 'Sites.csv',
   site.col = 'Site_code',
-  lat.col = 'UTME_public',
-  lon.col = 'UTMN_public'
+  lat.col = 'Lat',
+  lon.col = 'Lon'
 )
 
 #### Step 4: Set Temporal Coverage ####
-beginDate <- min(all_data$Events$Event_date)
-endDate <- max(all_data$Events$Event_date)
+begin_date <- min(all_data$Events$Event_date)
+end_date <- max(all_data$Events$Event_date)
 
 #### Step 5: Create EML File ####
 intellectual_rights<-readLines(here::here("dataPackages", "DataPackageTemplate", "metadata_templates","intellectual_rights.txt"),encoding="UTF-8")
