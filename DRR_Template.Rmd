@@ -123,9 +123,9 @@ lapply(pkgList, library, character.only = TRUE, quietly = TRUE)
 if (! "EMLassemblyline" %in% installed.packages()) remotes::install_github("EDIorg/EMLassemblyline")
 require("EMLassemblyline")  
 
-# If your data has an R package associated with it, install it here
-if (!("nccnbirds" %in% installed.packages())) remotes::install_github("NCCN-Landbirds/nccn-landbirds-package")
-require("nccnbirds")  
+# If your data has an R package associated with it, install it here. NCCN landbirds package used as an example below.
+# if (!("nccnbirds" %in% installed.packages())) remotes::install_github("NCCN-Landbirds/nccn-landbirds-package")
+# require("nccnbirds")  
 
 # create stub of citations for packages
 pkgBibTex <- lapply(c("base", pkgList, RRpackages), citation)
@@ -138,7 +138,8 @@ knitr::opts_chunk$set(
    dev = "svg",
    fig.path = here::here("figures"),
    tidy.opts = list(width.cutoff = 60),
-   tidy = TRUE
+   tidy = TRUE,
+   out.width = "100%"
    )
 # if ggplot, update theme to default to centered titles
 if ("ggplot2" %in% .packages()) {
