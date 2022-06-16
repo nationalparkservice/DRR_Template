@@ -38,7 +38,10 @@ pkgList <- c("devtools",
              "zip",
              "readxl",
              "readr",
-             "dplyr"
+             "dplyr",
+             "magrittr",
+             "stringr",
+             "gh"  # For getting github personal access tokens to download package from private repo
              # Your R package(s) here
 )
 ```
@@ -51,7 +54,7 @@ if (!("EMLassemblyline" %in% installed.packages())) {
 }
 
 # if (!("mypackage" %in% installed.packages())) {
-#   remotes::install_github("mygithubaccount/mypackagerepo")
+#   remotes::install_github("mygithubaccount/mypackagerepo", auth_token = gh::gh_token())  # Omit auth_token arg for public repos
 # }
 ```
 
@@ -63,14 +66,13 @@ if (length(pkgList[!inst]) > 0) {
   install.packages(pkgList[!inst], dep = TRUE,
                    repos = "https://cloud.r-project.org")
 }
-```
-
 lapply(pkgList, library, character.only = TRUE, quietly = TRUE)
+```
 
 ## Set up the data package
 
   1. Choose a name for your data package. This will be used as the name of the data package folder, and it will be used to name files within the data package.
-  1. If you haven't already, **make a copy of the DataPackageTemplate folder and rename it to the name of the data package.**
+  1. If you haven't already, **rename the DataPackageTemplate folder to the name of your data package.**
   1. **Rename this file to contain the name of your data package.**
   1. Assign the data package name to a variable (below).
   
@@ -86,13 +88,13 @@ In this section, you will fill out some information that is specific to your net
 
 This script figures out the data type (numeric, character, etc.) of each column in your data so that you don't have to.
 
-You just need to load your data into R before this can happen. Do this below. Data should be formatted as a named list of dataframes, where each list item is a dataframe corresponding to a CSV in data/final. The list names should match the table names in `tables_dict$Table_Name`.
+You just need to load your data into R before this can happen. Do this below. Data should be formatted as a named list of dataframes, where each list item is a dataframe corresponding to a CSV in data/final. The list names should match the table names in `tables_dict$tableName`.
 
 Make sure that the columns of each dataframe are assigned the correct data types. `read_csv` does its best to guess data types based on the first handful of rows of data, but sometimes it gets it wrong.
 
 ```{r load_data}
 # This is an example of reading in NCCN landbirds data using the nccnbirds package. You'll need to write different code for your data.
-# all_data <- nccnbirds::LoadLandbirds(data_path = here::here("data", "raw"), cache = FALSE)
+# all_data <- nccnbirds::LoadLandbirds(data_path = here::here("data", "final"), cache = FALSE)
 ```
 
 ## Data dictionary
@@ -109,7 +111,7 @@ Verify that the locations and filenames are correct for your data dictionary fil
 
 ```{r dd_paths}
 dd_tables_path <- here::here("data", "dictionary", "data_dictionary_tables.txt")  # The file path to the table data dictionary
-dd_fields_path <- here::here("data", "dictionary", "data_dictionary_fields.txt")  # The file path to the fields data dictionary
+dd_fields_path <- here::here("data", "dictionary", "data_dictionary_attributes.txt")  # The file path to the fields data dictionary
 dd_categories_path <- here::here("data", "dictionary", "data_dictionary_categories.txt")  # The file path to the categories data dictionary
 ```
 
@@ -117,12 +119,12 @@ dd_categories_path <- here::here("data", "dictionary", "data_dictionary_categori
 
 The following are named vectors mapping the names of your data dictionary columns to the column names required by EML (or expected by this script).  
 If your data dictionary column names match the EML required columns, leave this as is.  
-Otherwise, change the column names on the **left hand side** of the equals sign to the names of the columns in your data dictionary (e.g. "my_table_col" = "Table_Name").
+Otherwise, change the column names on the **left hand side** of the equals sign to the names of the columns in your data dictionary (e.g. "my_table_col" = "tableName").
 
 ```{r dd_columns}
-dd_tables_cols <- c("Table_Name" = "Table_Name",
-                    "File_Name" = "File_Name",
-                    "Description" = "Description"
+dd_tables_cols <- c("tableName" = "tableName",
+                    "fileName" = "fileName",
+                    "tableDescription" = "tableDescription"
                     )
 dd_fields_cols <- c("tableName" = "tableName",
                     "attributeName" = "attributeName",
@@ -144,7 +146,7 @@ If you've set everything up correctly, the code chunks below should run without 
 **Tables dictionary**
 
 ```{r table_dict}
-tables_dict <- read_tsv(here::here("data", "dictionary", "data-dictionary-tables.txt"), lazy = FALSE)
+tables_dict <- read_tsv(dd_tables_path, lazy = FALSE)
 tables_dict <- tables_dict[names(dd_tables_cols)]  # Select only expected cols
 names(tables_dict) <- dd_tables_cols  # Apply standard col names
 tables_dict
@@ -153,7 +155,7 @@ tables_dict
 **Fields dictionary**
 
 ```{r fields_dict}
-fields_dict <- readr::read_tsv(here::here("data", "dictionary", "data-dictionary-fields.txt"), lazy = FALSE)
+fields_dict <- readr::read_tsv(dd_fields_path, lazy = FALSE)
 fields_dict <- fields_dict[names(dd_fields_cols)]
 names(fields_dict) <- dd_fields_cols
 fields_dict
@@ -161,8 +163,8 @@ fields_dict
 
 **Categorical variables (codes) dictionary**
 
-```{r}
-cat_vars <- readr::read_tsv(here::here("data", "dictionary", "data-dictionary-categories.txt"), lazy = FALSE)
+```{r cat_dict}
+cat_vars <- readr::read_tsv(dd_categories_path, lazy = FALSE)
 cat_vars <- cat_vars[names(dd_categories_cols)]
 names(cat_vars) <- dd_categories_cols
 cat_vars
@@ -172,20 +174,20 @@ cat_vars
 
 Provide a brief text description of the geographic extent of your data:
 
-```{r}
-geographic_description <- "Landbird surveys in all NCCN parks"
+```{r geo_desc}
+geographic_description <- "Surveys of X in Y parks"
 ```
 
-Next, provide the file path and name of the data table that contains your monitoring site locations.
+Next, provide the file path and name of the data table that contains your monitoring site locations in lat/long coordinates. If your coordinates are in UTM, add code here to convert them.
 
-```{r}
+```{r geo_table}
 site_table_path <- here::here("data", "final")  # You may not need to change this
-site_table_name <- "Sites.csv"
+site_table_name <- "Sites.csv"  # The name of the CSV with monitoring locations
 ```
 
 Finally, provide the names of the columns in the above table that correspond to the site code, latitude, and longitude.
 
-```{r}
+```{r geo_cols}
 site_col <- "Site_code"
 lat_col <- "Lat"
 lon_col <- "Lon"
@@ -195,9 +197,10 @@ lon_col <- "Lon"
 
 Set the start and end dates of your data. Typically you can extract this information from one of the loaded data tables.
 
-```{r}
-begin_date <- min(all_data$Events$Event_date)
-end_date <- max(all_data$Events$Event_date)
+```{r temporal}
+# You will probably need to modify this code to work with your data
+begin_date <- min(all_data$events$Event_date, na.rm = TRUE)
+end_date <- max(all_data$events$Event_date, na.rm = TRUE)
 ```
 
 
@@ -230,8 +233,16 @@ The following code chunks should not need to be changed. I recommend running the
 
 ## Copy data to data objects folder
 
-```{r}
-file_names <- tables_dict$File_Name  # Depending on how your files are named, you may need to do some more work to get the filenames
+```{r copy_data}
+file_names <- sapply(tables_dict$fileName, function(fname) {
+  list.files(here::here("data", "final"), pattern = fname)
+}) %>%
+  unlist()
+
+# Delete existing data files from data_objects folder each time this code is rerun. May want to change this if you are manually putting files from other sources in the data_objects foler.
+files_to_del <- list.files(here::here("dataPackages", data_pkg_name, "data_objects"), "*.csv")
+file.remove(here::here("dataPackages", data_pkg_name, "data_objects", files_to_del))
+
 file.copy(from = here::here("data", "final", file_names),
           to = here::here("dataPackages", data_pkg_name, "data_objects"),
           overwrite = TRUE)
@@ -239,10 +250,14 @@ file.copy(from = here::here("data", "final", file_names),
 
 ## Set column data types
 
-```{r}
+```{r data_types}
 # Get R datatypes for data - take all_data and use sapply and typeof() to get each column type
 
-data_types <- sapply(all_data, function(df) {sapply(df, class)})
+data_types <- sapply(all_data, function(df) {
+  sapply(df, function(df2) {
+    class(df2)[1]  # Just get the first (most specific) class if there are multiple
+  })
+})
 
 # Add R datatypes to data dictionary
 # There must be a more R way to do this
@@ -259,7 +274,7 @@ class_map <- c(
   POSIXt = "Date")
 
 for (i in 1:nrow(fields_dict)) {
-  tbl <- fields_dict$tableName[i]
+  tbl <- fields_dict$dataName[i]
   col <- fields_dict$attributeName[i]
   data_type <- data_types[[tbl]][col]
   fields_dict[[i, "storageType"]] <- data_type
@@ -276,7 +291,7 @@ fields_dict %<>% dplyr::mutate(missingValueCode = ifelse(is.na(missingValueCode)
 
 ## Write attributes and categorical variables to tables that will be used by `make_eml()`
 
-```{r}
+```{r make_attr_cat_tbls}
 # Write attributes and categorical vars to tab separated text files
 for (datafile in unique(fields_dict$tableName)) {
   # Table-level attributes
@@ -287,14 +302,16 @@ for (datafile in unique(fields_dict$tableName)) {
   # Table-level categorical vars
   cat <- cat_vars[cat_vars$attributeName %in% attr$attributeName, ]
   
-  readr::write_tsv(attr, here::here("dataPackages", "DataPackageTemplate", "metadata_templates", paste0("attributes_", datafile, ".txt")))
-  readr::write_tsv(cat, here::here("dataPackages", "DataPackageTemplate", "metadata_templates", paste0("catvars_", datafile, ".txt")))
+  datafile <- str_remove(datafile, ".csv")
+  
+  readr::write_tsv(attr, here::here("dataPackages", data_pkg_name, "metadata_templates", paste0("attributes_", datafile, ".txt")))
+  readr::write_tsv(cat, here::here("dataPackages", data_pkg_name, "metadata_templates", paste0("catvars_", datafile, ".txt")))
 }
 ```
 
 ## Create some more metadata files
 
-```{r}
+```{r other_metadata}
 intellectual_rights<-readLines(here::here("dataPackages", "DataPackageTemplate", "metadata_templates","intellectual_rights.txt"),encoding="UTF-8")
 
 themekeywords<-read.delim(here::here("dataPackages", "DataPackageTemplate", "metadata_templates","keywords.txt"))
@@ -313,7 +330,7 @@ writeLines(methodstext,here::here("dataPackages", "DataPackageTemplate", "metada
 
 ## Set filenames
 
-```{r}
+```{r set_filenames}
 manifestfilename <- here::here("dataPackages", data_pkg_name, "eml", paste0(params$dataPackage1Description, "_", params$dataPackage1RefID, "_manifest.txt"))
 metadatafilename <- here::here("dataPackages", data_pkg_name, "eml", paste0(params$dataPackage1Description, "_", params$dataPackage1RefID, "_metadata.xml"))
 datafilename <- here::here("dataPackages", data_pkg_name, "eml", paste0(params$dataPackage1Description, "_", params$dataPackage1RefID, "_data.zip"))
@@ -323,16 +340,16 @@ datapackagefilename <- here::here("dataPackages", data_pkg_name, "eml", paste0(p
 
 ## Create the EML file
 
-```{r}
+```{r make_eml}
 make_eml(
-  path = here::here("dataPackages", "DataPackageTemplate", "metadata_templates"),
-  data.path = here::here("dataPackages", "DataPackageTemplate", "data_objects"),
-  data.table = tables_dict$File_Name,
-  data.table.name = tables_dict$Table_Name,
-  data.table.description = tables_dict$Table_Description,
-  eml.path = here::here("dataPackages", "DataPackageTemplate", "eml"),
+  path = here::here("dataPackages", data_pkg_name, "metadata_templates"),
+  data.path = here::here("dataPackages", data_pkg_name, "data_objects"),
+  data.table = tables_dict$fileName,
+  data.table.name = tables_dict$tableName,
+  data.table.description = tables_dict$tableDescription,
+  eml.path = here::here("dataPackages", data_pkg_name, "eml"),
   dataset.title = params$dataPackage1Title, 
-  temporal.coverage = c(as.Date(beginDate), as.Date(endDate)),
+  temporal.coverage = c(as.Date(begin_date), as.Date(end_date)),
   maintenance.description = 'completed',
   package.id = paste0(params$dataPackage1Description, "_", params$dataPackage1RefID, "_metadata")
 )
@@ -340,7 +357,7 @@ make_eml(
 
 ## Create the manifest file
 
-```{r}
+```{r make_manifest}
 cat("This data package was produced by the National Park Service (NPS) Inventory and Monitoring Division and can be downloaded from the [NPS Data Store](https://irma.nps.gov/DataStore/Reference/Profile/",params$dataPackage1RefID,").",file=manifestfilename,"\n",sep="") 
 cat("These data are provided under the Creative Commons CC0 1.0 “No Rights Reserved” (see: https://creativecommons.org/publicdomain/zero/1.0/).",file=manifestfilename,sep="\n",append=TRUE)
 cat(" ",file=manifestfilename,sep="\n",append=TRUE)
@@ -366,7 +383,7 @@ cat("Abstract: ",abstract,file=manifestfilename,"\n",sep="",append=TRUE)
 cat(" ",file=manifestfilename,sep="\n",append=TRUE)
 
 #Brief Study Area Description
-cat("Brief Study Area Description: ",geographicDescription,file=manifestfilename,"\n",sep="",append=TRUE) 
+cat("Brief Study Area Description: ",geographic_description,file=manifestfilename,"\n",sep="",append=TRUE) 
 cat(" ",file=manifestfilename,sep="\n",append=TRUE)
 
 #Keywords
@@ -440,7 +457,7 @@ cat(" ",file=manifestfilename,sep="\n",append=TRUE)
 
 ## Zip up the data and the package
 
-```{r}
+```{r zip_pkg}
 ### Zip up data
 zip::zip(zipfile = datafilename, 
          files = file_names, 
