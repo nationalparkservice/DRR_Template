@@ -5,6 +5,14 @@
     border-color: #4b5e26;
 }
 
+a {
+    color: #934e19;
+}
+
+a:hover {
+    color: #e37b2b;
+}
+
 blockquote {
     padding: 10px 20px;
     margin: 0 0 20px;

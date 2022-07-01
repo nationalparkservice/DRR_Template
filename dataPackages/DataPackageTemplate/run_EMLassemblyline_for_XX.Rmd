@@ -1,0 +1,471 @@
+---
+title: "EML metadata generation"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+Complete each step in this R Markdown notebook in order to create a data package complete with EML metadata.
+
+The data package will be a zip file containing:  
+
+  1. zip file of csv data  
+  1. xml metadata file (EML format)  
+  1. data package manifest (data package info and listing of files) 
+  
+See [the EML documentation](https://eml.ecoinformatics.org/) for much more information about metadata.
+
+# Before you start
+
+## Knit the DRR
+
+Knit the DRR if you haven't yet or if you have made changes to the parameters. Then run the code below (you shouldn't need to modify it).
+
+```{r load_params}
+load(here::here("data", "temp", "reportParameters.RData"))
+```
+
+## Load packages
+
+These are the R packages that are needed. If there is an R package that you use to load your data, add it to the list. 
+
+```{r pkg_list}
+pkgList <- c("devtools",
+             "EML",
+             "EMLassemblyline",
+             "lubridate",
+             "readtext",
+             "zip",
+             "readxl",
+             "readr",
+             "dplyr",
+             "magrittr",
+             "stringr",
+             "gh"  # For getting github personal access tokens to download package from private repo
+             # Your R package(s) here
+)
+```
+
+The `EMLassemblyline` package needs to be installed from GitHub. If you added any packages to the list above that also need to be installed from GitHub, do it below.
+
+```{r inst_from_gh}
+if (!("EMLassemblyline" %in% installed.packages())) {
+  remotes::install_github("EDIorg/EMLassemblyline")
+}
+
+# if (!("mypackage" %in% installed.packages())) {
+#   remotes::install_github("mygithubaccount/mypackagerepo", auth_token = gh::gh_token())  # Omit auth_token arg for public repos
+# }
+```
+
+Now we install packages from CRAN as needed and load everything. You shouldn't need to modify the code chunk below.
+
+```{r inst_from_cran}
+inst <- pkgList %in% installed.packages()
+if (length(pkgList[!inst]) > 0) {
+  install.packages(pkgList[!inst], dep = TRUE,
+                   repos = "https://cloud.r-project.org")
+}
+lapply(pkgList, library, character.only = TRUE, quietly = TRUE)
+```
+
+## Set up the data package
+
+  1. Choose a name for your data package. This will be used as the name of the data package folder, and it will be used to name files within the data package.
+  1. If you haven't already, **rename the DataPackageTemplate folder to the name of your data package.**
+  1. **Rename this file to contain the name of your data package.**
+  1. Assign the data package name to a variable (below).
+  
+```{r package_name}
+  data_pkg_name <- "MyDataPackage"
+```
+
+# User-supplied information
+
+In this section, you will fill out some information that is specific to your network and your project.
+
+## Load your data
+
+This script figures out the data type (numeric, character, etc.) of each column in your data so that you don't have to.
+
+You just need to load your data into R before this can happen. Do this below. Data should be formatted as a named list of dataframes, where each list item is a dataframe corresponding to a CSV in data/final. The list names should match the table names in `tables_dict$tableName`.
+
+Make sure that the columns of each dataframe are assigned the correct data types. `read_csv` does its best to guess data types based on the first handful of rows of data, but sometimes it gets it wrong.
+
+```{r load_data}
+# This is an example of reading in NCCN landbirds data using the nccnbirds package. You'll need to write different code for your data.
+# all_data <- nccnbirds::LoadLandbirds(data_path = here::here("data", "final"), cache = FALSE)
+```
+
+## Data dictionary
+
+You should have three data dictionary files.
+
+  - **data_dictionary_tables.txt** describes your data tables. It should contain columns for table name (e.g. Site, WaterQuality, etc), file name (the csv that the data is written to), and data table description.
+  - **data_dictionary_fields.txt** describes each column of each data table. It contains columns for data table, column name, column description, data type, unit (e.g. ft, m, etc), date/time format, missing value code, and missing value code description.
+  - **data_dictionary_categories.txt** provides a lookup for any codes used in the data (e.g. DPL codes). It contains columns for the column name containing the code (e.g. DPL), the code itself (e.g. C), and the definition of the code (e.g. Certified).
+  
+### File locations
+
+Verify that the locations and filenames are correct for your data dictionary files.
+
+```{r dd_paths}
+dd_tables_path <- here::here("data", "dictionary", "data_dictionary_tables.txt")  # The file path to the table data dictionary
+dd_fields_path <- here::here("data", "dictionary", "data_dictionary_attributes.txt")  # The file path to the fields data dictionary
+dd_categories_path <- here::here("data", "dictionary", "data_dictionary_categories.txt")  # The file path to the categories data dictionary
+```
+
+### Column names
+
+The following are named vectors mapping the names of your data dictionary columns to the column names required by EML (or expected by this script).  
+If your data dictionary column names match the EML required columns, leave this as is.  
+Otherwise, change the column names on the **left hand side** of the equals sign to the names of the columns in your data dictionary (e.g. "my_table_col" = "tableName").
+
+```{r dd_columns}
+dd_tables_cols <- c("tableName" = "tableName",
+                    "fileName" = "fileName",
+                    "tableDescription" = "tableDescription"
+                    )
+dd_fields_cols <- c("tableName" = "tableName",
+                    "attributeName" = "attributeName",
+                    "attributeDefinition" = "attributeDefinition",
+                    "class" = "class",
+                    "unit" = "unit",
+                    "dateTimeFormatString" = "dateTimeFormatString",
+                    "missingValueCode" = "missingValueCode",
+                    "missingValueCodeExplanation" = "missingValueCodeExplanation")
+dd_categories_cols <- c("attributeName" = "attributeName",
+                        "code" = "code",
+                        "definition" = "definition")
+```
+
+### Read in data dictionaries
+
+If you've set everything up correctly, the code chunks below should run without modification and display your data dictionaries.
+
+**Tables dictionary**
+
+```{r table_dict}
+tables_dict <- read_tsv(dd_tables_path, lazy = FALSE)
+tables_dict <- tables_dict[names(dd_tables_cols)]  # Select only expected cols
+names(tables_dict) <- dd_tables_cols  # Apply standard col names
+tables_dict
+```
+
+**Fields dictionary**
+
+```{r fields_dict}
+fields_dict <- readr::read_tsv(dd_fields_path, lazy = FALSE)
+fields_dict <- fields_dict[names(dd_fields_cols)]
+names(fields_dict) <- dd_fields_cols
+fields_dict
+```
+
+**Categorical variables (codes) dictionary**
+
+```{r cat_dict}
+cat_vars <- readr::read_tsv(dd_categories_path, lazy = FALSE)
+cat_vars <- cat_vars[names(dd_categories_cols)]
+names(cat_vars) <- dd_categories_cols
+cat_vars
+```
+
+### Geographic coverage
+
+Provide a brief text description of the geographic extent of your data:
+
+```{r geo_desc}
+geographic_description <- "Surveys of X in Y parks"
+```
+
+Next, provide the file path and name of the data table that contains your monitoring site locations in lat/long coordinates. If your coordinates are in UTM, add code here to convert them.
+
+```{r geo_table}
+site_table_path <- here::here("data", "final")  # You may not need to change this
+site_table_name <- "Sites.csv"  # The name of the CSV with monitoring locations
+```
+
+Finally, provide the names of the columns in the above table that correspond to the site code, latitude, and longitude.
+
+```{r geo_cols}
+site_col <- "Site_code"
+lat_col <- "Lat"
+lon_col <- "Lon"
+```
+
+### Temporal coverage
+
+Set the start and end dates of your data. Typically you can extract this information from one of the loaded data tables.
+
+```{r temporal}
+# You will probably need to modify this code to work with your data
+begin_date <- min(all_data$events$Event_date, na.rm = TRUE)
+end_date <- max(all_data$events$Event_date, na.rm = TRUE)
+```
+
+
+## Manually enter some metadata
+
+Navigate to the metadata_templates folder inside of the data package folder. There are two files that you must update and another two that you may need to change.
+
+To modify these tab separated files, open them in Excel. Make your changes, save the file, and close it. You may want to open the file in Notepad++ to verify that the encoding is UTF-8, especially if you used special characters.
+
+### Required
+
+**personnel.txt**  
+I *think* that a creator, PI, and contact are all required. These can be the same person. It's fine to omit fundingAgency and fundingNumber if they don't apply. projectTitle is only required for PI.
+
+**keywords.txt**
+A handful of keywords relating to your data. What sorts of words/phrases would you Google search to find data like yours? keywordThesaurus and keywordType are optional and can be left blank. See [the EML documentation](https://eml.ecoinformatics.org/) for more info.
+
+### Optional/as needed
+
+**custom_units.txt**
+If your data uses units that are not in the EML unit dictionary, you will need to add them as custom units. To view the EML unit dictionary, use `EMLassemblyline::view_unit_dictionary()`.
+
+**intellectual_rights.txt**
+Most of the time you can leave this as-is. Review it and make sure that Creative Commons CC0 1.0 No Rights Reserved is the appropriate license for your work.
+
+
+# Automated metadata generation
+
+The following code chunks should not need to be changed. I recommend running them one at a time to verify that everything is working.
+
+## Copy data to data objects folder
+
+```{r copy_data}
+file_names <- sapply(tables_dict$fileName, function(fname) {
+  list.files(here::here("data", "final"), pattern = fname)
+}) %>%
+  unlist()
+
+# Delete existing data files from data_objects folder each time this code is rerun. May want to change this if you are manually putting files from other sources in the data_objects foler.
+files_to_del <- list.files(here::here("dataPackages", data_pkg_name, "data_objects"), "*.csv")
+file.remove(here::here("dataPackages", data_pkg_name, "data_objects", files_to_del))
+
+file.copy(from = here::here("data", "final", file_names),
+          to = here::here("dataPackages", data_pkg_name, "data_objects"),
+          overwrite = TRUE)
+```
+
+## Set column data types
+
+```{r data_types}
+# Get R datatypes for data - take all_data and use sapply and typeof() to get each column type
+
+data_types <- sapply(all_data, function(df) {
+  sapply(df, function(df2) {
+    class(df2)[1]  # Just get the first (most specific) class if there are multiple
+  })
+})
+
+# Add R datatypes to data dictionary
+# There must be a more R way to do this
+class_map <- c(
+  character = "character", 
+  logical = "character", 
+  factor = "character",
+  integer = "numeric",
+  integer64 = "numeric",
+  double = "numeric",
+  numeric = "numeric",
+  Date = "Date",
+  POSIXct = "Date",
+  POSIXt = "Date")
+
+for (i in 1:nrow(fields_dict)) {
+  tbl <- fields_dict$dataName[i]
+  col <- fields_dict$attributeName[i]
+  data_type <- data_types[[tbl]][col]
+  fields_dict[[i, "storageType"]] <- data_type
+}
+
+fields_dict %<>% dplyr::mutate(class = unname(class_map[storageType])) %>%
+  dplyr::select(-storageType)  # make_eml doesn't like storageType but we may want to include it in our metadata someday
+
+# Assign missing value code and explanation. You may need to customize this for your data.
+fields_dict %<>% dplyr::mutate(missingValueCode = ifelse(is.na(missingValueCode), "Empty string", missingValueCode),
+                               missingValueCodeExplanation = ifelse(is.na(missingValueCodeExplanation), "Not applicable or data not collected", missingValueCodeExplanation))
+
+```
+
+## Write attributes and categorical variables to tables that will be used by `make_eml()`
+
+```{r make_attr_cat_tbls}
+# Write attributes and categorical vars to tab separated text files
+for (datafile in unique(fields_dict$tableName)) {
+  # Table-level attributes
+  attr <- fields_dict %>% 
+    dplyr::filter(tableName == datafile) %>%
+    dplyr::select(-tableName)
+  
+  # Table-level categorical vars
+  cat <- cat_vars[cat_vars$attributeName %in% attr$attributeName, ]
+  
+  datafile <- str_remove(datafile, ".csv")
+  
+  readr::write_tsv(attr, here::here("dataPackages", data_pkg_name, "metadata_templates", paste0("attributes_", datafile, ".txt")))
+  readr::write_tsv(cat, here::here("dataPackages", data_pkg_name, "metadata_templates", paste0("catvars_", datafile, ".txt")))
+}
+```
+
+## Create some more metadata files
+
+```{r other_metadata}
+intellectual_rights<-readLines(here::here("dataPackages", "DataPackageTemplate", "metadata_templates","intellectual_rights.txt"),encoding="UTF-8")
+
+themekeywords<-read.delim(here::here("dataPackages", "DataPackageTemplate", "metadata_templates","keywords.txt"))
+themekeywords<-paste(themekeywords$keyword, collapse = ', ')
+
+abstract<-params$packageAbstract
+writeLines(abstract,here::here("dataPackages", "DataPackageTemplate", "metadata_templates","abstract.txt"))
+
+methodstext<-paste0("Methods for the generation of this data set are documented in Data Release Report ",gsub("—","--",params$reportNumber), ", available at ", "https://irma.nps.gov/DataStore/Reference/Profile/", params$reportRefID,".")
+writeLines(methodstext,here::here("dataPackages", "DataPackageTemplate", "metadata_templates","methods.txt"))
+
+```
+
+
+# Create the EML metadata
+
+## Set filenames
+
+```{r set_filenames}
+manifestfilename <- here::here("dataPackages", data_pkg_name, "eml", paste0(params$dataPackage1Description, "_", params$dataPackage1RefID, "_manifest.txt"))
+metadatafilename <- here::here("dataPackages", data_pkg_name, "eml", paste0(params$dataPackage1Description, "_", params$dataPackage1RefID, "_metadata.xml"))
+datafilename <- here::here("dataPackages", data_pkg_name, "eml", paste0(params$dataPackage1Description, "_", params$dataPackage1RefID, "_data.zip"))
+datapackagefilename <- here::here("dataPackages", data_pkg_name, "eml", paste0(params$dataPackage1Description, "_", params$dataPackage1RefID, "_datapackage.zip"))
+```
+
+
+## Create the EML file
+
+```{r make_eml}
+make_eml(
+  path = here::here("dataPackages", data_pkg_name, "metadata_templates"),
+  data.path = here::here("dataPackages", data_pkg_name, "data_objects"),
+  data.table = tables_dict$fileName,
+  data.table.name = tables_dict$tableName,
+  data.table.description = tables_dict$tableDescription,
+  eml.path = here::here("dataPackages", data_pkg_name, "eml"),
+  dataset.title = params$dataPackage1Title, 
+  temporal.coverage = c(as.Date(begin_date), as.Date(end_date)),
+  maintenance.description = 'completed',
+  package.id = paste0(params$dataPackage1Description, "_", params$dataPackage1RefID, "_metadata")
+)
+```
+
+## Create the manifest file
+
+```{r make_manifest}
+cat("This data package was produced by the National Park Service (NPS) Inventory and Monitoring Division and can be downloaded from the [NPS Data Store](https://irma.nps.gov/DataStore/Reference/Profile/",params$dataPackage1RefID,").",file=manifestfilename,"\n",sep="") 
+cat("These data are provided under the Creative Commons CC0 1.0 “No Rights Reserved” (see: https://creativecommons.org/publicdomain/zero/1.0/).",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("DATA PRODUCT INFORMATION",file=manifestfilename,sep="\n",append=TRUE)
+cat("------------------------",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+# ID
+cat("ID: ", params$dataPackage1RefID, " Data Store Code.",file=manifestfilename,"\n",sep="",append=TRUE) 
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+#Title
+cat("Title: ",params$dataPackage1Title, file=manifestfilename,"\n",sep="",append=TRUE) 
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+#Description
+cat("Description: ",params$dataPackage1Description,file=manifestfilename,"\n",sep="",append=TRUE) 
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+#Abstract
+cat("Abstract: ",abstract,file=manifestfilename,"\n",sep="",append=TRUE) 
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+#Brief Study Area Description
+cat("Brief Study Area Description: ",geographic_description,file=manifestfilename,"\n",sep="",append=TRUE) 
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+#Keywords
+cat("Keywords:",unlist(themekeywords),file=manifestfilename,"\n",sep=" ",append=TRUE) 
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("Date for Data Publication: ",as.character(today()),file=manifestfilename,"\n",sep="",append=TRUE) 
+cat("This zip package was generated on: ",as.character(today()),file=manifestfilename,"\n",sep="",append=TRUE) 
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("DATA PACKAGE CONTENTS",file=manifestfilename,sep="\n",append=TRUE)
+cat("------------------------",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("This zip package contains the following documentation files:",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("- This readme file: ", manifestfilename,"\n",file=manifestfilename,sep="",append=TRUE)
+
+cat("- Machine-readable metadata file describing the data set(s): ", params$dataPackage1Description, "_", params$dataPackage1RefID, "_metadata.xml. This file uses the Ecological Metadata Language (EML) schema. Learn more about this format at https://knb.ecoinformatics.org/external//emlparser/docs/eml-2.1.1/index.html#N1022A.",file=manifestfilename, "\n",sep="",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("This zip package contains the following data set(s):",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat(params$dataPackage1Description, "_", params$dataPackage1RefID, "_data.zip",file=manifestfilename,sep="",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("ADDITIONAL INFORMATION",file=manifestfilename,sep="\n",append=TRUE)
+cat("------------------------",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("Primary related products: The following product(s) were created concurrently with this dataset:",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("1. Data Release Report. Document describing the methods and the analysis code used to generate data set. Available at ", "https://irma.nps.gov/DataStore/Reference/Profile/", params$reportRefID, ".", "\n",file=manifestfilename,sep="",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("CHANGE LOG",file=manifestfilename,sep="\n",append=TRUE)
+cat("------------------------",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("N/A",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("ADDITIONAL REMARKS",file=manifestfilename,sep="\n",append=TRUE)
+cat("------------------------",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("N/A",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+
+cat("NPS DATA POLICY AND CITATION GUIDELINES",file=manifestfilename,sep="\n",append=TRUE)
+cat("------------------------",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("See NPS Inventory and Monitoring Division's data policy and citation guidelines at https://irma.nps.gov/content/portal/about/.",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+
+cat("DATA QUALITY AND VERSIONING",file=manifestfilename,sep="\n",append=TRUE)
+cat("------------------------",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+cat("The data contained in this file are considered Accepted under the IMD Data Certification Guidance (https://www.google.com/url?q=https://irma.nps.gov/DataStore/Reference/Profile/2227397). Updates to the data, QA/QC and/or processing algorithms over time will occur on an as-needed basis.  Please check back to this site for updates tracked in change logs.",file=manifestfilename,sep="\n",append=TRUE)
+cat(" ",file=manifestfilename,sep="\n",append=TRUE)
+
+```
+
+## Zip up the data and the package
+
+```{r zip_pkg}
+### Zip up data
+zip::zip(zipfile = datafilename, 
+         files = file_names, 
+         root = here::here("dataPackages", data_pkg_name, "data_objects"))
+# Zip the whole package
+zip::zipr(datapackagefilename,c(datafilename,manifestfilename,metadatafilename), recurse=FALSE)
+```
+
+# All done!
+
+If everything ran successfully, you will see four files (not including readme.txt) in the **eml** folder. The file whose name ends with "_datapackage.zip" is the full data package. The other three files (ending with "_data.zip", "_manifest.txt", and "_metadata.xml") are the files that were zipped into the data package.

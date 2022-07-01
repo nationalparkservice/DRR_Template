@@ -1,6 +1,5 @@
 ---
 params:
-  projectDir: "N:/IMD_DRR_Template"                       # You will have to update this directory to match your project directory before knitting.
   reportNumber: "REPORT NUMBER"                           # Optional. Only include this if publishing in the semi-official Data Release Report Series. Contact Joe if you are.
   reportRefID: 123456                                     # This should match the Data Store Reference ID for this report.
   packageAbstract: >-
@@ -47,15 +46,15 @@ output:
     keep_md: yes
     smart: no
     theme: journal
-    css: "common/journalnps.min.css"
+    css: !expr here::here('common', 'journalnps.min.css')
     toc: yes
     toc_float: true
     number_sections: false
     includes:
         before_body:
-          - "common/header.html"
+          - !expr here::here('common', 'header.html')
         after_body: 
-          - "common/footer.html"
+          - !expr here::here('common', 'footer.html')
   bookdown::word_document2:
     df_print: kable
     fig_caption: yes
@@ -109,7 +108,9 @@ pkgList <- c("devtools",        # tends to be needed/useful
              "flextable",
              "english",         # converts numbers into english. Good for all that English stuff.
              "remotes",         # for install_github()
-             "dplyr")           # useful
+             "dplyr",
+             "ggplot2",
+             "plotly")           # useful
 
 inst <- pkgList %in% installed.packages()
 if (length(pkgList[!inst]) > 0) {
@@ -122,19 +123,23 @@ lapply(pkgList, library, character.only = TRUE, quietly = TRUE)
 if (! "EMLassemblyline" %in% installed.packages()) remotes::install_github("EDIorg/EMLassemblyline")
 require("EMLassemblyline")  
 
+# If your data has an R package associated with it, install it here. NCCN landbirds package used as an example below.
+# if (!("nccnbirds" %in% installed.packages())) remotes::install_github("NCCN-Landbirds/nccn-landbirds-package")
+# require("nccnbirds")  
+
 # create stub of citations for packages
 pkgBibTex <- lapply(c("base", pkgList, RRpackages), citation)
 
 # pkgBibTex <- do.call()
 
 knitr::opts_chunk$set(
-   root.dir = params$projectDir,  # from YAML parameter, knitr instead of setwd()
    echo = TRUE,
    comment = " ",
    dev = "svg",
-   fig.path = "figures/",
+   fig.path = here::here("figures"),
    tidy.opts = list(width.cutoff = 60),
-   tidy = TRUE
+   tidy = TRUE,
+   out.width = "100%"
    )
 # if ggplot, update theme to default to centered titles
 if ("ggplot2" %in% .packages()) {
@@ -142,31 +147,14 @@ if ("ggplot2" %in% .packages()) {
 }
 
 # Write YAML parameters to file for consistent reuse across report and data packages
-save(params,file="data/temp/reportParameters.RData")
+save(params,file=here::here("data", "temp", "reportParameters.RData"))
 
 ## General Utility Functions
 
-numbertext<-function(number){
-  if(number<20) {
-    words(number)
-  } else {
-    formatC(number,big.mark=",")
-  }
-}
-
-capitalize <- function(x) {
- substr(x, 1, 1) <- toupper(substr(x, 1, 1))
- x
-}
+source(here::here("common", "SharedFunctions.R"))
 
 #Create Abstract File from YAML header. You may need to update this if you change the data packaging folder (or add additional ones)
 cat(params$packageAbstract,file="dataPackages\\DataPackageTemplate\\metadata_templates\\abstract.txt",sep="\n",append=FALSE)
-
-# And set a few variables from the setup script
-MemoReference<-"Grass J, Angelakis P, Bennett B, Slaughter J, Griffin D, McCutchen BK, Smiley V, Black S, Trimble B, Wilkerson D, Pennington B. 2019. Cumberland Piedmont Network Parks Protected Data Memo. (Available at https://irma.nps.gov/DataStore/Reference/Profile/2260264)"
-MemoCitation<-"Grass et al. 2019"
-FederalCodes<-c("Fed-E","Fed-T","Fed-C")
-StateNSCodes<-c("KY-T","KY-E","TN-T","TN-E","TN-T-CE","VA-LE","VA-LT","VA-LT/PDL")
 
 # Set up table template
 NPS_theme <- function(x, ...) {
@@ -194,18 +182,11 @@ set_flextable_defaults(
   theme_fun = NPS_theme,
   )
 
-#Set Working Directory
-setwd(params$projectDir)
 ```
 
 ```{r LoadData, include=FALSE}
-# Load datasets for use
-
-if (file.exists(file="data/temp/projectMetadata.RData")) {
-  load(file="data/temp/projectMetadata.RData")
-} else{
-  projectMetadata<-list()
-}
+# Load datasets for use (example commented out below)
+# nccnbirds::LoadLandbirds(here::here("data", "final"), cache = FALSE)
 ```
 
 <hr>
