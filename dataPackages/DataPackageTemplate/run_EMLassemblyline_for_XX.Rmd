@@ -172,25 +172,66 @@ cat_vars
 
 ### Geographic coverage
 
-Provide a brief text description of the geographic extent of your data:
+At this point, you much choose how to provide the geographic extent of your data.  
 
-```{r geo_desc}
-geographic_description <- "Surveys of X in Y parks"
+ - **Option 1:** If your data contains a table of site coordinates, you can provide some information about that table and the geographic extent will be calculated for you.
+ - **Option 2:** Provide the geographic extent as a vector of four lat/long coordinates.
+ 
+Set the option that makes the most sense for your data below (`1` or `2`).
+ 
+```{r select_geo_option}
+geo_option <- 1  # Change this as needed
+
+# Leave the two lines below as-is
+option_1 <- geo_option == 1
+option_2 <- geo_option == 2
 ```
 
-Next, provide the file path and name of the data table that contains your monitoring site locations in lat/long coordinates. If your coordinates are in UTM, add code here to convert them.
+#### Option 1
 
-```{r geo_table}
+Fill out this section if you set `geo_option <- 1`. Otherwise, skip this section and move on to **Option 2**. No need to comment out any code.
+
+Provide the file path and name of the data table that contains your monitoring site locations in lat/long coordinates. If your coordinates are in UTM, add code here to convert them.
+Finally, provide the names of the columns in the location data table that correspond to the site code, latitude, and longitude.
+
+```{r geo_option_1, eval=option_1}
 site_table_path <- here::here("data", "final")  # You may not need to change this
 site_table_name <- "Sites.csv"  # The name of the CSV with monitoring locations
-```
-
-Finally, provide the names of the columns in the above table that correspond to the site code, latitude, and longitude.
-
-```{r geo_cols}
 site_col <- "Site_code"
 lat_col <- "Lat"
 lon_col <- "Lon"
+
+EMLassemblyline::template_geographic_coverage(path = here::here("dataPackages", data_pkg_name, "metadata_templates"),
+                                              data.path = site_table_path,
+                                              data.table = site_table_name, 
+                                              lat.col = lat_col, 
+                                              lon.col = lon_col, 
+                                              site.col = site_col)
+```
+
+#### Option 2
+
+Fill out this section if you set `geo_option <- 2`. Otherwise, skip this section and continue on if you have completed **Option 1**. No need to comment out any code.
+
+First, provide a brief text description of the geographic extent of your data (`geographic_description`). If you need to describe multiple survey areas, each with their own geographic extent, you may add additional elements to the vectors below.
+
+```{r geo_option_2, eval=option_2}
+geographic_description <- c("Badwater Basin")  # Change this to describe the location(s) surveyed
+
+# Fill in these coordinates
+northmost_lat <- c(0)  
+eastmost_long <- c(0)
+southmost_lat <- c(0)
+westmost_long <- c(0)
+
+# Do not change the code below
+geo_bounds <- tibble::tibble(geographicDescription = geographic_description,
+                             northBoundingCoordinate = northmost_lat,
+                             southBoundingCoordinate = southmost_lat,
+                             eastBoundingCoordinate = eastmost_long,
+                             westBoundingCoordinate = westmost_long)
+
+readr::write_tsv(geo_bounds, here::here("dataPackages", data_pkg_name, "metadata_templates", "geographic_coverage.txt"))
 ```
 
 ### Temporal coverage
