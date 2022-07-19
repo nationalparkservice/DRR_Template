@@ -27,12 +27,12 @@ load(here::here("data", "temp", "reportParameters.RData"))
 
 ## Load packages
 
-These are the R packages that are needed. If there is an R package that you use to load your data, add it to the list. 
+These are the R packages available on CRAN that are necessary for the code in this file to run. If you need additional packages, add them to the list. 
 
 ```{r pkg_list}
-pkgList <- c("devtools",
+# Packages to be installed from CRAN
+pkg_list <- c("devtools",
              "EML",
-             "EMLassemblyline",
              "lubridate",
              "readtext",
              "zip",
@@ -41,12 +41,24 @@ pkgList <- c("devtools",
              "dplyr",
              "magrittr",
              "stringr",
+             "remotes",  # For downloading packages from GitHub
              "gh"  # For getting github personal access tokens to download package from private repo
              # Your R package(s) here
 )
 ```
 
-The `EMLassemblyline` package needs to be installed from GitHub. If you added any packages to the list above that also need to be installed from GitHub, do it below.
+This code chunk installs packages from CRAN as needed. You shouldn't need to modify the code chunk below.
+
+```{r inst_from_cran}
+inst <- pkg_list %in% installed.packages()
+if (length(pkg_list[!inst]) > 0) {
+  install.packages(pkg_list[!inst], dep = TRUE,
+                   repos = "https://cloud.r-project.org")
+}
+library(magrittr)  # Load magrittr so we can use pipes (%>%, %<>%)
+```
+
+The `EMLassemblyline` package needs to be installed from GitHub. If you need to install other packages from GitHub, do it here.
 
 ```{r inst_from_gh}
 if (!("EMLassemblyline" %in% installed.packages())) {
@@ -58,15 +70,11 @@ if (!("EMLassemblyline" %in% installed.packages())) {
 # }
 ```
 
-Now we install packages from CRAN as needed and load everything. You shouldn't need to modify the code chunk below.
+It's recommended that you specify the namespace when you call functions from non-base packages (e.g. `dplyr::filter()` instead of just `filter()`), but if you prefer not to do this, uncomment the code in the chunk below.
 
-```{r inst_from_cran}
-inst <- pkgList %in% installed.packages()
-if (length(pkgList[!inst]) > 0) {
-  install.packages(pkgList[!inst], dep = TRUE,
-                   repos = "https://cloud.r-project.org")
-}
-lapply(pkgList, library, character.only = TRUE, quietly = TRUE)
+```{r optional_pkg_load}
+# github_pkg_list <- c("EMLassemblyline")  # Packages that were installed from GitHub. If you installed any other packages from GitHub, add them here.
+# lapply(c(pkg_list, github_pkg_list), library, character.only = TRUE, quietly = TRUE)
 ```
 
 ## Set up the data package
