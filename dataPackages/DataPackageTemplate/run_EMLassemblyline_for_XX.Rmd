@@ -82,7 +82,7 @@ It's recommended that you specify the namespace when you call functions from non
   1. Choose a name for your data package. This will be used as the name of the data package folder, and it will be used to name files within the data package.
   1. If you haven't already, **rename the DataPackageTemplate folder to the name of your data package.**
   1. **Rename this file to contain the name of your data package.**
-  1. Assign the data package name to a variable (below).
+  1. Assign the data package name to a variable (below). This **must** match the name of your data package folder exactly.
   
 ```{r package_name}
   data_pkg_name <- "MyDataPackage"
