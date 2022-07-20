@@ -439,8 +439,8 @@ cat(" ", file = manifestfilename, sep = "\n", append = TRUE)
 cat("Keywords:", unlist(themekeywords), file = manifestfilename, "\n", sep = " ", append = TRUE)
 cat(" ", file = manifestfilename, sep = "\n", append = TRUE)
 
-cat("Date for Data Publication: ", as.character(today()), file = manifestfilename, "\n", sep = "", append = TRUE)
-cat("This zip package was generated on: ", as.character(today()), file = manifestfilename, "\n", sep = "", append = TRUE)
+cat("Date for Data Publication: ", as.character(Sys.Date()), file = manifestfilename, "\n", sep = "", append = TRUE)
+cat("This zip package was generated on: ", as.character(Sys.Date()), file = manifestfilename, "\n", sep = "", append = TRUE)
 cat(" ", file = manifestfilename, sep = "\n", append = TRUE)
 
 cat("DATA PACKAGE CONTENTS", file = manifestfilename, sep = "\n", append = TRUE)
