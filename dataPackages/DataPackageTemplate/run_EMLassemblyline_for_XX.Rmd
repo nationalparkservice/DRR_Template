@@ -178,6 +178,40 @@ names(cat_vars) <- dd_categories_cols
 cat_vars
 ```
 
+### Taxonomic coverage
+
+This will not apply to all datasets. If your data do not contain taxonomic data, comment out the chunk below.
+
+The code below assumes that you are storing your species data as some kind of species code, and that code and the corresponding species name (either scientific or common) ended up in the categories data dictionary. If this is not the case, you will need to modify the section of the code that creates the `taxa` dataframe. As long as `taxa` is a dataframe with a column containing the common or scientific name for all *unique* taxa in your data, the rest of the code should work without modification.
+
+For the sake of minimizing run time, taxonomic coverage is only generated if taxonomic_coverage.txt is not present in the metadata_templates folder. If you need to update your taxonomic coverage (i.e. your taxonomic data has changed), set `overwrite_existing <- TRUE`. 
+
+```{r taxonomic_coverage}
+overwrite_existing <- FALSE  # Redo taxonomic coverage even if taxonomic_coverage.txt already exists in metadata_templates? Resolving taxonomic names is slow, so only set this to TRUE if taxonomic data have changed.
+species_col <- c("SpeciesCode")  # Names of columns with species data, as listed in cat_vars
+name_type <- "scientific"  # "scientific" or "common"
+codes_to_omit <- c("NOSP")  # Species codes that aren't actual species - codes for unknown sp, no sp., etc.
+taxa_authority <- c(3, 11, 9)  # Use ITIS to resolve taxonomic names, with GBIF then WORMS as backup.
+
+if (overwrite_existing) {
+  taxa <- dplyr::filter(cat_vars, 
+                        attributeName %in% species_col,
+                        !(code %in% codes_to_omit)) %>%
+    unique()
+  
+  temp_file <- tempfile(fileext = ".csv", tmpdir = tempdir(check = TRUE))  # Create a temporary filename and dir to write `taxa` to
+  readr::write_csv(taxa, file = temp_file)
+  
+  EMLassemblyline::template_taxonomic_coverage(path = here::here("dataPackages", data_pkg_name, "metadata_templates"),
+                                               data.path = dirname(temp_file),
+                                               taxa.table = basename(temp_file), 
+                                               taxa.col = "definition", 
+                                               taxa.name.type = name_type,
+                                               taxa.authority = taxa_authority) 
+  unlink(temp_file)  # Delete temporary file now that it's no longer needed
+}
+```
+
 ### Geographic coverage
 
 At this point, you must choose how to provide the geographic extent of your data.  
