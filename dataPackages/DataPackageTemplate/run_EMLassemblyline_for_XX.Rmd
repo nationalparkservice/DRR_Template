@@ -180,7 +180,7 @@ cat_vars
 
 ### Geographic coverage
 
-At this point, you much choose how to provide the geographic extent of your data.  
+At this point, you must choose how to provide the geographic extent of your data.  
 
  - **Option 1:** If your data contains a table of site coordinates, you can provide some information about that table and the geographic extent will be calculated for you.
  - **Option 2:** Provide the geographic extent as a vector of four lat/long coordinates.
