@@ -4,3 +4,4 @@
 .Ruserdata
 data/raw/
 data/final/
+dataPackages/DataPackageTemplate/*.nb.html
