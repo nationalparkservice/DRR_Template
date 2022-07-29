@@ -1,6 +1,6 @@
 ---
-title: "How To Use the Data Release Report Template"
-date: "4/23/2020"
+title: "How To Use This Template"
+date: "7/29/2022"
 output:
   html_document:
     df_print: kable
@@ -234,9 +234,6 @@ numbers are typically assigned early in data processing and quality evaluation.
 ## Data Release Report Review Requirements
 DRRs serve as the documentation of the technical review process (and standards) for published datasets. Prior to publication, DRRs and accompanying datasets should be reviewed to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. Typically they do not need to be peer reviewed, but should be appropriately reviewed prior to publication. In particular it's imperative to ensure that any summary statistics about associated data packages are correct, and all fields, codes, values, etc., are consistently used and defned among the report, data packages, and metadata. Data Release Reports should always be checked to ensure that they do not contain data that should be protected from release and/or that they identify data packages that contain such data.
 
-## Data Package Review Requirements
-Prior to approval of a data release report, all data packages should undergo a technical and usability review. Please see [Review Guidelines](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/DataReview.html) for details.
-
 ## Publishing Draft Data Packages
 Once data packages are ready for review, the current best practice is to a) activate them, but b) indicate in the reference metadata that the dataset is provisional with limited access while in review, and c) limit access to specific people (typically the report author and reviewers). This is typically required to conduct the data package usability review.
 
@@ -246,19 +243,3 @@ Under no circumstances should reports and associated data packages or metadata p
 > **For approved & published data sets:** "Unless otherwise stated, all data, metadata and related materials are considered to satisfy the quality standards relative to the purpose for which the data were collected. Although these data and associated metadata have been reviewed for accuracy and completeness and approved for release by the National Park Service Inventory and Monitoring Division, no warranty expressed or implied is made regarding the display or utility of the data for other purposes, nor on all computer systems, nor shall the act of distribution constitute any such warranty." 
 
 > **For provisional data:** "The data you have secured from the National Park Service (NPS) database identified as [database name] have not received approval for release by the NPS Inventory and Monitoring Division, and as such are provisional and subject to revision. The data are released on the condition that neither the NPS nor the U.S. Government shall be held liable for any damages resulting from its authorized or unauthorized use."
-
-# Appendix A. Using this Template with Reports Created in Microsoft Word.
-It is possible to easily convert a report created in Microsoft Word into the template. To facilitate this, we have included a MSWord author template called "DRR Word Template" in the "common" folder for this use. Conversion of tables and figures take a little work (and may not be fully 508-compliant), but the overall process should take no more than 15 minutes. Basic instructions are as follows:
-
-1. Write your report using the template, and use the default word styles to denote outline levels. Get it edited and finalized to the extent possible.
-
-2. Download and install the [Writage plugin](http://writage.com) for Microsoft Word. This will allow you to save your word document as a markdown (*.md) file. Do so.
-
-3. Copy your text into the template after the startup code chunk.
-
-4. Check your tables. When you save the file, tables are converted to markdown tables (not code chunks) and should all render just fine. Tables will be formatted using the same css styles as kable-based tables, but captions will not. Converting these is optional.
-
-5. Figures take a little more work. When saving as a markdown file, all figures are saved to a temporary file `C:\Users\[user]\AppData\Local\Microsoft\Windows\INetCache\Content.MSO,` and should be moved to the `figures\` folder in your R project. You will then need to edit the links to each figure within the RMD file.
-
-6. If you included code, you will want to encapsulate that in a non-R code chunk so that it renders as code instead of normal text. 
-
