@@ -9,7 +9,7 @@ report that documents the collection, processing, quality control, and evaluatio
 This template is under active development to improve style and 508 compliance.
 
 # Guides & Examples
-1. [Purpose and Scope of Data Release Reports](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/PurposeAndScope.html)
+1. [Purpose and Scope of Data Release Reports](vignettes/PurposeAndScope.md)
 
 2. [How to Use this Template](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/HowToUseThisTemplate.html)
 
