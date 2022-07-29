@@ -11,19 +11,20 @@ This template is under active development to improve style and 508 compliance.
 # Vignettes & Examples
 1. [Purpose and Scope of Data Release Reports](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/PurposeAndScope.html)
 
-2. [Data Release Report Outline and Content Guide](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/DRR_Template.html)
+2. [How to Use this Template](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/HowToUseThisTemplate.html)
 
-3. [How to Use this Template](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/HowToUseThisTemplate.html)
+3. [Data Release Report Outline and Content Guide](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/DRR_Template.html)
 
 4. [How to Create Data Packages](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/CreatingDataPackages.html)
 
-5. [Review Guidelines](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/DataReview.html)
-
-6. Examples (more will be provided as they are publilshed):
+5. Examples (more will be provided as they are publilshed):
 
     a) [DRR for tabular (csv) datasets](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/DRAFT_2019_Report_NationalMeanDailyFlowsDataSummary.html) of hydrologic data used for calculating hydrologic metrics as a part of the national Environmental Settings monitoring protocol. 
     
     b) [DRR for geospatial (file geodatabase) data](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/NPS-NRSS-DRR-2020-1.html) contining custom areas of analysis used for Environmental Settings montioring protocol. Report created in microsoft word and ported to the template.
+
+6. [Review Guidelines](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/DataReview.html)
+
 
 7. Tips, FAQs, and Errata (coming soon)
 
