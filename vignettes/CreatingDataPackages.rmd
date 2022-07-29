@@ -1,6 +1,6 @@
 ---
 title: "Creating Data Packages"
-date: "4/23/2020"
+date: "2020-04-23"
 output:
   html_document:
     df_print: kable
@@ -97,7 +97,7 @@ Keywords facilitate search and discovery on scientific terms, as well as names o
 
 Table1<-read.delim(file="../dataPackages/dataPackageTemplate/metadata_templates/keywords.txt")
 
-kable(Table1, 
+kable(Table1[, 1:2], 
       col.names=c("keyword","keywordThesaurus"),
       caption="**Table 1.** Example Keywords Table.") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)

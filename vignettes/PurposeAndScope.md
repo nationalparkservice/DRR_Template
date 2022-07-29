@@ -1,6 +1,6 @@
 ---
 title: "Purpose and Scope of Data Release Reports"
-date: "4/23/2020"
+date: "2020-04-23"
 output:
   html_document:
     df_print: kable
