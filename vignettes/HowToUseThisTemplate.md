@@ -2,54 +2,22 @@
 title: "How To Use This Template"
 date: "7/29/2022"
 output:
-  word_document:
-    toc: yes
   html_document:
     df_print: kable
-    fig_caption: yes
+    fig_caption: true
     dev: svg
     highlight: haddock
-    keep_md: yes
+    keep_md: TRUE
     smart: no
     theme: journal
-    css: ../common/journalnps.min.css
+    css: "../common/journalnps.min.css"
     toc: yes
-    toc_float: yes
-    number_sections: yes
+    toc_float: true
+    number_sections: true
+
 ---
 
-```{r setup, include=FALSE}
-RRpackages <- c('markdown',     # links to Sundown rendering library
-                'rmarkdown',    # newer rendering via pandoc
-                'pander',       # alternative renderer for markdown,
-                                # plus better tables than just knitr
-                'knitr',
-                "devtools",
-                "R.rsp",        # dynamic generation of scientific reports
-                "rmdHelpers",   # misc from Mark Peterson
-                                #  thisFileName() thisFile_knit()
-                'yaml',         # format data into markdown
-                'kableExtra',
-                'rmdformats',   # templates including automatic ToC,
-                                # also use_bookdown()
-                'htmltools'     #
-                )
 
-inst <- RRpackages %in% installed.packages()
-if (length(RRpackages[!inst]) > 0) {
-   install.packages(RRpackages[!inst], dep = TRUE)
-}
-lapply(RRpackages, library, character.only = TRUE)
-
-knitr::opts_chunk$set(
-   echo = TRUE,
-   comment = " ",
-   dev = "svg",
-   tidy.opts = list(width.cutoff = 60),
-   tidy = TRUE
-   )
-
-```
 
 # Overview
 Data Release Reports (DRRs) are created by the National Park Service and provide detailed descriptions of valuable research datasets, including the methods used to collect the data and technical analyses supporting the quality of the measurements. Data Release Reports focus on helping others reuse data, rather than presenting results, testing hypotheses, or presenting new interpretations, methods or in-depth analyses. 
@@ -71,10 +39,10 @@ New projects can be established using this template by downloading a zip file of
 
 ## Folder Structure
 General directory contents are as follows (Figure 1):
-```{r figure1, echo=FALSE, fig.align="center", out.width="30%",  fig.cap="**Figure 1.** Standard project directory structure for data release reports."}
-include_graphics("./DirectoryStructure.png")
-
-```
+<div class="figure" style="text-align: center">
+<img src="./DirectoryStructure.png" alt="**Figure 1.** Standard project directory structure for data release reports." width="30%" />
+<p class="caption">**Figure 1.** Standard project directory structure for data release reports.</p>
+</div>
 
 - `common` houses files that are shared across all projects and generally should not be edited by the user. Notable files:
 
@@ -147,17 +115,17 @@ tag, making it 508-compliant.
 For example:
 
 ````markdown
-`r ''````{r figure1, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 2.** Example general workflow to include in the methods section."}
+```{r figure1, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 2.** Example general workflow to include in the methods section."}
 include_graphics("ProcessingWorkflow.png")
 ```
 ````
 
 Results in:
 
-```{r figure2, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 2.** Example general workflow to include in the methods section."}
-include_graphics("ProcessingWorkflow.png")
-
-```
+<div class="figure" style="text-align: center">
+<img src="ProcessingWorkflow.png" alt="**Figure 2.** Example general workflow to include in the methods section." width="70%" />
+<p class="caption">**Figure 2.** Example general workflow to include in the methods section.</p>
+</div>
 
 ## Tables
 Tables should be created using the kable function, with additional formatting
@@ -172,7 +140,7 @@ hover, condensed, and responsive, with full_width set to false.
 For example:
 
 ````markdown
-`r ''````{r Table1, echo=FALSE}
+```{r Table1, echo=FALSE}
 c1<-c("Mouse1","Mouse2","Mousen")
 c2<-c("Drug treatment","Drug treatment","Drug treatment")
 c3<-c("Liver dissection","Liver dissection","Liver dissection")
@@ -189,20 +157,45 @@ kable(Table1,
 ````
 Results in:
 
-```{r Table1, echo=FALSE}
-c1<-c("Mouse1","Mouse2","Mousen")
-c2<-c("Drug treatment","Drug treatment","Drug treatment")
-c3<-c("Liver dissection","Liver dissection","Liver dissection")
-c4<-c("RNA extraction","RNA extraction","RNA extraction")
-c5<-c("RNA-Seq","RNA-Seq","RNA-Seq")
-c6<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX")
-Table1<-data.frame(c1,c2,c3,c4,c5,c6)
-
-kable(Table1, 
-      col.names=c("Subjects","Protocol 1","Protocol 2","Protocol 3","Protocol 4","Data"),
-      caption="**Table 1.** Experimental study example Data Records table.") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
-```
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>**Table 1.** Experimental study example Data Records table.</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Subjects </th>
+   <th style="text-align:left;"> Protocol 1 </th>
+   <th style="text-align:left;"> Protocol 2 </th>
+   <th style="text-align:left;"> Protocol 3 </th>
+   <th style="text-align:left;"> Protocol 4 </th>
+   <th style="text-align:left;"> Data </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Mouse1 </td>
+   <td style="text-align:left;"> Drug treatment </td>
+   <td style="text-align:left;"> Liver dissection </td>
+   <td style="text-align:left;"> RNA extraction </td>
+   <td style="text-align:left;"> RNA-Seq </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Mouse2 </td>
+   <td style="text-align:left;"> Drug treatment </td>
+   <td style="text-align:left;"> Liver dissection </td>
+   <td style="text-align:left;"> RNA extraction </td>
+   <td style="text-align:left;"> RNA-Seq </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Mousen </td>
+   <td style="text-align:left;"> Drug treatment </td>
+   <td style="text-align:left;"> Liver dissection </td>
+   <td style="text-align:left;"> RNA extraction </td>
+   <td style="text-align:left;"> RNA-Seq </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+</tbody>
+</table>
 Note that rendered tables are not fully 508 compliant, but they’re close. We are
 currently working on extending (or contributing to) the kable package so that
 rendered tables are 508 compliant.
