@@ -4,17 +4,18 @@ date: "7/29/2022"
 output:
   html_document:
     df_print: kable
-    fig_caption: true
+    fig_caption: yes
     dev: svg
     highlight: haddock
-    keep_md: TRUE
+    keep_md: yes
     smart: no
     theme: journal
-    css: "../common/journalnps.min.css"
+    css: ../common/journalnps.min.css
     toc: yes
-    toc_float: true
-    number_sections: true
-
+    toc_float: yes
+    number_sections: yes
+  word_document:
+    toc: yes
 ---
 
 
@@ -214,9 +215,6 @@ numbers are typically assigned early in data processing and quality evaluation.
 - **Report Numbers.** If you are plannning to publish a data release report with an official DRR number, please contact the IMD Deputy Chief with the Data Store reference number associated with the DRR.  
 
 - **Persistent Identifiers.** IMD is currently pursuing the ability to assign digital object identifiers (DOIs) to scientific works produced by IMD. At that point DOIs will be assigned to all DRRs and concurrently-published data packages will be assigned dois. DOIs will ultimately each resolve to a Data Store Reference; in the meantime, it is recommended that the URL for the Data Store reference be used in lieu of a DOI when citing DRRs and associated data packages. 
-
-## Data Release Report Review Requirements
-DRRs serve as the documentation of the technical review process (and standards) for published datasets. Prior to publication, DRRs and accompanying datasets should be reviewed to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. Typically they do not need to be peer reviewed, but should be appropriately reviewed prior to publication. In particular it's imperative to ensure that any summary statistics about associated data packages are correct, and all fields, codes, values, etc., are consistently used and defned among the report, data packages, and metadata. Data Release Reports should always be checked to ensure that they do not contain data that should be protected from release and/or that they identify data packages that contain such data.
 
 ## Publishing Draft Data Packages
 Once data packages are ready for review, the current best practice is to a) activate them, but b) indicate in the reference metadata that the dataset is provisional with limited access while in review, and c) limit access to specific people (typically the report author and reviewers). This is typically required to conduct the data package usability review.
