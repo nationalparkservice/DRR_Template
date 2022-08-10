@@ -37,7 +37,7 @@ RRpackages <- c('markdown',     # links to Sundown rendering library
 
 inst <- RRpackages %in% installed.packages()
 if (length(RRpackages[!inst]) > 0) {
-   install.packages(RRpackages[!inst], dep = TRUE)
+   install.packages(RRpackages[!inst], repos = "http://cran.us.r-project.org", dep = TRUE)
 }
 lapply(RRpackages, library, character.only = TRUE)
 
@@ -222,9 +222,6 @@ DRR DOIs have the format: https://doi.org/10.36967/xxxxxxx
 Data packages have the format:
 https://doi.org/10.57830/xxxxxxx
 Where the "xxxxxx" is the 7-digit DataStore reference number. 
-
-## Publishing Draft Data Packages
-Once data packages are ready for review, the current best practice is to a) activate them, but b) indicate in the reference metadata that the dataset is provisional with limited access while in review, and c) limit access to specific people (typically the report author and reviewers). This is typically required to conduct the data package usability review.
 
 ## Liability Statements ##
 Under no circumstances should reports and associated data packages or metadata published in the DRR series contain disclaimers or text that suggests that the work does not meet scientific integrity or information quality standards of the National Park Service. The following disclaimers are suitable for use, depending on whether the data are provisional or final (or approved or certified).
