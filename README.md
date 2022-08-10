@@ -15,7 +15,7 @@ This template is under active development to improve style and 508 compliance.
 
 3. Examples (more will be provided as they are published):
 
-    a) [Content Outline Guide](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/DRR_Template.html)
+    a) [Content Outline Guide](DRR_Template.html)
 
     b) [DRR for tabular (csv) datasets](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/DRAFT_2019_Report_NationalMeanDailyFlowsDataSummary.html) of hydrologic data used for calculating hydrologic metrics as a part of the national Environmental Settings monitoring protocol. 
     
