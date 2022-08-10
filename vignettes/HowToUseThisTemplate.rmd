@@ -217,10 +217,13 @@ numbers are typically assigned early in data processing and quality evaluation.
 
 - **Report Numbers.** If you are planning to publish a data release report with an official DRR number, please contact the IMD Deputy Chief with the Data Store reference number associated with the DRR.  
 
-- **Persistent Identifiers.** Digital object identifiers (DOIs) will be assigned to all DRRs and concurrently-published data packages. DOIs will resolve to a DataStore Reference; DOIs are reserved when a draft reference is initiated in DataStore.  
+- **Persistent Identifiers.** Digital object identifiers (DOIs) will be assigned to all DRRs and concurrently-published data packages. DOIs will resolve to a DataStore Reference; DOIs are reserved when a draft reference is initiated in DataStore.
+
 DRR DOIs have the format: https://doi.org/10.36967/xxxxxxx
-Data packages have the format:
+
+Data package DOIs have the format:
 https://doi.org/10.57830/xxxxxxx
+
 Where the "xxxxxx" is the 7-digit DataStore reference number. 
 
 ## Liability Statements ##
