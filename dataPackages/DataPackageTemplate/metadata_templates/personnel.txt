@@ -1,6 +1,0 @@
-givenName	middleInitial	surName	organizationName	electronicMailAddress	userId	role	projectTitle	fundingAgency	fundingNumber
-CreatorFirstname		Lastname	National Park Service Inventory & Monitoring Program	creator_email@nps.gov		creator			
-PIFirstname		Lastname	National Park Service Inventory & Monitoring Program	pi_email@nps.gov		PI	Protocol title goes here		
-Contact1Firstname		Lastname	National Park Service Inventory & Monitoring Program	contact1_email@nps.gov		contact			
-Contact2Firstname		Lastname	National Park Service Inventory & Monitoring Program	contact2_email@nps.gov		contact			
-National Park Service Inventory & Monitoring Program			National Park Service Inventory & Monitoring Program	irma@nps.gov		contact			
