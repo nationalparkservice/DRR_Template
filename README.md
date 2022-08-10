@@ -21,10 +21,7 @@ This template is under active development to improve style and 508 compliance.
     
     c) [DRR for geospatial (file geodatabase) data](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/NPS-NRSS-DRR-2020-1.html) contining custom areas of analysis used for Environmental Settings montioring protocol. Report created in microsoft word and ported to the template.
 
-4. [Review Guidelines](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/DataReview.html)
-
-
-5. Tips, FAQs, and Errata (coming soon)
+4. Tips, FAQs, and Errata (coming soon)
 
 # Getting Started
 New projects can be established using this template by downloading a zip file of the package from [This Link](https://github.com/nationalparkservice/IMD_DRR_Template/archive/master.zip)
