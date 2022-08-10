@@ -1888,36 +1888,15 @@ managing datasets used and generated during report production.</p>
 <ul>
 <li><code>raw</code> is for all source data sets used as the basis for a
 report. These can either be raw (non-QCed) datasets, or final citable
-datasets from prior works. The <code>getDataPackage</code> function from
-the <code>DSTools</code> package above will download and unpack
-datapackages into the raw directory.</li>
+datasets from prior works.</li>
 <li><code>temp</code> is intended to house datasets generated during
 production of the report that are retained for later use in processing
 (and to help save progress in analyses that require multiple steps). The
 starting chunk of the template will generate a
 <code>reportParameters.RData</code> dataset of all parameters from the
-YAML header for later use in the report and associated data
-packages.</li>
+YAML header for later use in the report.</li>
 <li><code>final</code> is for any final datasets that are to be included
 in data packages.</li>
-</ul></li>
-<li><p><code>dataPackages</code> is where the working files for
-<em>creating</em> data packages are held. The folder contains a single
-<code>DataPackageTemplate</code> folder that should be duplicated for
-each data package to be created. The files in the
-<code>DataPackageTemplate</code> folder are required of the
-EMLAssemblyline package, and are discussed in further detail below and
-the separate vignette for creating data packages. Folders and contents
-are as follows:</p>
-<ul>
-<li><code>data_objects</code> is for all data files and the manifest
-(readme) file describing the contents of the data package.</li>
-<li><code>metadata_templates</code> is a series of files that are either
-created (or must be edited) before generating the metadata.</li>
-<li><code>eml</code> which is where the final eml file will end up.</li>
-<li><code>run_EMLassemblylne_for_XX.R</code> script file, that will take
-a “final” dataset, create the metadata and manifest files, and zip them
-up into a data package for publication to the NPS Data Store.</li>
 </ul></li>
 <li><p><code>figures</code> contains all the figures for the data
 release report</p></li>
@@ -1955,7 +1934,7 @@ metadata and manifest files.</li>
 <li><code>dataPackageXXX</code>. There are three parameters for each
 data package associated with each DRR. The RefID parameters should match
 the Data Store reference IDs; the Title parameter should match the title
-in Data Store, and the descrption should be a short title/phrase that
+in Data Store, and the description should be a short title/phrase that
 will be used throughout the text of the report, metadata, and manifest
 files. Data package parameters can be added (or removed) as needed, but
 the template includes two by default</li>

@@ -54,17 +54,10 @@ General directory contents are as follows (Figure 1):
   
 - `data` The data folder contains three subfolders for managing datasets used and generated during report production.
 
-  - `raw` is for all source data sets used as the basis for a report. These can either be raw (non-QCed) datasets, or final citable datasets from prior works. The `getDataPackage` function from the `DSTools` package above will download and unpack datapackages into the raw directory.
-  - `temp` is intended to house datasets generated during production of the report that are retained for later use in processing (and to help save progress in analyses that require multiple steps). The starting chunk of the template will generate a `reportParameters.RData` dataset of all parameters from the YAML header for later use in the report and associated data packages.
+  - `raw` is for all source data sets used as the basis for a report. These can either be raw (non-QCed) datasets, or final citable datasets from prior works.
+  - `temp` is intended to house datasets generated during production of the report that are retained for later use in processing (and to help save progress in analyses that require multiple steps). The starting chunk of the template will generate a `reportParameters.RData` dataset of all parameters from the YAML header for later use in the report.
   - `final` is for any final datasets that are to be included in data packages.
   
-- `dataPackages` is where the working files for *creating* data packages are held. The folder contains a single `DataPackageTemplate` folder that should be duplicated for each data package to be created. The files in the `DataPackageTemplate` folder are required of the EMLAssemblyline package, and are discussed in further detail below and the separate vignette for creating data packages. Folders and contents are as follows:
-
-  - `data_objects` is for all data files and the manifest (readme) file describing the contents of the data package.
-  - `metadata_templates` is a series of files that are either created (or must be edited) before generating the metadata.
-  - `eml` which is where the final eml file will end up.
-  - `run_EMLassemblylne_for_XX.R` script file, that will take a "final" dataset, create the metadata and manifest files, and zip them up into a data package for publication to the NPS Data Store.
-
 - `figures` contains all the figures for the data release report
 
 - `output` is where the zipped data packages from the script above are written.
@@ -81,7 +74,7 @@ associated data packages. The following must be updated prior to finalization
   - `projectDir`. Should point to the root folder on your computer where your template lives.
   - `reportNumber`. This is optional, and should _only_ be included if publishing in the semi-official DRR series. If not, this line can be removed as well as the `subtitle` lines below (lines 23 and 24 in the template)
   - `reportRefID`. This is the Data Store reference ID for the report. Must be here so that it is reused in creation of the metadata and manifest files.
-  - `dataPackageXXX`. There are three parameters for each data package associated with each DRR. The RefID parameters should match the Data Store reference IDs; the Title parameter should match the title in Data Store, and the descrption should be a short title/phrase that will be used throughout the text of the report, metadata, and manifest files. Data package parameters can be added (or removed) as needed, but the template includes two by default
+  - `dataPackageXXX`. There are three parameters for each data package associated with each DRR. The RefID parameters should match the Data Store reference IDs; the Title parameter should match the title in Data Store, and the description should be a short title/phrase that will be used throughout the text of the report, metadata, and manifest files. Data package parameters can be added (or removed) as needed, but the template includes two by default
   - `title`. The title of the Data Release Report.
   - `author`. Author information should be edited to include the authors of the report. Two examples are included.
   
