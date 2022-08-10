@@ -2,8 +2,6 @@
 title: "How To Use This Template"
 date: "7/29/2022"
 output:
-  word_document:
-    toc: yes
   html_document:
     df_print: kable
     fig_caption: yes
@@ -16,6 +14,8 @@ output:
     toc: yes
     toc_float: yes
     number_sections: yes
+  word_document:
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -54,7 +54,7 @@ knitr::opts_chunk$set(
 # Overview
 Data Release Reports (DRRs) are created by the National Park Service and provide detailed descriptions of valuable research datasets, including the methods used to collect the data and technical analyses supporting the quality of the measurements. Data Release Reports focus on helping others reuse data, rather than presenting results, testing hypotheses, or presenting new interpretations, methods or in-depth analyses. 
 
-Data Release Reports are intended to document the processing of fully-QAed data to their final (QCed) form in a reproducible and transparent manner. Data Release Reports document the data collection methods, quality standards, and processing code used to prepare and review data prior to release, and present the quality of resultant data in the context of fitness for their intended use. 
+DRRs are intended to document the processing of fully-QAed data to their final (QCed) form in a reproducible and transparent manner. Data Release Reports document the data collection methods, quality standards, and processing code used to prepare and review data prior to release, and present the quality of resultant data in the context of fitness for their intended use. 
 
 Each DRR cites source and resultant datasets that are published concurrently and cross-referenced. Associated datasets are made publicly available with the exception of data that must be protected from release as per NPS and park-specific policies.
 
@@ -207,20 +207,21 @@ Note that rendered tables are not fully 508 compliant, but they’re close. We a
 currently working on extending (or contributing to) the kable package so that
 rendered tables are 508 compliant.
 
-# Creating Data Packages
-
-
 # Publishing Data Release Reports and Associated Data
 
 ## Acquiring Report Numbers
 Because data release reports and associated data packages are cross-referential, report
 numbers are typically assigned early in data processing and quality evaluation. 
 
-- **Data Store Reference Numbers.** When developing a report and data packages, Data Store references should be created as early in the process as practicable. While the report and data packages are in development, these should not be activated. 
+- **DataStore Reference Numbers.** When developing a report and data packages, DataStore references should be created as early in the process as practicable. While the report and data packages are in development, these should not be activated. 
 
-- **Report Numbers.** If you are plannning to publish a data release report with an official DRR number, please contact the IMD Deputy Chief with the Data Store reference number associated with the DRR.  
+- **Report Numbers.** If you are planning to publish a data release report with an official DRR number, please contact the IMD Deputy Chief with the Data Store reference number associated with the DRR.  
 
-- **Persistent Identifiers.** IMD is currently pursuing the ability to assign digital object identifiers (DOIs) to scientific works produced by IMD. At that point DOIs will be assigned to all DRRs and concurrently-published data packages will be assigned dois. DOIs will ultimately each resolve to a Data Store Reference; in the meantime, it is recommended that the URL for the Data Store reference be used in lieu of a DOI when citing DRRs and associated data packages. 
+- **Persistent Identifiers.** Digital object identifiers (DOIs) will be assigned to all DRRs and concurrently-published data packages. DOIs will resolve to a DataStore Reference; DOIs are reserved when a draft reference is initiated in DataStore.  
+DRR DOIs have the format: https://doi.org/10.36967/xxxxxxx
+Data packages have the format:
+https://doi.org/10.57830/xxxxxxx
+Where the "xxxxxx" is the 7-digit DataStore reference number. 
 
 ## Publishing Draft Data Packages
 Once data packages are ready for review, the current best practice is to a) activate them, but b) indicate in the reference metadata that the dataset is provisional with limited access while in review, and c) limit access to specific people (typically the report author and reviewers). This is typically required to conduct the data package usability review.
