@@ -17,38 +17,7 @@ output:
 
 ---
 
-```{r setup, include=FALSE}
-RRpackages <- c('markdown',     # links to Sundown rendering library
-                'rmarkdown',    # newer rendering via pandoc
-                'pander',       # alternative renderer for markdown,
-                                # plus better tables than just knitr
-                'knitr',
-                "devtools",
-                "R.rsp",        # dynamic generation of scientific reports
-                "rmdHelpers",   # misc from Mark Peterson
-                                #  thisFileName() thisFile_knit()
-                'yaml',         # format data into markdown
-                'kableExtra',
-                'rmdformats',   # templates including automatic ToC,
-                                # also use_bookdown()
-                'htmltools'     #
-                )
 
-inst <- RRpackages %in% installed.packages()
-if (length(RRpackages[!inst]) > 0) {
-   install.packages(RRpackages[!inst], dep = TRUE)
-}
-lapply(RRpackages, library, character.only = TRUE)
-
-knitr::opts_chunk$set(
-   echo = TRUE,
-   comment = " ",
-   dev = "svg",
-   tidy.opts = list(width.cutoff = 60),
-   tidy = TRUE
-   )
-
-```
 
 # Background
 Recognizing the broad move toward open science, we’ve seen the following changes
@@ -275,10 +244,10 @@ of general study data may be reused or contribute to other scientific work
 (observations from a deer browsing study may be contribute to an inventory or
 may be used as ancillary data to explain monitoring observations).
 
-```{r figure1, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 1.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements."}
-include_graphics("WorkflowModelGeneral.png")
-
-```
+<div class="figure" style="text-align: center">
+<img src="WorkflowModelGeneral.png" alt="**Figure 1.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
+<p class="caption">**Figure 1.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements.</p>
+</div>
 
 **Vital Signs Monitoring data.** Vital signs monitoring data are collected by
 IMD and park staff to address specific monitoring objectives following methods
@@ -293,10 +262,10 @@ test whether monitoring objectives have been met. Monitoring data may be reused
 for secondary purposes including synthesis reports and condition assessments,
 and portions of monitoring data may contribute to inventories.
 
-```{r figure2, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital sign monitoring efforts. Teal-colored boxes are subject to reproducibility requirements."}
-include_graphics("WorkflowModelMonitoring.png")
-
-```
+<div class="figure" style="text-align: center">
+<img src="WorkflowModelMonitoring.png" alt="**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital sign monitoring efforts. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
+<p class="caption">**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital sign monitoring efforts. Teal-colored boxes are subject to reproducibility requirements.</p>
+</div>
 
 **Inventory Study data.** Inventory study data are similar to general study data
 in that they are time- and area-specific efforts designed to answer specific
@@ -308,10 +277,10 @@ supporting study-specific and broader inventory-level objectives. Inventory
 study data are expected to be reused to meet broader inventory level goals, but
 may also support other scientific work and decision support.
 
-```{r figure3, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 3.** Workflow for data collection, processing, dissemination, and use for inventory studies. Teal-colored boxes are subject to reproducibility requirements."}
-include_graphics("WorkflowModelInventories.png")
-
-```
+<div class="figure" style="text-align: center">
+<img src="WorkflowModelInventories.png" alt="**Figure 3.** Workflow for data collection, processing, dissemination, and use for inventory studies. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
+<p class="caption">**Figure 3.** Workflow for data collection, processing, dissemination, and use for inventory studies. Teal-colored boxes are subject to reproducibility requirements.</p>
+</div>
 
 American Statistical Association (ASA). 2017. Recommendations to funding agencies for supporting reproducible research. https://www.amstat.org/asa/files/pdfs/POL-ReproducibleResearchRecommendations.pdf. 
 
