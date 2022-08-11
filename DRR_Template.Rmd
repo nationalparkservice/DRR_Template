@@ -185,6 +185,50 @@ set_flextable_defaults(
 
 ```
 
+```{r parameterss, include=FALSE}
+reportNumber<-"REPORT NUMBER"                           
+#Optional. Only include this if publishing in the semi-official Data Release Report Series. Contact Joe if you are.
+
+reportRefID<-123456
+# This should match the Data Store Reference ID for this report.
+
+packageAbstract<-"Abstract Should go here. Multiple Lines are okay; it'll format correctly. Do not put the abstract in the text section below; this will allow for reuse of the abtract in all associated products. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
+The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
+    
+dataPackage1RefID<-2272463
+# Data Store reference ID for data set associated with this report. You must have at least one.
+
+dataPackage1Title<-"Dataset 1 FULL TITLE"
+# Should match title in data store.
+
+dataPackage1Description<-"SHORT TITLE FOR DATASET 1"  
+
+dataPackage2RefID<-2272464
+# Data Store reference ID for data set associated with this report. You must have at least one.
+
+dataPackage2Title<-"Dataset 2 FULL TITLE"
+# Should match title in data store.
+
+dataPackage2Description<-"SHORT TITLE FOR DATASET 1"  
+
+title<-"REPORT TITLE"
+
+subtitle<-paste0("Data Release Report: ", reportNumber)
+author:
+  - name: "Author 1"                                      # Add or remove authors as appropriate.
+    affiliation: |
+      | NPS Inventory & Monitoring Division 
+      | 1201 Oakridge, Suite 150
+      | Fort Collins, Colorado
+  - name: "Author 2"
+    affiliation: |
+      | Managed Business Solutions (MBS), a Sealaska Company  
+      | Contractor to National Park Service  
+      | Natural Resource Stewardship and Science
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+abstract: "`r params$packageAbstract`"
+
+
 ```{r LoadData, include=FALSE}
 # Load datasets for use (example commented out below)
 # nccnbirds::LoadLandbirds(here::here("data", "final"), cache = FALSE)
