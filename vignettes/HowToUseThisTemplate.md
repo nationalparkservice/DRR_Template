@@ -65,12 +65,16 @@ General directory contents are as follows (Figure 1):
 # Creating a Reproducible Report
 The following is for users who are using the `DRR_Template.RMD` template file to generate a data release report using RMarkdown. If you are planning to author your report in MSWord, please see Appendix A below.
 
-## YAML Header Information
+## Standard Code Chunks
+In addition to the report outline and a description of content for each section, the template includes four standard code chunks.
+
+
 The YAML header contains a series of parameters that are used in the creation of 
 the data release report as well as the metadata and manifest files contained in 
 associated data packages. The following must be updated prior to finalization
 
-- Parameters
+- `Parameters`. A series of parameters that are used in the creation of the DRR and may be re-used in metadata and associated data package construction.
+
   - `projectDir`. Should point to the root folder on your computer where your template lives.
   - `reportNumber`. This is optional, and should _only_ be included if publishing in the semi-official DRR series. If not, this line can be removed as well as the `subtitle` lines below (lines 23 and 24 in the template)
   - `reportRefID`. This is the Data Store reference ID for the report. Must be here so that it is reused in creation of the metadata and manifest files.
@@ -84,14 +88,12 @@ Because folks will ask...
 
 2. Yes, we intended to use the `subtitle` field to hold the report number. The rmarkdown template does not have a field/placeholder for report number so (for now) this is our workaround. If you need or want a subtitle, this should be included in the title field similar to how it would be included in a citation.
 
-## Standard Code Chunks
-In addition to the report outline and a description of content for each section, the template includes four standard code chunks.
 
 - `setup`. Pretty self explanatory, but there are two snippets for loading packages; the `RRpackages` section is a suite of packages that are used to assist with reproducible reporting. You may not need these for your report, but we have included them as part of the base recommended packages. There is a second snippet for `pkgList` that includes all project-specific packages needed. Add as necessary.
 
 - `LoadData`. Any datasets you need to load can go here. 
 
-- `DataPackages` is the chunk used to read in the scripts for generating the data packages.
+<!-- - `DataPackages` is the chunk used to read in the scripts for generating the data packages. RLB: I couldn't find this code chunk so getting rid of reference to it -->
 
 - `Listing`. Appendix A, by default is the code listing. This will generate all code used in generating the report and data packages.
 

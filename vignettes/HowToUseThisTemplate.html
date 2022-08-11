@@ -1912,15 +1912,19 @@ Report</h1>
 <code>DRR_Template.RMD</code> template file to generate a data release
 report using RMarkdown. If you are planning to author your report in
 MSWord, please see Appendix A below.</p>
-<div id="yaml-header-information" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> YAML Header
-Information</h2>
+<div id="standard-code-chunks" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Standard Code
+Chunks</h2>
+<p>In addition to the report outline and a description of content for
+each section, the template includes four standard code chunks.</p>
 <p>The YAML header contains a series of parameters that are used in the
 creation of the data release report as well as the metadata and manifest
 files contained in associated data packages. The following must be
 updated prior to finalization</p>
 <ul>
-<li>Parameters
+<li><p><code>Parameters</code>. A series of parameters that are used in
+the creation of the DRR and may be re-used in metadata and associated
+data package construction.</p>
 <ul>
 <li><code>projectDir</code>. Should point to the root folder on your
 computer where your template lives.</li>
@@ -1955,12 +1959,6 @@ field/placeholder for report number so (for now) this is our workaround.
 If you need or want a subtitle, this should be included in the title
 field similar to how it would be included in a citation.</p></li>
 </ol>
-</div>
-<div id="standard-code-chunks" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Standard Code
-Chunks</h2>
-<p>In addition to the report outline and a description of content for
-each section, the template includes four standard code chunks.</p>
 <ul>
 <li><p><code>setup</code>. Pretty self explanatory, but there are two
 snippets for loading packages; the <code>RRpackages</code> section is a
@@ -1971,8 +1969,9 @@ part of the base recommended packages. There is a second snippet for
 Add as necessary.</p></li>
 <li><p><code>LoadData</code>. Any datasets you need to load can go
 here.</p></li>
-<li><p><code>DataPackages</code> is the chunk used to read in the
-scripts for generating the data packages.</p></li>
+</ul>
+<!-- - `DataPackages` is the chunk used to read in the scripts for generating the data packages. RLB: I couldn't find this code chunk so getting rid of reference to it -->
+<ul>
 <li><p><code>Listing</code>. Appendix A, by default is the code listing.
 This will generate all code used in generating the report and data
 packages.</p></li>
@@ -1980,8 +1979,8 @@ packages.</p></li>
 of R and packages used in generating the report.</p></li>
 </ul>
 </div>
-<div id="figures" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Figures</h2>
+<div id="figures" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Figures</h2>
 <p>Figures should be inserted using code chunks in all cases so that
 figure settings can be set in the chunk header. The chunk header should
 at a minimum set the fig.align parameter to “center” and the specify the
@@ -2001,8 +2000,8 @@ methods section.
 </p>
 </div>
 </div>
-<div id="tables" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Tables</h2>
+<div id="tables" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Tables</h2>
 <p>Tables should be created using the kable function, with additional
 formatting options available via the kableExtra package. Specifying the
 caption in the kable function call (as opposed to inline markdown text)
