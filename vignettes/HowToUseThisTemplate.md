@@ -1,6 +1,6 @@
 ---
 title: "How To Use This Template"
-date: "7/29/2022"
+date: "07-29-2022"
 output:
   html_document:
     df_print: kable
@@ -68,10 +68,6 @@ The following is for users who are using the `DRR_Template.RMD` template file to
 ## Standard Code Chunks
 In addition to the report outline and a description of content for each section, the template includes four standard code chunks.
 
-
-The YAML header contains a series of parameters that are used in the creation of 
-the data release report as well as the metadata and manifest files contained in 
-associated data packages. The following must be updated prior to finalization
 
 - `Parameters`. A series of parameters that are used in the creation of the DRR and may be re-used in metadata and associated data package construction.
 
