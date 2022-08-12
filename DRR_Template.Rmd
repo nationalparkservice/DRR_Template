@@ -42,6 +42,42 @@ output:
     number_sections: false
 ---
 
+```{r parameterss, include=FALSE}
+reportNumber<-"REPORT NUMBER"                           
+#Optional. Only include this if publishing in the semi-official Data Release Report Series. Contact Joe if you are.
+
+reportRefID<-123456
+# This should match the Data Store Reference ID for this report.
+
+DRRabstract<-"Abstract Should go here. Multiple Lines are okay; it'll format correctly. Do not put the abstract in the text section below; this will allow for reuse of the abtract in all associated products. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
+The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
+    
+dataPackage1RefID<-2272463
+# Data Store reference ID for data set associated with this report. You must have at least one.
+
+dataPackage1Title<-"Dataset 1 FULL TITLE"
+# Should match title in data store.
+
+dataPackage1Description<-"SHORT TITLE FOR DATASET 1"  
+
+dataPackage2RefID<-2272464
+# Data Store reference ID for data set associated with this report. You must have at least one.
+
+dataPackage2Title<-"Dataset 2 FULL TITLE"
+# Should match title in data store.
+
+dataPackage2Description<-"SHORT TITLE FOR DATASET 1"  
+
+title<-"REPORT TITLE"
+
+subtitle<-paste0("Data Release Report: ", reportNumber)
+date<-format(Sys.time(), '%d %B, %Y')
+
+# Write parameters to file for consistent reuse across report and data packages
+save(reportNumber, reportRefID, DRRabstract, dataPackage1RefID, dataPackage1Title, dataPackage1Description, dataPackage2RefID, dataPackage2Title, dataPackage2Description, file=here::here("temp", "reportParameters.Rdata"))
+
+```
+
 ```{r setup, include=FALSE}
 
 # This setup code loads both reproducible reporting packages
@@ -160,42 +196,6 @@ set_flextable_defaults(
 
 ```
 
-```{r parameterss, include=FALSE}
-reportNumber<-"REPORT NUMBER"                           
-#Optional. Only include this if publishing in the semi-official Data Release Report Series. Contact Joe if you are.
-
-reportRefID<-123456
-# This should match the Data Store Reference ID for this report.
-
-DRRabstract<-"Abstract Should go here. Multiple Lines are okay; it'll format correctly. Do not put the abstract in the text section below; this will allow for reuse of the abtract in all associated products. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
-The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
-    
-dataPackage1RefID<-2272463
-# Data Store reference ID for data set associated with this report. You must have at least one.
-
-dataPackage1Title<-"Dataset 1 FULL TITLE"
-# Should match title in data store.
-
-dataPackage1Description<-"SHORT TITLE FOR DATASET 1"  
-
-dataPackage2RefID<-2272464
-# Data Store reference ID for data set associated with this report. You must have at least one.
-
-dataPackage2Title<-"Dataset 2 FULL TITLE"
-# Should match title in data store.
-
-dataPackage2Description<-"SHORT TITLE FOR DATASET 1"  
-
-title<-"REPORT TITLE"
-
-subtitle<-paste0("Data Release Report: ", reportNumber)
-date<-format(Sys.time(), '%d %B, %Y')
-
-# Write parameters to file for consistent reuse across report and data packages
-save(reportNumber, reportRefID, DRRabstract, dataPackage1RefID, dataPackage1Title, dataPackage1Description, dataPackage2RefID, dataPackage2Title, dataPackage2Description, file=here::here("temp", "reportParameters.Rdata"))
-
-```
-
 ```{r LoadData, include=FALSE}
 # Load datasets for use (example commented out below)
 # nccnbirds::LoadLandbirds(here::here("data", "final"), cache = FALSE)
@@ -252,9 +252,9 @@ step, should these form part of the archived record.
 
 Two datasets were generated as a part of this effort (Table 2):
 
-* **`r params$dataPackage1Title`.** Comma-separated text file enumerating the specific taxa considered to have federal conservation status in NPS park units. These data were compiled by the National Park Service Biological Resources Division and were last updated on XX. Available at `r paste0("https://irma.nps.gov/DataStore/Reference/Profile/", params$dataPackage1RefID)`. 
+* **`r dataPackage1Title`.** Comma-separated text file enumerating the specific taxa considered to have federal conservation status in NPS park units. These data were compiled by the National Park Service Biological Resources Division and were last updated on XX. Available at `r paste0("https://irma.nps.gov/DataStore/Reference/Profile/", dataPackage1RefID)`. 
 
-* **`r params$dataPackage2Title`.** Comma-separated text file enumerating the park-specific specific taxa about which data must be protected from release to the public based on federal conservation status. This dataset includes all taxa identified by the USFWS as well as their child taxa and taxonomic synonyms. Available at `r paste0("https://irma.nps.gov/DataStore/Reference/Profile/",params$dataPackage2RefID)`. 
+* **`r dataPackage2Title`.** Comma-separated text file enumerating the park-specific specific taxa about which data must be protected from release to the public based on federal conservation status. This dataset includes all taxa identified by the USFWS as well as their child taxa and taxonomic synonyms. Available at `r paste0("https://irma.nps.gov/DataStore/Reference/Profile/", dataPackage2RefID)`. 
 
 
 *Also include a table explaining provenance of datasets*
@@ -274,7 +274,7 @@ quality assurance planning documentation.
 
 *Stock Text to include:*
 
-The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *`r params$dataPackage2Title `* is suitable for its intended use as of the date of processing (`r Sys.Date()`).
+The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *`r dataPackage2Title `* is suitable for its intended use as of the date of processing (`r Sys.Date()`).
 
 *Required Table*
 
