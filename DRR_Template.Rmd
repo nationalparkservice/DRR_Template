@@ -1,26 +1,4 @@
 ---
-params:
-  reportNumber: "REPORT NUMBER"                           # Optional. Only include this if publishing in the semi-official Data Release Report Series. Contact Joe if you are.
-  reportRefID: 123456                                     # This should match the Data Store Reference ID for this report.
-  packageAbstract: >-
-    Abstract Should go here.
-    Multiple Lines are okay; it'll format correctly.
-    Do not put the abstract in the text section below; this will allow
-    For reuse of the abtract in all associated products. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).
-    </br> </br> 
-    The Abstract should succinctly describe the study, the assay(s) performed, 
-    the resulting data, and their reuse potential, but should not make any 
-    claims regarding new scientific findings. No references are allowed in this section.
-    
-  dataPackage1RefID: 2272463                              # Data Store reference ID for data set associated with this report. You must have at least one.
-  dataPackage1Title: "Dataset 1 FULL TITLE"               # Should match title in data store.
-  dataPackage1Description: "SHORT TITLE FOR DATASET 1"  
-  dataPackage2RefID: 2272464                              # Data Store reference ID for data set associated with this report. You must have at least one.
-  dataPackage2Title: "Dataset 2 FULL TITLE"               # Should match title in data store.
-  dataPackage2Description: "SHORT TITLE FOR DATASET 1"  
-title: "REPORT TITLE"
-subtitle: |
-  | Data Release Report `r params$reportNumber` 
 author:
   - name: "Author 1"                                      # Add or remove authors as appropriate.
     affiliation: |
@@ -33,7 +11,6 @@ author:
       | Contractor to National Park Service  
       | Natural Resource Stewardship and Science
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-abstract: "`r params$packageAbstract`"
 editor_options:
   chunk_output_type: inline
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
@@ -147,15 +124,13 @@ if ("ggplot2" %in% .packages()) {
    theme_update(plot.title = element_text(hjust = 0.5))
 }
 
-# Write YAML parameters to file for consistent reuse across report and data packages
-save(params,file=here::here("data", "temp", "reportParameters.RData"))
 
 ## General Utility Functions
 
 source(here::here("common", "SharedFunctions.R"))
 
 #Create Abstract File from YAML header. You may need to update this if you change the data packaging folder (or add additional ones)
-cat(params$packageAbstract,file="temp\\abstract.txt",sep="\n",append=FALSE)
+cat(DRRabstract,file="temp\\abstract.txt",sep="\n",append=FALSE)
 
 # Set up table template
 NPS_theme <- function(x, ...) {
@@ -192,7 +167,7 @@ reportNumber<-"REPORT NUMBER"
 reportRefID<-123456
 # This should match the Data Store Reference ID for this report.
 
-packageAbstract<-"Abstract Should go here. Multiple Lines are okay; it'll format correctly. Do not put the abstract in the text section below; this will allow for reuse of the abtract in all associated products. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
+DRRabstract<-"Abstract Should go here. Multiple Lines are okay; it'll format correctly. Do not put the abstract in the text section below; this will allow for reuse of the abtract in all associated products. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
 The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
     
 dataPackage1RefID<-2272463
@@ -214,20 +189,12 @@ dataPackage2Description<-"SHORT TITLE FOR DATASET 1"
 title<-"REPORT TITLE"
 
 subtitle<-paste0("Data Release Report: ", reportNumber)
-author:
-  - name: "Author 1"                                      # Add or remove authors as appropriate.
-    affiliation: |
-      | NPS Inventory & Monitoring Division 
-      | 1201 Oakridge, Suite 150
-      | Fort Collins, Colorado
-  - name: "Author 2"
-    affiliation: |
-      | Managed Business Solutions (MBS), a Sealaska Company  
-      | Contractor to National Park Service  
-      | Natural Resource Stewardship and Science
-date: "`r format(Sys.time(), '%d %B, %Y')`"
-abstract: "`r params$packageAbstract`"
+date<-format(Sys.time(), '%d %B, %Y')
 
+# Write parameters to file for consistent reuse across report and data packages
+save(reportNumber, reportRefID, DRRabstract, dataPackage1RefID, dataPackage1Title, dataPackage1Description, dataPackage2RefID, dataPackage2Title, dataPackage2Description, file=here::here("temp", "reportParameters.Rdata"))
+
+```
 
 ```{r LoadData, include=FALSE}
 # Load datasets for use (example commented out below)
