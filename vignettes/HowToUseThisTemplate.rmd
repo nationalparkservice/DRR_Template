@@ -1,6 +1,6 @@
 ---
 title: "How To Use This Template"
-date: "7/29/2022"
+date: "07-29-2022"
 output:
   html_document:
     df_print: kable
