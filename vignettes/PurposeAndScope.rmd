@@ -59,7 +59,7 @@ in expectations (outside NPS) since the inception of the I&M program.
 -   A move in the scientific disciplines toward considering and publishing data
     sets as independently-citable scientific works.
 
--   Routine assignment of digital object identifiers (DOIs) to dataset to facilitate location, reuse, and
+-   Routine assignment of digital object identifiers (DOIs) to datasets to facilitate location, reuse, and
     citation of specific data
 
 -   Increased transparency and reproducibility in the processing and analysis of
@@ -82,9 +82,7 @@ evaluation (mandated; see below). The establishment of a data release report
 series is intended to facilitate and encourage this type of reporting in a
 standard format, and in a manner commensurate with current scientific norms.
 
-A template for creating data release reports to be published in the DRR series
-and associated data packages is located at
-<https://github.com/nationalparkservice/IMD_DRR_Template>. We have also
+A [template](../DRR_Template) for creating data release reports to be published in the DRR series. We have also
 developed procedures for authoring DRR reports in Microsoft Word and porting
 them to the appropriate format.  
 
