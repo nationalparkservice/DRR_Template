@@ -282,5 +282,5 @@ may also support other scientific work and decision support.
 
 American Statistical Association (ASA). 2017. Recommendations to funding agencies for supporting reproducible research. https://www.amstat.org/asa/files/pdfs/POL-ReproducibleResearchRecommendations.pdf. 
 
-Plesser, H. E. 2017. Reproducibility vs. replicability: a brief history of a confused termonology. Front Neuroinform. 11:76. https://dx.doi.org/10.3389%2Ffninf.2017.00076.
+Plesser, H. E. 2017. Reproducibility vs. Replicability: A brief history of a confused terminology. Front. Neuroinform. 11:76. https://doi.org/10.3389/fninf.2017.00076.
 
