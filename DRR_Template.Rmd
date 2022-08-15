@@ -1,15 +1,4 @@
 ---
-author:
-  - name: "Author 1"                                      # Add or remove authors as appropriate.
-    affiliation: |
-      | NPS Inventory & Monitoring Division 
-      | 1201 Oakridge, Suite 150
-      | Fort Collins, Colorado
-  - name: "Author 2"
-    affiliation: |
-      | Managed Business Solutions (MBS), a Sealaska Company  
-      | Contractor to National Park Service  
-      | Natural Resource Stewardship and Science
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 editor_options:
   chunk_output_type: inline
@@ -43,6 +32,36 @@ output:
 ---
 
 ```{r parameterss, include=FALSE}
+reportTitle<-"Report Title"
+
+
+#Can pull authors from data package metadata, but that assumes data package authors and DRR authors are the same.... 
+
+#the number of authors for the DRR:
+AuthorNumb<-2
+
+#DRR Author #1 (which may differ from data pacakge authors!)
+AuthorName1<-"Jane Doe"
+
+AuthorAffiliation1<-"NPS Inventory and Monitory Division\n
+1201 Oakrdige Dr, Suite 150\n
+Fort Collins, Colorado"
+
+#DRR Author #2
+AuthorName2<-"John Doe"
+AuthorAffiliation2<-"Managed Business Solutions (MBS), a Sealaska Company\n
+Contractor to the National Park Service\n
+Natural Resource Stewardship and Science Directorate\n
+1201 Oakridge Dr, Suite 150\n
+Fort Collins, Colorado"
+
+#DRR Author #3... and so on. make sure the number of authors is equal to the value set for AuthorNumb
+#AuthorName3<-"Author Name 3"
+#AuthorAffiliation3<-"Author Affilation 3"
+
+
+date<-format(Sys.time(), '%d %B, %Y')
+
 reportNumber<-"REPORT NUMBER"                           
 #Optional. Only include this if publishing in the semi-official Data Release Report Series. Contact Joe if you are.
 
@@ -68,7 +87,8 @@ dataPackage2Title<-"Dataset 2 FULL TITLE"
 
 dataPackage2Description<-"SHORT TITLE FOR DATASET 1"  
 
-title<-"REPORT TITLE"
+title<-"DRR TITLE"
+title<-toupper(title)
 
 subtitle<-paste0("Data Release Report: ", reportNumber)
 date<-format(Sys.time(), '%d %B, %Y')
@@ -195,6 +215,36 @@ set_flextable_defaults(
   )
 
 ```
+# `r title`
+## Data Release Report `r reportNumber`
+
+```{r authors, echo=FALSE, results="asis"}
+template<-"### %s
+
+%s
+
+
+"
+names<-NULL
+address<-NULL
+for(i in 1:AuthorNumb){
+  names<-append(names, get(paste0("AuthorName", i)))
+  address<-append(address, get(paste0("AuthorAffiliation", i)))
+}
+contact<-data.frame(names, address)
+
+for(i in 1:AuthorNumb){
+  curr<-contact[i,]
+  cat(sprintf(template, curr$names, curr$address))
+}
+  
+```
+
+### `r date` <!-- publication date - defaults to current system date -->
+
+<h4 class="text-center"> Abstract</h4>
+
+`r DRRabstract`
 
 ```{r LoadData, include=FALSE}
 # Load datasets for use (example commented out below)
