@@ -23,14 +23,14 @@ output:
 # Overview
 Data Release Reports (DRRs) are created by the National Park Service and provide detailed descriptions of valuable research datasets, including the methods used to collect the data and technical analyses supporting the quality of the measurements. Data Release Reports focus on helping others reuse data, rather than presenting results, testing hypotheses, or presenting new interpretations, methods or in-depth analyses. 
 
-DRRs are intended to document the processing of fully-QAed data to their final (QCed) form in a reproducible and transparent manner. Data Release Reports document the data collection methods, quality standards, and processing code used to prepare and review data prior to release, and present the quality of resultant data in the context of fitness for their intended use. 
+DRRs are intended to document the processing of fully-QAed data to their final (QCed) form in a reproducible and transparent manner. DRRs document the data collection methods, quality standards, and processing code used to prepare and review data prior to release, and present the quality of resultant data in the context of fitness for their intended use. 
 
 Each DRR cites source and resultant datasets that are published concurrently and cross-referenced. Associated datasets are made publicly available with the exception of data that must be protected from release as per NPS and park-specific policies.
 
 Data packages that are published concurrently with DRRs are intended to be independently citable scientific works that can serve as the basis for subsequent analysis and reporting by NPS or third parties.
 
 # Project Set-up
-New projects can be established using this template by downloading a zip file of the package from [This Link](https://github.com/nationalparkservice/IMD_DRR_Template/archive/master.zip)
+New projects can be established using this template by downloading a zip file of the package from [Dev Purposes TEMP Link](https://RobLBaker/IMD_DRR_Templat/zipball/master).
 
 ## Required Packages Not on CRAN
 
@@ -41,27 +41,26 @@ New projects can be established using this template by downloading a zip file of
 ## Folder Structure
 General directory contents are as follows (Figure 1):
 <div class="figure" style="text-align: center">
-<img src="./DirectoryStructure.png" alt="**Figure 1.** Standard project directory structure for data release reports." width="30%" />
+<img src="./FileStructure.PNG" alt="**Figure 1.** Standard project directory structure for data release reports." width="30%" />
 <p class="caption">**Figure 1.** Standard project directory structure for data release reports.</p>
 </div>
 
-- `common` houses files that are shared across all projects and generally should not be edited by the user. Notable files:
-
-  - `header.html` includes all of the graphic identity material at the top of the rendered report.
-  - `footer.html` includes all of the "about this report" information similar to what is found in the front matter of reports published in the NRR and NRDS series.
-  - `journalnps.min.css` includes stylesheet tweaks that modify the standard markdown "journal" theme to approxmiate NPS graphic identity standards.
-  - `DRR Word Template.docx` is intended for users who prefer to author reports in microsoft word and then convert to markdown (as opposed to authoring reports in rmarkdown). Instructions on how to use this method of DRR report creation are below.
+- `input` This is the only location where you you should manually change or edit files. This is where data files you need to supply should be placed. 
   
-- `data` The data folder contains three subfolders for managing datasets used and generated during report production.
-
-  - `raw` is for all source data sets used as the basis for a report. These can either be raw (non-QCed) datasets, or final citable datasets from prior works.
-  - `temp` is intended to house datasets generated during production of the report that are retained for later use in processing (and to help save progress in analyses that require multiple steps). The starting chunk of the template will generate a `reportParameters.RData` dataset of all parameters from the YAML header for later use in the report.
-  - `final` is for any final datasets that are to be included in data packages.
+  - `figures`  If you have figures that are not generated as part of running this template, place those files here.
   
-- `figures` contains all the figures for the data release report
 
-- `output` is where the zipped data packages from the script above are written.
+- `output` Do not edit these files. This is where you can find your final products. Edits to files in this folder will not be incorporated when you knit the DRR_Template. Any edits you make to files in this directory may be overwritten when you knit the template. 
 
+- `temp` Do not edit these files. These are files that are either used or generated during when you knit the DRR_Template. They may include graphics, text, or data.
+
+  - `common` houses files that are shared across all projects and generally should not be edited by the user. Notable files:
+
+    - `header.html` includes all of the graphic identity material at the top of the rendered report.
+    - `footer.html` includes all of the "about this report" information similar to what is found in the front matter of reports published in the NRR and NRDS series.
+    - `journalnps.min.css` includes stylesheet tweaks that modify the standard markdown "journal" theme to approxmiate NPS graphic identity standards.
+    - `DRR Word Template.docx` is intended for users who prefer to author reports in microsoft word and then convert to markdown (as opposed to authoring reports in rmarkdown). Instructions on how to use this method of DRR report creation are below.
+  
 # Creating a Reproducible Report
 The following is for users who are using the `DRR_Template.RMD` template file to generate a data release report using RMarkdown. If you are planning to author your report in MSWord, please see Appendix A below.
 
@@ -69,21 +68,24 @@ The following is for users who are using the `DRR_Template.RMD` template file to
 In addition to the report outline and a description of content for each section, the template includes four standard code chunks.
 
 
-- `Parameters`. A series of parameters that are used in the creation of the DRR and may be re-used in metadata and associated data package construction.
+- `user-edited-parameters`. A series of parameters that are used in the creation of the DRR and may be re-used in metadata and associated data package construction. You will need to edit these parameters for each DRR.
 
-  - `projectDir`. Should point to the root folder on your computer where your template lives.
-  - `reportNumber`. This is optional, and should _only_ be included if publishing in the semi-official DRR series. If not, this line can be removed as well as the `subtitle` lines below (lines 23 and 24 in the template)
-  - `reportRefID`. This is the Data Store reference ID for the report. Must be here so that it is reused in creation of the metadata and manifest files.
-  - `dataPackageXXX`. There are three parameters for each data package associated with each DRR. The RefID parameters should match the Data Store reference IDs; the Title parameter should match the title in Data Store, and the description should be a short title/phrase that will be used throughout the text of the report, metadata, and manifest files. Data package parameters can be added (or removed) as needed, but the template includes two by default
   - `title`. The title of the Data Release Report.
-  - `author`. Author information should be edited to include the authors of the report. Two examples are included.
+  - `reportNumber`. This is optional, and should _only_ be included if publishing in the semi-official DRR series. 
+  - `reportRefID`. This is the Data Store reference ID for the report.
+  - `AuthorNumb`. The number of authors for the DRR. There must be a minimum of 1 author!
+  - `AuthorName1`. The name of the first author.
+  - `AuthorAffiliation1`. The affiliation/address of the first author.
+  - `AuthorName2`. Optional based on number of authors. If one author, comment out using #
+  - `AuthorAffiliation2`. Optional based on number of authors. If one author, comment out using #
   
-Because folks will ask...  
+  Add additional AuthorName# and AuthorAffiliation# as needed, following the template.
+  
+  - `DRRabstract`. The abstract for the DRR (which is distinct from the data package abstract). Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word). Indicate line breaks with \n and a space between paragraphs - should you want them - using \n\n. The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section. A good suggested length for abstracts is less than 250 words.
+  
+  - `dataPackageXXX`. There are three parameters for each data package associated with each DRR. The RefID parameters should match the Data Store reference IDs; the Title parameter should match the title in Data Store, and the description should be a short title/phrase that will be used throughout the text of the report, metadata, and manifest files. Data package parameters can be added (or removed) as needed, but the template includes two by default
 
-1. The abstract is not included in the `abstract` field because if it's there it can't be easily reused in other places. This is our workaround to ensure that the abstract can be consistent across the report and data packages.
-
-2. Yes, we intended to use the `subtitle` field to hold the report number. The rmarkdown template does not have a field/placeholder for report number so (for now) this is our workaround. If you need or want a subtitle, this should be included in the title field similar to how it would be included in a citation.
-
+- `parameters-do-not-edit`. There parameters are auto-generated based on either the EML you supplied (when that becomes an option) or the information you've already supplied under "user-edited-parameters". You really should not need to edit these parameters. 
 
 - `setup`. Pretty self explanatory, but there are two snippets for loading packages; the `RRpackages` section is a suite of packages that are used to assist with reproducible reporting. You may not need these for your report, but we have included them as part of the base recommended packages. There is a second snippet for `pkgList` that includes all project-specific packages needed. Add as necessary.
 

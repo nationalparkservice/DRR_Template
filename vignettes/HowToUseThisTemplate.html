@@ -1822,11 +1822,11 @@ on helping others reuse data, rather than presenting results, testing
 hypotheses, or presenting new interpretations, methods or in-depth
 analyses.</p>
 <p>DRRs are intended to document the processing of fully-QAed data to
-their final (QCed) form in a reproducible and transparent manner. Data
-Release Reports document the data collection methods, quality standards,
-and processing code used to prepare and review data prior to release,
-and present the quality of resultant data in the context of fitness for
-their intended use.</p>
+their final (QCed) form in a reproducible and transparent manner. DRRs
+document the data collection methods, quality standards, and processing
+code used to prepare and review data prior to release, and present the
+quality of resultant data in the context of fitness for their intended
+use.</p>
 <p>Each DRR cites source and resultant datasets that are published
 concurrently and cross-referenced. Associated datasets are made publicly
 available with the exception of data that must be protected from release
@@ -1838,8 +1838,8 @@ for subsequent analysis and reporting by NPS or third parties.</p>
 <div id="project-set-up" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Project Set-up</h1>
 <p>New projects can be established using this template by downloading a
-zip file of the package from <a href="https://github.com/nationalparkservice/IMD_DRR_Template/archive/master.zip">This
-Link</a></p>
+zip file of the package from <a href="https://RobLBaker/IMD_DRR_Templat/zipball/master">Dev Purposes
+TEMP Link</a>.</p>
 <div id="required-packages-not-on-cran" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Required Packages Not
 on CRAN</h2>
@@ -1859,12 +1859,28 @@ reuse.”</p>
 <h2><span class="header-section-number">2.2</span> Folder Structure</h2>
 General directory contents are as follows (Figure 1):
 <div class="figure" style="text-align: center">
-<img src="data:image/png;base64,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" alt="**Figure 1.** Standard project directory structure for data release reports." width="30%" />
+<img src="data:image/png;base64,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" alt="**Figure 1.** Standard project directory structure for data release reports." width="30%" />
 <p class="caption">
 <strong>Figure 1.</strong> Standard project directory structure for data
 release reports.
 </p>
 </div>
+<ul>
+<li><p><code>input</code> This is the only location where you you should
+manually change or edit files. This is where data files you need to
+supply should be placed.</p>
+<ul>
+<li><code>figures</code> If you have figures that are not generated as
+part of running this template, place those files here.</li>
+</ul></li>
+<li><p><code>output</code> Do not edit these files. This is where you
+can find your final products. Edits to files in this folder will not be
+incorporated when you knit the DRR_Template. Any edits you make to files
+in this directory may be overwritten when you knit the
+template.</p></li>
+<li><p><code>temp</code> Do not edit these files. These are files that
+are either used or generated during when you knit the DRR_Template. They
+may include graphics, text, or data.</p>
 <ul>
 <li><p><code>common</code> houses files that are shared across all
 projects and generally should not be edited by the user. Notable
@@ -1883,25 +1899,7 @@ to author reports in microsoft word and then convert to markdown (as
 opposed to authoring reports in rmarkdown). Instructions on how to use
 this method of DRR report creation are below.</li>
 </ul></li>
-<li><p><code>data</code> The data folder contains three subfolders for
-managing datasets used and generated during report production.</p>
-<ul>
-<li><code>raw</code> is for all source data sets used as the basis for a
-report. These can either be raw (non-QCed) datasets, or final citable
-datasets from prior works.</li>
-<li><code>temp</code> is intended to house datasets generated during
-production of the report that are retained for later use in processing
-(and to help save progress in analyses that require multiple steps). The
-starting chunk of the template will generate a
-<code>reportParameters.RData</code> dataset of all parameters from the
-YAML header for later use in the report.</li>
-<li><code>final</code> is for any final datasets that are to be included
-in data packages.</li>
 </ul></li>
-<li><p><code>figures</code> contains all the figures for the data
-release report</p></li>
-<li><p><code>output</code> is where the zipped data packages from the
-script above are written.</p></li>
 </ul>
 </div>
 </div>
@@ -1918,44 +1916,54 @@ Chunks</h2>
 <p>In addition to the report outline and a description of content for
 each section, the template includes four standard code chunks.</p>
 <ul>
-<li><p><code>Parameters</code>. A series of parameters that are used in
-the creation of the DRR and may be re-used in metadata and associated
-data package construction.</p>
+<li><p><code>user-edited-parameters</code>. A series of parameters that
+are used in the creation of the DRR and may be re-used in metadata and
+associated data package construction. You will need to edit these
+parameters for each DRR.</p>
 <ul>
-<li><code>projectDir</code>. Should point to the root folder on your
-computer where your template lives.</li>
+<li><code>title</code>. The title of the Data Release Report.</li>
 <li><code>reportNumber</code>. This is optional, and should
-<em>only</em> be included if publishing in the semi-official DRR series.
-If not, this line can be removed as well as the <code>subtitle</code>
-lines below (lines 23 and 24 in the template)</li>
+<em>only</em> be included if publishing in the semi-official DRR
+series.</li>
 <li><code>reportRefID</code>. This is the Data Store reference ID for
-the report. Must be here so that it is reused in creation of the
-metadata and manifest files.</li>
-<li><code>dataPackageXXX</code>. There are three parameters for each
+the report.</li>
+<li><code>AuthorNumb</code>. The number of authors for the DRR. There
+must be a minimum of 1 author!</li>
+<li><code>AuthorName1</code>. The name of the first author.</li>
+<li><code>AuthorAffiliation1</code>. The affiliation/address of the
+first author.</li>
+<li><code>AuthorName2</code>. Optional based on number of authors. If
+one author, comment out using #</li>
+<li><code>AuthorAffiliation2</code>. Optional based on number of
+authors. If one author, comment out using #</li>
+</ul>
+<p>Add additional AuthorName# and AuthorAffiliation# as needed,
+following the template.</p>
+<ul>
+<li><p><code>DRRabstract</code>. The abstract for the DRR (which is
+distinct from the data package abstract). Pay careful attendtion to
+non-standard characters, line breaks, carriage returns, and
+curly-quotes. You may find it useful to write the abstract in NotePad++
+or some other text editor and not a word processor (such as Microsoft
+Word). Indicate line breaks with and a space between paragraphs - should
+you want them - using . The Abstract should succinctly describe the
+study, the assay(s) performed, the resulting data, and their reuse
+potential, but should not make any claims regarding new scientific
+findings. No references are allowed in this section. A good suggested
+length for abstracts is less than 250 words.</p></li>
+<li><p><code>dataPackageXXX</code>. There are three parameters for each
 data package associated with each DRR. The RefID parameters should match
 the Data Store reference IDs; the Title parameter should match the title
 in Data Store, and the description should be a short title/phrase that
 will be used throughout the text of the report, metadata, and manifest
 files. Data package parameters can be added (or removed) as needed, but
-the template includes two by default</li>
-<li><code>title</code>. The title of the Data Release Report.</li>
-<li><code>author</code>. Author information should be edited to include
-the authors of the report. Two examples are included.</li>
+the template includes two by default</p></li>
 </ul></li>
-</ul>
-<p>Because folks will ask…</p>
-<ol style="list-style-type: decimal">
-<li><p>The abstract is not included in the <code>abstract</code> field
-because if it’s there it can’t be easily reused in other places. This is
-our workaround to ensure that the abstract can be consistent across the
-report and data packages.</p></li>
-<li><p>Yes, we intended to use the <code>subtitle</code> field to hold
-the report number. The rmarkdown template does not have a
-field/placeholder for report number so (for now) this is our workaround.
-If you need or want a subtitle, this should be included in the title
-field similar to how it would be included in a citation.</p></li>
-</ol>
-<ul>
+<li><p><code>parameters-do-not-edit</code>. There parameters are
+auto-generated based on either the EML you supplied (when that becomes
+an option) or the information you’ve already supplied under
+“user-edited-parameters”. You really should not need to edit these
+parameters.</p></li>
 <li><p><code>setup</code>. Pretty self explanatory, but there are two
 snippets for loading packages; the <code>RRpackages</code> section is a
 suite of packages that are used to assist with reproducible reporting.
