@@ -2,9 +2,8 @@
 This is a template project to for use when drafting a data release report. Data Release Reports (DRRs) are created by the National Park Service and provide detailed descriptions of valuable research datasets, including the methods used to collect the data and technical analyses supporting the quality of the measurements. Data Release Reports focus on helping others reuse data, rather than presenting results, testing hypotheses, or presenting new interpretations, methods or in-depth analyses. 
 
 # About this Template
-This template and contains an rmarkdown
-template file, default folder structure for project files, and all necessary template files to generate a standard NPS-branded html 
-report that documents the collection, processing, quality control, and evaluation of utility. 
+This template contains an rmarkdown template file, default folder structure for project files, and all necessary template files to generate a standard NPS-branded html 
+report that documents the collection, processing, quality control, and evaluates the of utility of NPS data packages. 
 
 This template is under active development to improve style and 508 compliance.
 
