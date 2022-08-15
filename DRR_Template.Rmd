@@ -31,11 +31,17 @@ output:
     number_sections: false
 ---
 
-```{r parameterss, include=FALSE}
-reportTitle<-"Report Title"
+```{r user-edited-parameterss, include=FALSE}
+#The title of your DRR (all upper case is enforced):
+title<-"DRR TITLE"
 
+#Optional and should only be included if publishing to the semi-official DRR series. Contact Joe if you are. If not, leave as NULL
+reportNumber<-7654321
 
-#Can pull authors from data package metadata, but that assumes data package authors and DRR authors are the same.... 
+# This should match the Data Store Reference ID for this DRR. Eventually we should be able to pull this directly from the data package metadata.
+reportRefID<-123456
+
+#Can eventually pull authors from data package metadata, but that assumes data package authors and DRR authors are the same.... 
 
 #the number of authors for the DRR:
 AuthorNumb<-2
@@ -60,15 +66,7 @@ Fort Collins, Colorado"
 #AuthorAffiliation3<-"Author Affilation 3"
 
 
-date<-format(Sys.time(), '%d %B, %Y')
-
-reportNumber<-"REPORT NUMBER"                           
-#Optional. Only include this if publishing in the semi-official Data Release Report Series. Contact Joe if you are.
-
-reportRefID<-123456
-# This should match the Data Store Reference ID for this report.
-
-DRRabstract<-"Abstract Should go here. Multiple Lines are okay; it'll format correctly. Do not put the abstract in the text section below; this will allow for reuse of the abtract in all associated products. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
+DRRabstract<-"Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
 The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
     
 dataPackage1RefID<-2272463
@@ -85,16 +83,23 @@ dataPackage2RefID<-2272464
 dataPackage2Title<-"Dataset 2 FULL TITLE"
 # Should match title in data store.
 
-dataPackage2Description<-"SHORT TITLE FOR DATASET 1"  
+dataPackage2Description<-"SHORT TITLE FOR DATASET 1"
 
-title<-"DRR TITLE"
-title<-toupper(title)
 
-subtitle<-paste0("Data Release Report: ", reportNumber)
-date<-format(Sys.time(), '%d %B, %Y')
 
 # Write parameters to file for consistent reuse across report and data packages
 save(reportNumber, reportRefID, DRRabstract, dataPackage1RefID, dataPackage1Title, dataPackage1Description, dataPackage2RefID, dataPackage2Title, dataPackage2Description, file=here::here("temp", "reportParameters.Rdata"))
+
+```
+```{r parameters-do-not-edit, echo=FALSE, results="asis"}
+date<-format(Sys.time(), '%d %B, %Y')
+title<-toupper(title)
+cat("#", title, "\n")
+if(!is.null(reportNumber)){
+  subtitle<-paste0("Data Release Report ", reportNumber)
+  cat("##", subtitle)
+  }
+
 
 ```
 
@@ -215,8 +220,8 @@ set_flextable_defaults(
   )
 
 ```
-# `r title`
-## Data Release Report `r reportNumber`
+
+<!-- # `r title` <!-- pulls from title supplied above - don't edit here! -->
 
 ```{r authors, echo=FALSE, results="asis"}
 template<-"### %s
@@ -242,9 +247,9 @@ for(i in 1:AuthorNumb){
 
 ### `r date` <!-- publication date - defaults to current system date -->
 
-<h4 class="text-center"> Abstract</h4>
+<h4 class="text-center">Abstract</h4> <!-- abstract heading - don't edit -->
 
-`r DRRabstract`
+`r DRRabstract` <!-- pulls from the abstract you supplied above - don't edit here! -->
 
 ```{r LoadData, include=FALSE}
 # Load datasets for use (example commented out below)
