@@ -1895,7 +1895,7 @@ published in the NRR and NRDS series.</li>
 modify the standard markdown “journal” theme to approxmiate NPS graphic
 identity standards.</li>
 <li><code>DRR Word Template.docx</code> is intended for users who prefer
-to author reports in microsoft word and then convert to markdown (as
+to author reports in Microsoft Word and then convert to markdown (as
 opposed to authoring reports in rmarkdown). Instructions on how to use
 this method of DRR report creation are below.</li>
 </ul></li>
@@ -1908,20 +1908,25 @@ this method of DRR report creation are below.</li>
 Report</h1>
 <p>The following is for users who are using the
 <code>DRR_Template.RMD</code> template file to generate a data release
-report using RMarkdown. If you are planning to author your report in
-MSWord, please see Appendix A below.</p>
+report using RMarkdown. If you are planning to author your report in MS
+Word, please see Appendix A below.</p>
 <div id="standard-code-chunks" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Standard Code
 Chunks</h2>
 <p>In addition to the report outline and a description of content for
 each section, the template includes four standard code chunks.</p>
+<p><strong>YAML Header:</strong></p>
+<p>The YAML header helps format the DRR. You should not need to edit any
+of the YAML header.</p>
+<p><strong>R code chunks:</strong></p>
 <ul>
 <li><p><code>user-edited-parameters</code>. A series of parameters that
 are used in the creation of the DRR and may be re-used in metadata and
 associated data package construction. You will need to edit these
 parameters for each DRR.</p>
 <ul>
-<li><code>title</code>. The title of the Data Release Report.</li>
+<li><code>title</code>. The title of the Data Release Report.This will
+be converted to all upper case.</li>
 <li><code>reportNumber</code>. This is optional, and should
 <em>only</em> be included if publishing in the semi-official DRR
 series.</li>
@@ -1935,31 +1940,50 @@ first author.</li>
 <li><code>AuthorName2</code>. Optional based on number of authors. If
 one author, comment out using #</li>
 <li><code>AuthorAffiliation2</code>. Optional based on number of
-authors. If one author, comment out using #</li>
-</ul>
-<p>Add additional AuthorName# and AuthorAffiliation# as needed,
-following the template.</p>
-<ul>
-<li><p><code>DRRabstract</code>. The abstract for the DRR (which is
-distinct from the data package abstract). Pay careful attendtion to
+authors. If one author, comment out using #. Add additional AuthorName#
+and AuthorAffiliation# as needed, following the template.</li>
+<li><code>DRRabstract</code>. The abstract for the DRR (which is
+distinct from the data package abstract). Pay careful attention to
 non-standard characters, line breaks, carriage returns, and
-curly-quotes. You may find it useful to write the abstract in NotePad++
-or some other text editor and not a word processor (such as Microsoft
+curly-quotes. You may find it useful to write the abstract in NotePad or
+some other text editor and NOT a word processor (such as Microsoft
 Word). Indicate line breaks with and a space between paragraphs - should
 you want them - using . The Abstract should succinctly describe the
 study, the assay(s) performed, the resulting data, and their reuse
 potential, but should not make any claims regarding new scientific
 findings. No references are allowed in this section. A good suggested
-length for abstracts is less than 250 words.</p></li>
-<li><p><code>dataPackageXXX</code>. There are three parameters for each
-data package associated with each DRR. The RefID parameters should match
-the Data Store reference IDs; the Title parameter should match the title
-in Data Store, and the description should be a short title/phrase that
-will be used throughout the text of the report, metadata, and manifest
-files. Data package parameters can be added (or removed) as needed, but
-the template includes two by default</p></li>
+length for abstracts is less than 250 words.</li>
+<li><code>dataPackage1RefID</code>. DataStore reference ID for the data
+package associated with this report. You must have at least one data
+package.Eventually, we will automate importing much of this information
+from metadata and include the ability to describe multiple data packages
+in a single DRR.</li>
+<li><code>dataPackage1Title</code>. The title of the data package. Must
+match the title on DataStore (and metadata).</li>
+<li><code>dataPackage1Description</code>. A short title/subtitle or
+short description for the data package. Must match the data package
+metadata.</li>
+<li><code>dataPackage1DOI</code>. Auto-generated, no need to edit or
+update. This is the data package DOI. It is based on the DataStore
+reference number.</li>
+<li><code>dataPackage1_filenumb</code>. The number of data files in the
+data package described by the DRR. Exclude metadata files! For in this
+example the data package includes 3 files at upload: one metadata file
+and two data files.</li>
+<li><code>dataPackage1_datafile1_name</code>. The file name for the
+first data file in the data package. Each data package must include at
+least one data file.For example, “my_data.csv”.</li>
+<li><code>dataPackage1_datafile1_descript</code>. A short description of
+the corresponding data file that helps distinguish it from other data
+files. A good guideline is 10 words or less.</li>
+<li><code>dataPackage1_datafile2_name</code>. The file name for the
+second data file. For example, “my_data2.csv”.</li>
+<li><code>dataPackage1_datafile2_descript</code>. A short description of
+the corresponding data file that distinguishes it from other data files.
+A good guideline is 10 words or less.You can add additional data files
+and descriptions using the same format.</li>
 </ul></li>
-<li><p><code>parameters-do-not-edit</code>. There parameters are
+<li><p><code>parameters-do-not-edit</code>. These parameters are
 auto-generated based on either the EML you supplied (when that becomes
 an option) or the information you’ve already supplied under
 “user-edited-parameters”. You really should not need to edit these
@@ -1971,11 +1995,14 @@ You may not need these for your report, but we have included them as
 part of the base recommended packages. There is a second snippet for
 <code>pkgList</code> that includes all project-specific packages needed.
 Add as necessary.</p></li>
+<li><p><code>authors</code>. There is no need to edit this chunk. This
+writes the author names and affiliations to the html document based on
+information supplied in user-edited-parameters.</p></li>
 <li><p><code>LoadData</code>. Any datasets you need to load can go
 here.</p></li>
-</ul>
-<!-- - `DataPackages` is the chunk used to read in the scripts for generating the data packages. RLB: I couldn't find this code chunk so getting rid of reference to it -->
-<ul>
+<li><p><code>dp_files</code>. Do not edit. Generates a list of file
+names and descriptions in the data package being described by the
+DRR.</p></li>
 <li><p><code>Listing</code>. Appendix A, by default is the code listing.
 This will generate all code used in generating the report and data
 packages.</p></li>
