@@ -63,12 +63,6 @@ Data packages that are published concurrently with DRRs are intended to be indep
 # Project Set-up
 New projects can be established using this template by downloading a zip file of the package from [Dev Purposes TEMP Link](https://RobLBaker/IMD_DRR_Templat/zipball/master).
 
-## Required Packages Not on CRAN
-
-- **EMLassemblyline.** Package developed by EDI.org. As per their github repository, it's designed "for scientists and data managers who need to easily create high quality EML metadata for data publication. EMLassemblyline is a metadata builder that emphasizes auto-extraction of metadata, appends value added content, and inputs user supplied information through common interfaces thereby minimizing user effort while maximizing metadata features for data discovery and reuse."
-
-  ` remotes::install_github("EDIorg/EMLassemblyline")` 
-
 ## Folder Structure
 General directory contents are as follows (Figure 1):
 ```{r figure1, echo=FALSE, fig.align="center", out.width="30%",  fig.cap="**Figure 1.** Standard project directory structure for data release reports."}
@@ -107,7 +101,7 @@ The YAML header helps format the DRR. You should not need to edit any of the YAM
 - `user-edited-parameters`. A series of parameters that are used in the creation of the DRR and may be re-used in metadata and associated data package construction. You will need to edit these parameters for each DRR.
   - `title`. The title of the Data Release Report.This will be converted to all upper case. 
   - `reportNumber`. This is optional, and should _only_ be included if publishing in the semi-official DRR series. 
-  - `reportRefID`. This is the Data Store reference ID for the report.
+  - `DRR_DSRefID`. This is the Data Store reference ID for the report.
   - `AuthorNumb`. The number of authors for the DRR. There must be a minimum of 1 author!
   - `AuthorName1`. The name of the first author.
   - `AuthorAffiliation1`. The affiliation/address of the first author.
