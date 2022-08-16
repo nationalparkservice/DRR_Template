@@ -43,12 +43,12 @@ reportNumber<-1111111
 # This should match the Data Store Reference ID for this DRR. Eventually we should be able to pull this directly from the data package metadata.
 DRR_DSRefID<-7654321
 
-#Can eventually pull authors from data package metadata, but that assumes data package authors and DRR authors are the same.... 
+#Can eventually pull authors from data package metadata, but that assumes data package authors and DRR authors are the same... 
 
 #the number of authors for the DRR:
 AuthorNumb<-2
 
-#DRR Author #1 (which may differ from data pacakge authors!)
+#DRR Author #1 (which may differ from data package authors!)
 AuthorName1<-"Jane Doe"
 
 AuthorAffiliation1<-"NPS Inventory and Monitory Division\n
