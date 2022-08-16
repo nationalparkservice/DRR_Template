@@ -1,4 +1,5 @@
 ---
+### this is a YAML header that helps with formating the DRR. You do not need to edit anything in the YAML header.
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 editor_options:
   chunk_output_type: inline
@@ -29,6 +30,7 @@ output:
     fig_width: 5
     highlight: haddock
     number_sections: false
+### This is the end of the YAML header.
 ---
 
 ```{r user-edited-parameterss, include=FALSE}
@@ -36,10 +38,10 @@ output:
 title<-"DRR TITLE"
 
 #Optional and should only be included if publishing to the semi-official DRR series. Contact Joe if you are. If not, leave as NULL
-reportNumber<-7654321
+reportNumber<-1111111
 
 # This should match the Data Store Reference ID for this DRR. Eventually we should be able to pull this directly from the data package metadata.
-reportRefID<-123456
+DRR_DSRefID<-7654321
 
 #Can eventually pull authors from data package metadata, but that assumes data package authors and DRR authors are the same.... 
 
@@ -65,30 +67,38 @@ Fort Collins, Colorado"
 #AuthorName3<-"Author Name 3"
 #AuthorAffiliation3<-"Author Affilation 3"
 
-
 DRRabstract<-"Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
 The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
     
-dataPackage1RefID<-2272463
-# Data Store reference ID for data set associated with this report. You must have at least one.
+# DataStore reference ID for the data package associated with this report. You must have at least one data package.Eventually, we will automate importing much of this information from metadata and include the ability to describe multiple data packages in a single DRR.
+dataPackage1RefID<-12342567
 
+# Must match title in data store.
 dataPackage1Title<-"Dataset 1 FULL TITLE"
-# Should match title in data store.
 
-dataPackage1Description<-"SHORT TITLE FOR DATASET 1"  
+#Must match descriptions in the data package metadata
+dataPackage1Description<-"SHORT TITLE FOR DATASET 1"
 
-dataPackage2RefID<-2272464
-# Data Store reference ID for data set associated with this report. You must have at least one.
+#generates your data package DOI based on the data package DataStore reference ID. This is different from the DRR DOI!
+dataPackage1DOI<-paste0("https://doi.org/10.57830/", dataPackage1RefID)
 
-dataPackage2Title<-"Dataset 2 FULL TITLE"
-# Should match title in data store.
+#The number of data files in the data package described by the DRR. Exclude metadata files! For in this example the data package includes 3 files at upload: one metadata file and two data files.
+dataPackage1_filenumb<-2
 
-dataPackage2Description<-"SHORT TITLE FOR DATASET 1"
+# The file name for the first data file in the data package. Each data package must include at least one data file.
+dataPackage1_datafile1_name<-"my_data.csv"
 
+dataPackage1_datafile1_descript<-"This is a short description of the corresponding data file (a good guideline is 10 words or less)."
 
+# Should match file name in data store/metadata.
+dataPackage1_datafile2_name<-"my_data2.csv"
+
+dataPackage1_datafile2_descript<-"This is a short (perhaps 10 words) description of the 2nd data file."
+
+#Add additional file names and descriptions following the format above.
 
 # Write parameters to file for consistent reuse across report and data packages
-save(reportNumber, reportRefID, DRRabstract, dataPackage1RefID, dataPackage1Title, dataPackage1Description, dataPackage2RefID, dataPackage2Title, dataPackage2Description, file=here::here("temp", "reportParameters.Rdata"))
+save(title, reportNumber, DRR_DSRefID, AuthorNumb, AuthorName1, AuthorAffiliation1, AuthorName2, AuthorAffiliation2, DRRabstract, dataPackage1RefID, dataPackage1Title, dataPackage1Description, dataPackage1DOI, dataPackage1_filenumb, dataPackage1_datafile1_name, dataPackage1_datafile1_descript, dataPackage1_datafile2_name, dataPackage1_datafile2_descript,  file=here::here("temp", "reportParameters.Rdata"))
 
 ```
 ```{r parameters-do-not-edit, echo=FALSE, results="asis"}
@@ -221,9 +231,8 @@ set_flextable_defaults(
 
 ```
 
-<!-- # `r title` <!-- pulls from title supplied above - don't edit here! -->
-
 ```{r authors, echo=FALSE, results="asis"}
+#formatting template:
 template<-"### %s
 
 %s
@@ -232,12 +241,15 @@ template<-"### %s
 "
 names<-NULL
 address<-NULL
+
+#turn author data into a dataframe
 for(i in 1:AuthorNumb){
   names<-append(names, get(paste0("AuthorName", i)))
   address<-append(address, get(paste0("AuthorAffiliation", i)))
 }
 contact<-data.frame(names, address)
 
+#add author data to the template & write to html
 for(i in 1:AuthorNumb){
   curr<-contact[i,]
   cat(sprintf(template, curr$names, curr$address))
@@ -258,22 +270,23 @@ for(i in 1:AuthorNumb){
 
 <hr>
 # Background & Introduction
-The Background & Summary should provide an overview of the study design, the assay(s) performed, and the data generated, including any background information needed to put this study in the context of previous work and the literature, and should reference literature as needed. The section should also briefly outline the broader goals that motivated collection of the data, as well as their potential reuse value. We also encourage authors to include a figure that provides a schematic overview of the study and assay(s) design. 
+The Background & Summary should provide an overview of the study design, the assay(s) performed, and the data generated, including any background information needed to put this study in the context of previous work and the literature, and should reference literature as needed. Literature should be cited both in the text and in the References section below using the appropriate [Chicago Manual of Style](https://www.chicagomanualofstyle.org/tools_citationguide/citation-guide-2.html) author-date format. 
+
+The section should also briefly outline the broader goals that motivated collection of the data, as well as their potential reuse value. We also encourage authors to include a figure that provides a schematic overview of the study and assay(s) design. 
 
 # Methods
-The Methods should include detailed text describing any steps or procedures used in producing the data, including full descriptions of the experimental design, data acquisition assays, and any computational processing (e.g. normalization, image feature extraction). See the detailed section in our submission guidelines for advice on writing a transparent and reproducible methods section. Related methods should be grouped under corresponding subheadings where possible, and methods should be described in enough detail to allow other researchers to interpret and repeat, if required, the full study. Specific data outputs should be explicitly referenced via data citation (see Data Records and Citing Data, below).
+Ideally these methods are identical to the methods listed in the metadata accompanying the data package that the DRR describes.Future versions of this template will pull directly from metadata.
 
-Authors should cite previous descriptions of the methods under use, but ideally the method descriptions should be complete enough for others to understand and reproduce the methods and processing steps without referring to associated publications. There is no limit to the length of the Methods section.
+The Methods should include cite previous methods under use but also be detailed enough describing data production including full descriptions of the experimental design, data acquisition assays, and any computational processing (e.g. normalization, image feature extraction) that other can understand and reproduce the methods and processing steps without referring to associated publications. Related methods should be grouped under corresponding subheadings where possible, and methods should be described in enough detail to allow other researchers to interpret and repeat, if required, the full study. 
+
+Specific data inputs and outputs should be explicitly cited in the text and included in the References section below. See the [USGS data citation guidelines](https://www.usgs.gov/data-management/data-citation) for examples of how to cite data in text and in the References section.
 
 Authors are encouraged to consider creating a figure that outlines the experimental workflow(s) used to generate and analyse the data output(s) (Figure 1).
-
 
 ```{r figure1, echo=FALSE, fig.align="center", fig.cap="**Figure 1.** Example general workflow to include in the methods section."}
 include_graphics("figures/ProcessingWorkflow.png")
 
 ```
-
-
 
 ## Data Collection and Sample Processing Methods (optional)
 Include a description of field methods and sample processing 
@@ -305,12 +318,30 @@ step, should these form part of the archived record.
 
 ### Summary of datasets created. Example of stock text to include. ###
 
-Two datasets were generated as a part of this effort (Table 2):
+This DRR describes the data package `r dataPackage1Title` which contains a metadata file and `r dataPackage1_filenumb` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackage1DOI`. The files in the data package are:
 
-* **`r dataPackage1Title`.** Comma-separated text file enumerating the specific taxa considered to have federal conservation status in NPS park units. These data were compiled by the National Park Service Biological Resources Division and were last updated on XX. Available at `r paste0("https://irma.nps.gov/DataStore/Reference/Profile/", dataPackage1RefID)`. 
+```{r dp_files, echo=FALSE, results="asis"}
+#formatting template:
+template<-"**%s -** %s
 
-* **`r dataPackage2Title`.** Comma-separated text file enumerating the park-specific specific taxa about which data must be protected from release to the public based on federal conservation status. This dataset includes all taxa identified by the USFWS as well as their child taxa and taxonomic synonyms. Available at `r paste0("https://irma.nps.gov/DataStore/Reference/Profile/", dataPackage2RefID)`. 
+"
+names<-NULL
+descript<-NULL
 
+#turn author data into a dataframe
+for(i in 1:dataPackage1_filenumb){
+  names<-append(names, get(paste0("dataPackage1_datafile", i, "_name")))
+  descript<-append(descript, get(paste0("dataPackage1_datafile", i,"_descript")))
+}
+filelist<-data.frame(names, descript)
+
+#add author data to the template & write to html
+for(i in 1:dataPackage1_filenumb){
+  curr<-filelist[i,]
+  cat(sprintf(template, curr$names, curr$descript))
+}
+  
+```
 
 *Also include a table explaining provenance of datasets*
 
@@ -329,7 +360,7 @@ quality assurance planning documentation.
 
 *Stock Text to include:*
 
-The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *`r dataPackage2Title `* is suitable for its intended use as of the date of processing (`r Sys.Date()`).
+The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *`r dataPackage1Title `* is suitable for its intended use as of the date of processing (`r Sys.Date()`).
 
 *Required Table*
 
