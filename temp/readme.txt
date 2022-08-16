@@ -1,1 +1,0 @@
-No need to mess with files in this folder. They are auto-generated during the DRR authoring process.
