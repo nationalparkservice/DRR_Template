@@ -23,6 +23,6 @@ This template is under active development to improve style and 508 compliance.
 4. Tips, FAQs, and Errata (coming soon)
 
 # Getting Started
-New projects can be established using this template by downloading a zip file of the package from [This Link](https://github.com/nationalparkservice/IMD_DRR_Template/zipball/master)
+New projects can be established using this template by downloading a zip file of the package from <!--[This Link](https://github.com/nationalparkservice/IMD_DRR_Template/zipball/master) -->
 
-[Temp Zipball for dev purposes](tarball/master)
+[Temp Zipball for dev purposes](https://github.com/RobLBaker/DRR_Template_Wroking/zipball/master)
