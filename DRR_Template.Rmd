@@ -67,7 +67,9 @@ Fort Collins, Colorado"
 #AuthorName3<-"Author Name 3"
 #AuthorAffiliation3<-"Author Affilation 3"
 
-DRRabstract<-"Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
+DRRabstract<-"
+Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
+
 The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
     
 # DataStore reference ID for the data package associated with this report. You must have at least one data package.Eventually, we will automate importing much of this information from metadata and include the ability to describe multiple data packages in a single DRR.
@@ -232,7 +234,7 @@ Abstract
 
 <!-- abstract heading - don't edit -->
 
->   `r DRRabstract` <!-- pulls from the abstract you supplied above - don't edit here! -->
+   `r DRRabstract` <!-- pulls from the abstract you supplied above - don't edit here! -->
 
 ```{r LoadData, include=FALSE}
 # Load datasets for use (example commented out below)
@@ -290,7 +292,7 @@ Tables should be used to support the data records, and should clearly indicate t
 
 This DRR describes the data package `r dataPackage1Title` which contains a metadata file and `r dataPackage1_filenumb` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackage1DOI`. The files in the data package are:
 
-```{r dp_files, echo=FALSE, results="asis"}
+```{r datapackage_files, echo=FALSE, results="asis"}
 #formatting template:
 template<-"**%s -** %s
 
