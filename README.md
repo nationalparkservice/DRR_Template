@@ -12,7 +12,7 @@ This template is under active development to improve style and 508 compliance.
 
 2. [How to Use this Template](vignettes/HowToUseThisTemplate.html)
 
-3. [The DRR_Template](DRR_Template.html)) where you can make edits to generate a DRR
+3. [The DRR_Template](DRR_Template.html) where you can make edits to generate a DRR
 
 3. Examples (more will be provided as they are published):
 
