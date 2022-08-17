@@ -12,13 +12,13 @@ This template is under active development to improve style and 508 compliance.
 
 2. [How to Use this Template](vignettes/HowToUseThisTemplate.html)
 
+3. [The DRR_Template](DRR_Template.html)) where you can make edits to generate a DRR
+
 3. Examples (more will be provided as they are published):
 
-    a) [Content Outline Guide](DRR_Template.html)
-
-    b) [DRR for tabular (csv) datasets](vignettes/DRAFT_2019_Report_NationalMeanDailyFlowsDataSummary.html) of hydrologic data used for calculating hydrologic metrics as a part of the national Environmental Settings monitoring protocol. 
+    a) [DRR for tabular (csv) datasets](vignettes/DRAFT_2019_Report_NationalMeanDailyFlowsDataSummary.html) of hydrologic data used for calculating hydrologic metrics as a part of the national Environmental Settings monitoring protocol. 
     
-    c) [DRR for geospatial (file geodatabase) data](vignettes/NPS-NRSS-DRR-2020-1.html) contining custom areas of analysis used for Environmental Settings montioring protocol. Report created in microsoft word and ported to the template.
+    b) [DRR for geospatial (file geodatabase) data](vignettes/NPS-NRSS-DRR-2020-1.html) contining custom areas of analysis used for Environmental Settings montioring protocol. Report created in microsoft word and ported to the template.
 
 4. Tips, FAQs, and Errata (coming soon)
 
