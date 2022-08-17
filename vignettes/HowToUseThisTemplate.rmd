@@ -126,7 +126,7 @@ The YAML header helps format the DRR. You should not need to edit any of the YAM
 
 - `LoadData`. Any datasets you need to load can go here.
 
-- `dp_files`. Do not edit. Generates a list of file names and descriptions in the data package being described by the DRR.
+- `datapackage_files`. Do not edit. Generates a list of file names and descriptions in the data package being described by the DRR.
 
 - `Listing`. Appendix A, by default is the code listing. This will generate all code used in generating the report and data packages.
 
