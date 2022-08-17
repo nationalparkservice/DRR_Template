@@ -1,0 +1,57 @@
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+    z-index: 2;
+    color: #ffffff;
+    background-color: #4b5e26;
+    border-color: #4b5e26;
+}
+
+a {
+    color: #934e19;
+}
+
+a:hover {
+    color: #e37b2b;
+}
+
+blockquote {
+    padding: 10px 20px;
+    margin: 0 0 20px;
+    font-size: 14px;
+    border-left: 5px solid #eee;
+}
+
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td{
+    padding:5px
+}
+
+TH{
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #000000;
+}
+
+TD{
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+    border-bottom: 1px solid #dddddd;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(221, 221, 221);
+    color: #000000;
+}
+
+caption {
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #000000;
+}
+
+.caption {
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif; 
+    text-align:left;
+    color: #000000;
+}
+
+table {
+    border-top: 1px solid #dddddd;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: rgb(221, 221, 221);
+    border-collapse:collapse;
