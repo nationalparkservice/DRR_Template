@@ -259,7 +259,7 @@ Specific data inputs and outputs should be explicitly cited in the text and incl
 
 Authors are encouraged to consider creating a figure that outlines the experimental workflow(s) used to generate and analyse the data output(s) (Figure 1).
 
-```{r figure1, echo=FALSE, fig.align="center", fig.cap="**Figure 1.** Example general workflow to include in the methods section."}
+```{r figure1, echo=FALSE, fig.align="center", fig.cap="Example general workflow to include in the methods section."}
 include_graphics("output/temp/example_DRR/figures/ProcessingWorkflow.png")
 
 ```
