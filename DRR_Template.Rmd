@@ -76,10 +76,10 @@ The Abstract should succinctly describe the study, the assay(s) performed, the r
 dataPackage1RefID<-12342567
 
 # Must match title in data store.
-dataPackage1Title<-"Dataset 1 FULL TITLE"
+dataPackage1Title<-"Data package1 Title"
 
 #Must match descriptions in the data package metadata
-dataPackage1Description<-"SHORT TITLE FOR DATASET 1"
+dataPackage1Description<-"Short title for data package1"
 
 #generates your data package DOI based on the data package DataStore reference ID. This is different from the DRR DOI!
 dataPackage1DOI<-paste0("https://doi.org/10.57830/", dataPackage1RefID)
@@ -282,13 +282,11 @@ For all studies using custom code in the generation or processing of datasets, a
 
 # Data Records (required)
 
-The Data Records section should be used to explain each data record associated with this work, including the repository where this information is stored, and to provide an overview of the data files and their formats. Each external data record should be cited as described below. A data citation should also be placed in the subsection of the Methods containing the data-collection or analytical procedure(s) used to derive the corresponding record.
+The Data Records section should be used to explain each data record associated with this work (for instance, a data package), including the repository where this information is stored, and provide an overview of the data files and their formats. Each external data record should be cited.
 
-Tables should be used to support the data records, and should clearly indicate the samples and subjects (study inputs), their provenance, and the experimental manipulations performed on each (please see example Tables below). They should also specify the data output resulting from each data-collection or analytical step, should these form part of the archived record.
+Tables should be used to support the data records and should clearly indicate the samples and subjects (study inputs), their provenance, and the experimental manipulations performed on each (see example Tables below). They should also specify the data output resulting from each data-collection or analytical step, should these form part of the archived record.
 
-## Required Elements for this Section
-
-### Summary of datasets created. Example of stock text to include.
+## Summary of datasets created (Required)
 
 This DRR describes the data package `r dataPackage1Title` which contains a metadata file and `r dataPackage1_filenumb` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackage1DOI`. The files in the data package are:
 
@@ -340,30 +338,21 @@ Possible content **strongly Suggested to Include**
 Possible content **may include:**
 
 -   experiments that support or validate the data-collection procedure(s) (e.g. negative controls, or an analysis of standards to confirm measurement linearity)
-
 -   statistical analyses of experimental error and variation
-
 -   general discussions of any procedures used to ensure reliable and unbiased data production, such as chain of custody procedures, blinding and randomization, sample tracking systems, etc.
-
 -   any other information needed for assessment of technical rigor by reviewers/users
 
 Generally, this **should not include:**
 
 -   follow-up experiments aimed at testing or supporting an interpretation of the data
-
 -   statistical hypothesis testing (e.g. tests of statistical significance, identifying deferentially expressed genes, trend analysis, etc.)
-
 -   exploratory computational analyses like clustering and annotation enrichment (e.g. GO analysis).
 
 # Usage Notes (required)
 
-The Usage Notes should contain brief instructions to assist other researchers with reuse of the data. This may include discussion of software packages that are suitable for analysing the assay data files, suggested downstream processing steps (e.g. normalization, etc.), or tips for integrating or comparing the data records with other datasets. Authors are encouraged to provide code, programs or data-processing workflows if they may help others understand or use the data.
+The Usage Notes should contain brief instructions to assist other researchers with reuse of the data. This may include discussion of software packages (with appropriate citations) that are suitable for analysing the assay data files, suggested downstream processing steps (e.g. normalization, etc.), or tips for integrating or comparing the data records with other datasets. Authors are encouraged to provide code, programs or data-processing workflows if they may help others understand or use the data.
 
 For studies involving privacy or safety controls on public access to the data, this section should describe in detail these controls, including how authors can apply to access the data, what criteria will be used to determine who may access the data, and any limitations on data use.
-
-# Acknowledgements (optional)
-
-The Acknowledgements should contain text acknowledging non-author contributors. Acknowledgements should be brief, and should not include thanks to anonymous referees and editors or effusive comments. Grant or contribution numbers may be acknowledged.
 
 # References (required)
 
@@ -385,14 +374,18 @@ U.S. Government Printing Office (GPO). 2013. Making Open and Machine Readable th
 
 \pagebreak
 
-# Appendix C. Code Listing
+# Acknowledgements (optional)
+
+The Acknowledgements should contain text acknowledging non-author contributors. Acknowledgements should be brief, and should not include thanks to anonymous referees and editors or effusive comments. Grant or contribution numbers may be acknowledged.
+
+# Appendix A. Code Listing
 
 ```{r Listing, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
 ```
 
 \pagebreak
 
-# Appendix D. Session and Version Information
+# Appendix B. Session and Version Information
 
 ```{r session-info, echo=FALSE, cache=FALSE}
 sessionInfo()
