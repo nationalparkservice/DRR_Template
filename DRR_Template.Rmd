@@ -33,7 +33,7 @@ output:
     number_sections: False
 ---
 
-```{r user-edited-parameterss, include=FALSE}
+```{r user_edited_parameterss, include=FALSE}
 #The title of your DRR (all upper case is enforced):
 title<-"DRR TITLE"
 
@@ -43,7 +43,7 @@ reportNumber<-1111111
 # This should match the Data Store Reference ID for this DRR. Eventually we should be able to pull this directly from the data package metadata.
 DRR_DSRefID<-7654321
 
-#Can eventually pull authors from data package metadata, but that assumes data package authors and DRR authors are the same... 
+#Can eventually pull authors from data package metadata, but that assumes data package authors and DRR authors are the same so there will always need to be an option for manually entering author info. 
 
 #the number of authors for the DRR:
 AuthorNumb<-2
@@ -70,7 +70,8 @@ AuthorORCID2<-NA #this author does not have an ORCID.
 
 #DRR Author #3... and so on. make sure the number of authors is equal to the value set for AuthorNumb
 #AuthorName3<-"Author Name 3"
-#AuthorAffiliation3<-"Author Affilation 3"
+#AuthorAffiliation3<-"Author Affiliation 3"
+#AuthorORCID3<-NA
 
 DRRabstract<-"
 Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
@@ -108,18 +109,6 @@ dataPackage1_datafile2_descript<-"This is a short (perhaps 10 words) description
 
 # Write parameters to file for consistent reuse across report and data packages
 save(title, reportNumber, DRR_DSRefID, AuthorNumb, AuthorName1, AuthorAffiliation1, AuthorName2, AuthorAffiliation2, DRRabstract, dataPackage1RefID, dataPackage1Title, dataPackage1Description, dataPackage1DOI, dataPackage1_filenumb, dataPackage1_datafile1_name, dataPackage1_datafile1_descript, dataPackage1_datafile2_name, dataPackage1_datafile2_descript, file=here::here("output", "temp", "reportParameters.Rdata"))
-
-```
-
-```{r parameters-do-not-edit, echo=FALSE, results="asis"}
-date<-format(Sys.time(), '%d %B, %Y')
-title<-toupper(title)
-cat("#", title, "\n")
-if(!is.null(reportNumber)){
-  subtitle<-paste0("Data Release Report ", reportNumber)
-  cat("###", subtitle)
-  }
-
 
 ```
 
@@ -205,6 +194,17 @@ set_flextable_defaults(
 
 ```
 
+```{r title_do_not_edit, echo=FALSE, results="asis"}
+date<-format(Sys.time(), '%d %B, %Y')
+title<-toupper(title)
+cat("#", title, "\n")
+if(!is.null(reportNumber)){
+  subtitle<-paste0("Data Release Report ", reportNumber)
+  cat("###", subtitle)
+  }
+
+
+```
 
 ```{r authors_do_not_edit, echo=FALSE, results="asis"}
 names<-NULL
@@ -238,8 +238,6 @@ for(i in 1:AuthorNumb){
 
 ```
 
-
-
 ```{r authors_deprecated, echo=FALSE, eval=FALSE, results="asis"}
 #formatting template:
 template<-"#### %s
@@ -271,13 +269,10 @@ for(i in 1:AuthorNumb){
 
 #### `r date` <!-- publication date - defaults to current system date -->
 
-<h4 class="text-center">
-
-Abstract
-
-</h4>
-
 <!-- abstract heading - don't edit -->
+<h4 class="text-center">
+Abstract
+</h4>
 
    `r DRRabstract` <!-- pulls from the abstract you supplied above - don't edit here! -->
 
