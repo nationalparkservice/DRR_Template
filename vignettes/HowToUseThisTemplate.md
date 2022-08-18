@@ -1,6 +1,6 @@
 ---
 title: "How To Use This Template"
-date: "07-29-2022"
+date: "18 August, 2022"
 output:
   html_document:
     df_print: kable
@@ -10,7 +10,7 @@ output:
     keep_md: yes
     smart: no
     theme: journal
-    css: ../common/journalnps.min.css
+    css: ../output/temp/common/journalnps.min.css
     toc: yes
     toc_float: yes
     number_sections: yes
@@ -75,6 +75,7 @@ The YAML header helps format the DRR. You should not need to edit any of the YAM
   - `AuthorName1`. The name of the first author.
   - `AuthorAffiliation1`. The affiliation/address of the first author.
   - `AuthorName2`. Optional based on number of authors. If one author, comment out using #
+  - `AuthorORCID1` Optional 16-digit ORCID iD. If you have an ORCID iD enter it here in quotes, with dashes separating every 4 digits as in the example. If not, enter NA (no quotes). Specifying an ORCID iD will add a green ORCID icon after the author's name with a link to the corresponding ORCID author profile. Future iterations of the DRR Template will pull ORCID iDs from metadata and eventually from Active Directory. See [ORCID](https://www.orcid.org/) for more information about ORCID iDs.
   - `AuthorAffiliation2`. Optional based on number of authors. If one author, comment out using #. Add additional AuthorName# and AuthorAffiliation# as needed, following the template.
   - `DRRabstract`. The abstract for the DRR (which is distinct from the data package abstract). Pay careful attention to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad or some other text editor and NOT a word processor (such as Microsoft Word). Indicate line breaks with \n and a space between paragraphs - should you want them - using \n\n. The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section. A good suggested length for abstracts is less than 250 words.
   - `dataPackage1RefID`. DataStore reference ID for the data package associated with this report. You must have at least one data package.Eventually, we will automate importing much of this information from metadata and include the ability to describe multiple data packages in a single DRR.
@@ -95,7 +96,7 @@ The YAML header helps format the DRR. You should not need to edit any of the YAM
 
 - `LoadData`. Any datasets you need to load can go here.
 
-- `dp_files`. Do not edit. Generates a list of file names and descriptions in the data package being described by the DRR.
+- `datapackage_files`. Do not edit. Generates a list of file names and descriptions in the data package being described by the DRR.
 
 - `Listing`. Appendix A, by default is the code listing. This will generate all code used in generating the report and data packages.
 

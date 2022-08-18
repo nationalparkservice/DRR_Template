@@ -1807,7 +1807,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">How To Use This Template</h1>
-<h4 class="date">07-29-2022</h4>
+<h4 class="date">18 August, 2022</h4>
 
 </div>
 
@@ -1924,6 +1924,14 @@ must be a minimum of 1 author!</li>
 first author.</li>
 <li><code>AuthorName2</code>. Optional based on number of authors. If
 one author, comment out using #</li>
+<li><code>AuthorORCID1</code> Optional 16-digit ORCID iD. If you have an
+ORCID iD enter it here in quotes, with dashes separating every 4 digits
+as in the example. If not, enter NA (no quotes). Specifying an ORCID iD
+will add a green ORCID icon after the author’s name with a link to the
+corresponding ORCID author profile. Future iterations of the DRR
+Template will pull ORCID iDs from metadata and eventually from Active
+Directory. See <a href="https://www.orcid.org/">ORCID</a> for more
+information about ORCID iDs.</li>
 <li><code>AuthorAffiliation2</code>. Optional based on number of
 authors. If one author, comment out using #. Add additional AuthorName#
 and AuthorAffiliation# as needed, following the template.</li>
@@ -1985,8 +1993,8 @@ writes the author names and affiliations to the html document based on
 information supplied in user-edited-parameters.</p></li>
 <li><p><code>LoadData</code>. Any datasets you need to load can go
 here.</p></li>
-<li><p><code>dp_files</code>. Do not edit. Generates a list of file
-names and descriptions in the data package being described by the
+<li><p><code>datapackage_files</code>. Do not edit. Generates a list of
+file names and descriptions in the data package being described by the
 DRR.</p></li>
 <li><p><code>Listing</code>. Appendix A, by default is the code listing.
 This will generate all code used in generating the report and data
