@@ -1,20 +1,21 @@
 ---
 title: "Purpose and Scope of Data Release Reports"
-date: "04-23-2020"
+date: "18 August, 2022"
 output:
   html_document:
     df_print: kable
-    fig_caption: true
+    fig_caption: yes
     dev: svg
     highlight: haddock
-    keep_md: TRUE
+    keep_md: yes
     smart: no
     theme: journal
-    css: "../common/journalnps.min.css"
+    css: ../output/temp/common/journalnps.min.css
     toc: yes
-    toc_float: true
-    number_sections: true
-
+    toc_float: yes
+    number_sections: yes
+  word_document:
+    toc: yes
 ---
 
 
