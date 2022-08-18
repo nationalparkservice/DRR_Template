@@ -7,13 +7,6 @@ editor_options:
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
 link-citations: True
 output:
-  bookdown::word_document2:
-    df_print: kable
-    fig_caption: True
-    fig_height: 5
-    fig_width: 5
-    highlight: haddock
-    number_sections: False
   bookdown::html_document2:
     df_print: kable
     fig_caption: True
@@ -31,6 +24,13 @@ output:
           - !expr here::here('output', 'temp', 'common', 'header.html')
         after_body: 
           - !expr here::here('output', 'temp', 'common', 'footer.html')
+  bookdown::word_document2:
+    df_print: kable
+    fig_caption: True
+    fig_height: 5
+    fig_width: 5
+    highlight: haddock
+    number_sections: False
 ---
 
 ```{r user_edited_parameterss, include=FALSE}
@@ -225,7 +225,8 @@ for(i in 1:AuthorNumb){
     cat("\n")
   }
   if(!is.na(curr$ORCID)){
-    orc<-fontawesome::fa("orcid", fill="#a6ce39")
+    #Consider re-write to use the actual downloaded icon and not fontawesome.For some reason fill isn't rendering in chrome (but does in edge). Maybe move fill to CSS?
+    orc<-fontawesome::fa("orcid", fill='#A6CE39')
     orc<-gsub(';">', ';"> <xmlns:xlink="http://www.w3.org/1999/xlink"><a xlink:href= "dummyhtml">', orc)
     orc<-gsub('dummyhtml', paste0("https://orcid.org/", curr$ORCID), orc)
     orc<-gsub('</svg>','</a></svg>',orc)
