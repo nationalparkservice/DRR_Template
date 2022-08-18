@@ -92,7 +92,7 @@ The YAML header helps format the DRR. You should not need to edit any of the YAM
 
 - `setup`. Pretty self explanatory, but there are two snippets for loading packages; the `RRpackages` section is a suite of packages that are used to assist with reproducible reporting. You may not need these for your report, but we have included them as part of the base recommended packages. There is a second snippet for `pkgList` that includes all project-specific packages needed. Add as necessary.
 
-- `authors`. There is no need to edit this chunk. This writes the author names and affiliations to the html document based on information supplied in user-edited-parameters. 
+- `authors_do_not_edit`. There is no need to edit this chunk. This writes the author names, ORCID iDs, and affiliations to the html document based on information supplied in user-edited-parameters. 
 
 - `LoadData`. Any datasets you need to load can go here.
 
