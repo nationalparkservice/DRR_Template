@@ -51,9 +51,13 @@ AuthorNumb<-2
 #DRR Author #1 (which may differ from data package authors!)
 AuthorName1<-"Jane Doe"
 
+#Author 1 affiliation and address. Note use of <br> for line breaks.
 AuthorAffiliation1<-"NPS Inventory and Monitory Division<br>
 1201 Oakrdige Dr, Suite 150<br>
 Fort Collins, Colorado"
+
+#Author 1 ORCID iD. If no ORCID iD, set to NA (not applicable). See https://www.orcid.org to register an ORCID. 
+AuthorORCID1<-"0000-1111-2222-3333"
 
 #DRR Author #2
 AuthorName2<-"John Doe"
@@ -62,6 +66,7 @@ Contractor to the National Park Service<br>
 Natural Resource Stewardship and Science Directorate<br>
 1201 Oakridge Dr, Suite 150<br>
 Fort Collins, Colorado"
+AuthorORCID2<-NA #this author does not have an ORCID.
 
 #DRR Author #3... and so on. make sure the number of authors is equal to the value set for AuthorNumb
 #AuthorName3<-"Author Name 3"
@@ -83,6 +88,8 @@ dataPackage1Description<-"Short title for data package1"
 
 #generates your data package DOI based on the data package DataStore reference ID. This is different from the DRR DOI!
 dataPackage1DOI<-paste0("https://doi.org/10.57830/", dataPackage1RefID)
+
+#orc<-fontawesome::fa("orcid")
 
 #The number of data files in the data package described by the DRR. Exclude metadata files! For in this example the data package includes 3 files at upload: one metadata file and two data files.
 dataPackage1_filenumb<-2
@@ -123,7 +130,7 @@ if(!is.null(reportNumber)){
 # Note that it also generates the start of a BibTex literature cited
 # including the citations for R and all used packages
 # reproducible reporting packages
-RRpackages<-c('markdown','rmarkdown','pander','knitr',"dataMaid","R.rsp","kimisc","papeR","rmdHelpers",'yaml','rmdformats','htmltools',"bibtex","RefManageR","knitcitations")
+RRpackages<-c('markdown','rmarkdown','pander','knitr', 'fontawesome', "dataMaid","R.rsp","kimisc","papeR","rmdHelpers",'yaml','rmdformats','htmltools',"bibtex","RefManageR","knitcitations")
 
 inst <- RRpackages %in% installed.packages()
 if (length(RRpackages[!inst]) > 0) {
@@ -198,7 +205,42 @@ set_flextable_defaults(
 
 ```
 
-```{r authors, echo=FALSE, results="asis"}
+
+```{r authors_orcid, echo=FALSE, results="asis"}
+names<-NULL
+address<-NULL
+ORCID<-NULL
+
+#turn author data into a dataframe
+for(i in 1:AuthorNumb){
+  names<-append(names, get(paste0("AuthorName", i)))
+  address<-append(address, get(paste0("AuthorAffiliation", i)))
+  ORCID<-append(ORCID, get(paste0("AuthorORCID", i)))
+}
+contact<-data.frame(names, address, ORCID)
+for(i in 1:AuthorNumb){
+  curr<-contact[i,]
+  cat("###", curr$names, " ")
+  if(is.na(curr$ORCID)){
+    cat("\n")
+  }
+  if(!is.na(curr$ORCID)){
+    orc<-fontawesome::fa("orcid", fill="#a6ce39")
+    orc<-gsub(';">', ';"> <xmlns:xlink="http://www.w3.org/1999/xlink"><a xlink:href= "dummyhtml">', orc)
+    orc<-gsub('dummyhtml', paste0("https://orcid.org/", curr$ORCID), orc)
+    orc<-gsub('</svg>','</a></svg>',orc)
+    cat({{orc}})
+  }
+  cat("\n")
+  cat(curr$address, "\n\n")
+  
+}
+
+```
+
+
+
+```{r authors_deprecated, echo=FALSE, eval=FALSE, results="asis"}
 #formatting template:
 template<-"#### %s
 
@@ -208,11 +250,13 @@ template<-"#### %s
 "
 names<-NULL
 address<-NULL
+ORCID<-NULL
 
 #turn author data into a dataframe
 for(i in 1:AuthorNumb){
   names<-append(names, get(paste0("AuthorName", i)))
   address<-append(address, get(paste0("AuthorAffiliation", i)))
+  #ORCID<-append(ORCID, get(paste0("AuthorORCID", i)))
 }
 contact<-data.frame(names, address)
 
@@ -223,6 +267,7 @@ for(i in 1:AuthorNumb){
 }
   
 ```
+
 
 #### `r date` <!-- publication date - defaults to current system date -->
 
