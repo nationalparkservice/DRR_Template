@@ -42,7 +42,6 @@ General directory contents are as follows (Figure 1):
 - `input` This is the only location where you you should manually change or edit files. This is where data files you need to supply should be placed. 
   
   - `figures`  If you have figures that are not generated as part of running this template, place those files here.
-  
 
 - `output` Do not edit these files. This is where you can find your final products. Edits to files in this folder will not be incorporated when you knit the DRR_Template. Any edits you make to files in this directory may be overwritten when you knit the template. 
 
@@ -67,7 +66,7 @@ The YAML header helps format the DRR. You should not need to edit any of the YAM
 
 **R code chunks:**
 
-- `user-edited-parameters`. A series of parameters that are used in the creation of the DRR and may be re-used in metadata and associated data package construction. You will need to edit these parameters for each DRR.
+- `user_edited_parameters`. A series of parameters that are used in the creation of the DRR and may be re-used in metadata and associated data package construction. You will need to edit these parameters for each DRR.
   - `title`. The title of the Data Release Report.This will be converted to all upper case. 
   - `reportNumber`. This is optional, and should _only_ be included if publishing in the semi-official DRR series. 
   - `DRR_DSRefID`. This is the Data Store reference ID for the report.
@@ -88,9 +87,9 @@ The YAML header helps format the DRR. You should not need to edit any of the YAM
   - `dataPackage1_datafile2_name`. The file name for the second data file. For example, "my_data2.csv".
   - `dataPackage1_datafile2_descript`.  A short description of the corresponding data file that distinguishes it from other data files. A good guideline is 10 words or less.You can add additional data files and descriptions using the same format.
   
-- `parameters-do-not-edit`. These parameters are auto-generated based on either the EML you supplied (when that becomes an option) or the information you've already supplied under "user-edited-parameters". You really should not need to edit these parameters. 
-
 - `setup`. Pretty self explanatory, but there are two snippets for loading packages; the `RRpackages` section is a suite of packages that are used to assist with reproducible reporting. You may not need these for your report, but we have included them as part of the base recommended packages. There is a second snippet for `pkgList` that includes all project-specific packages needed. Add as necessary.
+
+- `title_do_not_edit`. These parameters are auto-generated based on either the EML you supplied (when that becomes an option) or the information you've already supplied under "user-edited-parameters". You really should not need to edit these parameters. 
 
 - `authors_do_not_edit`. There is no need to edit this chunk. This writes the author names, ORCID iDs, and affiliations to the html document based on information supplied in user-edited-parameters. 
 
