@@ -17,7 +17,7 @@ New projects can be established using this template by downloading a zip file of
 
 1. [How to Use this Template](vignettes/HowToUseThisTemplate.html) line-by-line instructions and descriptions for how to use the DRR Template.
 
-2. [The DRR_Template](DRR_Template.rmd) the file you make changes to to generate a DRR.
+2. [The DRR_Template](DRR_Template.Rmd) the file you make changes to to generate a DRR.
 
 # Examples:
 More will be provided as they are published:
