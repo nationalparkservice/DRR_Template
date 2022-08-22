@@ -1,4 +1,5 @@
 ---
+# YAML header: do not edit
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 editor_options:
   chunk_output_type: inline
@@ -31,6 +32,7 @@ output:
     fig_width: 5
     highlight: haddock
     number_sections: False
+# End YAML header
 ---
 
 ```{r user_edited_parameterss, include=FALSE}
