@@ -92,8 +92,6 @@ dataPackage1Description<-"Short title for data package1"
 #generates your data package DOI based on the data package DataStore reference ID. This is different from the DRR DOI!
 dataPackage1DOI<-paste0("https://doi.org/10.57830/", dataPackage1RefID)
 
-#orc<-fontawesome::fa("orcid")
-
 #The number of data files in the data package described by the DRR. Exclude metadata files! For in this example the data package includes 3 files at upload: one metadata file and two data files.
 dataPackage1_filenumb<-2
 
