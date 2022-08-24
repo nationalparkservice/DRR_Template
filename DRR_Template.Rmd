@@ -219,7 +219,7 @@ for(i in 1:AuthorNumb){
 contact<-data.frame(names, address, ORCID)
 for(i in 1:AuthorNumb){
   curr<-contact[i,]
-  cat("###", curr$names, " ")
+  cat("####", curr$names, " ")
   if(is.na(curr$ORCID)){
     cat("\n")
   }
