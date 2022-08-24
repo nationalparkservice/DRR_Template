@@ -40,8 +40,7 @@ output:
 title<-"DRR Title"
 
 #Optional and should only be included if publishing to the semi-official DRR series. Contact Joe if you are. If not, leave as NULL
-reportNumber<-1111111
-
+reportNumber<-NULL
 # This should match the Data Store Reference ID for this DRR. Eventually we should be able to pull this directly from the data package metadata.
 DRR_DSRefID<-7654321
 
@@ -80,7 +79,7 @@ Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay ca
 
 The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
     
-# DataStore reference ID for the data package associated with this report. You must have at least one data package.Eventually, we will automate importing much of this information from metadata and include the ability to describe multiple data packages in a single DRR.
+# DataStore reference ID for the data package associated with this report. You must have at least one data package.Eventually, we will automate importing much of this information from metadata.
 dataPackage1RefID<-12342567
 
 # Must match title in data store.
@@ -237,14 +236,10 @@ for(i in 1:(AuthorNumb/2)){
   cat(curr$address, "\n\n")
 }
 ```
-
 :::
-
 ::: {.column width="5%"}
-\
-<!-- empty DIV (with whitespace) as a column separator-->
+\ <!-- empty DIV (with whitespace) as a column separator-->
 :::
-
 ::: {.column width="47.5%"}
 ```{r authorsCOL2_do_not_edit, echo=FALSE, attr.source="style='display:inline-block;'", collapse=TRUE, results="asis"}
 for(i in ((AuthorNumb/2)+1):AuthorNumb){
@@ -266,7 +261,6 @@ for(i in ((AuthorNumb/2)+1):AuthorNumb){
 }
 ```
 :::
-
 ::::::
 
 ```{r authors_deprecated, echo=FALSE, eval=FALSE, results="asis"}
