@@ -205,7 +205,9 @@ if(!is.null(reportNumber)){
 
 ```
 
-```{r authors_do_not_edit, echo=FALSE, results="asis"}
+:::::: {.columns}
+::: {.column width="47.5%"}
+```{r authorsCOL1_do_not_edit, echo=FALSE, attr.source="style='display:inline-block;'", collapse=TRUE, results="asis"}
 names<-NULL
 address<-NULL
 ORCID<-NULL
@@ -217,7 +219,7 @@ for(i in 1:AuthorNumb){
   ORCID<-append(ORCID, get(paste0("AuthorORCID", i)))
 }
 contact<-data.frame(names, address, ORCID)
-for(i in 1:AuthorNumb){
+for(i in 1:(AuthorNumb/2)){
   curr<-contact[i,]
   cat("####", curr$names, " ")
   if(is.na(curr$ORCID)){
@@ -233,10 +235,39 @@ for(i in 1:AuthorNumb){
   }
   cat("\n")
   cat(curr$address, "\n\n")
-  
 }
-
 ```
+
+:::
+
+::: {.column width="5%"}
+\
+<!-- empty DIV (with whitespace) as a column separator-->
+:::
+
+::: {.column width="47.5%"}
+```{r authorsCOL2_do_not_edit, echo=FALSE, attr.source="style='display:inline-block;'", collapse=TRUE, results="asis"}
+for(i in ((AuthorNumb/2)+1):AuthorNumb){
+  curr<-contact[i,]
+  cat("####", curr$names, " ")
+  if(is.na(curr$ORCID)){
+    cat("\n")
+  }
+  if(!is.na(curr$ORCID)){
+    #Consider re-write to use the actual downloaded icon and not fontawesome.For some reason fill isn't rendering in chrome (but does in edge). Maybe move fill to CSS?
+    orc<-fontawesome::fa("orcid", fill='#A6CE39')
+    orc<-gsub(';">', ';"> <xmlns:xlink="http://www.w3.org/1999/xlink"><a xlink:href= "dummyhtml">', orc)
+    orc<-gsub('dummyhtml', paste0("https://orcid.org/", curr$ORCID), orc)
+    orc<-gsub('</svg>','</a></svg>',orc)
+    cat({{orc}})
+  }
+  cat("\n")
+  cat(curr$address, "\n\n")
+}
+```
+:::
+
+::::::
 
 ```{r authors_deprecated, echo=FALSE, eval=FALSE, results="asis"}
 #formatting template:
