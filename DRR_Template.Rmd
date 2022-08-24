@@ -193,6 +193,8 @@ set_flextable_defaults(
 
 ```
 
+*`r (paste0("https://doi.org/10.38750/", DRR_DSRefID))`*
+
 ```{r title_do_not_edit, echo=FALSE, results="asis"}
 date<-format(Sys.time(), '%d %B, %Y')
 cat("#", title, "\n")
@@ -203,6 +205,8 @@ if(!is.null(reportNumber)){
 
 
 ```
+
+ <!-- Authors section in columns -->
 
 :::::: {.columns}
 ::: {.column width="47.5%"}
@@ -291,7 +295,6 @@ for(i in 1:AuthorNumb){
   
 ```
 
-
 #### `r date` <!-- publication date - defaults to current system date -->
 
 <!-- abstract heading - don't edit -->
@@ -313,37 +316,6 @@ Abstract
 The Background & Summary should provide an overview of the study design, the assay(s) performed, and the data generated, including any background information needed to put this study in the context of previous work and the literature, and should reference literature as needed. Literature should be cited both in the text and in the References section below using the appropriate [Chicago Manual of Style](https://www.chicagomanualofstyle.org/tools_citationguide/citation-guide-2.html) author-date format.
 
 The section should also briefly outline the broader goals that motivated collection of the data, as well as their potential reuse value. We also encourage authors to include a figure that provides a schematic overview of the study and assay(s) design.
-
-# Methods
-
-Ideally these methods are identical to the methods listed in the metadata accompanying the data package that the DRR describes.Future versions of this template will pull directly from metadata.
-
-The Methods should include cite previous methods under use but also be detailed enough describing data production including full descriptions of the experimental design, data acquisition assays, and any computational processing (e.g. normalization, image feature extraction) that other can understand and reproduce the methods and processing steps without referring to associated publications. Related methods should be grouped under corresponding subheadings where possible, and methods should be described in enough detail to allow other researchers to interpret and repeat, if required, the full study.
-
-Specific data inputs and outputs should be explicitly cited in the text and included in the References section below. See the [USGS data citation guidelines](https://www.usgs.gov/data-management/data-citation) for examples of how to cite data in text and in the References section.
-
-Authors are encouraged to consider creating a figure that outlines the experimental workflow(s) used to generate and analyse the data output(s) (Figure 1).
-
-```{r figure1, echo=FALSE, fig.align="center", fig.cap="Example general workflow to include in the methods section."}
-include_graphics("output/temp/example_DRR/figures/ProcessingWorkflow.png")
-
-```
-
-## Data Collection and Sample Processing Methods (optional)
-
-Include a description of field methods and sample processing
-
-## Additional Data Sources (optional)
-
-Provide descriptions (with citations) of other data sources used.
-
-## Data Processing (required if done)
-
-Summarize process and results of any QC processes done that manipulate, change, or qualify data.
-
-## Code Availability (required)
-
-For all studies using custom code in the generation or processing of datasets, a statement must be included in the Methods section, under the subheading "Code availability", indicating whether and how the code can be accessed, including any restrictions to access. This section should also include information on the versions of any software used, if relevant, and any specific variables or parameters used to generate, test, or process the current dataset. Actual analytical code should be provided in Appendices.
 
 # Data Records (required)
 
@@ -418,6 +390,37 @@ Generally, this **should not include:**
 The Usage Notes should contain brief instructions to assist other researchers with reuse of the data. This may include discussion of software packages (with appropriate citations) that are suitable for analysing the assay data files, suggested downstream processing steps (e.g. normalization, etc.), or tips for integrating or comparing the data records with other datasets. Authors are encouraged to provide code, programs or data-processing workflows if they may help others understand or use the data.
 
 For studies involving privacy or safety controls on public access to the data, this section should describe in detail these controls, including how authors can apply to access the data, what criteria will be used to determine who may access the data, and any limitations on data use.
+
+# Methods
+
+Ideally these methods are identical to the methods listed in the metadata accompanying the data package that the DRR describes.Future versions of this template will pull directly from metadata.
+
+The Methods should include cite previous methods under use but also be detailed enough describing data production including full descriptions of the experimental design, data acquisition assays, and any computational processing (e.g. normalization, image feature extraction) that other can understand and reproduce the methods and processing steps without referring to associated publications. Related methods should be grouped under corresponding subheadings where possible, and methods should be described in enough detail to allow other researchers to interpret and repeat, if required, the full study.
+
+Specific data inputs and outputs should be explicitly cited in the text and included in the References section below. See the [USGS data citation guidelines](https://www.usgs.gov/data-management/data-citation) for examples of how to cite data in text and in the References section.
+
+Authors are encouraged to consider creating a figure that outlines the experimental workflow(s) used to generate and analyse the data output(s) (Figure 1).
+
+```{r figure1, echo=FALSE, fig.align="center", fig.cap="Example general workflow to include in the methods section."}
+include_graphics("output/temp/example_DRR/figures/ProcessingWorkflow.png")
+
+```
+
+## Data Collection and Sample Processing Methods (optional)
+
+Include a description of field methods and sample processing
+
+## Additional Data Sources (optional)
+
+Provide descriptions (with citations) of other data sources used.
+
+## Data Processing (required if done)
+
+Summarize process and results of any QC processes done that manipulate, change, or qualify data.
+
+## Code Availability (required)
+
+For all studies using custom code in the generation or processing of datasets, a statement must be included in the Methods section, under the subheading "Code availability", indicating whether and how the code can be accessed, including any restrictions to access. This section should also include information on the versions of any software used, if relevant, and any specific variables or parameters used to generate, test, or process the current dataset. Actual analytical code should be provided in Appendices.
 
 # References (required)
 
