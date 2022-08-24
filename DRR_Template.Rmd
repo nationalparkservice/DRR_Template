@@ -36,8 +36,8 @@ output:
 ---
 
 ```{r user_edited_parameterss, include=FALSE}
-#The title of your DRR (all upper case is enforced):
-title<-"DRR TITLE"
+#The title of your DRR. Should all DRR start with "Data Release Report:"? Should we enforce titles specifically referencing the data package(s) they the report is about?
+title<-"DRR Title"
 
 #Optional and should only be included if publishing to the semi-official DRR series. Contact Joe if you are. If not, leave as NULL
 reportNumber<-1111111
@@ -196,7 +196,6 @@ set_flextable_defaults(
 
 ```{r title_do_not_edit, echo=FALSE, results="asis"}
 date<-format(Sys.time(), '%d %B, %Y')
-title<-toupper(title)
 cat("#", title, "\n")
 if(!is.null(reportNumber)){
   subtitle<-paste0("Data Release Report ", reportNumber)
