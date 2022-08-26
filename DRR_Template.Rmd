@@ -73,7 +73,7 @@ The Abstract should succinctly describe the study, the assay(s) performed, the r
 dataPackageRefID<-c(12342567)
 
 # Must match title in data store.
-dataPackageTitle<-"Data package1 Title"
+dataPackageTitle<-"Data Package Title"
 
 #Must match descriptions in the data package metadata
 dataPackageDescription<-"Short title for data package1"
@@ -280,7 +280,7 @@ This DRR describes the data package `r dataPackageTitle` which contains a metada
 ```{r FileTable, echo=FALSE}
 filelist<-data.frame(dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript)
 
-knitr::kable(filelist, caption=paste0("**", dataPackageTitle, ": file list**"), col.names=c("File Name", "Size", "Description"), format="pandoc")
+knitr::kable(filelist, caption=paste0("**", dataPackageTitle, ": list of data files**"), col.names=c("File Name", "Size", "Description"), format="pandoc")
 ```
 ```{r datapackage_files_deprecated, eval=FALSE, echo=FALSE, results="asis"}
 #formatting template:
