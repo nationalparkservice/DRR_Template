@@ -36,65 +36,73 @@ output:
 ---
 
 ```{r user_edited_parameterss, include=FALSE}
-#The title of your DRR. Should all DRR start with "Data Release Report:"? Should we enforce titles specifically referencing the data package(s) they the report is about?
-title<-"DRR Title"
+# The title of your DRR. Should all DRR start with "Data Release Report:"? Should we enforce titles specifically referencing the data package(s) they the report is about?
+title <- "DRR Title"
 
-#Optional and should only be included if publishing to the semi-official DRR series. Contact Joe if you are. If not, leave as NULL
-reportNumber<-NULL
+# Optional and should only be included if publishing to the semi-official DRR series. Contact Joe if you are. If not, leave as NULL
+reportNumber <- NULL
 # This should match the Data Store Reference ID for this DRR. Eventually we should be able to pull this directly from the data package metadata.
-DRR_DSRefID<-7654321
+DRR_DSRefID <- 7654321
 
-#Can eventually pull authors from data package metadata, but that assumes data package authors and DRR authors are the same so there will always need to be an option for manually entering author info. 
+# Can eventually pull authors from data package metadata, but that assumes data package authors and DRR authors are the same so there will always need to be an option for manually entering author info.
 
-#list the authors. 
-authorNames <- c("Jane Doe",
-               "John Doe")
+# list the authors.
+authorNames <- c(
+  "Jane Doe",
+  "John Doe"
+)
 
 # List author affiliations. The order of author affiliations must match the order of the authors in AuthorNames. Note that the entirety of each affiliation is enclosed in quotations. Line breaks are indicated with the tag <br>. Do not worry about indentation or word wrapping.
-authorAffiliations <- c("NPS Inventory and Monitory Division<br>
+authorAffiliations <- c(
+  "NPS Inventory and Monitory Division<br>
 1201 Oakrdige Dr, Suite 150<br>
 Fort Collins, Colorado",
-                      "Managed Business Solutions (MBS), a Sealaska Company<br>
+  "Managed Business Solutions (MBS), a Sealaska Company<br>
 Contractor to the National Park Service<br>
 Natural Resource Stewardship and Science Directorate<br>
 1201 Oakridge Dr, Suite 150<br>
-Fort Collins, Colorado")
+Fort Collins, Colorado"
+)
 
-#List the ORCID iDs for each author in the format "xxxx-xxxx-xxxx-xxxx". If an author does not have an ORCID iD, specify NA (no quotes). For more information on ORCID iDs and to register an ORCID iD, see https://www.orcid.org. The order of the ORCID iDs must match the order of authors in AuthorNames.In this example, Jane Doe has an ORCID iD but John Doe does not.
-authorORCID <- c("0000-1111-2222-3333",
-                NA)
+# List the ORCID iDs for each author in the format "xxxx-xxxx-xxxx-xxxx". If an author does not have an ORCID iD, specify NA (no quotes). For more information on ORCID iDs and to register an ORCID iD, see https://www.orcid.org. The order of the ORCID iDs must match the order of authors in AuthorNames.In this example, Jane Doe has an ORCID iD but John Doe does not.
+authorORCID <- c(
+  "0000-1111-2222-3333",
+  NA
+)
 
-DRRabstract<-"
-Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
+DRRabstract <- "Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
 
-The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
-    
+The abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
+
 # DataStore reference ID for the data package associated with this report. You must have at least one data package.Eventually, we will automate importing much of this information from metadata.
-dataPackageRefID<-c(12342567)
+dataPackageRefID <- c(12342567)
 
-# Must match title in data store.
-dataPackageTitle<-"Data Package Title"
+# Must match title in DataStore and metadata
+dataPackageTitle <- "Data Package Title"
 
-#Must match descriptions in the data package metadata
-dataPackageDescription<-"Short title for data package1"
+# Must match descriptions in the data package metadata
+dataPackageDescription <- "Short title for data package1"
 
-#generates your data package DOI based on the data package DataStore reference ID. This is different from the DRR DOI! No need to edit this.
-dataPackageDOI<-paste0("https://doi.org/10.57830/", dataPackageRefID)
+# generates your data package DOI based on the data package DataStore reference ID. This is different from the DRR DOI! No need to edit this.
+dataPackageDOI <- paste0("https://doi.org/10.57830/", dataPackageRefID)
 
-#list the file names in your data package. Do NOT include metadata files.
-dataPackage_fileNames<-c("my_data.csv",
-                          "my_data2.csv")
+# list the file names in your data package. Do NOT include metadata files.
+dataPackage_fileNames <- c(
+  "my_data.csv",
+  "my_data2.csv"
+)
 
-#list the approximate size of each data file. Make sure the order corresponds to the order of of the file names in dataPackage_fileNames
-dataPackage_fileSizes<-c("0.8 MB", "10 GB")
+# list the approximate size of each data file. Make sure the order corresponds to the order of of the file names in dataPackage_fileNames
+dataPackage_fileSizes <- c("0.8 MB", "10 GB")
 
-#list a short, one-line description of each data file. Descriptions must be in the same order as the filenames.
-dataPackage_fileDescript<-c("This is a short description of my_data.csv (a good guideline is 10 words or less).",
-                                  "This is a short description of my_data2.csv")
+# list a short, one-line description of each data file. Descriptions must be in the same order as the filenames.
+dataPackage_fileDescript <- c(
+  "This is a short description of my_data.csv (a good guideline is 10 words or less).",
+  "This is a short description of my_data2.csv."
+)
 
 # Write parameters to file for consistent reuse across report and data packages
-save(title, reportNumber, DRR_DSRefID, authorNames, authorAffiliations, authorORCID, DRRabstract, dataPackageRefID, dataPackageTitle, dataPackageDescription, dataPackageDOI, dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript, file=here::here("output", "temp", "reportParameters.Rdata"))
-
+save(title, reportNumber, DRR_DSRefID, authorNames, authorAffiliations, authorORCID, DRRabstract, dataPackageRefID, dataPackageTitle, dataPackageDescription, dataPackageDOI, dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript, file = here::here("output", "temp", "reportParameters.Rdata"))
 ```
 
 ```{r setup, include=FALSE}
@@ -104,46 +112,48 @@ save(title, reportNumber, DRR_DSRefID, authorNames, authorAffiliations, authorOR
 # Note that it also generates the start of a BibTex literature cited
 # including the citations for R and all used packages
 # reproducible reporting packages
-RRpackages<-c('markdown','rmarkdown','pander','knitr', 'fontawesome', "dataMaid","R.rsp","kimisc","papeR","rmdHelpers",'yaml','rmdformats','htmltools',"bibtex","RefManageR","knitcitations")
+RRpackages <- c("markdown", "rmarkdown", "pander", "knitr", "fontawesome", "dataMaid", "R.rsp", "kimisc", "papeR", "rmdHelpers", "yaml", "rmdformats", "htmltools", "bibtex", "RefManageR", "knitcitations")
 
 inst <- RRpackages %in% installed.packages()
 if (length(RRpackages[!inst]) > 0) {
-   install.packages(RRpackages[!inst], dep = TRUE, repos = "https://cloud.r-project.org")
+  install.packages(RRpackages[!inst], dep = TRUE, repos = "https://cloud.r-project.org")
 }
 lapply(RRpackages, library, character.only = TRUE)
 
 # __________________________________
 # Now repeat for packages used in the analyses
-pkgList <- c("devtools","RODBC","EML","flextable","english","remotes","dplyr","ggplot2","plotly")
+pkgList <- c("devtools", "RODBC", "EML", "flextable", "english", "remotes", "dplyr", "ggplot2", "plotly")
 
 inst <- pkgList %in% installed.packages()
 if (length(pkgList[!inst]) > 0) {
-   install.packages(pkgList[!inst], dep = TRUE, 
-                    repos = "https://cloud.r-project.org")
+  install.packages(pkgList[!inst],
+    dep = TRUE,
+    repos = "https://cloud.r-project.org"
+  )
 }
 
 lapply(pkgList, library, character.only = TRUE, quietly = TRUE)
 
-if (! "EMLassemblyline" %in% installed.packages()) remotes::install_github("EDIorg/EMLassemblyline")
-require("EMLassemblyline")  
+if (!"EMLassemblyline" %in% installed.packages()) remotes::install_github("EDIorg/EMLassemblyline")
+require("EMLassemblyline")
 
 # create stub of citations for packages
 pkgBibTex <- lapply(c("base", pkgList, RRpackages), citation)
 
 knitr::opts_chunk$set(
-	echo = TRUE,
-	fig.path = here::here("output", "temp", "common"),
-	message = TRUE,
-	warning = TRUE,
-	comment = " ",
-	dev = "svg",
-	out.width = "100%",
-	tidy = TRUE,
-	tidy.opts = list(width.cutoff = 60)
+  echo = TRUE,
+  fig.path = here::here("output", "temp", "common"),
+  message = TRUE,
+  warning = TRUE,
+  comment = " ",
+  dev = "svg",
+  out.width = "100%",
+  tidy = TRUE,
+  tidy.opts = list(width.cutoff = 60)
 )
 # if ggplot, update theme to default to centered titles
 if ("ggplot2" %in% .packages()) {
-   theme_update(plot.title = element_text(hjust = 0.5))
+  theme_update(plot.title = element_text(hjust = 0.5))
 }
 
 
@@ -153,43 +163,40 @@ source(here::here("output", "temp", "common", "SharedFunctions.R"))
 
 # Set up table template
 NPS_theme <- function(x, ...) {
-    x <- colformat_double(x, big.mark = ",", decimal.mark = ".", digits = 1)
-    x <- colformat_int(x, big.mark = ",")
-    x <- colformat_date(x,fmt_date = "%Y-%m-%d")
-    x <- set_table_properties(x, layout = "fixed")
-    x <- border_remove(x)
-    std_border <- fp_border_default(width = 1, color = "black")
-    x <-hline_bottom(x,part="body")
-    x <-hline_bottom(x,part="header")
-    x <-hline_top(x,part="header")
-    x <-bold(x,bold=TRUE,part="header")
-    x <-set_table_properties(x, width = 0, layout = "autofit")
-    x <-align_nottext_col(x, align = "right", header = TRUE, footer = TRUE)
-    x <-align_text_col(x, align = "left", header = TRUE, footer = TRUE)
-    x <-valign(x,valign="bottom",part="header")
-    x <-valign(x,valign="top",part="body")
+  x <- colformat_double(x, big.mark = ",", decimal.mark = ".", digits = 1)
+  x <- colformat_int(x, big.mark = ",")
+  x <- colformat_date(x, fmt_date = "%Y-%m-%d")
+  x <- set_table_properties(x, layout = "fixed")
+  x <- border_remove(x)
+  std_border <- fp_border_default(width = 1, color = "black")
+  x <- hline_bottom(x, part = "body")
+  x <- hline_bottom(x, part = "header")
+  x <- hline_top(x, part = "header")
+  x <- bold(x, bold = TRUE, part = "header")
+  x <- set_table_properties(x, width = 0, layout = "autofit")
+  x <- align_nottext_col(x, align = "right", header = TRUE, footer = TRUE)
+  x <- align_text_col(x, align = "left", header = TRUE, footer = TRUE)
+  x <- valign(x, valign = "bottom", part = "header")
+  x <- valign(x, valign = "top", part = "body")
 }
 
 set_flextable_defaults(
-  font.family = "Arial", 
+  font.family = "Arial",
   font.size = 9,
   font.color = "black",
   theme_fun = NPS_theme,
-  )
-
+)
 ```
 
 *`r (paste0("https://doi.org/10.38750/", DRR_DSRefID))`*
 
 ```{r title_do_not_edit, echo=FALSE, results="asis"}
-date<-format(Sys.time(), '%d %B, %Y')
+date <- format(Sys.time(), "%d %B, %Y")
 cat("#", title, "\n")
-if(!is.null(reportNumber)){
-  subtitle<-paste0("Data Release Report ", reportNumber)
+if (!is.null(reportNumber)) {
+  subtitle <- paste0("Data Release Report ", reportNumber)
   cat("###", subtitle)
-  }
-
-
+}
 ```
 
 <!-- Authors section in columns -->
@@ -197,21 +204,21 @@ if(!is.null(reportNumber)){
 :::::: {.columns}
 ::: {.column width="47.5%"}
 ```{r authorsCOL1_do_not_edit, echo=FALSE, attr.source="style='display:inline-block;'", collapse=TRUE, results="asis"}
-contact<-data.frame(authorNames, authorAffiliations, authorORCID)
+contact <- data.frame(authorNames, authorAffiliations, authorORCID)
 
-for(i in 1:(length(authorNames)/2)){
-  curr<-contact[i,]
+for (i in 1:(length(authorNames) / 2)) {
+  curr <- contact[i, ]
   cat("####", curr$authorNames, " ")
-  if(is.na(curr$authorORCID)){
+  if (is.na(curr$authorORCID)) {
     cat("\n")
   }
-  if(!is.na(curr$authorORCID)){
-    #Consider re-write to use the actual downloaded icon and not fontawesome.For some reason fill isn't rendering in chrome (but does in edge). Maybe move fill to CSS?
-    orc<-fontawesome::fa("orcid", fill='#A6CE39')
-    orc<-gsub(';">', ';"> <xmlns:xlink="http://www.w3.org/1999/xlink"><a xlink:href= "dummyhtml">', orc)
-    orc<-gsub('dummyhtml', paste0("https://orcid.org/", curr$authorORCID), orc)
-    orc<-gsub('</svg>','</a></svg>',orc)
-    cat({{orc}})
+  if (!is.na(curr$authorORCID)) {
+    # Consider re-write to use the actual downloaded icon and not fontawesome.For some reason fill isn't rendering in chrome (but does in edge). Maybe move fill to CSS?
+    orc <- fontawesome::fa("orcid", fill = "#A6CE39")
+    orc <- gsub(';">', ';"> <xmlns:xlink="http://www.w3.org/1999/xlink"><a xlink:href= "dummyhtml">', orc)
+    orc <- gsub("dummyhtml", paste0("https://orcid.org/", curr$authorORCID), orc)
+    orc <- gsub("</svg>", "</a></svg>", orc)
+    cat({{ orc }})
   }
   cat("\n")
   cat(curr$authorAffiliations, "\n\n")
@@ -223,19 +230,19 @@ for(i in 1:(length(authorNames)/2)){
 :::
 ::: {.column width="47.5%"}
 ```{r authorsCOL2_do_not_edit, echo=FALSE, attr.source="style='display:inline-block;'", collapse=TRUE, results="asis"}
-for(i in ((length(authorNames)/2)+1):(length(authorNames))){
-  curr<-contact[i,]
+for (i in ((length(authorNames) / 2) + 1):(length(authorNames))) {
+  curr <- contact[i, ]
   cat("####", curr$authorNames, " ")
-  if(is.na(curr$authorORCID)){
+  if (is.na(curr$authorORCID)) {
     cat("\n")
   }
-  if(!is.na(curr$authorORCID)){
-    #Consider re-write to use the actual downloaded icon and not fontawesome.For some reason fill isn't rendering in chrome (but does in edge). Maybe move fill to CSS?
-    orc<-fontawesome::fa("orcid", fill='#A6CE39')
-    orc<-gsub(';">', ';"> <xmlns:xlink="http://www.w3.org/1999/xlink"><a xlink:href= "dummyhtml">', orc)
-    orc<-gsub('dummyhtml', paste0("https://orcid.org/", curr$authorORCID), orc)
-    orc<-gsub('</svg>','</a></svg>',orc)
-    cat({{orc}})
+  if (!is.na(curr$authorORCID)) {
+    # Consider re-write to use the actual downloaded icon and not fontawesome.For some reason fill isn't rendering in chrome (but does in edge). Maybe move fill to CSS?
+    orc <- fontawesome::fa("orcid", fill = "#A6CE39")
+    orc <- gsub(';">', ';"> <xmlns:xlink="http://www.w3.org/1999/xlink"><a xlink:href= "dummyhtml">', orc)
+    orc <- gsub("dummyhtml", paste0("https://orcid.org/", curr$authorORCID), orc)
+    orc <- gsub("</svg>", "</a></svg>", orc)
+    cat({{ orc }})
   }
   cat("\n")
   cat(curr$authorAffiliations, "\n\n")
@@ -269,33 +276,32 @@ The section should also briefly outline the broader goals that motivated collect
 
 # Data Records (required)
 
-The Data Records section should be used to explain each data record associated with this work (for instance, a data package), including the repository where this information is stored, and provide an overview of the data files and their formats. Each external data record should be cited.
+The Data Records section should be used to explain each data record associated with this work (for instance, a data package), including the DOI indicating where this information is stored, and provide an overview of the data files and their formats. Each external data record should be cited.
 
-Tables should be used to support the data records and should clearly indicate the samples and subjects (study inputs), their provenance, and the experimental manipulations performed on each (see example Tables below). They should also specify the data output resulting from each data-collection or analytical step, should these form part of the archived record.
+Tables should be used to support the data records and should clearly indicate the samples and subjects (study inputs), their provenance, and the experimental manipulations performed on each or the protocols for observational data collection (see example Tables below). They should also specify the data output resulting from each data-collection or analytical step, should these form part of the archived record.
 
 ## Summary of datasets created (Required)
 
 This DRR describes the data package `r dataPackageTitle` which contains a metadata file and `r length(dataPackage_fileNames)` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackageDOI` (see Table 1).
 
 ```{r FileTable, echo=FALSE}
-filelist<-data.frame(dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript)
+filelist <- data.frame(dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript)
 
-knitr::kable(filelist, caption=paste0("**", dataPackageTitle, ": list of data files**"), col.names=c("File Name", "Size", "Description"), format="pandoc")
+knitr::kable(filelist, caption = paste0("**", dataPackageTitle, ": list of data files**"), col.names = c("File Name", "Size", "Description"), format = "pandoc")
 ```
 ```{r datapackage_files_deprecated, eval=FALSE, echo=FALSE, results="asis"}
-#formatting template:
-template<-"**%s -** %s - %s
+# formatting template:
+template <- "**%s -** %s - %s
 
 "
-#made dataframe describing datapackage contents:
-filelist<-data.frame(dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript)
+# made dataframe describing datapackage contents:
+filelist <- data.frame(dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript)
 
-#add data file info to the template & write to html:
-for(i in seq_along(dataPackage_fileNames)){
-  curr<-filelist[i,]
+# add data file info to the template & write to html:
+for (i in seq_along(dataPackage_fileNames)) {
+  curr <- filelist[i, ]
   cat(sprintf(template, curr$dataPackage_fileNames, curr$dataPackage_fileSizes, curr$dataPackage_fileDescript))
 }
-  
 ```
 
 See Appendix for additional notes and examples.
@@ -349,7 +355,6 @@ Authors are encouraged to consider creating a figure that outlines the experimen
 
 ```{r figure1, echo=FALSE, fig.align="center", fig.cap="Example general workflow to include in the methods section."}
 include_graphics("output/temp/example_DRR/figures/ProcessingWorkflow.png")
-
 ```
 
 ## Data Collection and Sample Processing Methods (optional)
@@ -395,6 +400,7 @@ The Acknowledgements should contain text acknowledging non-author contributors. 
 # Appendix A. Code Listing
 
 ```{r Listing, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
+
 ```
 
 \pagebreak
@@ -425,86 +431,89 @@ Authors may provide tables within text near the initial citation or as an append
 Here, we provide four generic 'Table 1' examples, including two experimental study examples, one observational study example, and an example for an aggregated dataset of the type that may result from a meta-analysis.
 
 ```{r Table1, echo=FALSE}
-T1Subjects<-c("Mouse1","Mouse2","Mousen")
-T1Protocol1<-c("Drug treatment","Drug treatment","Drug treatment")
-T1Protocol2<-c("Liver dissection","Liver dissection","Liver dissection")
-T1Protocol3<-c("RNA extraction","RNA extraction","RNA extraction")
-T1Protocol4<-c("RNA-Seq","RNA-Seq","RNA-Seq")
-T1Data<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX")
-Table1<-data.frame(T1Subjects,T1Protocol1,T1Protocol2,T1Protocol3,T1Protocol4,T1Data)
+T1Subjects <- c("Mouse1", "Mouse2", "Mousen")
+T1Protocol1 <- c("Drug treatment", "Drug treatment", "Drug treatment")
+T1Protocol2 <- c("Liver dissection", "Liver dissection", "Liver dissection")
+T1Protocol3 <- c("RNA extraction", "RNA extraction", "RNA extraction")
+T1Protocol4 <- c("RNA-Seq", "RNA-Seq", "RNA-Seq")
+T1Data <- c("GEOXXXXX", "GEOXXXXX", "GEOXXXXX")
+Table1 <- data.frame(T1Subjects, T1Protocol1, T1Protocol2, T1Protocol3, T1Protocol4, T1Data)
 
-T1<-flextable(Table1)
-T1<-set_caption(T1,"Experimental study example Data Records table. [Table created using the flextable package.]")
-T1<-set_header_labels(T1,
-                      T1Subjects="Subjects",
-                      T1Protocol1="Protocol 1",
-                      T1Protocol2="Protocol 2",
-                      T1Protocol3="Protocol 3",
-                      T1Protocol4="Protocol 4",
-                      T1Data="Data")
+T1 <- flextable(Table1)
+T1 <- set_caption(T1, "Experimental study example Data Records table. [Table created using the flextable package.]")
+T1 <- set_header_labels(T1,
+  T1Subjects = "Subjects",
+  T1Protocol1 = "Protocol 1",
+  T1Protocol2 = "Protocol 2",
+  T1Protocol3 = "Protocol 3",
+  T1Protocol4 = "Protocol 4",
+  T1Data = "Data"
+)
 autofit(T1)
 ```
 
 ```{r Table2, echo=FALSE}
-Source<-c("CellCulture1","CellCulture1","CellCulture1","CellCulture1","CellCulture1","CellCulture1")
-Protocol1<-c("Drug treatment","Drug treatment","Drug treatment","Drug treatment","Drug treatment","Drug treatment")
-Protocol2<-c("RNA extraction","RNA extraction","RNA extraction","RNA extraction","RNA extraction","RNA extraction")
-Samples<-c("TechnicalRep1a","TechnicalRep2a","TechnicalRep3a","TechnicalRep1b","TechnicalRep2b","TechnicalRep3b")
-Protocol3<-c("Microarray hybridization","Microarray hybridization","Microarray hybridization","Microarray hybridization","Microarray hybridization","Microarray hybridization")
-Data<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX","GEOXXXXX")
-Table<-data.frame(Source,Protocol1,Protocol2,Samples,Protocol3,Data)
+Source <- c("CellCulture1", "CellCulture1", "CellCulture1", "CellCulture1", "CellCulture1", "CellCulture1")
+Protocol1 <- c("Drug treatment", "Drug treatment", "Drug treatment", "Drug treatment", "Drug treatment", "Drug treatment")
+Protocol2 <- c("RNA extraction", "RNA extraction", "RNA extraction", "RNA extraction", "RNA extraction", "RNA extraction")
+Samples <- c("TechnicalRep1a", "TechnicalRep2a", "TechnicalRep3a", "TechnicalRep1b", "TechnicalRep2b", "TechnicalRep3b")
+Protocol3 <- c("Microarray hybridization", "Microarray hybridization", "Microarray hybridization", "Microarray hybridization", "Microarray hybridization", "Microarray hybridization")
+Data <- c("GEOXXXXX", "GEOXXXXX", "GEOXXXXX", "GEOXXXXX", "GEOXXXXX", "GEOXXXXX")
+Table <- data.frame(Source, Protocol1, Protocol2, Samples, Protocol3, Data)
 
-T1<-flextable(Table)
-T1<-set_caption(T1,"Experimental study with replicates Data Records table. [Table created using the flextable package.]")
-T1<-set_header_labels(T1,
-                      Source="Subjects",
-                      Protocol1="Protocol 1",
-                      Protocol2="Protocol 2",
-                      Samples="Samples",
-                      Protocol3="Protocol 3",
-                      data="Data")
+T1 <- flextable(Table)
+T1 <- set_caption(T1, "Experimental study with replicates Data Records table. [Table created using the flextable package.]")
+T1 <- set_header_labels(T1,
+  Source = "Subjects",
+  Protocol1 = "Protocol 1",
+  Protocol2 = "Protocol 2",
+  Samples = "Samples",
+  Protocol3 = "Protocol 3",
+  data = "Data"
+)
 autofit(T1)
-
 ```
 
 ```{r Table3, echo=FALSE}
-Sample<-c("Body of water 1","Body of water 2","Body of water n")
-geoloc<-c("location name","location name","location name")
-geopos<-c("latitude, longitude, altitude","latitude, longitude, altitude","latitude, longitude, altitude")
-protocol<-c("Measurement of surface temperature","Measurement of surface temperature","Measurement of surface temperature")
-data<-c("dataFile1","dataFile2","dataFile3")
-Table<-data.frame(Sample,geoloc,geopos,protocol,data)
+Sample <- c("Body of water 1", "Body of water 2", "Body of water n")
+geoloc <- c("location name", "location name", "location name")
+geopos <- c("latitude, longitude, altitude", "latitude, longitude, altitude", "latitude, longitude, altitude")
+protocol <- c("Measurement of surface temperature", "Measurement of surface temperature", "Measurement of surface temperature")
+data <- c("dataFile1", "dataFile2", "dataFile3")
+Table <- data.frame(Sample, geoloc, geopos, protocol, data)
 
-T1<-flextable(Table)
-T1<-set_caption(T1,"Observational study example Data Records table. [Table created using the flextable package.]")
-T1<-set_header_labels(T1,
-                      Sample="Sample",
-                      geoloc="Geographical Location",
-                      geopos="Geoposition",
-                      protocol="Protocol",
-                      data="Data")
+T1 <- flextable(Table)
+T1 <- set_caption(T1, "Observational study example Data Records table. [Table created using the flextable package.]")
+T1 <- set_header_labels(T1,
+  Sample = "Sample",
+  geoloc = "Geographical Location",
+  geopos = "Geoposition",
+  protocol = "Protocol",
+  data = "Data"
+)
 autofit(T1)
 ```
 
 ```{r Table4, echo=FALSE}
-c1<-c("Database URL 1","Database URL 1","Database URL 2")
-c2<-c("Dataset 1","Dataset 2","Dataset n")
-c3<-c("Number of samples in the dataset","Number of samples in the dataset","Number of samples in the dataset")
-c4<-c("Range of measurements reported in the dataset","Range of measurements reported in the dataset","Range of measurements reported in the dataset")
-c5<-c("Data assimilation procedure","Data assimilation procedure","Data assimilation procedure")
-c6<-c("Method to generate output data","Method to generate output data","Method to generate output data")
-c7<-c("dataFile1","dataFile1","dataFile2")
-Table<-data.frame(c1,c2,c3,c4,c5,c6,c7)
+c1 <- c("Database URL 1", "Database URL 1", "Database URL 2")
+c2 <- c("Dataset 1", "Dataset 2", "Dataset n")
+c3 <- c("Number of samples in the dataset", "Number of samples in the dataset", "Number of samples in the dataset")
+c4 <- c("Range of measurements reported in the dataset", "Range of measurements reported in the dataset", "Range of measurements reported in the dataset")
+c5 <- c("Data assimilation procedure", "Data assimilation procedure", "Data assimilation procedure")
+c6 <- c("Method to generate output data", "Method to generate output data", "Method to generate output data")
+c7 <- c("dataFile1", "dataFile1", "dataFile2")
+Table <- data.frame(c1, c2, c3, c4, c5, c6, c7)
 
-T1<-flextable(Table)
-T1<-set_caption(T1,"Observational study example Data Records table. [Table created using the flextable package.]")
-T1<-set_header_labels(T1,
-                      c1="Source",
-                      c2="Sample",
-                      c3="Sample Number",
-                      c4="Temporal Range",
-                      c5="Protocol 1",
-                      c6="Protocol 2",
-                      c7="Data")
+T1 <- flextable(Table)
+T1 <- set_caption(T1, "Observational study example Data Records table. [Table created using the flextable package.]")
+T1 <- set_header_labels(T1,
+  c1 = "Source",
+  c2 = "Sample",
+  c3 = "Sample Number",
+  c4 = "Temporal Range",
+  c5 = "Protocol 1",
+  c6 = "Protocol 2",
+  c7 = "Data"
+)
 autofit(T1)
 ```
