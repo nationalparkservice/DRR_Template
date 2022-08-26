@@ -70,34 +70,30 @@ Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay ca
 The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
     
 # DataStore reference ID for the data package associated with this report. You must have at least one data package.Eventually, we will automate importing much of this information from metadata.
-dataPackage1RefID<-12342567
+dataPackageRefID<-c(12342567)
 
 # Must match title in data store.
-dataPackage1Title<-"Data package1 Title"
+dataPackageTitle<-"Data package1 Title"
 
 #Must match descriptions in the data package metadata
-dataPackage1Description<-"Short title for data package1"
+dataPackageDescription<-"Short title for data package1"
 
-#generates your data package DOI based on the data package DataStore reference ID. This is different from the DRR DOI!
-dataPackage1DOI<-paste0("https://doi.org/10.57830/", dataPackage1RefID)
+#generates your data package DOI based on the data package DataStore reference ID. This is different from the DRR DOI! No need to edit this.
+dataPackageDOI<-paste0("https://doi.org/10.57830/", dataPackageRefID)
 
-#The number of data files in the data package described by the DRR. Exclude metadata files! For in this example the data package includes 3 files at upload: one metadata file and two data files.
-dataPackage1_filenumb<-2
+#list the file names in your data package. Do NOT include metadata files.
+dataPackage_fileNames<-c("my_data.csv",
+                          "my_data2.csv")
 
-# The file name for the first data file in the data package. Each data package must include at least one data file.
-dataPackage1_datafile1_name<-"my_data.csv"
+#list the approximate size of each data file. Make sure the order corresponds to the order of of the file names in dataPackage_fileNames
+dataPackage_fileSizes<-c("0.8 MB", "10 GB")
 
-dataPackage1_datafile1_descript<-"This is a short description of the corresponding data file (a good guideline is 10 words or less)."
-
-# Should match file name in data store/metadata.
-dataPackage1_datafile2_name<-"my_data2.csv"
-
-dataPackage1_datafile2_descript<-"This is a short (perhaps 10 words) description of the 2nd data file."
-
-#Add additional file names and descriptions following the format above.
+#list a short, one-line description of each data file. Descriptions must be in the same order as the filenames.
+dataPackage_fileDescript<-c("This is a short description of my_data.csv (a good guideline is 10 words or less).",
+                                  "This is a short description of my_data2.csv")
 
 # Write parameters to file for consistent reuse across report and data packages
-save(title, reportNumber, DRR_DSRefID, authorNames, authorAffiliations, authorORCID, DRRabstract, dataPackage1RefID, dataPackage1Title, dataPackage1Description, dataPackage1DOI, dataPackage1_filenumb, dataPackage1_datafile1_name, dataPackage1_datafile1_descript, dataPackage1_datafile2_name, dataPackage1_datafile2_descript, file=here::here("output", "temp", "reportParameters.Rdata"))
+save(title, reportNumber, DRR_DSRefID, authorNames, authorAffiliations, authorORCID, DRRabstract, dataPackageRefID, dataPackageTitle, dataPackageDescription, dataPackageDOI, dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript, file=here::here("output", "temp", "reportParameters.Rdata"))
 
 ```
 
@@ -196,7 +192,7 @@ if(!is.null(reportNumber)){
 
 ```
 
- <!-- Authors section in columns -->
+<!-- Authors section in columns -->
 
 :::::: {.columns}
 ::: {.column width="47.5%"}
@@ -223,7 +219,7 @@ for(i in 1:(length(authorNames)/2)){
 ```
 :::
 ::: {.column width="5%"}
-\ <!-- empty DIV (with whitespace) as a column separator-->
+\ <!-- empty DIV (with white space) as a column separator-->
 :::
 ::: {.column width="47.5%"}
 ```{r authorsCOL2_do_not_edit, echo=FALSE, attr.source="style='display:inline-block;'", collapse=TRUE, results="asis"}
@@ -248,34 +244,6 @@ for(i in ((length(authorNames)/2)+1):(length(authorNames))){
 :::
 ::::::
 
-```{r authors_deprecated, echo=FALSE, eval=FALSE, results="asis"}
-#formatting template:
-template<-"#### %s
-
-%s
-
-
-"
-names<-NULL
-address<-NULL
-ORCID<-NULL
-
-#turn author data into a dataframe
-for(i in 1:AuthorNumb){
-  names<-append(names, get(paste0("AuthorName", i)))
-  address<-append(address, get(paste0("AuthorAffiliation", i)))
-  #ORCID<-append(ORCID, get(paste0("AuthorORCID", i)))
-}
-contact<-data.frame(names, address)
-
-#add author data to the template & write to html
-for(i in 1:AuthorNumb){
-  curr<-contact[i,]
-  cat(sprintf(template, curr$names, curr$address))
-}
-  
-```
-
 #### `r date` <!-- publication date - defaults to current system date -->
 
 <!-- abstract heading - don't edit -->
@@ -295,6 +263,7 @@ Abstract
 # Background & Introduction
 
 The Background & Summary should provide an overview of the study design, the assay(s) performed, and the data generated, including any background information needed to put this study in the context of previous work and the literature, and should reference literature as needed. Literature should be cited both in the text and in the References section below using the appropriate [Chicago Manual of Style](https://www.chicagomanualofstyle.org/tools_citationguide/citation-guide-2.html) author-date format.
+<!-- to do: add in support for importing bibtex references: inline citations and citation formatting-->
 
 The section should also briefly outline the broader goals that motivated collection of the data, as well as their potential reuse value. We also encourage authors to include a figure that provides a schematic overview of the study and assay(s) design.
 
@@ -306,27 +275,20 @@ Tables should be used to support the data records and should clearly indicate th
 
 ## Summary of datasets created (Required)
 
-This DRR describes the data package `r dataPackage1Title` which contains a metadata file and `r dataPackage1_filenumb` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackage1DOI`. The files in the data package are:
+This DRR describes the data package `r dataPackageTitle` which contains a metadata file and `r length(dataPackage_fileNames)` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackageDOI`. The files in the data package are:
 
 ```{r datapackage_files, echo=FALSE, results="asis"}
 #formatting template:
-template<-"**%s -** %s
+template<-"**%s -** %s - %s
 
 "
-names<-NULL
-descript<-NULL
+#made dataframe describing datapackage contents:
+filelist<-data.frame(dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript)
 
-#turn author data into a dataframe
-for(i in 1:dataPackage1_filenumb){
-  names<-append(names, get(paste0("dataPackage1_datafile", i, "_name")))
-  descript<-append(descript, get(paste0("dataPackage1_datafile", i,"_descript")))
-}
-filelist<-data.frame(names, descript)
-
-#add author data to the template & write to html
-for(i in 1:dataPackage1_filenumb){
+#add data file info to the template & write to html:
+for(i in seq_along(dataPackage_fileNames)){
   curr<-filelist[i,]
-  cat(sprintf(template, curr$names, curr$descript))
+  cat(sprintf(template, curr$dataPackage_fileNames, curr$dataPackage_fileSizes, curr$dataPackage_fileDescript))
 }
   
 ```
@@ -343,7 +305,7 @@ The Data Quality Evaluation section should present any analyses that are needed 
 
 *Stock Text to include:*
 
-The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *`r dataPackage1Title`* is suitable for its intended use as of the date of processing (`r Sys.Date()`).
+The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *`r dataPackageTitle`* is suitable for its intended use as of the date of processing (`r Sys.Date()`).
 
 *Required Table*
 
