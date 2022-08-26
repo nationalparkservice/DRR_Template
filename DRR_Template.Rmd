@@ -55,7 +55,7 @@ authorNames <- c(
 # List author affiliations. The order of author affiliations must match the order of the authors in AuthorNames. Note that the entirety of each affiliation is enclosed in quotations. Line breaks are indicated with the tag <br>. Do not worry about indentation or word wrapping.
 authorAffiliations <- c(
   "NPS Inventory and Monitory Division<br>
-1201 Oakrdige Dr, Suite 150<br>
+1201 Oakridge Dr, Suite 150<br>
 Fort Collins, Colorado",
   "Managed Business Solutions (MBS), a Sealaska Company<br>
 Contractor to the National Park Service<br>
@@ -280,7 +280,7 @@ The Data Records section should be used to explain each data record associated w
 
 Tables should be used to support the data records and should clearly indicate the samples and subjects (study inputs), their provenance, and the experimental manipulations performed on each or the protocols for observational data collection (see example Tables below). They should also specify the data output resulting from each data-collection or analytical step, should these form part of the archived record.
 
-## Summary of datasets created (Required)
+## Summary of datasets (required)
 
 This DRR describes the data package `r dataPackageTitle` which contains a metadata file and `r length(dataPackage_fileNames)` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackageDOI` (see Table 1).
 
