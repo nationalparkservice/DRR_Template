@@ -1,6 +1,6 @@
 ---
 title: "How To Use This Template"
-date: "18 August, 2022"
+date: "26 August, 2022"
 output:
   html_document:
     df_print: kable
@@ -68,34 +68,31 @@ The YAML header helps format the DRR. You should not need to edit any of the YAM
 
 - `user_edited_parameters`. A series of parameters that are used in the creation of the DRR and may be re-used in metadata and associated data package construction. You will need to edit these parameters for each DRR.
   - `title`. The title of the Data Release Report.This will be converted to all upper case. 
-  - `reportNumber`. This is optional, and should _only_ be included if publishing in the semi-official DRR series. 
+  - `reportNumber`. This is optional, and should _only_ be included if publishing in the semi-official DRR series. Set to NULL if there is no reportNumber.
   - `DRR_DSRefID`. This is the Data Store reference ID for the report.
-  - `AuthorNumb`. The number of authors for the DRR. There must be a minimum of 1 author!
-  - `AuthorName1`. The name of the first author.
-  - `AuthorAffiliation1`. The affiliation/address of the first author.
-  - `AuthorName2`. Optional based on number of authors. If one author, comment out using #
-  - `AuthorORCID1` Optional 16-digit ORCID iD. If you have an ORCID iD enter it here in quotes, with dashes separating every 4 digits as in the example. If not, enter NA (no quotes). Specifying an ORCID iD will add a green ORCID icon after the author's name with a link to the corresponding ORCID author profile. Future iterations of the DRR Template will pull ORCID iDs from metadata and eventually from Active Directory. See [ORCID](https://www.orcid.org/) for more information about ORCID iDs.
-  - `AuthorAffiliation2`. Optional based on number of authors. If one author, comment out using #. Add additional AuthorName# and AuthorAffiliation# as needed, following the template.
+  - `authorNames`. A list of the author's names.
+  - `authorAffiliations`. A list of the author's affiliations. The order of author affiliations must match the order of the authors in the `authorNames` list. Note that the entirety of each affiliation is enclosed in a single set of quotations. Line breaks are indicated with the <br> tag. Do not worry about indentation or word wrapping.
+  - `authorORCID`. A list of ORCID iDs for each author in the format "xxxx-xxxx-xxxx-xxxx". If an author does not have an ORCID iD, specify NA (no quotes). The order of ORCID iDs (and NAs) must correspond to the order of authors in the `authorNames` list. Future iterations of the DRR Template will pull ORCID iDs from metadata and eventually from Active Directory. See [ORCID](https://www.orcid.org/) for more information about ORCID iDs or to register an ORCID iD.
   - `DRRabstract`. The abstract for the DRR (which is distinct from the data package abstract). Pay careful attention to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad or some other text editor and NOT a word processor (such as Microsoft Word). Indicate line breaks with \n and a space between paragraphs - should you want them - using \n\n. The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section. A good suggested length for abstracts is less than 250 words.
-  - `dataPackage1RefID`. DataStore reference ID for the data package associated with this report. You must have at least one data package.Eventually, we will automate importing much of this information from metadata and include the ability to describe multiple data packages in a single DRR.
-  - `dataPackage1Title`. The title of the data package. Must match the title on DataStore (and metadata).
-  - `dataPackage1Description`. A short title/subtitle or short description for the data package. Must match the data package metadata.
-  - `dataPackage1DOI`. Auto-generated, no need to edit or update. This is the data package DOI. It is based on the DataStore reference number.
-  - `dataPackage1_filenumb`. The number of data files in the data package described by the DRR. Exclude metadata files! For in this example the data package includes 3 files at upload: one metadata file and two data files.
-  - `dataPackage1_datafile1_name`. The file name for the first data file in the data package. Each data package must include at least one data file.For example, "my_data.csv".
-  - `dataPackage1_datafile1_descript`. A short description of the corresponding data file that helps distinguish it from other data files. A good guideline is 10 words or less.
-  - `dataPackage1_datafile2_name`. The file name for the second data file. For example, "my_data2.csv".
-  - `dataPackage1_datafile2_descript`.  A short description of the corresponding data file that distinguishes it from other data files. A good guideline is 10 words or less.You can add additional data files and descriptions using the same format.
-  
+  - `dataPackageRefID`. DataStore reference ID for the data package associated with this report. You must have at least one data package.Eventually, we will automate importing much of this information from metadata and include the ability to describe multiple data packages in a single DRR.
+  - `dataPackageTitle`. The title of the data package. Must match the title on DataStore (and metadata).
+  - `dataPackageDescription`. A short title/subtitle or short description for the data package. Must match the data package metadata.
+  - `dataPackageDOI`. Auto-generated, no need to edit or update. This is the data package DOI. It is based on the DataStore reference number.
+  - `dataPackage_fileNames`. List the file names in your data package. Do NOT include metadata files. For example, "my_data.csv".
+  -  `dataPackage_fileSizes`. List the approximate size of each data file. Make sure the order of the file sizes corresponds to the order of file names in `dataPackage_fileNames`.
+  `dataPackage_fileDescript`. A short description of the corresponding data file that helps distinguish it from other data files. A good guideline is 10 words or less. This will be used in a table summary table so brevity is a priority.
+
 - `setup`. Pretty self explanatory, but there are two snippets for loading packages; the `RRpackages` section is a suite of packages that are used to assist with reproducible reporting. You may not need these for your report, but we have included them as part of the base recommended packages. There is a second snippet for `pkgList` that includes all project-specific packages needed. Add as necessary.
 
 - `title_do_not_edit`. These parameters are auto-generated based on either the EML you supplied (when that becomes an option) or the information you've already supplied under "user-edited-parameters". You really should not need to edit these parameters. 
 
-- `authors_do_not_edit`. There is no need to edit this chunk. This writes the author names, ORCID iDs, and affiliations to the html document based on information supplied in user-edited-parameters. 
+- `authorsCol1_do_not_edit`. There is no need to edit this chunk. This writes the author names, ORCID iDs, and affiliations to the html document based on information supplied in user-edited-parameters. 
+
+- `authorsCol2_do_not_edit`.There is no need to edit this chunk. This writes the author names, ORCID iDs, and affiliations to the html document based on information supplied in user-edited-parameters.
 
 - `LoadData`. Any datasets you need to load can go here.
 
-- `datapackage_files`. Do not edit. Generates a list of file names and descriptions in the data package being described by the DRR.
+- `FileTable`. Do not edit. Generates a table of file names, sizes,  and descriptions in the data package being described by the DRR.
 
 - `Listing`. Appendix A, by default is the code listing. This will generate all code used in generating the report and data packages.
 
@@ -138,16 +135,16 @@ hover, condensed, and responsive, with full_width set to false.
 For example:
 
 ````markdown
-```{r Table1, echo=FALSE}
+```{r Table2, echo=FALSE}
 c1<-c("Mouse1","Mouse2","Mousen")
 c2<-c("Drug treatment","Drug treatment","Drug treatment")
 c3<-c("Liver dissection","Liver dissection","Liver dissection")
 c4<-c("RNA extraction","RNA extraction","RNA extraction")
 c5<-c("RNA-Seq","RNA-Seq","RNA-Seq")
 c6<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX")
-Table1<-data.frame(c1,c2,c3,c4,c5,c6)
+Table2<-data.frame(c1,c2,c3,c4,c5,c6)
 
-kable(Table1, 
+kable(Table2, 
       col.names=c("Subjects","Protocol 1","Protocol 2","Protocol 3","Protocol 4","Data"),
       caption="**Table 1.** Experimental study example Data Records table.") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
