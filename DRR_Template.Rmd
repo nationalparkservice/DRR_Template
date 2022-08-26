@@ -275,9 +275,14 @@ Tables should be used to support the data records and should clearly indicate th
 
 ## Summary of datasets created (Required)
 
-This DRR describes the data package `r dataPackageTitle` which contains a metadata file and `r length(dataPackage_fileNames)` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackageDOI`. The files in the data package are:
+This DRR describes the data package `r dataPackageTitle` which contains a metadata file and `r length(dataPackage_fileNames)` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackageDOI` (see Table 1).
 
-```{r datapackage_files, echo=FALSE, results="asis"}
+```{r FileTable, echo=FALSE}
+filelist<-data.frame(dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript)
+
+knitr::kable(filelist, caption=paste0("**", dataPackageTitle, ": file list**"), col.names=c("File Name", "Size", "Description"), format="pandoc")
+```
+```{r datapackage_files_deprecated, eval=FALSE, echo=FALSE, results="asis"}
 #formatting template:
 template<-"**%s -** %s - %s
 
@@ -292,8 +297,6 @@ for(i in seq_along(dataPackage_fileNames)){
 }
   
 ```
-
-*Also include a table explaining provenance of datasets*
 
 See Appendix for additional notes and examples.
 
