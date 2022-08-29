@@ -287,7 +287,7 @@ This DRR describes the data package `r dataPackageTitle` which contains a metada
 ```{r FileTable, echo=FALSE}
 filelist <- data.frame(dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript)
 
-knitr::kable(filelist, caption = paste0("**", dataPackageTitle, ": list of data files**"), col.names = c("File Name", "Size", "Description"), format = "pandoc")
+knitr::kable(filelist, caption = paste0("**", dataPackageTitle, ": List of data files**"), col.names = c("File Name", "Size", "Description"), format = "pandoc")
 ```
 ```{r datapackage_files_deprecated, eval=FALSE, echo=FALSE, results="asis"}
 # formatting template:
@@ -347,7 +347,7 @@ For studies involving privacy or safety controls on public access to the data, t
 
 Ideally these methods are identical to the methods listed in the metadata accompanying the data package that the DRR describes.Future versions of this template will pull directly from metadata.
 
-The Methods should include cite previous methods under use but also be detailed enough describing data production including full descriptions of the experimental design, data acquisition assays, and any computational processing (e.g. normalization, image feature extraction) that other can understand and reproduce the methods and processing steps without referring to associated publications. Related methods should be grouped under corresponding subheadings where possible, and methods should be described in enough detail to allow other researchers to interpret and repeat, if required, the full study.
+The Methods should cite previous methods under use but also be detailed enough describing data production including a descriptions of the experimental design, data acquisition assays, and any computational processing (e.g. normalization, image feature extraction) that other can understand the methods and processing steps without referring to associated publications. Cite and link to the DataStore reference for the protocol for detailed methods sufficient for reproducing the experiment or observational study. Related methods should be grouped under corresponding subheadings where possible, and methods should be described in enough detail to allow other researchers to interpret the full study.
 
 Specific data inputs and outputs should be explicitly cited in the text and included in the References section below. See the [USGS data citation guidelines](https://www.usgs.gov/data-management/data-citation) for examples of how to cite data in text and in the References section.
 
