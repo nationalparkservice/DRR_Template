@@ -381,7 +381,7 @@ For all studies using custom code in the generation or processing of datasets, a
 
 # References (required)
 
-Bibliographic information for any works cited in the above sections, using the standard *NPS NR Publication Series* referencing style.
+Provide sufficient information to locate the resource. If the citation has a DOI, include the DOI. If you are citing documents that have unregistered DOIs (such as a data pacakge that you are working on concurrently) still include the DOI. Electronic resources data and data services or web sites should include the date they were accessed. Include bibliographic information for any works cited in the above sections (including the data package the DRR is describing), using the standard *NPS NR Publication Series* referencing style.
 
 In line with emerging [industry-wide standards for data citation](https://www.nature.com/articles/sdata2018259), references to all datasets described or used in the manuscript should be cited in the text and listed in the 'References' section in the same manner as a conventional literature reference.
 

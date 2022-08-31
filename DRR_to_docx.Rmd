@@ -242,7 +242,7 @@ For all studies using custom code in the generation or processing of datasets, a
 
 Provide sufficient information to locate the resource. If the citation has a DOI, include the DOI. If you are citing documents that have unregistered DOIs (such as a data pacakge that you are working on concurrently) still include the DOI. Electronic resources data and data services or web sites should include the date they were accessed.
 
-Bibliographic information for any works cited in the above sections, using the standard *NPS NR Publication Series* referencing style.
+Include bibliographic information for any works cited (including the data package the DRR is describing) in the above sections, using the standard *NPS NR Publication Series* referencing style.
 
 ITIS. 2020. Integrated Taxonomic Information System. Available at: <https://www.itis.gov/> (accessed 29 January 2020).
 
