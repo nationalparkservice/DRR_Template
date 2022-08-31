@@ -32,7 +32,6 @@ output:
     fig_width: 5
     highlight: haddock
     number_sections: False
-# End YAML header
 ---
 
 ```{r user_edited_parameterss, include=FALSE}
@@ -318,7 +317,14 @@ The data within the data records listed above have been reviewed by staff in the
 
 *Required Table*
 
-Summary of any data qualification codes used, their definitions, and the fields to which they apply.
+```{r dataFlaggingTable, echo=FALSE}
+flags<-c("A", "AE", "R")
+def<-c("Accepted", "Accepted, estimated", "Rejected")
+app<-rep("columns endining \"_flag\"", 3)
+data_flags<-data.frame(flags, def, app)
+
+knitr::kable(data_flags, caption = "**Description of data quality flags**", col.names=c("Flag", "Definition", "Useage"), format="pandoc")
+```
 
 Possible content **strongly Suggested to Include**
 
