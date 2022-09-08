@@ -1,6 +1,5 @@
 ---
 # YAML header: do not edit
-date: "`r format(Sys.time(), '%d %B, %Y')`"
 editor_options:
   chunk_output_type: inline
   markdown: 
