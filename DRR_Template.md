@@ -1,6 +1,6 @@
 ---
 # YAML header: do not edit
-date: "31 August, 2022"
+date: "08 September, 2022"
 editor_options:
   chunk_output_type: inline
   markdown: 
@@ -65,7 +65,7 @@ Fort Collins, Colorado
 :::
 ::::::
 
-#### 31 August, 2022 <!-- publication date - defaults to current system date -->
+#### 08 September, 2022 <!-- publication date - defaults to current system date -->
 
 <!-- abstract heading - don't edit -->
 <h4 class="text-center">
@@ -118,7 +118,7 @@ The Data Quality Evaluation section should present any analyses that are needed 
 
 *Stock Text to include:*
 
-The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *Data Package Title* is suitable for its intended use as of the date of processing (2022-08-31).
+The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *Data Package Title* is suitable for its intended use as of the date of processing (2022-09-08).
 
 *Required Table*
 
@@ -271,397 +271,16 @@ United States Geologic Survey (USGS). 2016. BioData - Aquatic Bioassessment Data
 The Acknowledgements should contain text acknowledging non-author contributors. Acknowledgements should be brief, and should not include thanks to anonymous referees and editors or effusive comments. Grant or contribution numbers may be acknowledged.
 
 # Appendix A. Code Listing
+In most cases, Code listing is not required. If all QA/QC and data manipulations were performed elsewhere, you should cite that code in the methods (and leave the "Listing" code chunk as the default settings - eval=FALSE). If you have developed custom scripts, you can add those to DataStore with the reference type "Script" and cite them in the DRR.Some people have developed code to perform QA/QC or data manipulation within the DRR itself. In that case, you must set the "Listing" code chunk to eval=TRUE.
 
 
-```r
-# The title of your DRR. Should all DRR start with 'Data
-# Release Report:'? Should we enforce titles specifically
-# referencing the data package(s) they the report is about?
-title <- "DRR Title"
-
-# Optional and should only be included if publishing to the
-# semi-official DRR series. Contact Joe if you are. If not,
-# leave as NULL
-reportNumber <- NULL
-# This should match the Data Store Reference ID for this
-# DRR. Eventually we should be able to pull this directly
-# from the data package metadata.
-DRR_DSRefID <- 7654321
-
-# Can eventually pull authors from data package metadata,
-# but that assumes data package authors and DRR authors are
-# the same so there will always need to be an option for
-# manually entering author info.
-
-# list the authors.
-authorNames <- c("Jane Doe", "John Doe")
-
-# List author affiliations. The order of author
-# affiliations must match the order of the authors in
-# AuthorNames. Note that the entirety of each affiliation
-# is enclosed in quotations. Line breaks are indicated with
-# the tag <br>. Do not worry about indentation or word
-# wrapping.
-authorAffiliations <- c("NPS Inventory and Monitory Division<br>
-1201 Oakridge Dr, Suite 150<br>
-Fort Collins, Colorado",
-    "Managed Business Solutions (MBS), a Sealaska Company<br>
-Contractor to the National Park Service<br>
-Natural Resource Stewardship and Science Directorate<br>
-1201 Oakridge Dr, Suite 150<br>
-Fort Collins, Colorado")
-
-# List the ORCID iDs for each author in the format
-# 'xxxx-xxxx-xxxx-xxxx'. If an author does not have an
-# ORCID iD, specify NA (no quotes). For more information on
-# ORCID iDs and to register an ORCID iD, see
-# https://www.orcid.org. The order of the ORCID iDs must
-# match the order of authors in AuthorNames.In this
-# example, Jane Doe has an ORCID iD but John Doe does not.
-authorORCID <- c("0000-1111-2222-3333", NA)
-
-DRRabstract <- "Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
-
-The abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
-
-# DataStore reference ID for the data package associated
-# with this report. You must have at least one data
-# package.Eventually, we will automate importing much of
-# this information from metadata.
-dataPackageRefID <- c(12342567)
-
-# Must match title in DataStore and metadata
-dataPackageTitle <- "Data Package Title"
-
-# Must match descriptions in the data package metadata
-dataPackageDescription <- "Short title for data package1"
-
-# generates your data package DOI based on the data package
-# DataStore reference ID. This is different from the DRR
-# DOI! No need to edit this.
-dataPackageDOI <- paste0("https://doi.org/10.57830/", dataPackageRefID)
-
-# list the file names in your data package. Do NOT include
-# metadata files.
-dataPackage_fileNames <- c("my_data.csv", "my_data2.csv")
-
-# list the approximate size of each data file. Make sure
-# the order corresponds to the order of of the file names
-# in dataPackage_fileNames
-dataPackage_fileSizes <- c("0.8 MB", "10 GB")
-
-# list a short, one-line description of each data file.
-# Descriptions must be in the same order as the filenames.
-dataPackage_fileDescript <- c("This is a short description of my_data.csv (a good guideline is 10 words or less).",
-    "This is a short description of my_data2.csv.")
-
-# Write parameters to file for consistent reuse across
-# report and data packages
-save(title, reportNumber, DRR_DSRefID, authorNames, authorAffiliations,
-    authorORCID, DRRabstract, dataPackageRefID, dataPackageTitle,
-    dataPackageDescription, dataPackageDOI, dataPackage_fileNames,
-    dataPackage_fileSizes, dataPackage_fileDescript, file = here::here("output",
-        "temp", "reportParameters.Rdata"))
-
-# This setup code loads both reproducible reporting
-# packages (delete those not needed) and packages for the
-# actual project.  Note that it also generates the start of
-# a BibTex literature cited including the citations for R
-# and all used packages reproducible reporting packages
-RRpackages <- c("markdown", "rmarkdown", "pander", "knitr", "fontawesome",
-    "dataMaid", "R.rsp", "kimisc", "papeR", "rmdHelpers", "yaml",
-    "rmdformats", "htmltools", "bibtex", "RefManageR", "knitcitations")
-
-inst <- RRpackages %in% installed.packages()
-if (length(RRpackages[!inst]) > 0) {
-    install.packages(RRpackages[!inst], dep = TRUE, repos = "https://cloud.r-project.org")
-}
-lapply(RRpackages, library, character.only = TRUE)
-
-# __________________________________ Now repeat for
-# packages used in the analyses
-pkgList <- c("devtools", "RODBC", "EML", "flextable", "english",
-    "remotes", "dplyr", "ggplot2", "plotly")
-
-inst <- pkgList %in% installed.packages()
-if (length(pkgList[!inst]) > 0) {
-    install.packages(pkgList[!inst], dep = TRUE, repos = "https://cloud.r-project.org")
-}
-
-lapply(pkgList, library, character.only = TRUE, quietly = TRUE)
-
-if (!"EMLassemblyline" %in% installed.packages()) remotes::install_github("EDIorg/EMLassemblyline")
-require("EMLassemblyline")
-
-# create stub of citations for packages
-pkgBibTex <- lapply(c("base", pkgList, RRpackages), citation)
-
-knitr::opts_chunk$set(echo = TRUE, fig.path = here::here("output",
-    "temp", "common"), message = TRUE, warning = TRUE, comment = " ",
-    dev = "svg", out.width = "100%", tidy = TRUE, tidy.opts = list(width.cutoff = 60))
-# if ggplot, update theme to default to centered titles
-if ("ggplot2" %in% .packages()) {
-    theme_update(plot.title = element_text(hjust = 0.5))
-}
-
-
-## General Utility Functions
-
-source(here::here("output", "temp", "common", "SharedFunctions.R"))
-
-# Set up table template
-NPS_theme <- function(x, ...) {
-    x <- colformat_double(x, big.mark = ",", decimal.mark = ".",
-        digits = 1)
-    x <- colformat_int(x, big.mark = ",")
-    x <- colformat_date(x, fmt_date = "%Y-%m-%d")
-    x <- set_table_properties(x, layout = "fixed")
-    x <- border_remove(x)
-    std_border <- fp_border_default(width = 1, color = "black")
-    x <- hline_bottom(x, part = "body")
-    x <- hline_bottom(x, part = "header")
-    x <- hline_top(x, part = "header")
-    x <- bold(x, bold = TRUE, part = "header")
-    x <- set_table_properties(x, width = 0, layout = "autofit")
-    x <- align_nottext_col(x, align = "right", header = TRUE,
-        footer = TRUE)
-    x <- align_text_col(x, align = "left", header = TRUE, footer = TRUE)
-    x <- valign(x, valign = "bottom", part = "header")
-    x <- valign(x, valign = "top", part = "body")
-}
-
-set_flextable_defaults(font.family = "Arial", font.size = 9,
-    font.color = "black", theme_fun = NPS_theme, )
-date <- format(Sys.time(), "%d %B, %Y")
-cat("#", title, "\n")
-if (!is.null(reportNumber)) {
-    subtitle <- paste0("Data Release Report ", reportNumber)
-    cat("###", subtitle)
-}
-contact <- data.frame(authorNames, authorAffiliations, authorORCID)
-
-for (i in 1:(length(authorNames)/2)) {
-    curr <- contact[i, ]
-    cat("####", curr$authorNames, " ")
-    if (is.na(curr$authorORCID)) {
-        cat("\n")
-    }
-    if (!is.na(curr$authorORCID)) {
-        # Consider re-write to use the actual downloaded
-        # icon and not fontawesome.For some reason fill
-        # isn't rendering in chrome (but does in edge).
-        # Maybe move fill to CSS?
-        orc <- fontawesome::fa("orcid", fill = "#A6CE39")
-        orc <- gsub(";\">", ";\"> <xmlns:xlink=\"http://www.w3.org/1999/xlink\"><a xlink:href= \"dummyhtml\">",
-            orc)
-        orc <- gsub("dummyhtml", paste0("https://orcid.org/",
-            curr$authorORCID), orc)
-        orc <- gsub("</svg>", "</a></svg>", orc)
-        cat({
-            {
-                orc
-            }
-        })
-    }
-    cat("\n")
-    cat(curr$authorAffiliations, "\n\n")
-}
-for (i in ((length(authorNames)/2) + 1):(length(authorNames))) {
-    curr <- contact[i, ]
-    cat("####", curr$authorNames, " ")
-    if (is.na(curr$authorORCID)) {
-        cat("\n")
-    }
-    if (!is.na(curr$authorORCID)) {
-        # Consider re-write to use the actual downloaded
-        # icon and not fontawesome.For some reason fill
-        # isn't rendering in chrome (but does in edge).
-        # Maybe move fill to CSS?
-        orc <- fontawesome::fa("orcid", fill = "#A6CE39")
-        orc <- gsub(";\">", ";\"> <xmlns:xlink=\"http://www.w3.org/1999/xlink\"><a xlink:href= \"dummyhtml\">",
-            orc)
-        orc <- gsub("dummyhtml", paste0("https://orcid.org/",
-            curr$authorORCID), orc)
-        orc <- gsub("</svg>", "</a></svg>", orc)
-        cat({
-            {
-                orc
-            }
-        })
-    }
-    cat("\n")
-    cat(curr$authorAffiliations, "\n\n")
-}
-# Load datasets for use (example commented out below)
-# nccnbirds::LoadLandbirds(here::here('data', 'final'),
-# cache = FALSE)
-filelist <- data.frame(dataPackage_fileNames, dataPackage_fileSizes,
-    dataPackage_fileDescript)
-
-knitr::kable(filelist, caption = paste0("**", dataPackageTitle,
-    ": List of data files**"), col.names = c("File Name", "Size",
-    "Description"), format = "pandoc")
-# formatting template:
-template <- "**%s -** %s - %s
-
-"
-# made dataframe describing datapackage contents:
-filelist <- data.frame(dataPackage_fileNames, dataPackage_fileSizes,
-    dataPackage_fileDescript)
-
-# add data file info to the template & write to html:
-for (i in seq_along(dataPackage_fileNames)) {
-    curr <- filelist[i, ]
-    cat(sprintf(template, curr$dataPackage_fileNames, curr$dataPackage_fileSizes,
-        curr$dataPackage_fileDescript))
-}
-flags <- c("A", "AE", "R")
-def <- c("Accepted", "Accepted, estimated", "Rejected")
-app <- rep("columns endining \"_flag\"", 3)
-data_flags <- data.frame(flags, def, app)
-
-knitr::kable(data_flags, caption = "**Description of data quality flags**",
-    col.names = c("Flag", "Definition", "Useage"), format = "pandoc")
-include_graphics("output/temp/example_DRR/figures/ProcessingWorkflow.png")
-
-sessionInfo()
-Sys.time()
-T1Subjects <- c("Mouse1", "Mouse2", "Mousen")
-T1Protocol1 <- c("Drug treatment", "Drug treatment", "Drug treatment")
-T1Protocol2 <- c("Liver dissection", "Liver dissection", "Liver dissection")
-T1Protocol3 <- c("RNA extraction", "RNA extraction", "RNA extraction")
-T1Protocol4 <- c("RNA-Seq", "RNA-Seq", "RNA-Seq")
-T1Data <- c("GEOXXXXX", "GEOXXXXX", "GEOXXXXX")
-Table1 <- data.frame(T1Subjects, T1Protocol1, T1Protocol2, T1Protocol3,
-    T1Protocol4, T1Data)
-
-T1 <- flextable(Table1)
-T1 <- set_caption(T1, "Experimental study example Data Records table. [Table created using the flextable package.]")
-T1 <- set_header_labels(T1, T1Subjects = "Subjects", T1Protocol1 = "Protocol 1",
-    T1Protocol2 = "Protocol 2", T1Protocol3 = "Protocol 3", T1Protocol4 = "Protocol 4",
-    T1Data = "Data")
-autofit(T1)
-Source <- c("CellCulture1", "CellCulture1", "CellCulture1", "CellCulture1",
-    "CellCulture1", "CellCulture1")
-Protocol1 <- c("Drug treatment", "Drug treatment", "Drug treatment",
-    "Drug treatment", "Drug treatment", "Drug treatment")
-Protocol2 <- c("RNA extraction", "RNA extraction", "RNA extraction",
-    "RNA extraction", "RNA extraction", "RNA extraction")
-Samples <- c("TechnicalRep1a", "TechnicalRep2a", "TechnicalRep3a",
-    "TechnicalRep1b", "TechnicalRep2b", "TechnicalRep3b")
-Protocol3 <- c("Microarray hybridization", "Microarray hybridization",
-    "Microarray hybridization", "Microarray hybridization", "Microarray hybridization",
-    "Microarray hybridization")
-Data <- c("GEOXXXXX", "GEOXXXXX", "GEOXXXXX", "GEOXXXXX", "GEOXXXXX",
-    "GEOXXXXX")
-Table <- data.frame(Source, Protocol1, Protocol2, Samples, Protocol3,
-    Data)
-
-T1 <- flextable(Table)
-T1 <- set_caption(T1, "Experimental study with replicates Data Records table. [Table created using the flextable package.]")
-T1 <- set_header_labels(T1, Source = "Subjects", Protocol1 = "Protocol 1",
-    Protocol2 = "Protocol 2", Samples = "Samples", Protocol3 = "Protocol 3",
-    data = "Data")
-autofit(T1)
-Sample <- c("Body of water 1", "Body of water 2", "Body of water n")
-geoloc <- c("location name", "location name", "location name")
-geopos <- c("latitude, longitude, altitude", "latitude, longitude, altitude",
-    "latitude, longitude, altitude")
-protocol <- c("Measurement of surface temperature", "Measurement of surface temperature",
-    "Measurement of surface temperature")
-data <- c("dataFile1", "dataFile2", "dataFile3")
-Table <- data.frame(Sample, geoloc, geopos, protocol, data)
-
-T1 <- flextable(Table)
-T1 <- set_caption(T1, "Observational study example Data Records table. [Table created using the flextable package.]")
-T1 <- set_header_labels(T1, Sample = "Sample", geoloc = "Geographical Location",
-    geopos = "Geoposition", protocol = "Protocol", data = "Data")
-autofit(T1)
-c1 <- c("Database URL 1", "Database URL 1", "Database URL 2")
-c2 <- c("Dataset 1", "Dataset 2", "Dataset n")
-c3 <- c("Number of samples in the dataset", "Number of samples in the dataset",
-    "Number of samples in the dataset")
-c4 <- c("Range of measurements reported in the dataset", "Range of measurements reported in the dataset",
-    "Range of measurements reported in the dataset")
-c5 <- c("Data assimilation procedure", "Data assimilation procedure",
-    "Data assimilation procedure")
-c6 <- c("Method to generate output data", "Method to generate output data",
-    "Method to generate output data")
-c7 <- c("dataFile1", "dataFile1", "dataFile2")
-Table <- data.frame(c1, c2, c3, c4, c5, c6, c7)
-
-T1 <- flextable(Table)
-T1 <- set_caption(T1, "Observational study example Data Records table. [Table created using the flextable package.]")
-T1 <- set_header_labels(T1, c1 = "Source", c2 = "Sample", c3 = "Sample Number",
-    c4 = "Temporal Range", c5 = "Protocol 1", c6 = "Protocol 2",
-    c7 = "Data")
-autofit(T1)
-```
 
 \pagebreak
 
 # Appendix B. Session and Version Information
+In most cases you do not need to report session info (leave the "session-info" code chunk parameters in their default state: eval=FALSE). Session and version information is only necessary if you have set the "Listing" code chunk to eval=TRUE in appendix A. In that case, change set "session-info" code chunk to eval=TRUE. 
 
 
-```
-  R version 4.2.0 (2022-04-22 ucrt)
-  Platform: x86_64-w64-mingw32/x64 (64-bit)
-  Running under: Windows 10 x64 (build 19042)
-  
-  Matrix products: default
-  
-  locale:
-  [1] LC_COLLATE=English_United States.utf8 
-  [2] LC_CTYPE=English_United States.utf8   
-  [3] LC_MONETARY=English_United States.utf8
-  [4] LC_NUMERIC=C                          
-  [5] LC_TIME=English_United States.utf8    
-  
-  attached base packages:
-  [1] stats     graphics  grDevices utils     datasets  methods   base     
-  
-  other attached packages:
-   [1] EMLassemblyline_3.5.4 plotly_4.10.0         ggplot2_3.3.6        
-   [4] remotes_2.4.2         english_1.2-6         flextable_0.7.3      
-   [7] EML_2.0.6.1           RODBC_1.3-19          devtools_2.4.4       
-  [10] usethis_2.1.6         knitcitations_1.0.12  RefManageR_1.3.0     
-  [13] bibtex_0.4.2.3        htmltools_0.5.3       rmdformats_1.0.4     
-  [16] yaml_2.3.5            rmdHelpers_1.2        dplyr_1.0.9          
-  [19] papeR_1.0-5           xtable_1.8-4          car_3.1-0            
-  [22] carData_3.0-5         kimisc_0.4            R.rsp_0.45.0         
-  [25] dataMaid_1.4.1        fontawesome_0.3.0     knitr_1.39           
-  [28] pander_0.6.5          rmarkdown_2.15        markdown_1.1         
-  
-  loaded via a namespace (and not attached):
-   [1] colorspace_2.0-3  ellipsis_0.3.2    rprojroot_2.0.3   base64enc_0.1-3  
-   [5] fs_1.5.2          rstudioapi_0.13   fansi_1.0.3       lubridate_1.8.0  
-   [9] xml2_1.3.3        R.methodsS3_1.8.2 cachem_1.0.6      robustbase_0.95-0
-  [13] pkgload_1.3.0     jsonlite_1.8.0    R.oo_1.25.0       shiny_1.7.2      
-  [17] compiler_4.2.0    httr_1.4.3        fastmap_1.1.0     lazyeval_0.2.2   
-  [21] cli_3.3.0         formatR_1.12      later_1.3.0       prettyunits_1.1.1
-  [25] tools_4.2.0       gtable_0.3.0      glue_1.6.2        gmodels_2.18.1.1 
-  [29] V8_4.2.0          Rcpp_1.0.9        jquerylib_0.1.4   vctrs_0.4.1      
-  [33] gdata_2.18.0.1    xfun_0.31         stringr_1.4.1     ps_1.7.1         
-  [37] mime_0.12         miniUI_0.1.1.1    lifecycle_1.0.1   gtools_3.9.3     
-  [41] jqr_1.2.3         DEoptimR_1.0-11   MASS_7.3-56       scales_1.2.0     
-  [45] jsonld_2.2        hms_1.1.1         promises_1.2.0.1  curl_4.3.2       
-  [49] memoise_2.0.1     gridExtra_2.3     gdtools_0.2.4     sass_0.4.2       
-  [53] stringi_1.7.8     highr_0.9         emld_0.5.1        zip_2.2.0        
-  [57] pkgbuild_1.3.1    systemfonts_1.0.4 rlang_1.0.4       pkgconfig_2.0.3  
-  [61] evaluate_0.16     purrr_0.3.4       htmlwidgets_1.5.4 processx_3.7.0   
-  [65] tidyselect_1.1.2  here_1.0.1        plyr_1.8.7        magrittr_2.0.3   
-  [69] bookdown_0.28     R6_2.5.1          generics_0.1.3    profvis_0.3.7    
-  [73] withr_2.5.0       pillar_1.8.1      haven_2.5.0       abind_1.4-5      
-  [77] tibble_3.1.7      crayon_1.5.1      uuid_1.1-0        utf8_1.2.2       
-  [81] officer_0.4.3     urlchecker_1.0.1  grid_4.2.0        data.table_1.14.2
-  [85] callr_3.7.1       forcats_0.5.1     digest_0.6.29     R.cache_0.16.0   
-  [89] tidyr_1.2.0       httpuv_1.6.5      R.utils_2.12.0    munsell_0.5.0    
-  [93] viridisLite_0.4.0 bslib_0.4.0       sessioninfo_1.2.2
-```
-
-```
-  [1] "2022-08-31 10:28:24 MDT"
-```
 
 # Additional Notes For Authors (this should not be included in reports...)
 
@@ -682,7 +301,7 @@ Authors may provide tables within text near the initial citation or as an append
 Here, we provide four generic 'Table 1' examples, including two experimental study examples, one observational study example, and an example for an aggregated dataset of the type that may result from a meta-analysis.
 
 ```{=html}
-<template id="d162f0af-8922-4c3f-948c-8bf906c3f511"><style>
+<template id="e69a8c04-89bf-479c-9c3b-0ffec4dc4089"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -719,7 +338,7 @@ background-color: transparent;
 .katex-display {
     margin: 0 0 !important;
 }
-</style><div class="tabwid"><style>.cl-f0cf5664{}.cl-f06b2f9a{font-family:'Arial';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f06b2fcc{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f06ba998{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f06ba9b6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f06cc986{width:70.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cc9d6{width:80.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cc9f4{width:82.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cc9fe{width:64.5pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cca08{width:81.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cca12{width:58pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cca26{width:70.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cca30{width:80.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cca3a{width:82.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cca44{width:64.5pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cca4e{width:81.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cca62{width:58pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cca6c{width:70.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cca76{width:82.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cca80{width:80.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cca8a{width:81.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cca94{width:64.5pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f06cca9e{width:58pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-f0cf5664'>
+</style><div class="tabwid"><style>.cl-a8954f0c{}.cl-a880e79c{font-family:'Arial';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a880e7a6{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a880febc{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a880fec6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a8813576{width:70.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8813580{width:80.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8813581{width:82.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a881358a{width:64.5pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a881358b{width:81.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a881358c{width:58pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8813594{width:70.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8813595{width:80.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a881359e{width:82.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a881359f{width:64.5pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a88135a0{width:81.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a88135a8{width:58pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a88135a9{width:70.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a88135b2{width:82.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a88135b3{width:80.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a88135b4{width:81.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a88135b5{width:64.5pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a88135b6{width:58pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-a8954f0c'>
 ```
 <caption class="Table Caption">
 
@@ -727,11 +346,11 @@ background-color: transparent;
 
 </caption>
 ```{=html}
-<thead><tr style="overflow-wrap:break-word;"><td class="cl-f06cca9e"><p class="cl-f06ba998"><span class="cl-f06b2f9a">Subjects</span></p></td><td class="cl-f06cca80"><p class="cl-f06ba998"><span class="cl-f06b2f9a">Protocol 1</span></p></td><td class="cl-f06cca76"><p class="cl-f06ba998"><span class="cl-f06b2f9a">Protocol 2</span></p></td><td class="cl-f06cca8a"><p class="cl-f06ba998"><span class="cl-f06b2f9a">Protocol 3</span></p></td><td class="cl-f06cca94"><p class="cl-f06ba998"><span class="cl-f06b2f9a">Protocol 4</span></p></td><td class="cl-f06cca6c"><p class="cl-f06ba998"><span class="cl-f06b2f9a">Data</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-f06cca12"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">Mouse1</span></p></td><td class="cl-f06cc9d6"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">Drug treatment</span></p></td><td class="cl-f06cc9f4"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">Liver dissection</span></p></td><td class="cl-f06cca08"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">RNA extraction</span></p></td><td class="cl-f06cc9fe"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">RNA-Seq</span></p></td><td class="cl-f06cc986"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f06cca12"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">Mouse2</span></p></td><td class="cl-f06cc9d6"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">Drug treatment</span></p></td><td class="cl-f06cc9f4"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">Liver dissection</span></p></td><td class="cl-f06cca08"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">RNA extraction</span></p></td><td class="cl-f06cc9fe"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">RNA-Seq</span></p></td><td class="cl-f06cc986"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f06cca62"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">Mousen</span></p></td><td class="cl-f06cca30"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">Drug treatment</span></p></td><td class="cl-f06cca3a"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">Liver dissection</span></p></td><td class="cl-f06cca4e"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">RNA extraction</span></p></td><td class="cl-f06cca44"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">RNA-Seq</span></p></td><td class="cl-f06cca26"><p class="cl-f06ba9b6"><span class="cl-f06b2fcc">GEOXXXXX</span></p></td></tr></tbody></table></div></template>
-<div class="flextable-shadow-host" id="e5831bf5-4aca-495a-88d0-a17405376903"></div>
+<thead><tr style="overflow-wrap:break-word;"><td class="cl-a88135b6"><p class="cl-a880febc"><span class="cl-a880e79c">Subjects</span></p></td><td class="cl-a88135b3"><p class="cl-a880febc"><span class="cl-a880e79c">Protocol 1</span></p></td><td class="cl-a88135b2"><p class="cl-a880febc"><span class="cl-a880e79c">Protocol 2</span></p></td><td class="cl-a88135b4"><p class="cl-a880febc"><span class="cl-a880e79c">Protocol 3</span></p></td><td class="cl-a88135b5"><p class="cl-a880febc"><span class="cl-a880e79c">Protocol 4</span></p></td><td class="cl-a88135a9"><p class="cl-a880febc"><span class="cl-a880e79c">Data</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-a881358c"><p class="cl-a880fec6"><span class="cl-a880e7a6">Mouse1</span></p></td><td class="cl-a8813580"><p class="cl-a880fec6"><span class="cl-a880e7a6">Drug treatment</span></p></td><td class="cl-a8813581"><p class="cl-a880fec6"><span class="cl-a880e7a6">Liver dissection</span></p></td><td class="cl-a881358b"><p class="cl-a880fec6"><span class="cl-a880e7a6">RNA extraction</span></p></td><td class="cl-a881358a"><p class="cl-a880fec6"><span class="cl-a880e7a6">RNA-Seq</span></p></td><td class="cl-a8813576"><p class="cl-a880fec6"><span class="cl-a880e7a6">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a881358c"><p class="cl-a880fec6"><span class="cl-a880e7a6">Mouse2</span></p></td><td class="cl-a8813580"><p class="cl-a880fec6"><span class="cl-a880e7a6">Drug treatment</span></p></td><td class="cl-a8813581"><p class="cl-a880fec6"><span class="cl-a880e7a6">Liver dissection</span></p></td><td class="cl-a881358b"><p class="cl-a880fec6"><span class="cl-a880e7a6">RNA extraction</span></p></td><td class="cl-a881358a"><p class="cl-a880fec6"><span class="cl-a880e7a6">RNA-Seq</span></p></td><td class="cl-a8813576"><p class="cl-a880fec6"><span class="cl-a880e7a6">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a88135a8"><p class="cl-a880fec6"><span class="cl-a880e7a6">Mousen</span></p></td><td class="cl-a8813595"><p class="cl-a880fec6"><span class="cl-a880e7a6">Drug treatment</span></p></td><td class="cl-a881359e"><p class="cl-a880fec6"><span class="cl-a880e7a6">Liver dissection</span></p></td><td class="cl-a88135a0"><p class="cl-a880fec6"><span class="cl-a880e7a6">RNA extraction</span></p></td><td class="cl-a881359f"><p class="cl-a880fec6"><span class="cl-a880e7a6">RNA-Seq</span></p></td><td class="cl-a8813594"><p class="cl-a880fec6"><span class="cl-a880e7a6">GEOXXXXX</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="2df917e4-3d58-4e8b-9dc7-a2de240dfffd"></div>
 <script>
-var dest = document.getElementById("e5831bf5-4aca-495a-88d0-a17405376903");
-var template = document.getElementById("d162f0af-8922-4c3f-948c-8bf906c3f511");
+var dest = document.getElementById("2df917e4-3d58-4e8b-9dc7-a2de240dfffd");
+var template = document.getElementById("e69a8c04-89bf-479c-9c3b-0ffec4dc4089");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -747,7 +366,7 @@ fantome.appendChild(templateContent);
 ```
 
 ```{=html}
-<template id="00303c5a-ee33-4e02-bfe2-383478d31f5e"><style>
+<template id="4c155e14-5512-4850-b111-05bf2e72f0bf"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -784,7 +403,7 @@ background-color: transparent;
 .katex-display {
     margin: 0 0 !important;
 }
-</style><div class="tabwid"><style>.cl-f17bb436{}.cl-f15123ec{font-family:'Arial';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f151240a{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f15188fa{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f1518936{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f152a0aa{width:85.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a0d2{width:80.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a0f0{width:116.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a104{width:70.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a122{width:70.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a12c{width:81.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a136{width:85.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a14a{width:70.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a15e{width:80.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a168{width:116.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a169{width:70.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a172{width:81.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a186{width:80.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a190{width:85.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a19a{width:81.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a1ae{width:70.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a1b8{width:70.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f152a1cc{width:116.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-f17bb436'>
+</style><div class="tabwid"><style>.cl-a8b8916a{}.cl-a8af25b2{font-family:'Arial';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a8af25bc{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a8af3ab6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a8af3ac0{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a8af768e{width:85.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af7698{width:80.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af7699{width:116.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76a2{width:70.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76a3{width:70.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76ac{width:81.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76ad{width:85.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76b6{width:70.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76b7{width:80.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76b8{width:116.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76b9{width:70.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76c0{width:81.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76c1{width:80.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76ca{width:85.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76cb{width:81.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76cc{width:70.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76cd{width:70.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8af76d4{width:116.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-a8b8916a'>
 ```
 <caption class="Table Caption">
 
@@ -792,11 +411,11 @@ background-color: transparent;
 
 </caption>
 ```{=html}
-<thead><tr style="overflow-wrap:break-word;"><td class="cl-f152a1b8"><p class="cl-f15188fa"><span class="cl-f15123ec">Subjects</span></p></td><td class="cl-f152a186"><p class="cl-f15188fa"><span class="cl-f15123ec">Protocol 1</span></p></td><td class="cl-f152a19a"><p class="cl-f15188fa"><span class="cl-f15123ec">Protocol 2</span></p></td><td class="cl-f152a190"><p class="cl-f15188fa"><span class="cl-f15123ec">Samples</span></p></td><td class="cl-f152a1cc"><p class="cl-f15188fa"><span class="cl-f15123ec">Protocol 3</span></p></td><td class="cl-f152a1ae"><p class="cl-f15188fa"><span class="cl-f15123ec">Data</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-f152a104"><p class="cl-f1518936"><span class="cl-f151240a">CellCulture1</span></p></td><td class="cl-f152a0d2"><p class="cl-f1518936"><span class="cl-f151240a">Drug treatment</span></p></td><td class="cl-f152a12c"><p class="cl-f1518936"><span class="cl-f151240a">RNA extraction</span></p></td><td class="cl-f152a0aa"><p class="cl-f1518936"><span class="cl-f151240a">TechnicalRep1a</span></p></td><td class="cl-f152a0f0"><p class="cl-f1518936"><span class="cl-f151240a">Microarray hybridization</span></p></td><td class="cl-f152a122"><p class="cl-f1518936"><span class="cl-f151240a">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f152a104"><p class="cl-f1518936"><span class="cl-f151240a">CellCulture1</span></p></td><td class="cl-f152a0d2"><p class="cl-f1518936"><span class="cl-f151240a">Drug treatment</span></p></td><td class="cl-f152a12c"><p class="cl-f1518936"><span class="cl-f151240a">RNA extraction</span></p></td><td class="cl-f152a0aa"><p class="cl-f1518936"><span class="cl-f151240a">TechnicalRep2a</span></p></td><td class="cl-f152a0f0"><p class="cl-f1518936"><span class="cl-f151240a">Microarray hybridization</span></p></td><td class="cl-f152a122"><p class="cl-f1518936"><span class="cl-f151240a">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f152a104"><p class="cl-f1518936"><span class="cl-f151240a">CellCulture1</span></p></td><td class="cl-f152a0d2"><p class="cl-f1518936"><span class="cl-f151240a">Drug treatment</span></p></td><td class="cl-f152a12c"><p class="cl-f1518936"><span class="cl-f151240a">RNA extraction</span></p></td><td class="cl-f152a0aa"><p class="cl-f1518936"><span class="cl-f151240a">TechnicalRep3a</span></p></td><td class="cl-f152a0f0"><p class="cl-f1518936"><span class="cl-f151240a">Microarray hybridization</span></p></td><td class="cl-f152a122"><p class="cl-f1518936"><span class="cl-f151240a">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f152a104"><p class="cl-f1518936"><span class="cl-f151240a">CellCulture1</span></p></td><td class="cl-f152a0d2"><p class="cl-f1518936"><span class="cl-f151240a">Drug treatment</span></p></td><td class="cl-f152a12c"><p class="cl-f1518936"><span class="cl-f151240a">RNA extraction</span></p></td><td class="cl-f152a0aa"><p class="cl-f1518936"><span class="cl-f151240a">TechnicalRep1b</span></p></td><td class="cl-f152a0f0"><p class="cl-f1518936"><span class="cl-f151240a">Microarray hybridization</span></p></td><td class="cl-f152a122"><p class="cl-f1518936"><span class="cl-f151240a">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f152a104"><p class="cl-f1518936"><span class="cl-f151240a">CellCulture1</span></p></td><td class="cl-f152a0d2"><p class="cl-f1518936"><span class="cl-f151240a">Drug treatment</span></p></td><td class="cl-f152a12c"><p class="cl-f1518936"><span class="cl-f151240a">RNA extraction</span></p></td><td class="cl-f152a0aa"><p class="cl-f1518936"><span class="cl-f151240a">TechnicalRep2b</span></p></td><td class="cl-f152a0f0"><p class="cl-f1518936"><span class="cl-f151240a">Microarray hybridization</span></p></td><td class="cl-f152a122"><p class="cl-f1518936"><span class="cl-f151240a">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f152a169"><p class="cl-f1518936"><span class="cl-f151240a">CellCulture1</span></p></td><td class="cl-f152a15e"><p class="cl-f1518936"><span class="cl-f151240a">Drug treatment</span></p></td><td class="cl-f152a172"><p class="cl-f1518936"><span class="cl-f151240a">RNA extraction</span></p></td><td class="cl-f152a136"><p class="cl-f1518936"><span class="cl-f151240a">TechnicalRep3b</span></p></td><td class="cl-f152a168"><p class="cl-f1518936"><span class="cl-f151240a">Microarray hybridization</span></p></td><td class="cl-f152a14a"><p class="cl-f1518936"><span class="cl-f151240a">GEOXXXXX</span></p></td></tr></tbody></table></div></template>
-<div class="flextable-shadow-host" id="2799a790-1cb9-47f2-ac87-6b24967c079f"></div>
+<thead><tr style="overflow-wrap:break-word;"><td class="cl-a8af76cd"><p class="cl-a8af3ab6"><span class="cl-a8af25b2">Subjects</span></p></td><td class="cl-a8af76c1"><p class="cl-a8af3ab6"><span class="cl-a8af25b2">Protocol 1</span></p></td><td class="cl-a8af76cb"><p class="cl-a8af3ab6"><span class="cl-a8af25b2">Protocol 2</span></p></td><td class="cl-a8af76ca"><p class="cl-a8af3ab6"><span class="cl-a8af25b2">Samples</span></p></td><td class="cl-a8af76d4"><p class="cl-a8af3ab6"><span class="cl-a8af25b2">Protocol 3</span></p></td><td class="cl-a8af76cc"><p class="cl-a8af3ab6"><span class="cl-a8af25b2">Data</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-a8af76a2"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">CellCulture1</span></p></td><td class="cl-a8af7698"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">Drug treatment</span></p></td><td class="cl-a8af76ac"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">RNA extraction</span></p></td><td class="cl-a8af768e"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">TechnicalRep1a</span></p></td><td class="cl-a8af7699"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">Microarray hybridization</span></p></td><td class="cl-a8af76a3"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a8af76a2"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">CellCulture1</span></p></td><td class="cl-a8af7698"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">Drug treatment</span></p></td><td class="cl-a8af76ac"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">RNA extraction</span></p></td><td class="cl-a8af768e"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">TechnicalRep2a</span></p></td><td class="cl-a8af7699"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">Microarray hybridization</span></p></td><td class="cl-a8af76a3"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a8af76a2"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">CellCulture1</span></p></td><td class="cl-a8af7698"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">Drug treatment</span></p></td><td class="cl-a8af76ac"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">RNA extraction</span></p></td><td class="cl-a8af768e"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">TechnicalRep3a</span></p></td><td class="cl-a8af7699"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">Microarray hybridization</span></p></td><td class="cl-a8af76a3"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a8af76a2"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">CellCulture1</span></p></td><td class="cl-a8af7698"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">Drug treatment</span></p></td><td class="cl-a8af76ac"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">RNA extraction</span></p></td><td class="cl-a8af768e"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">TechnicalRep1b</span></p></td><td class="cl-a8af7699"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">Microarray hybridization</span></p></td><td class="cl-a8af76a3"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a8af76a2"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">CellCulture1</span></p></td><td class="cl-a8af7698"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">Drug treatment</span></p></td><td class="cl-a8af76ac"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">RNA extraction</span></p></td><td class="cl-a8af768e"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">TechnicalRep2b</span></p></td><td class="cl-a8af7699"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">Microarray hybridization</span></p></td><td class="cl-a8af76a3"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">GEOXXXXX</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a8af76b9"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">CellCulture1</span></p></td><td class="cl-a8af76b7"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">Drug treatment</span></p></td><td class="cl-a8af76c0"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">RNA extraction</span></p></td><td class="cl-a8af76ad"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">TechnicalRep3b</span></p></td><td class="cl-a8af76b8"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">Microarray hybridization</span></p></td><td class="cl-a8af76b6"><p class="cl-a8af3ac0"><span class="cl-a8af25bc">GEOXXXXX</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="2e1f96ca-594a-4b57-af46-bfa50f63a779"></div>
 <script>
-var dest = document.getElementById("2799a790-1cb9-47f2-ac87-6b24967c079f");
-var template = document.getElementById("00303c5a-ee33-4e02-bfe2-383478d31f5e");
+var dest = document.getElementById("2e1f96ca-594a-4b57-af46-bfa50f63a779");
+var template = document.getElementById("4c155e14-5512-4850-b111-05bf2e72f0bf");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -812,7 +431,7 @@ fantome.appendChild(templateContent);
 ```
 
 ```{=html}
-<template id="7819c25c-0ef3-4f88-a140-ebd8c655e95a"><style>
+<template id="13fad7b7-e8ca-4798-8b1e-6c79cb2613e9"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -849,7 +468,7 @@ background-color: transparent;
 .katex-display {
     margin: 0 0 !important;
 }
-</style><div class="tabwid"><style>.cl-f2216bc4{}.cl-f1f68ab2{font-family:'Arial';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f1f68af8{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f1f6f722{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f1f6f740{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f1f81120{width:57.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1f81148{width:118pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1f8115c{width:125.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1f81166{width:168.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1f81170{width:83.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1f8117a{width:57.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1f8118e{width:118pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1f811ac{width:125.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1f811b6{width:168.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1f811ca{width:83.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1f811d4{width:57.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1f811de{width:118pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1f811f2{width:125.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1f811fc{width:168.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f1f81210{width:83.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-f2216bc4'>
+</style><div class="tabwid"><style>.cl-a8d8d56a{}.cl-a8cf7f74{font-family:'Arial';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a8cf7f88{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a8cf9766{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a8cf9770{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a8cfcba0{width:57.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8cfcba1{width:118pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8cfcbaa{width:125.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8cfcbab{width:168.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8cfcbac{width:83.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8cfcbb4{width:57.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8cfcbb5{width:118pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8cfcbbe{width:125.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8cfcbbf{width:168.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8cfcbc0{width:83.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8cfcbc8{width:57.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8cfcbc9{width:118pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8cfcbca{width:125.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8cfcbd2{width:168.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8cfcbd3{width:83.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-a8d8d56a'>
 ```
 <caption class="Table Caption">
 
@@ -857,11 +476,11 @@ background-color: transparent;
 
 </caption>
 ```{=html}
-<thead><tr style="overflow-wrap:break-word;"><td class="cl-f1f81210"><p class="cl-f1f6f722"><span class="cl-f1f68ab2">Sample</span></p></td><td class="cl-f1f811de"><p class="cl-f1f6f722"><span class="cl-f1f68ab2">Geographical Location</span></p></td><td class="cl-f1f811f2"><p class="cl-f1f6f722"><span class="cl-f1f68ab2">Geoposition</span></p></td><td class="cl-f1f811fc"><p class="cl-f1f6f722"><span class="cl-f1f68ab2">Protocol</span></p></td><td class="cl-f1f811d4"><p class="cl-f1f6f722"><span class="cl-f1f68ab2">Data</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-f1f81170"><p class="cl-f1f6f740"><span class="cl-f1f68af8">Body of water 1</span></p></td><td class="cl-f1f81148"><p class="cl-f1f6f740"><span class="cl-f1f68af8">location name</span></p></td><td class="cl-f1f8115c"><p class="cl-f1f6f740"><span class="cl-f1f68af8">latitude, longitude, altitude</span></p></td><td class="cl-f1f81166"><p class="cl-f1f6f740"><span class="cl-f1f68af8">Measurement of surface temperature</span></p></td><td class="cl-f1f81120"><p class="cl-f1f6f740"><span class="cl-f1f68af8">dataFile1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f1f81170"><p class="cl-f1f6f740"><span class="cl-f1f68af8">Body of water 2</span></p></td><td class="cl-f1f81148"><p class="cl-f1f6f740"><span class="cl-f1f68af8">location name</span></p></td><td class="cl-f1f8115c"><p class="cl-f1f6f740"><span class="cl-f1f68af8">latitude, longitude, altitude</span></p></td><td class="cl-f1f81166"><p class="cl-f1f6f740"><span class="cl-f1f68af8">Measurement of surface temperature</span></p></td><td class="cl-f1f81120"><p class="cl-f1f6f740"><span class="cl-f1f68af8">dataFile2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f1f811ca"><p class="cl-f1f6f740"><span class="cl-f1f68af8">Body of water n</span></p></td><td class="cl-f1f8118e"><p class="cl-f1f6f740"><span class="cl-f1f68af8">location name</span></p></td><td class="cl-f1f811ac"><p class="cl-f1f6f740"><span class="cl-f1f68af8">latitude, longitude, altitude</span></p></td><td class="cl-f1f811b6"><p class="cl-f1f6f740"><span class="cl-f1f68af8">Measurement of surface temperature</span></p></td><td class="cl-f1f8117a"><p class="cl-f1f6f740"><span class="cl-f1f68af8">dataFile3</span></p></td></tr></tbody></table></div></template>
-<div class="flextable-shadow-host" id="8c1b268a-d2d3-4eb8-ab53-c9988840fcd8"></div>
+<thead><tr style="overflow-wrap:break-word;"><td class="cl-a8cfcbd3"><p class="cl-a8cf9766"><span class="cl-a8cf7f74">Sample</span></p></td><td class="cl-a8cfcbc9"><p class="cl-a8cf9766"><span class="cl-a8cf7f74">Geographical Location</span></p></td><td class="cl-a8cfcbca"><p class="cl-a8cf9766"><span class="cl-a8cf7f74">Geoposition</span></p></td><td class="cl-a8cfcbd2"><p class="cl-a8cf9766"><span class="cl-a8cf7f74">Protocol</span></p></td><td class="cl-a8cfcbc8"><p class="cl-a8cf9766"><span class="cl-a8cf7f74">Data</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-a8cfcbac"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">Body of water 1</span></p></td><td class="cl-a8cfcba1"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">location name</span></p></td><td class="cl-a8cfcbaa"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">latitude, longitude, altitude</span></p></td><td class="cl-a8cfcbab"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">Measurement of surface temperature</span></p></td><td class="cl-a8cfcba0"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">dataFile1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a8cfcbac"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">Body of water 2</span></p></td><td class="cl-a8cfcba1"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">location name</span></p></td><td class="cl-a8cfcbaa"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">latitude, longitude, altitude</span></p></td><td class="cl-a8cfcbab"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">Measurement of surface temperature</span></p></td><td class="cl-a8cfcba0"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">dataFile2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a8cfcbc0"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">Body of water n</span></p></td><td class="cl-a8cfcbb5"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">location name</span></p></td><td class="cl-a8cfcbbe"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">latitude, longitude, altitude</span></p></td><td class="cl-a8cfcbbf"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">Measurement of surface temperature</span></p></td><td class="cl-a8cfcbb4"><p class="cl-a8cf9770"><span class="cl-a8cf7f88">dataFile3</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="8e84ccdf-019e-490b-ab9b-0085b4b01034"></div>
 <script>
-var dest = document.getElementById("8c1b268a-d2d3-4eb8-ab53-c9988840fcd8");
-var template = document.getElementById("7819c25c-0ef3-4f88-a140-ebd8c655e95a");
+var dest = document.getElementById("8e84ccdf-019e-490b-ab9b-0085b4b01034");
+var template = document.getElementById("13fad7b7-e8ca-4798-8b1e-6c79cb2613e9");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -877,7 +496,7 @@ fantome.appendChild(templateContent);
 ```
 
 ```{=html}
-<template id="e3603ace-e71e-4284-aca2-8fd7a8a5b824"><style>
+<template id="728f396c-c766-4321-8631-b17830c99a76"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -914,7 +533,7 @@ background-color: transparent;
 .katex-display {
     margin: 0 0 !important;
 }
-</style><div class="tabwid"><style>.cl-f2d6af66{}.cl-f2ada0e4{font-family:'Arial';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f2ada102{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f2ae0e80{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f2ae0ea8{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f2af1690{width:59.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af16ae{width:155.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af16cc{width:87.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af16d6{width:146.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af16e0{width:57.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af16ea{width:211.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af16f4{width:132.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af16fe{width:155.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af1708{width:211.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af1712{width:87.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af1726{width:59.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af1727{width:57.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af173a{width:132.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af1744{width:146.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af174e{width:87.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af1758{width:59.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af1762{width:155.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af176c{width:211.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af1776{width:132.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af1780{width:146.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f2af1794{width:57.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-f2d6af66'>
+</style><div class="tabwid"><style>.cl-a8fd87f2{}.cl-a8f495de{font-family:'Arial';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a8f495e8{font-family:'Arial';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a8f4aa6a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a8f4aa74{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a8f4e1b0{width:59.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1ba{width:155.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1c4{width:87.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1c5{width:146.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1ce{width:57.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1cf{width:211.6pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1d0{width:132.1pt;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1d8{width:155.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1d9{width:211.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1e2{width:87.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1e3{width:59.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1e4{width:57.6pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1ec{width:132.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1ed{width:146.1pt;background-color:transparent;vertical-align: top;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1ee{width:87.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1f6{width:59.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e1f7{width:155.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e200{width:211.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e201{width:132.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e202{width:146.1pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a8f4e203{width:57.6pt;background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-a8fd87f2'>
 ```
 <caption class="Table Caption">
 
@@ -922,11 +541,11 @@ background-color: transparent;
 
 </caption>
 ```{=html}
-<thead><tr style="overflow-wrap:break-word;"><td class="cl-f2af174e"><p class="cl-f2ae0e80"><span class="cl-f2ada0e4">Source</span></p></td><td class="cl-f2af1758"><p class="cl-f2ae0e80"><span class="cl-f2ada0e4">Sample</span></p></td><td class="cl-f2af1762"><p class="cl-f2ae0e80"><span class="cl-f2ada0e4">Sample Number</span></p></td><td class="cl-f2af176c"><p class="cl-f2ae0e80"><span class="cl-f2ada0e4">Temporal Range</span></p></td><td class="cl-f2af1776"><p class="cl-f2ae0e80"><span class="cl-f2ada0e4">Protocol 1</span></p></td><td class="cl-f2af1780"><p class="cl-f2ae0e80"><span class="cl-f2ada0e4">Protocol 2</span></p></td><td class="cl-f2af1794"><p class="cl-f2ae0e80"><span class="cl-f2ada0e4">Data</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-f2af16cc"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Database URL 1</span></p></td><td class="cl-f2af1690"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Dataset 1</span></p></td><td class="cl-f2af16ae"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Number of samples in the dataset</span></p></td><td class="cl-f2af16ea"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Range of measurements reported in the dataset</span></p></td><td class="cl-f2af16f4"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Data assimilation procedure</span></p></td><td class="cl-f2af16d6"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Method to generate output data</span></p></td><td class="cl-f2af16e0"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">dataFile1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f2af16cc"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Database URL 1</span></p></td><td class="cl-f2af1690"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Dataset 2</span></p></td><td class="cl-f2af16ae"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Number of samples in the dataset</span></p></td><td class="cl-f2af16ea"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Range of measurements reported in the dataset</span></p></td><td class="cl-f2af16f4"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Data assimilation procedure</span></p></td><td class="cl-f2af16d6"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Method to generate output data</span></p></td><td class="cl-f2af16e0"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">dataFile1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f2af1712"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Database URL 2</span></p></td><td class="cl-f2af1726"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Dataset n</span></p></td><td class="cl-f2af16fe"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Number of samples in the dataset</span></p></td><td class="cl-f2af1708"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Range of measurements reported in the dataset</span></p></td><td class="cl-f2af173a"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Data assimilation procedure</span></p></td><td class="cl-f2af1744"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">Method to generate output data</span></p></td><td class="cl-f2af1727"><p class="cl-f2ae0ea8"><span class="cl-f2ada102">dataFile2</span></p></td></tr></tbody></table></div></template>
-<div class="flextable-shadow-host" id="e93f9ce1-b7cd-4351-bcad-5b486fb88c49"></div>
+<thead><tr style="overflow-wrap:break-word;"><td class="cl-a8f4e1ee"><p class="cl-a8f4aa6a"><span class="cl-a8f495de">Source</span></p></td><td class="cl-a8f4e1f6"><p class="cl-a8f4aa6a"><span class="cl-a8f495de">Sample</span></p></td><td class="cl-a8f4e1f7"><p class="cl-a8f4aa6a"><span class="cl-a8f495de">Sample Number</span></p></td><td class="cl-a8f4e200"><p class="cl-a8f4aa6a"><span class="cl-a8f495de">Temporal Range</span></p></td><td class="cl-a8f4e201"><p class="cl-a8f4aa6a"><span class="cl-a8f495de">Protocol 1</span></p></td><td class="cl-a8f4e202"><p class="cl-a8f4aa6a"><span class="cl-a8f495de">Protocol 2</span></p></td><td class="cl-a8f4e203"><p class="cl-a8f4aa6a"><span class="cl-a8f495de">Data</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-a8f4e1c4"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Database URL 1</span></p></td><td class="cl-a8f4e1b0"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Dataset 1</span></p></td><td class="cl-a8f4e1ba"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Number of samples in the dataset</span></p></td><td class="cl-a8f4e1cf"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Range of measurements reported in the dataset</span></p></td><td class="cl-a8f4e1d0"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Data assimilation procedure</span></p></td><td class="cl-a8f4e1c5"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Method to generate output data</span></p></td><td class="cl-a8f4e1ce"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">dataFile1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a8f4e1c4"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Database URL 1</span></p></td><td class="cl-a8f4e1b0"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Dataset 2</span></p></td><td class="cl-a8f4e1ba"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Number of samples in the dataset</span></p></td><td class="cl-a8f4e1cf"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Range of measurements reported in the dataset</span></p></td><td class="cl-a8f4e1d0"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Data assimilation procedure</span></p></td><td class="cl-a8f4e1c5"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Method to generate output data</span></p></td><td class="cl-a8f4e1ce"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">dataFile1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a8f4e1e2"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Database URL 2</span></p></td><td class="cl-a8f4e1e3"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Dataset n</span></p></td><td class="cl-a8f4e1d8"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Number of samples in the dataset</span></p></td><td class="cl-a8f4e1d9"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Range of measurements reported in the dataset</span></p></td><td class="cl-a8f4e1ec"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Data assimilation procedure</span></p></td><td class="cl-a8f4e1ed"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">Method to generate output data</span></p></td><td class="cl-a8f4e1e4"><p class="cl-a8f4aa74"><span class="cl-a8f495e8">dataFile2</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="4abb44ec-3fd4-4f9d-9a9b-285d8206d114"></div>
 <script>
-var dest = document.getElementById("e93f9ce1-b7cd-4351-bcad-5b486fb88c49");
-var template = document.getElementById("e3603ace-e71e-4284-aca2-8fd7a8a5b824");
+var dest = document.getElementById("4abb44ec-3fd4-4f9d-9a9b-285d8206d114");
+var template = document.getElementById("728f396c-c766-4321-8631-b17830c99a76");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
