@@ -1,0 +1,588 @@
+---
+# YAML header: do not edit
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+editor_options:
+  chunk_output_type: inline
+  markdown: 
+    wrap: 72
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+link-citations: True
+output:
+  bookdown::word_document2:
+    df_print: kable
+    fig_caption: True
+    fig_height: 5
+    fig_width: 5
+    highlight: haddock
+    number_sections: False
+  bookdown::html_document2:
+    df_print: kable
+    fig_caption: True
+    dev: svg
+    highlight: haddock
+    keep_md: True
+    smart: False
+    theme: journal
+    css: !expr here::here('output', 'temp', 'common', 'journalnps.min.css')
+    toc: True
+    toc_float: True
+    number_sections: False
+    includes:
+        before_body:
+          - !expr here::here('output', 'temp', 'common', 'header.html')
+        after_body: 
+          - !expr here::here('output', 'temp', 'common', 'footer.html')
+---
+
+```{r user_edited_parameterss, include=FALSE}
+# The title of your DRR. Should all DRR start with "Data Release Report:"? Should we enforce titles specifically referencing the data package(s) they the report is about?
+title <- "DRR Title"
+
+# Optional and should only be included if publishing to the semi-official DRR series. Contact Joe if you are. If not, leave as NULL
+reportNumber <- NULL
+# This should match the Data Store Reference ID for this DRR. Eventually we should be able to pull this directly from the data package metadata.
+DRR_DSRefID <- 7654321
+
+# Can eventually pull authors from data package metadata, but that assumes data package authors and DRR authors are the same so there will always need to be an option for manually entering author info.
+
+# list the authors.
+authorNames <- c(
+  "Jane Doe",
+  "John Doe"
+)
+
+# List author affiliations. The order of author affiliations must match the order of the authors in AuthorNames. Note that the entirety of each affiliation is enclosed in quotations. Line breaks are indicated with the tag <br>. Do not worry about indentation or word wrapping.
+authorAffiliations <- c(
+  "NPS Inventory and Monitory Division<br>
+1201 Oakridge Dr, Suite 150<br>
+Fort Collins, Colorado",
+  "Managed Business Solutions (MBS), a Sealaska Company<br>
+Contractor to the National Park Service<br>
+Natural Resource Stewardship and Science Directorate<br>
+1201 Oakridge Dr, Suite 150<br>
+Fort Collins, Colorado"
+)
+
+# List the ORCID iDs for each author in the format "xxxx-xxxx-xxxx-xxxx". If an author does not have an ORCID iD, specify NA (no quotes). For more information on ORCID iDs and to register an ORCID iD, see https://www.orcid.org. The order of the ORCID iDs must match the order of authors in AuthorNames.In this example, Jane Doe has an ORCID iD but John Doe does not.
+authorORCID <- c(
+  "0000-1111-2222-3333",
+  NA
+)
+
+DRRabstract <- "Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
+
+The abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
+
+# DataStore reference ID for the data package associated with this report. You must have at least one data package.Eventually, we will automate importing much of this information from metadata.
+dataPackageRefID <- c(12342567)
+
+# Must match title in DataStore and metadata
+dataPackageTitle <- "Data Package Title"
+
+# Must match descriptions in the data package metadata
+dataPackageDescription <- "Short title for data package1"
+
+# generates your data package DOI based on the data package DataStore reference ID. This is different from the DRR DOI! No need to edit this.
+dataPackageDOI <- paste0("https://doi.org/10.57830/", dataPackageRefID)
+
+# list the file names in your data package. Do NOT include metadata files.
+dataPackage_fileNames <- c(
+  "my_data.csv",
+  "my_data2.csv"
+)
+
+# list the approximate size of each data file. Make sure the order corresponds to the order of of the file names in dataPackage_fileNames
+dataPackage_fileSizes <- c("0.8 MB", "10 GB")
+
+# list a short, one-line description of each data file. Descriptions must be in the same order as the filenames.
+dataPackage_fileDescript <- c(
+  "This is a short description of my_data.csv (a good guideline is 10 words or less).",
+  "This is a short description of my_data2.csv."
+)
+
+# Write parameters to file for consistent reuse across report and data packages
+save(title, reportNumber, DRR_DSRefID, authorNames, authorAffiliations, authorORCID, DRRabstract, dataPackageRefID, dataPackageTitle, dataPackageDescription, dataPackageDOI, dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript, file = here::here("output", "temp", "reportParameters.Rdata"))
+```
+
+```{r setup, include=FALSE}
+
+# This setup code loads both reproducible reporting packages
+# (delete those not needed) and packages for the actual project.
+# Note that it also generates the start of a BibTex literature cited
+# including the citations for R and all used packages
+# reproducible reporting packages
+RRpackages <- c("markdown", "rmarkdown", "pander", "knitr", "fontawesome", "dataMaid", "R.rsp", "kimisc", "papeR", "rmdHelpers", "yaml", "rmdformats", "htmltools", "bibtex", "RefManageR", "knitcitations")
+
+inst <- RRpackages %in% installed.packages()
+if (length(RRpackages[!inst]) > 0) {
+  install.packages(RRpackages[!inst], dep = TRUE, repos = "https://cloud.r-project.org")
+}
+lapply(RRpackages, library, character.only = TRUE)
+
+# __________________________________
+# Now repeat for packages used in the analyses
+pkgList <- c("devtools", "RODBC", "EML", "flextable", "english", "remotes", "dplyr", "ggplot2", "plotly")
+
+inst <- pkgList %in% installed.packages()
+if (length(pkgList[!inst]) > 0) {
+  install.packages(pkgList[!inst],
+    dep = TRUE,
+    repos = "https://cloud.r-project.org"
+  )
+}
+
+lapply(pkgList, library, character.only = TRUE, quietly = TRUE)
+
+if (!"EMLassemblyline" %in% installed.packages()) remotes::install_github("EDIorg/EMLassemblyline")
+require("EMLassemblyline")
+
+# create stub of citations for packages
+pkgBibTex <- lapply(c("base", pkgList, RRpackages), citation)
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.path = here::here("output", "temp", "common"),
+  message = TRUE,
+  warning = TRUE,
+  comment = " ",
+  dev = "svg",
+  out.width = "100%",
+  tidy = TRUE,
+  tidy.opts = list(width.cutoff = 60)
+)
+# if ggplot, update theme to default to centered titles
+if ("ggplot2" %in% .packages()) {
+  theme_update(plot.title = element_text(hjust = 0.5))
+}
+
+
+## General Utility Functions
+
+source(here::here("output", "temp", "common", "SharedFunctions.R"))
+
+# Set up table template
+NPS_theme <- function(x, ...) {
+  x <- colformat_double(x, big.mark = ",", decimal.mark = ".", digits = 1)
+  x <- colformat_int(x, big.mark = ",")
+  x <- colformat_date(x, fmt_date = "%Y-%m-%d")
+  x <- set_table_properties(x, layout = "fixed")
+  x <- border_remove(x)
+  std_border <- fp_border_default(width = 1, color = "black")
+  x <- hline_bottom(x, part = "body")
+  x <- hline_bottom(x, part = "header")
+  x <- hline_top(x, part = "header")
+  x <- bold(x, bold = TRUE, part = "header")
+  x <- set_table_properties(x, width = 0, layout = "autofit")
+  x <- align_nottext_col(x, align = "right", header = TRUE, footer = TRUE)
+  x <- align_text_col(x, align = "left", header = TRUE, footer = TRUE)
+  x <- valign(x, valign = "bottom", part = "header")
+  x <- valign(x, valign = "top", part = "body")
+}
+
+set_flextable_defaults(
+  font.family = "Arial",
+  font.size = 9,
+  font.color = "black",
+  theme_fun = NPS_theme,
+)
+```
+
+*`r (paste0("doi: https://doi.org/10.38750/", DRR_DSRefID))`*
+
+```{r title_do_not_edit, echo=FALSE, results="asis"}
+date <- format(Sys.time(), "%d %B, %Y")
+cat("#", title, "\n")
+if (!is.null(reportNumber)) {
+  subtitle <- paste0("Data Release Report ", reportNumber)
+  cat("###", subtitle)
+}
+```
+
+<!-- Authors section in columns -->
+
+:::::: {.columns}
+::: {.column width="47.5%"}
+```{r authorsCOL1_do_not_edit, echo=FALSE, attr.source="style='display:inline-block;'", collapse=TRUE, results="asis"}
+contact <- data.frame(authorNames, authorAffiliations, authorORCID)
+
+for (i in 1:(length(authorNames) / 2)) {
+  curr <- contact[i, ]
+  cat("####", curr$authorNames, " ")
+  if (is.na(curr$authorORCID)) {
+    cat("\n")
+  }
+  if (!is.na(curr$authorORCID)) {
+    # Consider re-write to use the actual downloaded icon and not fontawesome.For some reason fill isn't rendering in chrome (but does in edge). Maybe move fill to CSS?
+    orc <- fontawesome::fa("orcid", fill = "#A6CE39")
+    orc <- gsub(';">', ';"> <xmlns:xlink="http://www.w3.org/1999/xlink"><a xlink:href= "dummyhtml">', orc)
+    orc <- gsub("dummyhtml", paste0("https://orcid.org/", curr$authorORCID), orc)
+    orc <- gsub("</svg>", "</a></svg>", orc)
+    cat({{ orc }})
+  }
+  cat("\n")
+  cat(curr$authorAffiliations, "\n\n")
+}
+```
+:::
+::: {.column width="5%"}
+\ <!-- empty DIV (with white space) as a column separator-->
+:::
+::: {.column width="47.5%"}
+```{r authorsCOL2_do_not_edit, echo=FALSE, attr.source="style='display:inline-block;'", collapse=TRUE, results="asis"}
+for (i in ((length(authorNames) / 2) + 1):(length(authorNames))) {
+  curr <- contact[i, ]
+  cat("####", curr$authorNames, " ")
+  if (is.na(curr$authorORCID)) {
+    cat("\n")
+  }
+  if (!is.na(curr$authorORCID)) {
+    # Consider re-write to use the actual downloaded icon and not fontawesome.For some reason fill isn't rendering in chrome (but does in edge). Maybe move fill to CSS?
+    orc <- fontawesome::fa("orcid", fill = "#A6CE39")
+    orc <- gsub(';">', ';"> <xmlns:xlink="http://www.w3.org/1999/xlink"><a xlink:href= "dummyhtml">', orc)
+    orc <- gsub("dummyhtml", paste0("https://orcid.org/", curr$authorORCID), orc)
+    orc <- gsub("</svg>", "</a></svg>", orc)
+    cat({{ orc }})
+  }
+  cat("\n")
+  cat(curr$authorAffiliations, "\n\n")
+}
+```
+:::
+::::::
+
+#### `r date` <!-- publication date - defaults to current system date -->
+
+<!-- abstract heading - don't edit -->
+<h4 class="text-center">
+Abstract
+</h4>
+
+   `r DRRabstract` <!-- pulls from the abstract you supplied above - don't edit here! -->
+
+```{r LoadData, include=FALSE}
+# Load datasets for use (example commented out below)
+# nccnbirds::LoadLandbirds(here::here("data", "final"), cache = FALSE)
+```
+
+<hr>
+
+# Background & Introduction
+
+The Background & Summary should provide an overview of the study design, the assay(s) performed, and the data generated, including any background information needed to put this study in the context of previous work and the literature, and should reference literature as needed. Literature should be cited both in the text and in the References section (below). In text citation should use the [Chicago Manual of Style](https://www.chicagomanualofstyle.org/tools_citationguide/citation-guide-2.html) author-date format.
+<!-- to do: add in support for importing bibtex references: inline citations and citation formatting-->
+
+The section should also briefly outline the broader goals that motivated collection of the data, as well as their potential reuse value. We also encourage authors to include a figure that provides a schematic overview of the study and assay(s) design.
+
+# Data Records (required)
+
+The Data Records section should be used to explain each data record associated with this work (for instance, a data package), including the DOI indicating where this information is stored, and provide an overview of the data files and their formats. Each external data record should be cited.
+
+Tables should be used to support the data records and should clearly indicate the samples and subjects (study inputs), their provenance, and the experimental manipulations performed on each or the protocols for observational data collection (see example Tables below). They should also specify the data output resulting from each data-collection or analytical step, should these form part of the archived record.
+
+### Summary of datasets created (required)
+
+This DRR describes the data package `r dataPackageTitle` which contains a metadata file and `r length(dataPackage_fileNames)` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackageDOI` (see Table 1).
+
+```{r FileTable, echo=FALSE}
+filelist <- data.frame(dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript)
+
+knitr::kable(filelist, caption = paste0("**", dataPackageTitle, ": List of data files**"), col.names = c("File Name", "Size", "Description"), format = "pandoc")
+```
+```{r datapackage_files_deprecated, eval=FALSE, echo=FALSE, results="asis"}
+# formatting template:
+template <- "**%s -** %s - %s
+
+"
+# made dataframe describing datapackage contents:
+filelist <- data.frame(dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript)
+
+# add data file info to the template & write to html:
+for (i in seq_along(dataPackage_fileNames)) {
+  curr <- filelist[i, ]
+  cat(sprintf(template, curr$dataPackage_fileNames, curr$dataPackage_fileSizes, curr$dataPackage_fileDescript))
+}
+```
+
+See Appendix for additional notes and examples.
+
+# Data Quality Evaluation (required)
+
+The Data Quality Evaluation section should present any analyses that are needed to support the technical quality of the dataset. This section may be supported by figures and tables, as needed. *This is a required section*; authors must provide information to justify the reliability of their data. Wherever possible & appropriate, data quality evaluation should be presented in the context of data standards and quality control procedures as prescribed in the project's quality assurance planning documentation.
+
+**Required elements for this section**
+
+*Stock Text to include:*
+
+The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *`r dataPackageTitle`* is suitable for its intended use as of the date of processing (`r Sys.Date()`).
+
+*Required Table*
+
+```{r dataFlaggingTable, echo=FALSE}
+flags<-c("A", "AE", "R")
+def<-c("Accepted", "Accepted, estimated", "Rejected")
+app<-rep("columns endining \"_flag\"", 3)
+data_flags<-data.frame(flags, def, app)
+
+knitr::kable(data_flags, caption = "**Description of data quality flags**", col.names=c("Flag", "Definition", "Useage"), format="pandoc")
+```
+
+Possible content **strongly Suggested to Include**
+
+-   Occurrence rates or patterns in data that do not meet established standards or data quality objectives.
+
+Possible content **may include:**
+
+-   experiments that support or validate the data-collection procedure(s) (e.g. negative controls, or an analysis of standards to confirm measurement linearity)
+-   statistical analyses of experimental error and variation
+-   general discussions of any procedures used to ensure reliable and unbiased data production, such as chain of custody procedures, blinding and randomization, sample tracking systems, etc.
+-   any other information needed for assessment of technical rigor by reviewers/users
+
+Generally, this **should not include:**
+
+-   follow-up experiments aimed at testing or supporting an interpretation of the data
+-   statistical hypothesis testing (e.g. tests of statistical significance, identifying deferentially expressed genes, trend analysis, etc.)
+-   exploratory computational analyses like clustering and annotation enrichment (e.g. GO analysis).
+
+# Usage Notes (required)
+
+The Usage Notes should contain brief instructions to assist other researchers with reuse of the data. This may include discussion of software packages (with appropriate citations) that are suitable for analysing the assay data files, suggested downstream processing steps (e.g. normalization, etc.), or tips for integrating or comparing the data records with other datasets. Authors are encouraged to provide code, programs or data-processing workflows if they may help others understand or use the data.
+
+For studies involving privacy or safety controls on public access to the data, this section should describe in detail these controls, including how authors can apply to access the data, what criteria will be used to determine who may access the data, and any limitations on data use.
+
+# Methods
+
+Ideally these methods are identical to the methods listed in the metadata accompanying the data package that the DRR describes.Future versions of this template will pull directly from metadata.
+
+The Methods should cite previous methods under use but also be detailed enough describing data production including a descriptions of the experimental design, data acquisition assays, and any computational processing (e.g. normalization, image feature extraction) that other can understand the methods and processing steps without referring to associated publications. Cite and link to the DataStore reference for the protocol for detailed methods sufficient for reproducing the experiment or observational study. Related methods should be grouped under corresponding subheadings where possible, and methods should be described in enough detail to allow other researchers to interpret the full study.
+
+Specific data inputs and outputs should be explicitly cited in the text and included in the References section below. See the [USGS data citation guidelines](https://www.usgs.gov/data-management/data-citation) for examples of how to cite data in text and in the References section.
+
+Authors are encouraged to consider creating a figure that outlines the experimental workflow(s) used to generate and analyse the data output(s) (Figure 1).
+
+```{r figure1, echo=FALSE, fig.align="center", fig.cap="Example general workflow to include in the methods section."}
+include_graphics("output/temp/example_DRR/figures/ProcessingWorkflow.png")
+```
+
+### Data Collection and Sample Processing Methods (optional)
+
+Include a description of field methods and sample processing
+
+### Additional Data Sources (optional)
+
+Provide descriptions (with citations) of other data sources used.
+
+### Data Processing (required if done)
+
+Summarize process and results of any QC processes done that manipulate, change, or qualify data.
+
+### Code Availability (required)
+
+For all studies using custom code in the generation or processing of datasets, a statement must be included indicating whether and how the code can be accessed and any restrictions to access. This section should also include information on the versions of any software used, if relevant, and any specific variables or parameters used to generate, test, or process the current dataset. Actual analytical code should be provided in Appendices.
+
+
+# References (required)
+
+Provide sufficient information to locate the resource. If the citation has a DOI, include the DOI at the end of the citation, including the https://doi.org prefix. If you are citing documents that have unregistered DOIs (such as a data package that you are working on concurrently) still include the DOI. Electronic resources data and data services or web sites should include the date they were accessed.
+
+Include bibliographic information for any works cited (including the data package the DRR is describing) in the above sections, using the standard *NPS NR Publication Series* referencing style (Derived from the Chicago Manual of Style). 
+
+See the following examples:
+
+#### Agency, Company, etc. as Author Examples 
+Fung Associates Inc. and SWCA Environmental Consultants. 2010. Assessment of natural resources and watershed conditions for Kalaupapa National Historical Park. Natural Resource Report. NPS/NPRC/WRD/NRR—2010/261. National Park Service, Fort Collins, Colorado.
+
+Greater Yellowstone Whitebark Pine Monitoring Working Group. 2014. Monitoring whitebark pine in the Greater Yellowstone Ecosystem: 2013 annual report. Natural Resource Data Series. NPS/GRYN/NRDS—2014/631. National Park Service. Fort Collins, Colorado.
+
+National Park Service (NPS). 2016. State of the park report for Zion National Park. State of the Park Reports. No. 23. National Park Service. Washington, District of Columbia.
+
+U.S. Forest Service (USFS). 1993. ECOMAP. National hierarchical framework of ecological units. U. S. Forest Service, Washington, D.C.
+
+#### Traditional Journal Article Examples 
+Bradbury, J. W., S. L. Vehrencamp, K. E. Clifton, and L. M. Clifton. 1996. The relationship between bite rate and local forage abundance in wild Thompson’s gazelles. Ecology 77:2237–2255. https://doi.org/10.2307/2265717
+
+Oakley, K. L., L. P. Thomas, and S. G. Fancy. 2003. Guidelines for long-term monitoring 
+protocols. Wildlife Society Bulletin 31(4):1000–1003.
+
+Sawaya, M. A., T. K. Ruth, S. Creel, J. J. Rotella, J. B. Stetz, H. B. Quigley, and S. T. 
+Kalinowski. 2011. Evaluation of noninvasive genetic sampling methods for cougars in Yellowstone National Park. The Journal of Wildlife Management 75(3):612–622. https://doi.org/10.1002/jwmg.92
+
+#### Book Example 
+Harvill, A. M., Jr., T. R. Bradley, C. E. Stevens, T. F. Wieboldt, D. M. E. Ware, D. W. Ogle, and G. W. Ramsey. 1992. Atlas of the Virginia flora, third edition. Virginia Botanical Associates, Farmville, Virginia.
+
+#### Book Chapter Examples 
+McCauly, E. 1984. The estimation of abundance and biomass of zooplankton in samples. Pages 228–265 in J. A. Dowling and F. H. Rigler, editors. A manual on methods for the assessment of secondary productivity in fresh waters. Blackwell Scientific, Oxford, UK.
+
+Watson, P. J. 2004. Of caves and shell mounds in west-central Kentucky. Pages 159–164 in Of caves and shell mounds. The University of Alabama Press, Tuscaloosa, Alabama.
+
+#### Published Report Examples 
+Bass, S., R. E. Gallipeau, Jr., M. Van Stappen, J. Kumer, M. Wessner, S. Petersburg, L. L. Hays, J. Milstone, M. Soukup, M. Fletcher, L. G. Adams, and others. 1988. Highlights of natural resource management 1987. National Park Service, Denver, Colorado.
+
+Holthausen, R. S., M. G. Raphael, K. S. McKelvey, E. D. Forsman, E. E. Starkey, and D. E. Seaman. 1994. The contribution of federal and nonfederal habitats to the persistence of the northern spotted owl on the Olympic Peninsula, Washington. General Technical Report PNW–GTR–352. U.S. Forest Service, Corvallis, Oregon.
+https://doi.org/10.2737/PNW-GTR-352
+
+Jackson, L. L., and L. P. Gough. 1991. Seasonal and spatial biogeochemical trends for chaparral vegetation and soil geochemistry in the Santa Monica Mountains National Recreation Area. U.S. Geological Survey, Denver. Open File Report 91–0005. 
+https://doi.org/10.3133/ofr915
+
+#### Unpublished Report Examples 
+Conant, B., and J. I. Hodges. 1995. Western brant population estimates. U.S. Fish and Wildlife Service Unpublished Report, Juneau, Alaska.
+
+Conant, B., and J. F. Voelzer. 2001. Winter waterfowl survey: Mexico west coast and Baja California. U.S. Fish and Wildlife Service Unpublished Report, Juneau, Alaska.
+
+#### Thesis/Dissertation Examples 
+Diong, C. H. 1982. Population and biology of the feral pig (Sus scrofa L) in Kipahulu Valley, Mau’i. Dissertation. University of Hawai’i, Honolulu, Hawai’i.
+
+McTigue, K. M. 1992. Nutrient pulses and herbivory: Integrative control of primary producers in lakes. Thesis. University of Wisconsin, Madison, Wisconsin.
+
+#### Conference Proceedings Examples 
+Gunther, K. A. 1994. Changing problems in bear management: Yellowstone National Park twenty-plus years after the dumps. Ninth International Conference on Bear Research and Management. Missoula, MT, International Association for Bear Research and Management, Bozeman, Montana, February 1992:549–560.
+
+Webb, J. R., and J. N. Galloway. 1991. Potential acidification of streams in Mid-Appalachian Highlands: A problem with generalized assessments. Southern Appalachian Man and Biosphere Conference. Gatlinburg, Tennessee. 
+
+#### General Internet Examples 
+Colorado Native Plant Society. 2016. Colorado Native Plant Society website. Available at: https://conps.org/ (accessed 07 March 2016).
+
+National Park Service (NPS). 2016a. IRMA Portal (Integrated Resource Management Applications) website. Available at: https://irma.nps.gov (accessed 07 March 2016),
+
+National Park Service (NPS). 2016b. Natural Resource Publications Management website. Available at: http://www.nature.nps.gov/publications/nrpm/ (accessed 07 March 2016).
+
+United Sates Fish and Wildlife Service (USFWS). 2016. Endangered Species website. Available at: http://www.fws.gov/endangered/ (accessed 07 March 2016).
+
+#### Online Data Warehouse Sites (sites that allow you see and download data from multiple sources)
+National Oceanographic and Atmospheric Association (NOAA). 2016. NOAA National Climatic Data Center website. Available at: http://www.ncdc.noaa.gov/ (accessed 07 March 2016).
+
+Environmental Protection Agency (EPA). 2016. Storage and Retrieval Data Warehouse website (STORET). Available at: http://www.epa.gov/storet/ (accessed 07 March 2016).
+
+National Park Service (NPS). 2016c. NPScape Landscape Dynamics Metric Viewer website. Available at: http://science.nature.nps.gov/im/monitor/npscape/viewer/ (accessed 07 March 2016).
+
+National Park Service (NPS). 2016d. NPSpecies online application. Available at: https://irma.nps.gov/NPSpecies/ (accessed 07 March 2016).
+
+United States Geologic Survey (USGS). 2016. BioData - Aquatic Bioassessment Data for the Nation. Available at: https://aquatic.biodata.usgs.gov/ (accessed 07 March 2016). 
+
+\pagebreak
+
+# Acknowledgements (optional)
+
+The Acknowledgements should contain text acknowledging non-author contributors. Acknowledgements should be brief, and should not include thanks to anonymous referees and editors or effusive comments. Grant or contribution numbers may be acknowledged.
+
+# Appendix A. Code Listing
+In most cases, Code listing is not required. If all QA/QC and data manipulations were performed elsewhere, you should cite that code in the methods (and leave the "Listing" code chunk as the default settings: eval=FALSE and echo=FALSE). If you have developed custom scripts, you can add those to DataStore with the reference type "Script" and cite them in the DRR. Some people have developed code to perform QA/QC or data manipulation within the DRR itself. In that case, you must set the "Listing" code chunk to eval=TRUE and echo=TRUE to fully document the QA/QC process.
+
+```{r Listing, eval=FALSE, echo=FALSE, ref.label=knitr::all_labels()}
+
+```
+
+\pagebreak
+
+# Appendix B. Session and Version Information
+In most cases you do not need to report session info (leave the "session-info" code chunk parameters in their default state: eval=FALSE). Session and version information is only necessary if you have set the "Listing" code chunk to eval=TRUE in appendix A. In that case, change set "session-info" code chunk to eval=TRUE. 
+
+```{r session-info, eval=FALSE, echo=FALSE, cache=FALSE}
+sessionInfo()
+Sys.time()
+```
+
+# Additional Notes For Authors (this should not be included in reports...)
+
+## Figures
+
+Figure images should be included in-text near the initial point of reference.
+
+Figure captions begin with a brief title sentence summarizing the purpose of the figure as a whole, and continue with a short description of what is shown in each panel and an explanation of any symbols used. Legends must total no more than 350 words, and may contain literature references. The first sentence of the legend will be used as the title for the figure. It (the first sentence) should contain no references of any kind, including to specific figure panels, bibliographic citations or references to other figures or panels.
+
+## Tables
+
+Authors are encouraged to provide one or more tables that provide basic information on the main 'inputs' to the study (e.g. samples, participants, or information sources) and the main data outputs of the study; also see the additional information on providing metadata on page 6. Tables in the manuscript should generally not be used to present primary data (i.e. measurements). Tables containing primary data should be submitted to an appropriate data repository.
+
+Authors may provide tables within text near the initial citation or as an appendix. Legends, where needed, should be included in the Word document. Generally, a Data Release Report should have fewer than ten tables, but more may be allowed when needed.
+
+### Example Data Record Summary Tables
+
+Here, we provide four generic 'Table 1' examples, including two experimental study examples, one observational study example, and an example for an aggregated dataset of the type that may result from a meta-analysis.
+
+```{r Table1, echo=FALSE}
+T1Subjects <- c("Mouse1", "Mouse2", "Mousen")
+T1Protocol1 <- c("Drug treatment", "Drug treatment", "Drug treatment")
+T1Protocol2 <- c("Liver dissection", "Liver dissection", "Liver dissection")
+T1Protocol3 <- c("RNA extraction", "RNA extraction", "RNA extraction")
+T1Protocol4 <- c("RNA-Seq", "RNA-Seq", "RNA-Seq")
+T1Data <- c("GEOXXXXX", "GEOXXXXX", "GEOXXXXX")
+Table1 <- data.frame(T1Subjects, T1Protocol1, T1Protocol2, T1Protocol3, T1Protocol4, T1Data)
+
+T1 <- flextable(Table1)
+T1 <- set_caption(T1, "Experimental study example Data Records table. [Table created using the flextable package.]")
+T1 <- set_header_labels(T1,
+  T1Subjects = "Subjects",
+  T1Protocol1 = "Protocol 1",
+  T1Protocol2 = "Protocol 2",
+  T1Protocol3 = "Protocol 3",
+  T1Protocol4 = "Protocol 4",
+  T1Data = "Data"
+)
+autofit(T1)
+```
+
+```{r Table2, echo=FALSE}
+Source <- c("CellCulture1", "CellCulture1", "CellCulture1", "CellCulture1", "CellCulture1", "CellCulture1")
+Protocol1 <- c("Drug treatment", "Drug treatment", "Drug treatment", "Drug treatment", "Drug treatment", "Drug treatment")
+Protocol2 <- c("RNA extraction", "RNA extraction", "RNA extraction", "RNA extraction", "RNA extraction", "RNA extraction")
+Samples <- c("TechnicalRep1a", "TechnicalRep2a", "TechnicalRep3a", "TechnicalRep1b", "TechnicalRep2b", "TechnicalRep3b")
+Protocol3 <- c("Microarray hybridization", "Microarray hybridization", "Microarray hybridization", "Microarray hybridization", "Microarray hybridization", "Microarray hybridization")
+Data <- c("GEOXXXXX", "GEOXXXXX", "GEOXXXXX", "GEOXXXXX", "GEOXXXXX", "GEOXXXXX")
+Table <- data.frame(Source, Protocol1, Protocol2, Samples, Protocol3, Data)
+
+T1 <- flextable(Table)
+T1 <- set_caption(T1, "Experimental study with replicates Data Records table. [Table created using the flextable package.]")
+T1 <- set_header_labels(T1,
+  Source = "Subjects",
+  Protocol1 = "Protocol 1",
+  Protocol2 = "Protocol 2",
+  Samples = "Samples",
+  Protocol3 = "Protocol 3",
+  data = "Data"
+)
+autofit(T1)
+```
+
+```{r Table3, echo=FALSE}
+Sample <- c("Body of water 1", "Body of water 2", "Body of water n")
+geoloc <- c("location name", "location name", "location name")
+geopos <- c("latitude, longitude, altitude", "latitude, longitude, altitude", "latitude, longitude, altitude")
+protocol <- c("Measurement of surface temperature", "Measurement of surface temperature", "Measurement of surface temperature")
+data <- c("dataFile1", "dataFile2", "dataFile3")
+Table <- data.frame(Sample, geoloc, geopos, protocol, data)
+
+T1 <- flextable(Table)
+T1 <- set_caption(T1, "Observational study example Data Records table. [Table created using the flextable package.]")
+T1 <- set_header_labels(T1,
+  Sample = "Sample",
+  geoloc = "Geographical Location",
+  geopos = "Geoposition",
+  protocol = "Protocol",
+  data = "Data"
+)
+autofit(T1)
+```
+
+```{r Table4, echo=FALSE}
+c1 <- c("Database URL 1", "Database URL 1", "Database URL 2")
+c2 <- c("Dataset 1", "Dataset 2", "Dataset n")
+c3 <- c("Number of samples in the dataset", "Number of samples in the dataset", "Number of samples in the dataset")
+c4 <- c("Range of measurements reported in the dataset", "Range of measurements reported in the dataset", "Range of measurements reported in the dataset")
+c5 <- c("Data assimilation procedure", "Data assimilation procedure", "Data assimilation procedure")
+c6 <- c("Method to generate output data", "Method to generate output data", "Method to generate output data")
+c7 <- c("dataFile1", "dataFile1", "dataFile2")
+Table <- data.frame(c1, c2, c3, c4, c5, c6, c7)
+
+T1 <- flextable(Table)
+T1 <- set_caption(T1, "Observational study example Data Records table. [Table created using the flextable package.]")
+T1 <- set_header_labels(T1,
+  c1 = "Source",
+  c2 = "Sample",
+  c3 = "Sample Number",
+  c4 = "Temporal Range",
+  c5 = "Protocol 1",
+  c6 = "Protocol 2",
+  c7 = "Data"
+)
+autofit(T1)
+```
