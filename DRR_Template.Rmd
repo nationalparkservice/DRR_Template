@@ -38,7 +38,7 @@ output:
 title <- "DRR Title"
 
 # Optional and should only be included if publishing to the semi-official DRR series. Contact Joe if you are. If not, leave as NULL
-reportNumber <- NULL
+reportNumber <- 12345
 # This should match the Data Store Reference ID for this DRR. Eventually we should be able to pull this directly from the data package metadata.
 DRR_DSRefID <- 7654321
 
@@ -186,7 +186,7 @@ set_flextable_defaults(
 )
 ```
 
-*`r (paste0("https://doi.org/10.38750/", DRR_DSRefID))`*
+`r (paste0("doi: *https://doi.org/10.38750/", DRR_DSRefID, "*"))`
 
 ```{r title_do_not_edit, echo=FALSE, results="asis"}
 date <- format(Sys.time(), "%d %B, %Y")
