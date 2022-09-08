@@ -197,8 +197,25 @@ if (!is.null(reportNumber)) {
   cat("###", subtitle)
 }
 ```
+```{r authors2_depricated, echo=FALSE, results="asis"}
+contact<-data.frame(authorNames, authorAffiliations, authorORCID)
 
-<!-- Authors section in columns -->
+for(i in 1:(length(authorNames))){
+  curr<-contact[i,]
+  cat("####", curr$authorNames, " ")
+  if(is.na(curr$authorORCID)){
+    cat("\n")
+  }
+  if(!is.na(curr$authorORCID)){
+    #Consider re-write to use the actual downloaded icon and not fontawesome.For some reason fill isn't rendering in chrome (but does in edge). Maybe move fill to CSS?
+    orc<- paste0("https://orcid.org/", curr$authorORCID)
+    cat({{orc}})
+  }
+  cat("\n")
+  cat(curr$authorAffiliations, "\n\n")
+}
+```
+<!-- Authors section in columns
 
 :::::: {.columns}
 ::: {.column width="47.5%"}
@@ -226,6 +243,7 @@ for (i in 1:(length(authorNames) / 2)) {
 :::
 ::: {.column width="5%"}
 \ <!-- empty DIV (with white space) as a column separator-->
+<!--
 :::
 ::: {.column width="47.5%"}
 ```{r authorsCOL2_do_not_edit, echo=FALSE, attr.source="style='display:inline-block;'", collapse=TRUE, results="asis"}
@@ -249,6 +267,7 @@ for (i in ((length(authorNames) / 2) + 1):(length(authorNames))) {
 ```
 :::
 ::::::
+-->
 
 #### `r date` <!-- publication date - defaults to current system date -->
 
