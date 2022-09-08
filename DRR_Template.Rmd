@@ -50,15 +50,15 @@ authorNames <- c(
   "John Doe"
 )
 
-# List author affiliations. The order of author affiliations must match the order of the authors in AuthorNames. Note that the entirety of each affiliation is enclosed in quotations. Line breaks are indicated with the tag <br>. Do not worry about indentation or word wrapping.
+# List author affiliations. The order of author affiliations must match the order of the authors in AuthorNames. Note that the entirety of each affiliation is enclosed in quotations. Line breaks are indicated with a backslash followed by two spaces(\  ). Do not worry about indentation or word wrapping.
 authorAffiliations <- c(
-  "NPS Inventory and Monitory Division<br>
-1201 Oakridge Dr, Suite 150<br>
+  "NPS Inventory and Monitory Division\  
+1201 Oakridge Dr, Suite 150\  
 Fort Collins, Colorado",
-  "Managed Business Solutions (MBS), a Sealaska Company<br>
-Contractor to the National Park Service<br>
-Natural Resource Stewardship and Science Directorate<br>
-1201 Oakridge Dr, Suite 150<br>
+  "Managed Business Solutions (MBS), a Sealaska Company\  
+Contractor to the National Park Service\  
+Natural Resource Stewardship and Science Directorate\  
+1201 Oakridge Dr, Suite 150\  
 Fort Collins, Colorado"
 )
 
