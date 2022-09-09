@@ -38,7 +38,7 @@ authorORCID <- c(
   NA
 )
 
-DRRabstract <- "Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attendtion to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
+DRRabstract <- "Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attention to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
 
 The abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
 
@@ -131,9 +131,7 @@ for (i in seq_along(authorNames)) {
 
 #### `r date` <!-- publication date - defaults to current system date -->
 
-<!-- abstract heading - don't edit -->
-<h4 class="text-center">
-Abstract
+# Abstract
 
 `r DRRabstract` <!-- pulls from the abstract you supplied is user_edited_parameters - don't edit here! -->
 
@@ -148,11 +146,12 @@ The section should also briefly outline the broader goals that motivated collect
 
 # Data Records (required)
 
-The Data Records section should be used to explain each data record associated with this work (for instance, a data package), including the DOI indicating where this information is stored, and provide an overview of the data files and their formats. Each external data record should be cited.
-
-Tables should be used to support the data records and should clearly indicate the samples and subjects (study inputs), their provenance, and the experimental manipulations performed on each or the protocols for observational data collection (see example Tables below). They should also specify the data output resulting from each data-collection or analytical step, should these form part of the archived record.
+## Data inputs (optional)
+If the data package being described was generated based on one or more pre-existing datasets, cite those datasets here.
 
 ### Summary of datasets created (required)
+
+The Data Records section should be used to explain each data record associated with this work (for instance, a data package), including the DOI indicating where this information is stored, and provide an overview of the data files and their formats. Each external data record should be cited.
 
 This DRR describes the data package `r dataPackageTitle` which contains a metadata file and `r length(dataPackage_fileNames)` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackageDOI` (see Table 1).
 
@@ -179,7 +178,7 @@ The data within the data records listed above have been reviewed by staff in the
 ```{r dataFlaggingTable, echo=FALSE}
 flags<-c("A", "AE", "R")
 def<-c("Accepted", "Accepted, estimated", "Rejected")
-app<-rep("columns endining \"_flag\"", 3)
+app<-rep("columns ending \"_flag\"", 3)
 data_flags<-data.frame(flags, def, app)
 
 knitr::kable(data_flags, caption = "**Description of data quality flags**", col.names=c("Flag", "Definition", "Useage"), format="pandoc")
@@ -322,16 +321,18 @@ United States Geologic Survey (USGS). 2016. BioData - Aquatic Bioassessment Data
 The Acknowledgements should contain text acknowledging non-author contributors. Acknowledgements should be brief, and should not include thanks to anonymous referees and editors or effusive comments. Grant or contribution numbers may be acknowledged.
 
 # Appendix A. Code Listing
+In most cases, Code listing is not required. If all QA/QC and data manipulations were performed elsewhere, you should cite that code in the methods (and leave the "Listing" code chunk as the default settings: eval=FALSE and echo=FALSE). If you have developed custom scripts, you can add those to DataStore with the reference type "Script" and cite them in the DRR. Some people have developed code to perform QA/QC or data manipulation within the DRR itself. In that case, you must set the "Listing" code chunk to eval=TRUE and echo=TRUE to fully document the QA/QC process.
 
-```{r Listing, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
+```{r Listing, ref.label=knitr::all_labels(), echo=TRUE, eval=TRUE}
 
 ```
 
 \pagebreak
 
 # Appendix B. Session and Version Information
+In most cases you do not need to report session info (leave the "session-info" code chunk parameters in their default state: eval=FALSE). Session and version information is only necessary if you have set the "Listing" code chunk to eval=TRUE in appendix A. In that case, change set "session-info" code chunk to eval=TRUE. 
 
-```{r session-info, echo=FALSE, cache=FALSE}
+```{r session-info, eval=TRUE, echo=FALSE, cache=FALSE}
 sessionInfo()
 Sys.time()
 ```
