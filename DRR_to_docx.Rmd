@@ -137,19 +137,12 @@ for (i in seq_along(authorNames)) {
 
 <hr>
 
-# Background & Introduction
-
-The Background & Summary should provide an overview of the study design, the assay(s) performed, and the data generated, including any background information needed to put this study in the context of previous work and the literature, and should reference literature as needed. Literature should be cited both in the text and in the References section (below). In text citation should use the [Chicago Manual of Style](https://www.chicagomanualofstyle.org/tools_citationguide/citation-guide-2.html) author-date format.
-<!-- to do: add in support for importing bibtex references: inline citations and citation formatting-->
-
-The section should also briefly outline the broader goals that motivated collection of the data, as well as their potential reuse value. We also encourage authors to include a figure that provides a schematic overview of the study and assay(s) design.
-
 # Data Records (required)
 
 ## Data inputs (optional)
 If the data package being described was generated based on one or more pre-existing datasets, cite those datasets here.
 
-### Summary of datasets created (required)
+## Summary of datasets created (required)
 
 The Data Records section should be used to explain each data record associated with this work (for instance, a data package), including the DOI indicating where this information is stored, and provide an overview of the data files and their formats. Each external data record should be cited.
 
