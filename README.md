@@ -1,4 +1,4 @@
-For a browser-friendly readme, check out the [TEMP DEV PURPOSES DRR Template Website](https://roblbaker.github.io/DRR_Template_Working) hosted on github
+For a browser-friendly readme, check out the [DRR Template Website](https://nationalparkservice.github.io/DRR_Template/) hosted on github
 
 # DRRs: Background
 
@@ -12,9 +12,7 @@ This template contains an rmarkdown template file, default folder structure for 
 This template is under active development to improve style and 508 compliance.
 
 # How to Start a DRR
-New projects can be established using this template by downloading a zip file of the package from: <!--[This Link](https://github.com/nationalparkservice/IMD_DRR_Template/zipball/master) -->
-
-([TEMP DEV PURPOSES Zipball](https://github.com/RobLBaker/DRR_Template_Working/zipball/master))
+New projects can be established using this template by downloading a zip file of the package from: [This Link](https://github.com/nationalparkservice/IMD_DRR_Template/zipball/master)
 
 1. [How to Use this Template](vignettes/HowToUseThisTemplate.html) line-by-line instructions and descriptions for how to use the DRR Template.
 
