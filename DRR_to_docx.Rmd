@@ -1,5 +1,7 @@
 ---
-output: word_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r user_edited_parameterss, include=FALSE}
@@ -74,7 +76,7 @@ save(title, reportNumber, DRR_DSRefID, authorNames, authorAffiliations, authorOR
 ```
 
 
-```{r setup, include=FALSE}
+```{r setup_do_not_edit, include=FALSE}
 RRpackages <- c("markdown", "rmarkdown", "pander", "knitr", "yaml")
 
 inst <- RRpackages %in% installed.packages()
@@ -197,7 +199,7 @@ Specific data inputs and outputs should be explicitly cited in the text and incl
 Authors are encouraged to consider creating a figure that outlines the experimental workflow(s) used to generate and analyse the data output(s) (Figure 1).
 
 ```{r figure1, echo=FALSE, fig.align="center", fig.cap="Example general workflow to include in the methods section."}
-include_graphics("output/temp/example_DRR/figures/ProcessingWorkflow.png")
+include_graphics("vignettes/common/ProcessingWorkflow.png")
 ```
 
 ### Data Collection and Sample Processing Methods (optional)
@@ -309,7 +311,7 @@ In most cases, Code listing is not required. If all QA/QC and data manipulations
 \pagebreak
 
 # Appendix B. Session and Version Information
-In most cases you do not need to report session info (leave the "session-info" code chunk parameters in their default state: eval=FALSE). Session and version information is only necessary if you have set the "Listing" code chunk to eval=TRUE in appendix A. In that case, change set "session-info" code chunk to eval=TRUE. 
+In most cases you do not need to report session info (leave the "session-info" code chunk parameters in their default state: eval=FALSE). Session and version information is only necessary if you have set the "Listing" code chunk to eval=TRUE in appendix A. In that case, change the "session-info" code chunk parameters to eval=TRUE. 
 
 ```{r session-info, eval=TRUE, echo=FALSE, cache=FALSE}
 sessionInfo()
