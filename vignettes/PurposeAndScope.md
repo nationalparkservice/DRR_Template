@@ -1,6 +1,6 @@
 ---
 title: "Purpose and Scope of Data Release Reports"
-date: "18 August, 2022"
+date: "03 October, 2022"
 output:
   html_document:
     df_print: kable
@@ -10,7 +10,7 @@ output:
     keep_md: yes
     smart: no
     theme: journal
-    css: ../output/temp/common/journalnps.min.css
+    css: common/journalnps.min.css
     toc: yes
     toc_float: yes
     number_sections: yes
@@ -52,7 +52,7 @@ evaluation (mandated; see below). The establishment of a data release report
 series is intended to facilitate and encourage this type of reporting in a
 standard format, and in a manner commensurate with current scientific norms.
 
-A [template](../DRR_Template) for creating data release reports to be published in the DRR series. We have also
+A [template](../DRR_to_docx.rmd) for creating data release reports to be published in the DRR series. We have also
 developed procedures for authoring DRR reports in Microsoft Word and porting
 them to the appropriate format.  
 
@@ -244,7 +244,7 @@ of general study data may be reused or contribute to other scientific work
 may be used as ancillary data to explain monitoring observations).
 
 <div class="figure" style="text-align: center">
-<img src="WorkflowModelGeneral.png" alt="**Figure 1.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
+<img src="common/WorkflowModelGeneral.png" alt="**Figure 1.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
 <p class="caption">**Figure 1.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements.</p>
 </div>
 
@@ -262,7 +262,7 @@ for secondary purposes including synthesis reports and condition assessments,
 and portions of monitoring data may contribute to inventories.
 
 <div class="figure" style="text-align: center">
-<img src="WorkflowModelMonitoring.png" alt="**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital sign monitoring efforts. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
+<img src="common/WorkflowModelMonitoring.png" alt="**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital sign monitoring efforts. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
 <p class="caption">**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital sign monitoring efforts. Teal-colored boxes are subject to reproducibility requirements.</p>
 </div>
 
@@ -277,7 +277,7 @@ study data are expected to be reused to meet broader inventory level goals, but
 may also support other scientific work and decision support.
 
 <div class="figure" style="text-align: center">
-<img src="WorkflowModelInventories.png" alt="**Figure 3.** Workflow for data collection, processing, dissemination, and use for inventory studies. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
+<img src="common/WorkflowModelInventories.png" alt="**Figure 3.** Workflow for data collection, processing, dissemination, and use for inventory studies. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
 <p class="caption">**Figure 3.** Workflow for data collection, processing, dissemination, and use for inventory studies. Teal-colored boxes are subject to reproducibility requirements.</p>
 </div>
 
