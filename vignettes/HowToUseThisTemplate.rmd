@@ -10,7 +10,7 @@ output:
     keep_md: yes
     smart: no
     theme: journal
-    css: ../output/temp/common/journalnps.min.css
+    css: common/journalnps.min.css
     toc: yes
     toc_float: yes
     number_sections: yes
@@ -54,7 +54,7 @@ knitr::opts_chunk$set(
 # Overview
 Data Release Reports (DRRs) are created by the National Park Service and provide detailed descriptions of valuable research datasets, including the methods used to collect the data and technical analyses supporting the quality of the measurements. Data Release Reports focus on helping others reuse data, rather than presenting results, testing hypotheses, or presenting new interpretations, methods or in-depth analyses. 
 
-DRRs are intended to document the processing of fully-QAed data to their final (QCed) form in a reproducible and transparent manner. DRRs document the data collection methods, quality standards, and processing code used to prepare and review data prior to release, and present the quality of resultant data in the context of fitness for their intended use. 
+DRRs are intended to document the processing of fully-QAed data to their final (QCed) form in a reproducible and transparent manner. DRRs document the data collection methods and quality standards used to prepare and review data prior to release. DRRs present the quality of resultant data in the context of fitness for their intended use. 
 
 Each DRR cites source and resultant datasets that are published concurrently and cross-referenced. Associated datasets are made publicly available with the exception of data that must be protected from release as per NPS and park-specific policies.
 
@@ -66,7 +66,7 @@ New projects can be established using this template by downloading a zip file of
 ## Folder Structure
 General directory contents are as follows (Figure 1):
 ```{r figure1, echo=FALSE, fig.align="center", out.width="30%",  fig.cap="**Figure 1.** Standard project directory structure for data release reports."}
-include_graphics("./FileStructure.PNG")
+include_graphics("./common/FileStructure.PNG")
 
 ```
 
@@ -74,19 +74,12 @@ include_graphics("./FileStructure.PNG")
   
   - `figures`  If you have figures that are not generated as part of running this template, place those files here.
 
-- `output` Do not edit these files. This is where you can find your final products. Edits to files in this folder will not be incorporated when you knit the DRR_Template. Any edits you make to files in this directory may be overwritten when you knit the template. 
+- `output` Do not edit these files. This is where you can find your final products. Edits to files in this folder will not be incorporated when you knit the DRR_to_docx.rmd file. Any edits you make to files in this directory may be overwritten when you knit the template. 
 
-- `temp` Do not edit these files. These are files that are either used or generated during when you knit the DRR_Template. They may include graphics, text, or data.
+- `temp` Do not edit these files. These are files that are either used or generated during when you knit the DRR_to_docx.rmd template. They may include graphics, text, or data.
 
-  - `common` houses files that are shared across all projects and generally should not be edited by the user. Notable files:
-
-    - `header.html` includes all of the graphic identity material at the top of the rendered report.
-    - `footer.html` includes all of the "about this report" information similar to what is found in the front matter of reports published in the NRR and NRDS series.
-    - `journalnps.min.css` includes stylesheet tweaks that modify the standard markdown "journal" theme to approxmiate NPS graphic identity standards.
-    - `DRR Word Template.docx` is intended for users who prefer to author reports in Microsoft Word and then convert to markdown (as opposed to authoring reports in rmarkdown). Instructions on how to use this method of DRR report creation are below.
-  
 # Creating a Reproducible Report
-The following is for users who are using the `DRR_Template.RMD` template file to generate a data release report using RMarkdown. If you are planning to author your report in MS Word, please see Appendix A below.
+The following is for users who are using the `DRR_to_docx.RMD` template file to generate a data release report using RMarkdown. 
 
 ## Standard Code Chunks
 In addition to the report outline and a description of content for each section, the template includes four standard code chunks.
@@ -98,36 +91,34 @@ The YAML header helps format the DRR. You should not need to edit any of the YAM
 **R code chunks:**
 
 - `user_edited_parameters`. A series of parameters that are used in the creation of the DRR and may be re-used in metadata and associated data package construction. You will need to edit these parameters for each DRR.
-  - `title`. The title of the Data Release Report.This will be converted to all upper case. 
+  - `title`. The title of the Data Release Report.
   - `reportNumber`. This is optional, and should _only_ be included if publishing in the semi-official DRR series. Set to NULL if there is no reportNumber.
   - `DRR_DSRefID`. This is the Data Store reference ID for the report.
   - `authorNames`. A list of the author's names.
-  - `authorAffiliations`. A list of the author's affiliations. The order of author affiliations must match the order of the authors in the `authorNames` list. Note that the entirety of each affiliation is enclosed in a single set of quotations. Line breaks are indicated with the <br> tag. Do not worry about indentation or word wrapping.
+  - `authorAffiliations`. A list of the author's affiliations. The order of author affiliations must match the order of the authors in the `authorNames` list. Note that the entirety of each affiliation is enclosed in a single set of quotations. Line breaks are indicated with the <br> tag. Do not worry about indentation or word wrapping. If two authors have the same affiliation, list the affiliation twice.
   - `authorORCID`. A list of ORCID iDs for each author in the format "xxxx-xxxx-xxxx-xxxx". If an author does not have an ORCID iD, specify NA (no quotes). The order of ORCID iDs (and NAs) must correspond to the order of authors in the `authorNames` list. Future iterations of the DRR Template will pull ORCID iDs from metadata and eventually from Active Directory. See [ORCID](https://www.orcid.org/) for more information about ORCID iDs or to register an ORCID iD.
-  - `DRRabstract`. The abstract for the DRR (which is distinct from the data package abstract). Pay careful attention to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad or some other text editor and NOT a word processor (such as Microsoft Word). Indicate line breaks with \n and a space between paragraphs - should you want them - using \n\n. The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section. A good suggested length for abstracts is less than 250 words.
-  - `dataPackageRefID`. DataStore reference ID for the data package associated with this report. You must have at least one data package.Eventually, we will automate importing much of this information from metadata and include the ability to describe multiple data packages in a single DRR.
+  - `DRRabstract`. The abstract for the DRR (which may be distinct from the data package abstract). Pay careful attention to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad or some other text editor and NOT a word processor (such as Microsoft Word). Indicate line breaks with \n and a space between paragraphs - should you want them - using \n\n. The Abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section. A good suggested length for abstracts is less than 250 words.
+  - `dataPackageRefID`. DataStore reference ID for the data package associated with this report. You must have at least one data package. Eventually, we will automate importing much of this information from metadata and include the ability to describe multiple data packages in a single DRR.
   - `dataPackageTitle`. The title of the data package. Must match the title on DataStore (and metadata).
   - `dataPackageDescription`. A short title/subtitle or short description for the data package. Must match the data package metadata.
   - `dataPackageDOI`. Auto-generated, no need to edit or update. This is the data package DOI. It is based on the DataStore reference number.
-  - `dataPackage_fileNames`. List the file names in your data package. Do NOT include metadata files. For example, "my_data.csv".
+  - `dataPackage_fileNames`. List the file names in your data package. Do NOT include metadata files. For example, include "my_data.csv" but do NOT include "my_metadata.xml".
   -  `dataPackage_fileSizes`. List the approximate size of each data file. Make sure the order of the file sizes corresponds to the order of file names in `dataPackage_fileNames`.
-  `dataPackage_fileDescript`. A short description of the corresponding data file that helps distinguish it from other data files. A good guideline is 10 words or less. This will be used in a table summary table so brevity is a priority.
+  `dataPackage_fileDescript`. A short description of the corresponding data file that helps distinguish it from other data files. A good guideline is 10 words or less. This will be used in a table summary table so brevity is a priority. If you have already created metadata for your data package in EML format, this should be the same text as found in the "entityDescription" element for each data file.
 
-- `setup`. Pretty self explanatory, but there are two snippets for loading packages; the `RRpackages` section is a suite of packages that are used to assist with reproducible reporting. You may not need these for your report, but we have included them as part of the base recommended packages. There is a second snippet for `pkgList` that includes all project-specific packages needed. Add as necessary.
+- `setup`. Most users will not need to edit this code chunk. There is one code snippet for loading packages; the `RRpackages` section is a suite of packages that are used to assist with reproducible reporting. You may not need these for your report, but we have included them as part of the base recommended packages. If you plan to perform you QC as part of the DRR construction process, you can add a second code snipped to import necessary packages for your QC process here.
 
 - `title_do_not_edit`. These parameters are auto-generated based on either the EML you supplied (when that becomes an option) or the information you've already supplied under "user-edited-parameters". You really should not need to edit these parameters. 
 
-- `authorsCol1_do_not_edit`. There is no need to edit this chunk. This writes the author names, ORCID iDs, and affiliations to the html document based on information supplied in user-edited-parameters. 
+- `authors_do_not_edit`. There is no need to edit this chunk. This writes the author names, ORCID iDs, and affiliations to the .docx document based on information supplied in user-edited-parameters. 
 
-- `authorsCol2_do_not_edit`.There is no need to edit this chunk. This writes the author names, ORCID iDs, and affiliations to the html document based on information supplied in user-edited-parameters.
-
-- `LoadData`. Any datasets you need to load can go here.
+- `LoadData`. Any datasets you need to load can go here. For most people these datasets are used to generate summary statistics on proportions of data that were flagged as accepted (A) accepted, estimated (AE) and rejected (R) during the quality control process. 
 
 - `FileTable`. Do not edit. Generates a table of file names, sizes,  and descriptions in the data package being described by the DRR.
 
-- `Listing`. Appendix A, by default is the code listing. This will generate all code used in generating the report and data packages.
+- `Listing`. Appendix A, by default is the code listing. This will generate all code used in generating the report and data packages. In most cases, code listing is not required. If all QA/QC processes and data manipulations were performed elsewhere, you should cite that code (in the methods and references) and leave the "listing code chunk with the default settings of eval=FALSE and echo=FALSE. If you have developed custom scripts, you can add those to DataStore with the reference "Script" and cite them in the DRR. 
 
-- `session-info` is the information about the versions of R and packages used in generating the report.
+- `session-info` is the information about the versions of R and packages used in generating the report. In most cases, you do not need to report session info (leave the session-info code chunk parameters in their default state: eval=FALSE). Session and version information is only necessary if you have set the "Listing" code chunk in appendix A to eval=TRUE. In that case, change the "session info" code chunk parameters to eval=TRUE.
 
 
 ## Figures
@@ -149,57 +140,47 @@ include_graphics("ProcessingWorkflow.png")
 Results in:
 
 ```{r figure2, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 2.** Example general workflow to include in the methods section."}
-include_graphics("ProcessingWorkflow.png")
+include_graphics("common/ProcessingWorkflow.png")
 
 ```
 
 ## Tables
-Tables should be created using the kable function, with additional formatting
-options available via the kableExtra package. Specifying the caption in the
+Tables should be created using the kable function. Specifying the caption in the
 kable function call (as opposed to inline markdown text) will ensure that the
-caption is appropriately formatted using the theme stylesheet. The table format
-has been designed to mimic the NPS graphic identity standards.
-
-In general, tables should be created with the bootstrap_options of striped,
-hover, condensed, and responsive, with full_width set to false.
+caption is appropriately formatted.
 
 For example:
 
 ````markdown
 `r ''````{r Table2, echo=FALSE}
-c1<-c("Mouse1","Mouse2","Mousen")
-c2<-c("Drug treatment","Drug treatment","Drug treatment")
-c3<-c("Liver dissection","Liver dissection","Liver dissection")
-c4<-c("RNA extraction","RNA extraction","RNA extraction")
-c5<-c("RNA-Seq","RNA-Seq","RNA-Seq")
-c6<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX")
-Table2<-data.frame(c1,c2,c3,c4,c5,c6)
+c1<-c("Protocol1","Protocol2","Protocol3")
+c2<-c("Park Unit 1","Park Unit 2","Park Unit 3")
+c3<-c("Site 1","Site 2","Site 3")
+c4<-c("Date 1","Date 2","Date 3")
+c5<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX")
+Table2<-data.frame(c1,c2,c3,c4,c5)
 
 kable(Table2, 
-      col.names=c("Subjects","Protocol 1","Protocol 2","Protocol 3","Protocol 4","Data"),
-      caption="**Table 1.** Experimental study example Data Records table.") %>%
+      col.names=c("Subjects","Park Units","Locations","Sampling Dates","Data"),
+      caption="**Table 1.** Monitoring study example Data Records table.") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
 ```
 ````
 Results in:
 
 ```{r Table2, echo=FALSE}
-c1<-c("Mouse1","Mouse2","Mousen")
-c2<-c("Drug treatment","Drug treatment","Drug treatment")
-c3<-c("Liver dissection","Liver dissection","Liver dissection")
-c4<-c("RNA extraction","RNA extraction","RNA extraction")
-c5<-c("RNA-Seq","RNA-Seq","RNA-Seq")
-c6<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX")
-Table2<-data.frame(c1,c2,c3,c4,c5,c6)
+c1<-c("Protocol1","Protocol2","Protocol3")
+c2<-c("Park Unit 1","Park Unit 2","Park Unit 3")
+c3<-c("Site 1","Site 2","Site 3")
+c4<-c("Date 1","Date 2","Date 3")
+c5<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX")
+Table2<-data.frame(c1,c2,c3,c4,c5)
 
 kable(Table2, 
-      col.names=c("Subjects","Protocol 1","Protocol 2","Protocol 3","Protocol 4","Data"),
-      caption="**Table 1.** Experimental study example Data Records table.") %>%
+      col.names=c("Subjects","Park Units","Locations","Sampling Dates","Data"),
+      caption="**Table 1.** Monitoring study example Data Records table.") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
 ```
-Note that rendered tables are not fully 508 compliant, but they’re close. We are
-currently working on extending (or contributing to) the kable package so that
-rendered tables are 508 compliant.
 
 # Publishing Data Release Reports and Associated Data
 
