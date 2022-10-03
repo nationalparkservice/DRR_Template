@@ -1,20 +1,21 @@
 ---
 title: "Purpose and Scope of Data Release Reports"
-date: "2020-04-23"
+date: "03 October, 2022"
 output:
   html_document:
     df_print: kable
-    fig_caption: true
+    fig_caption: yes
     dev: svg
     highlight: haddock
-    keep_md: TRUE
+    keep_md: yes
     smart: no
     theme: journal
-    css: "../common/journalnps.min.css"
+    css: common/journalnps.min.css
     toc: yes
-    toc_float: true
-    number_sections: true
-
+    toc_float: yes
+    number_sections: yes
+  word_document:
+    toc: yes
 ---
 
 
@@ -28,7 +29,7 @@ in expectations (outside NPS) since the inception of the I&M program.
 -   A move in the scientific disciplines toward considering and publishing data
     sets as independently-citable scientific works.
 
--   Routine assignment of digital object identifiers (DOIs) to dataset to facilitate location, reuse, and
+-   Routine assignment of digital object identifiers (DOIs) to datasets to facilitate location, reuse, and
     citation of specific data
 
 -   Increased transparency and reproducibility in the processing and analysis of
@@ -51,9 +52,7 @@ evaluation (mandated; see below). The establishment of a data release report
 series is intended to facilitate and encourage this type of reporting in a
 standard format, and in a manner commensurate with current scientific norms.
 
-A template for creating data release reports to be published in the DRR series
-and associated data packages is located at
-<https://github.com/nationalparkservice/IMD_DRR_Template>. We have also
+A [template](../DRR_to_docx.rmd) for creating data release reports to be published in the DRR series. We have also
 developed procedures for authoring DRR reports in Microsoft Word and porting
 them to the appropriate format.  
 
@@ -245,7 +244,7 @@ of general study data may be reused or contribute to other scientific work
 may be used as ancillary data to explain monitoring observations).
 
 <div class="figure" style="text-align: center">
-<img src="WorkflowModelGeneral.png" alt="**Figure 1.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
+<img src="common/WorkflowModelGeneral.png" alt="**Figure 1.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
 <p class="caption">**Figure 1.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements.</p>
 </div>
 
@@ -263,7 +262,7 @@ for secondary purposes including synthesis reports and condition assessments,
 and portions of monitoring data may contribute to inventories.
 
 <div class="figure" style="text-align: center">
-<img src="WorkflowModelMonitoring.png" alt="**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital sign monitoring efforts. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
+<img src="common/WorkflowModelMonitoring.png" alt="**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital sign monitoring efforts. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
 <p class="caption">**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital sign monitoring efforts. Teal-colored boxes are subject to reproducibility requirements.</p>
 </div>
 
@@ -278,11 +277,11 @@ study data are expected to be reused to meet broader inventory level goals, but
 may also support other scientific work and decision support.
 
 <div class="figure" style="text-align: center">
-<img src="WorkflowModelInventories.png" alt="**Figure 3.** Workflow for data collection, processing, dissemination, and use for inventory studies. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
+<img src="common/WorkflowModelInventories.png" alt="**Figure 3.** Workflow for data collection, processing, dissemination, and use for inventory studies. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
 <p class="caption">**Figure 3.** Workflow for data collection, processing, dissemination, and use for inventory studies. Teal-colored boxes are subject to reproducibility requirements.</p>
 </div>
 
 American Statistical Association (ASA). 2017. Recommendations to funding agencies for supporting reproducible research. https://www.amstat.org/asa/files/pdfs/POL-ReproducibleResearchRecommendations.pdf. 
 
-Plesser, H. E. 2017. Reproducibility vs. replicability: a brief history of a confused termonology. Front Neuroinform. 11:76. https://dx.doi.org/10.3389%2Ffninf.2017.00076.
+Plesser, H. E. 2017. Reproducibility vs. Replicability: A brief history of a confused terminology. Front. Neuroinform. 11:76. https://doi.org/10.3389/fninf.2017.00076.
 

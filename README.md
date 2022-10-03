@@ -1,30 +1,34 @@
-# IMD_DRR_Template
-This is a template project to for use when drafting a data release report. Data Release Reports (DRRs) are created by the National Park Service and provide detailed descriptions of valuable research datasets, including the methods used to collect the data and technical analyses supporting the quality of the measurements. Data Release Reports focus on helping others reuse data, rather than presenting results, testing hypotheses, or presenting new interpretations, methods or in-depth analyses. 
+For a browser-friendly readme, check out the [TEMP DEV PURPOSES DRR Template Website](https://roblbaker.github.io/DRR_Template_Working) hosted on github
+
+# DRRs: Background
+
+[Purpose and Scope of Data Release Reports](vignettes/PurposeAndScope.html)
+
+This is a template is for use when drafting Data Release Reports. DRRs are created by the National Park Service and provide detailed descriptions of valuable research datasets, including the methods used to collect the data and technical analyses supporting the quality of the measurements. Data Release Reports focus on helping others reuse data rather than presenting results, testing hypotheses, or presenting new interpretations and in-depth analyses. 
 
 # About this Template
-This template is modeled after the Nature Science Data electronic journal (https://www.nature.com/sdata/), and contains an rmarkdown
-template file, default folder structure for project files, and all necessary template files to generate a standard NPS-branded html 
-report that documents the collection, processing, quality control, and evaluation of utility. 
+This template contains an rmarkdown template file, default folder structure for project files, and all the necessary template files to generate an unformatted .docx file. The file will be ingested by EXstyles, converted to an .xml file and fully formatted according to NPS branding upon final publication. The goal of this process is to relieve data producers, managers, and scientists from the burden of formatting and allow them to focus primarily on content. The content should document the collection, processing, quality control, of NPS data packages and evaluate their of utility. 
 
 This template is under active development to improve style and 508 compliance.
 
-# Guides & Examples
-1. [Purpose and Scope of Data Release Reports](vignettes/PurposeAndScope.html)
+# How to Start a DRR
+New projects can be established using this template by downloading a zip file of the package from: <!--[This Link](https://github.com/nationalparkservice/IMD_DRR_Template/zipball/master) -->
 
-2. [How to Use this Template](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/HowToUseThisTemplate.html)
+([TEMP DEV PURPOSES Zipball](https://github.com/RobLBaker/DRR_Template_Working/zipball/master))
 
-3. Examples (more will be provided as they are published):
+1. [How to Use this Template](vignettes/HowToUseThisTemplate.html) line-by-line instructions and descriptions for how to use the DRR Template.
 
-    a) [Content Outline Guide](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/DRR_Template.html)
+2. [The DRR_Template](DRR_to_docx.Rmd) the file you make changes to to generate a DRR.
 
-    b) [DRR for tabular (csv) datasets](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/DRAFT_2019_Report_NationalMeanDailyFlowsDataSummary.html) of hydrologic data used for calculating hydrologic metrics as a part of the national Environmental Settings monitoring protocol. 
+3. [DRR_Report](DRR_to_docx.docx) an example of the .docx output file that takes into account your edits and changes to DRR_to_docx.Rmd (assuming you have saved and/or knit the .Rmd) 
+
+# Examples
+More will be provided as they are published. The following examples are post-formatting and should be used as examples for content generation only.
+
+1. [DRR for tabular (csv) datasets](vignettes/DRAFT_2019_Report_NationalMeanDailyFlowsDataSummary.html) of hydrologic data used for calculating hydrologic metrics as a part of the national Environmental Settings monitoring protocol. 
     
-    c) [DRR for geospatial (file geodatabase) data](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/NPS-NRSS-DRR-2020-1.html) contining custom areas of analysis used for Environmental Settings montioring protocol. Report created in microsoft word and ported to the template.
+2. [DRR for geospatial (file geodatabase) data](vignettes/NPS-NRSS-DRR-2020-1.html) continuing custom areas of analysis used for Environmental Settings monitoring protocol. Report created in Microsoft Word and ported to the template.
 
-4. [Review Guidelines](https://htmlpreview.github.io/?https://github.com/nationalparkservice/IMD_DRR_Template/blob/master/vignettes/DataReview.html)
+# Tips, FAQs, and Errata 
+(coming soon)
 
-
-5. Tips, FAQs, and Errata (coming soon)
-
-# Getting Started
-New projects can be established using this template by downloading a zip file of the package from [This Link](https://github.com/nationalparkservice/IMD_DRR_Template/archive/master.zip)

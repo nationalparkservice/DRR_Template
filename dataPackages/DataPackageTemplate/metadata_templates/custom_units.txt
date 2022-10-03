@@ -1,2 +1,0 @@
-id	unitType	parentSI	multiplierToSI	description
-microsiemensPerCentimeter	specific conductance			μS/cm

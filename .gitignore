@@ -2,6 +2,4 @@
 .Rhistory
 .RData
 .Ruserdata
-data/raw/
-data/final/
-dataPackages/DataPackageTemplate/*.nb.html
+DRR_Template_test.*

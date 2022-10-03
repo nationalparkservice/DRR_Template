@@ -1,20 +1,21 @@
 ---
 title: "Purpose and Scope of Data Release Reports"
-date: "2020-04-23"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   html_document:
     df_print: kable
-    fig_caption: true
+    fig_caption: yes
     dev: svg
     highlight: haddock
-    keep_md: TRUE
+    keep_md: yes
     smart: no
     theme: journal
-    css: "../common/journalnps.min.css"
+    css: common/journalnps.min.css
     toc: yes
-    toc_float: true
-    number_sections: true
-
+    toc_float: yes
+    number_sections: yes
+  word_document:
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -59,7 +60,7 @@ in expectations (outside NPS) since the inception of the I&M program.
 -   A move in the scientific disciplines toward considering and publishing data
     sets as independently-citable scientific works.
 
--   Routine assignment of digital object identifiers (DOIs) to dataset to facilitate location, reuse, and
+-   Routine assignment of digital object identifiers (DOIs) to datasets to facilitate location, reuse, and
     citation of specific data
 
 -   Increased transparency and reproducibility in the processing and analysis of
@@ -82,9 +83,7 @@ evaluation (mandated; see below). The establishment of a data release report
 series is intended to facilitate and encourage this type of reporting in a
 standard format, and in a manner commensurate with current scientific norms.
 
-A template for creating data release reports to be published in the DRR series
-and associated data packages is located at
-<https://github.com/nationalparkservice/IMD_DRR_Template>. We have also
+A [template](../DRR_to_docx.rmd) for creating data release reports to be published in the DRR series. We have also
 developed procedures for authoring DRR reports in Microsoft Word and porting
 them to the appropriate format.  
 
@@ -276,7 +275,7 @@ of general study data may be reused or contribute to other scientific work
 may be used as ancillary data to explain monitoring observations).
 
 ```{r figure1, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 1.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements."}
-include_graphics("WorkflowModelGeneral.png")
+include_graphics("common/WorkflowModelGeneral.png")
 
 ```
 
@@ -294,7 +293,7 @@ for secondary purposes including synthesis reports and condition assessments,
 and portions of monitoring data may contribute to inventories.
 
 ```{r figure2, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital sign monitoring efforts. Teal-colored boxes are subject to reproducibility requirements."}
-include_graphics("WorkflowModelMonitoring.png")
+include_graphics("common/WorkflowModelMonitoring.png")
 
 ```
 
@@ -309,11 +308,11 @@ study data are expected to be reused to meet broader inventory level goals, but
 may also support other scientific work and decision support.
 
 ```{r figure3, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 3.** Workflow for data collection, processing, dissemination, and use for inventory studies. Teal-colored boxes are subject to reproducibility requirements."}
-include_graphics("WorkflowModelInventories.png")
+include_graphics("common/WorkflowModelInventories.png")
 
 ```
 
 American Statistical Association (ASA). 2017. Recommendations to funding agencies for supporting reproducible research. https://www.amstat.org/asa/files/pdfs/POL-ReproducibleResearchRecommendations.pdf. 
 
-Plesser, H. E. 2017. Reproducibility vs. replicability: a brief history of a confused termonology. Front Neuroinform. 11:76. https://dx.doi.org/10.3389%2Ffninf.2017.00076.
+Plesser, H. E. 2017. Reproducibility vs. Replicability: A brief history of a confused terminology. Front. Neuroinform. 11:76. https://doi.org/10.3389/fninf.2017.00076.
 

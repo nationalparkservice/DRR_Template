@@ -1,6 +1,6 @@
 ---
 title: "How To Use This Template"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "03 October, 2022"
 output:
   html_document:
     df_print: kable
@@ -18,38 +18,7 @@ output:
     toc: yes
 ---
 
-```{r setup, include=FALSE}
-RRpackages <- c('markdown',     # links to Sundown rendering library
-                'rmarkdown',    # newer rendering via pandoc
-                'pander',       # alternative renderer for markdown,
-                                # plus better tables than just knitr
-                'knitr',
-                "devtools",
-                "R.rsp",        # dynamic generation of scientific reports
-                "rmdHelpers",   # misc from Mark Peterson
-                                #  thisFileName() thisFile_knit()
-                'yaml',         # format data into markdown
-                'kableExtra',
-                'rmdformats',   # templates including automatic ToC,
-                                # also use_bookdown()
-                'htmltools'     #
-                )
 
-inst <- RRpackages %in% installed.packages()
-if (length(RRpackages[!inst]) > 0) {
-   install.packages(RRpackages[!inst], repos = "http://cran.us.r-project.org", dep = TRUE)
-}
-lapply(RRpackages, library, character.only = TRUE)
-
-knitr::opts_chunk$set(
-   echo = TRUE,
-   comment = " ",
-   dev = "svg",
-   tidy.opts = list(width.cutoff = 60),
-   tidy = TRUE
-   )
-
-```
 
 # Overview
 Data Release Reports (DRRs) are created by the National Park Service and provide detailed descriptions of valuable research datasets, including the methods used to collect the data and technical analyses supporting the quality of the measurements. Data Release Reports focus on helping others reuse data, rather than presenting results, testing hypotheses, or presenting new interpretations, methods or in-depth analyses. 
@@ -65,10 +34,10 @@ New projects can be established using this template by downloading a zip file of
 
 ## Folder Structure
 General directory contents are as follows (Figure 1):
-```{r figure1, echo=FALSE, fig.align="center", out.width="30%",  fig.cap="**Figure 1.** Standard project directory structure for data release reports."}
-include_graphics("./common/FileStructure.PNG")
-
-```
+<div class="figure" style="text-align: center">
+<img src="./common/FileStructure.PNG" alt="**Figure 1.** Standard project directory structure for data release reports." width="30%" />
+<p class="caption">**Figure 1.** Standard project directory structure for data release reports.</p>
+</div>
 
 - `input` This is the only location where you you should manually change or edit files. This is where data files you need to supply should be placed. 
   
@@ -132,17 +101,17 @@ tag, making it 508-compliant.
 For example:
 
 ````markdown
-`r ''````{r figure1, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 2.** Example general workflow to include in the methods section."}
+```{r figure1, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 2.** Example general workflow to include in the methods section."}
 include_graphics("ProcessingWorkflow.png")
 ```
 ````
 
 Results in:
 
-```{r figure2, echo=FALSE, fig.align="center", out.width="70%", fig.cap="**Figure 2.** Example general workflow to include in the methods section."}
-include_graphics("common/ProcessingWorkflow.png")
-
-```
+<div class="figure" style="text-align: center">
+<img src="common/ProcessingWorkflow.png" alt="**Figure 2.** Example general workflow to include in the methods section." width="70%" />
+<p class="caption">**Figure 2.** Example general workflow to include in the methods section.</p>
+</div>
 
 ## Tables
 Tables should be created using the kable function. Specifying the caption in the
@@ -152,22 +121,6 @@ caption is appropriately formatted.
 For example:
 
 ````markdown
-`r ''````{r Table2, echo=FALSE}
-c1<-c("Protocol1","Protocol2","Protocol3")
-c2<-c("Park Unit 1","Park Unit 2","Park Unit 3")
-c3<-c("Site 1","Site 2","Site 3")
-c4<-c("Date 1","Date 2","Date 3")
-c5<-c("GEOXXXXX","GEOXXXXX","GEOXXXXX")
-Table2<-data.frame(c1,c2,c3,c4,c5)
-
-kable(Table2, 
-      col.names=c("Subjects","Park Units","Locations","Sampling Dates","Data"),
-      caption="**Table 1.** Monitoring study example Data Records table.") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
-```
-````
-Results in:
-
 ```{r Table2, echo=FALSE}
 c1<-c("Protocol1","Protocol2","Protocol3")
 c2<-c("Park Unit 1","Park Unit 2","Park Unit 3")
@@ -181,6 +134,44 @@ kable(Table2,
       caption="**Table 1.** Monitoring study example Data Records table.") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),full_width=F)
 ```
+````
+Results in:
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>**Table 1.** Monitoring study example Data Records table.</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Subjects </th>
+   <th style="text-align:left;"> Park Units </th>
+   <th style="text-align:left;"> Locations </th>
+   <th style="text-align:left;"> Sampling Dates </th>
+   <th style="text-align:left;"> Data </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Protocol1 </td>
+   <td style="text-align:left;"> Park Unit 1 </td>
+   <td style="text-align:left;"> Site 1 </td>
+   <td style="text-align:left;"> Date 1 </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Protocol2 </td>
+   <td style="text-align:left;"> Park Unit 2 </td>
+   <td style="text-align:left;"> Site 2 </td>
+   <td style="text-align:left;"> Date 2 </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Protocol3 </td>
+   <td style="text-align:left;"> Park Unit 3 </td>
+   <td style="text-align:left;"> Site 3 </td>
+   <td style="text-align:left;"> Date 3 </td>
+   <td style="text-align:left;"> GEOXXXXX </td>
+  </tr>
+</tbody>
+</table>
 
 # Publishing Data Release Reports and Associated Data
 

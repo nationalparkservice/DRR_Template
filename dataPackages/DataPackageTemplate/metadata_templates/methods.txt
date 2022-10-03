@@ -1,1 +1,0 @@
-Methods for the generation of this data set are documented in Data Release Report REPORT NUMBER, available at https://irma.nps.gov/DataStore/Reference/Profile/123456.
