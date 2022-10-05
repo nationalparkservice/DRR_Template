@@ -12,11 +12,12 @@ This template contains an rmarkdown template file, default folder structure for 
 This template is under active development to improve style and 508 compliance.
 
 # How to Start a DRR
-New projects can be established using this template by downloading a zip file of the package from: [This Link](https://github.com/nationalparkservice/IMD_DRR_Template/zipball/master)
+
+New projects can be established using this template by downloading a zip file of the template and associated files and folders from: [This Link](https://github.com/nationalparkservice/IMD_DRR_Template/zipball/master)
 
 1. [How to Use this Template](vignettes/HowToUseThisTemplate.html) line-by-line instructions and descriptions for how to use the DRR Template.
 
-2. [The DRR_Template](DRR_to_docx.Rmd) the file you make changes to to generate a DRR.
+2. [The DRR_Template](DRR_to_docx.Rmd) the file you make changes to to generate a DRR. Note: this is not a stand-alone file. To create a DRR please download the [zipped template](https://github.com/nationalparkservice/IMD_DRR_Template/zipball/master) with all associated files and folders.
 
 3. [DRR_Report](DRR_to_docx.docx) an example of the .docx output file that takes into account your edits and changes to DRR_to_docx.Rmd (assuming you have saved and/or knit the .Rmd) 
 

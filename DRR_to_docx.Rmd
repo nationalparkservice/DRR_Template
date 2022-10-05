@@ -1,5 +1,6 @@
 ---
 output:
+  word_document: default
   html_document:
     df_print: paged
 ---
@@ -68,11 +69,7 @@ dataPackage_fileSizes <- c("0.8 MB", "10 GB")
 # list a short, one-line description of each data file. Descriptions must be in the same order as the filenames.
 dataPackage_fileDescript <- c(
   "This is a short description of my_data.csv (a good guideline is 10 words or less).",
-  "This is a short description of my_data2.csv."
-)
-
-# Write parameters to file for consistent reuse across report and data packages
-save(title, reportNumber, DRR_DSRefID, authorNames, authorAffiliations, authorORCID, DRRabstract, dataPackageRefID, dataPackageTitle, dataPackageDescription, dataPackageDOI, dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript, file = here::here("output", "temp", "reportParameters.Rdata"))
+  "This is a short description of my_data2.csv.")
 ```
 
 

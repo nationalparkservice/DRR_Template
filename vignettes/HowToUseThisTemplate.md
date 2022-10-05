@@ -1,6 +1,6 @@
 ---
 title: "How To Use This Template"
-date: "03 October, 2022"
+date: "05 October, 2022"
 output:
   html_document:
     df_print: kable
@@ -30,7 +30,7 @@ Each DRR cites source and resultant datasets that are published concurrently and
 Data packages that are published concurrently with DRRs are intended to be independently citable scientific works that can serve as the basis for subsequent analysis and reporting by NPS or third parties.
 
 # Project Set-up
-New projects can be established using this template by downloading a zip file of the package from [Dev Purposes TEMP Link](https://RobLBaker/IMD_DRR_Templat/zipball/master).
+New projects can be established using this template by downloading a [zip file](https://github.com/nationalparkservice/IMD_DRR_Template/zipball/master) of the Template and associated files and folders.
 
 ## Folder Structure
 General directory contents are as follows (Figure 1):
@@ -39,7 +39,7 @@ General directory contents are as follows (Figure 1):
 <p class="caption">**Figure 1.** Standard project directory structure for data release reports.</p>
 </div>
 
-- `input` This is the only location where you you should manually change or edit files. This is where data files you need to supply should be placed. 
+- `input` This is the only location where you you should manually change or edit files. This is where data files you need to supply should be placed.  
   
   - `figures`  If you have figures that are not generated as part of running this template, place those files here.
 
@@ -48,7 +48,7 @@ General directory contents are as follows (Figure 1):
 - `temp` Do not edit these files. These are files that are either used or generated during when you knit the DRR_to_docx.rmd template. They may include graphics, text, or data.
 
 # Creating a Reproducible Report
-The following is for users who are using the `DRR_to_docx.RMD` template file to generate a data release report using RMarkdown. 
+The following is for users who are using the `DRR_to_docx.rmd` template file to generate a data release report using RMarkdown. 
 
 ## Standard Code Chunks
 In addition to the report outline and a description of content for each section, the template includes four standard code chunks.
@@ -62,7 +62,7 @@ The YAML header helps format the DRR. You should not need to edit any of the YAM
 - `user_edited_parameters`. A series of parameters that are used in the creation of the DRR and may be re-used in metadata and associated data package construction. You will need to edit these parameters for each DRR.
   - `title`. The title of the Data Release Report.
   - `reportNumber`. This is optional, and should _only_ be included if publishing in the semi-official DRR series. Set to NULL if there is no reportNumber.
-  - `DRR_DSRefID`. This is the Data Store reference ID for the report.
+  - `DRR_DSRefID`. This is the DataStore reference ID for the report.
   - `authorNames`. A list of the author's names.
   - `authorAffiliations`. A list of the author's affiliations. The order of author affiliations must match the order of the authors in the `authorNames` list. Note that the entirety of each affiliation is enclosed in a single set of quotations. Line breaks are indicated with the <br> tag. Do not worry about indentation or word wrapping. If two authors have the same affiliation, list the affiliation twice.
   - `authorORCID`. A list of ORCID iDs for each author in the format "xxxx-xxxx-xxxx-xxxx". If an author does not have an ORCID iD, specify NA (no quotes). The order of ORCID iDs (and NAs) must correspond to the order of authors in the `authorNames` list. Future iterations of the DRR Template will pull ORCID iDs from metadata and eventually from Active Directory. See [ORCID](https://www.orcid.org/) for more information about ORCID iDs or to register an ORCID iD.
@@ -181,7 +181,7 @@ numbers are typically assigned early in data processing and quality evaluation.
 
 - **DataStore Reference Numbers.** When developing a report and data packages, DataStore references should be created as early in the process as practicable. While the report and data packages are in development, these should not be activated. 
 
-- **Report Numbers.** If you are planning to publish a data release report with an official DRR number, please contact the IMD Deputy Chief with the Data Store reference number associated with the DRR.  
+- **Report Numbers.** If you are planning to publish a data release report with an official DRR number, please contact the IMD Deputy Chief with the DataStore reference number associated with the DRR.  
 
 - **Persistent Identifiers.** Digital object identifiers (DOIs) will be assigned to all DRRs and concurrently-published data packages. DOIs will resolve to a DataStore Reference; DOIs are reserved when a draft reference is initiated in DataStore.
 
