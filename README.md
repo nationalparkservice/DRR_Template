@@ -12,6 +12,7 @@ This template contains an rmarkdown template file, default folder structure for 
 This template is under active development to improve style and 508 compliance.
 
 # How to Start a DRR
+
 New projects can be established using this template by downloading a zip file of the template and associated files and folders from: [This Link](https://github.com/nationalparkservice/IMD_DRR_Template/zipball/master)
 
 1. [How to Use this Template](vignettes/HowToUseThisTemplate.html) line-by-line instructions and descriptions for how to use the DRR Template.
