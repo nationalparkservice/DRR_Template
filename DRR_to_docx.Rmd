@@ -41,7 +41,10 @@ authorORCID <- c(
   NA
 )
 
-DRRabstract <- "Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attention to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
+# Replace the text below with your abstract.
+DRRabstract <- "Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attention to non-standard characters, line breaks (<br>), carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
+
+Note that if you need multiple paragraphs or line breaks you can generate them using a combination of backslashes and n's. \n\n
 
 The abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section."
 
@@ -129,7 +132,7 @@ If the data package being described was generated based on one or more pre-exist
 
 ## Summary of datasets created (required)
 
-The Data Records section should be used to explain each data record associated with this work (for instance, a data package), including the DOI indicating where this information is stored, and provide an overview of the data files and their formats. Each external data record should be cited.
+The Data Records section should be used to explain each data record associated with this work (for instance, a data package), including the DOI indicating where this information is stored, and provide an overview of the data files and their formats. Each external data record should be cited. Below is some sample text:
 
 This DRR describes the data package `r dataPackageTitle` which contains a metadata file and `r length(dataPackage_fileNames)` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackageDOI` (see Table 1).
 
@@ -189,7 +192,7 @@ For studies involving privacy or safety controls on public access to the data, t
 
 Ideally these methods are identical to the methods listed in the metadata accompanying the data package that the DRR describes.Future versions of this template will pull directly from metadata.
 
-The Methods should cite previous methods under use but also be detailed enough describing data production including a descriptions of the experimental design, data acquisition assays, and any computational processing (e.g. normalization, image feature extraction) that other can understand the methods and processing steps without referring to associated publications. Cite and link to the DataStore reference for the protocol for detailed methods sufficient for reproducing the experiment or observational study. Related methods should be grouped under corresponding subheadings where possible, and methods should be described in enough detail to allow other researchers to interpret the full study.
+The Methods should cite previous methods under use but also be detailed enough describing data production including experimental design, data acquisition assays, and any computational processing (e.g. normalization, image feature extraction) such that others can understand the methods and processing steps without referring to associated publications. Cite and link to the DataStore reference for the protocol for detailed methods sufficient for reproducing the experiment or observational study. Related methods should be grouped under corresponding subheadings where possible, and methods should be described in enough detail to allow other researchers to interpret the full study.
 
 Specific data inputs and outputs should be explicitly cited in the text and included in the References section below, following the same [Chicago Manual of Style author-date format](https://www.chicagomanualofstyle.org/tools_citationguide/citation-guide-2.html) in text. See the [USGS data citation guidelines](https://www.usgs.gov/data-management/data-citation) for examples of how to cite data in text and in the References section.
 

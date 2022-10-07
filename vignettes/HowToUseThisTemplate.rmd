@@ -52,6 +52,7 @@ knitr::opts_chunk$set(
 ```
 
 # Overview
+
 Data Release Reports (DRRs) are created by the National Park Service and provide detailed descriptions of valuable research datasets, including the methods used to collect the data and technical analyses supporting the quality of the measurements. Data Release Reports focus on helping others reuse data, rather than presenting results, testing hypotheses, or presenting new interpretations, methods or in-depth analyses. 
 
 DRRs are intended to document the processing of fully-QAed data to their final (QCed) form in a reproducible and transparent manner. DRRs document the data collection methods and quality standards used to prepare and review data prior to release. DRRs present the quality of resultant data in the context of fitness for their intended use. 
@@ -61,7 +62,7 @@ Each DRR cites source and resultant datasets that are published concurrently and
 Data packages that are published concurrently with DRRs are intended to be independently citable scientific works that can serve as the basis for subsequent analysis and reporting by NPS or third parties.
 
 # Project Set-up
-New projects can be established using this template by downloading a [zip file](https://github.com/nationalparkservice/IMD_DRR_Template/zipball/master) of the Template and associated files and folders.
+New projects can be established using this template by downloading a [zip file](https://github.com/nationalparkservice/DRR_Template/zipball/master) of the Template and associated files and folders.
 
 ## Folder Structure
 General directory contents are as follows (Figure 1):
@@ -70,7 +71,7 @@ include_graphics("./common/FileStructure.PNG")
 
 ```
 
-- `input` This is the only location where you you should manually change or edit files. This is where data files you need to supply should be placed.  
+- `input` This is the only location (other than the template script itself) where you you should manually change or edit files. This is where data files you need to supply should be placed.  
   
   - `figures`  If you have figures that are not generated as part of running this template, place those files here.
 
@@ -79,6 +80,7 @@ include_graphics("./common/FileStructure.PNG")
 - `temp` Do not edit these files. These are files that are either used or generated during when you knit the DRR_to_docx.rmd template. They may include graphics, text, or data.
 
 # Creating a Reproducible Report
+
 The following is for users who are using the `DRR_to_docx.rmd` template file to generate a data release report using RMarkdown. 
 
 ## Standard Code Chunks
@@ -116,10 +118,50 @@ The YAML header helps format the DRR. You should not need to edit any of the YAM
 
 - `FileTable`. Do not edit. Generates a table of file names, sizes,  and descriptions in the data package being described by the DRR.
 
+- `dataFlaggingTable`. This sample code provides a summary table defining the suggested data flagging codes. There is no need to edit this table.
+
 - `Listing`. Appendix A, by default is the code listing. This will generate all code used in generating the report and data packages. In most cases, code listing is not required. If all QA/QC processes and data manipulations were performed elsewhere, you should cite that code (in the methods and references) and leave the "listing code chunk with the default settings of eval=FALSE and echo=FALSE. If you have developed custom scripts, you can add those to DataStore with the reference "Script" and cite them in the DRR. 
 
 - `session-info` is the information about the versions of R and packages used in generating the report. In most cases, you do not need to report session info (leave the session-info code chunk parameters in their default state: eval=FALSE). Session and version information is only necessary if you have set the "Listing" code chunk in appendix A to eval=TRUE. In that case, change the "session info" code chunk parameters to eval=TRUE.
 
+## Text 
+
+The following text in the body of the DRR template will need to be edited to customize it to each data package:
+
+### Data Records
+This is a required section and consists of two subheadings:
+
+  * **Data inputs** - an optional subsection used to describe datasets that the data package is based on if it is a re-analysis, reorganization, or re-integration of prevously existing data sets.
+  
+  * **Summary of datasts created ** - this is a required section used to explain each data record associated with the work (for instance, a data package), including the DOI indicating where this information is stored. It shoudl also provide an overview of the data files and their formats. Each external data record should be cited.
+
+Sample text is included that uses r code to incorporate previously specified parameters such as the data package title, file names, and DOI.
+
+A code for a sample table summarizing the contents of the data package (except the metadata) is provided.
+
+### Data Qualit and Evaluation
+
+This is a required section. and the text includes multiple suggested text elements and code for an example table defining data flagging codes. Near future development here will incorporate additional optional tables to summarize the data quality based on the flags in the data sets.
+
+### Usage Notes
+
+This is a required section that should contain brief instructions to assist other researchers with reuse of the data. This may include discussion of software packages (with appropriate citations) that are suitable for analysing the assay data files, suggested downstream processing steps (e.g. normalization, etc.), or tips for integrating or comparing the data records with other datasets. Authors are encouraged to provide code, programs or data-processing workflows if they may help others understand or use the data.
+
+### Methods
+This is a required section that cites previous methods used but should also be detailed enough in describing data production including the experimental design, data acquisition assays, and any computational processing (e.g. normalization, QA, QC) such that others can understand the methods without referring to associated publications.  
+
+Optional sub-sections within the methods include:
+
+  * **Data Collection and Sampling**
+  * **Additional Data Sources**
+  * **Data Processing**
+  * **Code availability**
+
+### References
+
+This required section includes full bibliographic references for each paper, chapter, book, data package, dataset, protocol, etc cited within the DRR. 
+
+There are numerous examples of proper formatting for each of these. Future versions of the DRR will enable automatic reference formatting given a correctly formatted bibtex file with the references (.bib).
 
 ## Figures
 Figures should be inserted using code chunks in all cases so that figure

@@ -1654,7 +1654,7 @@ Science Directorate<br> 1201 Oakridge Dr, Suite 150<br> Fort Collins,
 Colorado</p>
 </div>
 <div id="october-2022" class="section level4">
-<h4>03 October, 2022
+<h4>07 October, 2022
 <!-- publication date - defaults to current system date --></h4>
 </div>
 </div>
@@ -1662,10 +1662,12 @@ Colorado</p>
 <div id="abstract" class="section level1">
 <h1>Abstract</h1>
 <p>Abstract Should go here. Multiple Lines are okay; it’ll format
-correctly. Pay careful attention to non-standard characters, line
-breaks, carriage returns, and curly-quotes. You may find it useful to
+correctly. Pay careful attention to non-standard characters, line breaks
+(<br>), carriage returns, and curly-quotes. You may find it useful to
 write the abstract in NotePad++ or some other text editor and not a word
 processor (such as Microsoft Word).</p>
+<p>Note that if you need multiple paragraphs or line breaks you can
+generate them using a combination of backslashes and n’s.</p>
 <p>The abstract should succinctly describe the study, the assay(s)
 performed, the resulting data, and their reuse potential, but should not
 make any claims regarding new scientific findings. No references are
@@ -1686,7 +1688,7 @@ more pre-existing datasets, cite those datasets here.</p>
 associated with this work (for instance, a data package), including the
 DOI indicating where this information is stored, and provide an overview
 of the data files and their formats. Each external data record should be
-cited.</p>
+cited. Below is some sample text:</p>
 <p>This DRR describes the data package Data Package Title which contains
 a metadata file and 2 data files. These data were compiled by the
 National Park Service Biological Resources Division and are available at
@@ -1735,7 +1737,7 @@ staff in the NPS Inventory and Monitoring Division to ensure accuracy,
 completeness, and consistency with documented data quality standards, as
 well as for usability and reproducibility. The <em>Data Package
 Title</em> is suitable for its intended use as of the date of processing
-(2022-10-03).</p>
+(2022-10-07).</p>
 <p><em>Required Table</em></p>
 <table>
 <caption><strong>Description of data quality flags</strong></caption>
@@ -1814,9 +1816,9 @@ data use.</p>
 metadata accompanying the data package that the DRR describes.Future
 versions of this template will pull directly from metadata.</p>
 <p>The Methods should cite previous methods under use but also be
-detailed enough describing data production including a descriptions of
-the experimental design, data acquisition assays, and any computational
-processing (e.g. normalization, image feature extraction) that other can
+detailed enough describing data production including experimental
+design, data acquisition assays, and any computational processing
+(e.g. normalization, image feature extraction) such that others can
 understand the methods and processing steps without referring to
 associated publications. Cite and link to the DataStore reference for
 the protocol for detailed methods sufficient for reproducing the
@@ -2051,7 +2053,10 @@ authorORCID &lt;- c(
   NA
 )
 
-DRRabstract &lt;- &quot;Abstract Should go here. Multiple Lines are okay; it&#39;ll format correctly. Pay careful attention to non-standard characters, line breaks, carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
+# Replace the text below with your abstract.
+DRRabstract &lt;- &quot;Abstract Should go here. Multiple Lines are okay; it&#39;ll format correctly. Pay careful attention to non-standard characters, line breaks (&lt;br&gt;), carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
+
+Note that if you need multiple paragraphs or line breaks you can generate them using a combination of backslashes and n&#39;s. \n\n
 
 The abstract should succinctly describe the study, the assay(s) performed, the resulting data, and their reuse potential, but should not make any claims regarding new scientific findings. No references are allowed in this section.&quot;
 
@@ -2079,11 +2084,7 @@ dataPackage_fileSizes &lt;- c(&quot;0.8 MB&quot;, &quot;10 GB&quot;)
 # list a short, one-line description of each data file. Descriptions must be in the same order as the filenames.
 dataPackage_fileDescript &lt;- c(
   &quot;This is a short description of my_data.csv (a good guideline is 10 words or less).&quot;,
-  &quot;This is a short description of my_data2.csv.&quot;
-)
-
-# Write parameters to file for consistent reuse across report and data packages
-save(title, reportNumber, DRR_DSRefID, authorNames, authorAffiliations, authorORCID, DRRabstract, dataPackageRefID, dataPackageTitle, dataPackageDescription, dataPackageDOI, dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript, file = here::here(&quot;output&quot;, &quot;temp&quot;, &quot;reportParameters.Rdata&quot;))
+  &quot;This is a short description of my_data2.csv.&quot;)
 RRpackages &lt;- c(&quot;markdown&quot;, &quot;rmarkdown&quot;, &quot;pander&quot;, &quot;knitr&quot;, &quot;yaml&quot;)
 
 inst &lt;- RRpackages %in% installed.packages()
@@ -2229,14 +2230,14 @@ knitr::kable(data_flags, caption = &quot;**Description of data quality flags**&q
 ## [1] yaml_2.3.5     knitr_1.40     pander_0.6.5   rmarkdown_2.16 markdown_1.1  
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.9      rstudioapi_0.14 magrittr_2.0.3  here_1.0.1     
-##  [5] R6_2.5.1        rlang_1.0.5     fastmap_1.1.0   stringr_1.4.1  
-##  [9] highr_0.9       tools_4.2.0     xfun_0.31       png_0.1-7      
-## [13] cli_3.3.0       jquerylib_0.1.4 htmltools_0.5.3 digest_0.6.29  
-## [17] rprojroot_2.0.3 sass_0.4.2      cachem_1.0.6    evaluate_0.16  
-## [21] stringi_1.7.8   compiler_4.2.0  bslib_0.4.0     jsonlite_1.8.0</code></pre>
+##  [1] Rcpp_1.0.9      png_0.1-7       digest_0.6.29   R6_2.5.1       
+##  [5] jsonlite_1.8.2  magrittr_2.0.3  evaluate_0.16   highr_0.9      
+##  [9] stringi_1.7.8   cachem_1.0.6    rlang_1.0.5     cli_3.3.0      
+## [13] rstudioapi_0.14 jquerylib_0.1.4 bslib_0.4.0     tools_4.2.0    
+## [17] stringr_1.4.1   xfun_0.33       fastmap_1.1.0   compiler_4.2.0 
+## [21] htmltools_0.5.3 sass_0.4.2</code></pre>
 <pre class="r"><code>Sys.time()</code></pre>
-<pre><code>## [1] &quot;2022-10-03 09:08:05 MDT&quot;</code></pre>
+<pre><code>## [1] &quot;2022-10-07 12:46:57 MDT&quot;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div id="appendix-b.-session-and-version-information" class="section level1">
@@ -2266,13 +2267,13 @@ case, change the “session-info” code chunk parameters to eval=TRUE.</p>
 ## [1] yaml_2.3.5     knitr_1.40     pander_0.6.5   rmarkdown_2.16 markdown_1.1  
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.9      rstudioapi_0.14 magrittr_2.0.3  here_1.0.1     
-##  [5] R6_2.5.1        rlang_1.0.5     fastmap_1.1.0   stringr_1.4.1  
-##  [9] highr_0.9       tools_4.2.0     xfun_0.31       png_0.1-7      
-## [13] cli_3.3.0       jquerylib_0.1.4 htmltools_0.5.3 digest_0.6.29  
-## [17] rprojroot_2.0.3 sass_0.4.2      cachem_1.0.6    evaluate_0.16  
-## [21] stringi_1.7.8   compiler_4.2.0  bslib_0.4.0     jsonlite_1.8.0</code></pre>
-<pre><code>## [1] &quot;2022-10-03 09:08:05 MDT&quot;</code></pre>
+##  [1] Rcpp_1.0.9      png_0.1-7       digest_0.6.29   R6_2.5.1       
+##  [5] jsonlite_1.8.2  magrittr_2.0.3  evaluate_0.16   highr_0.9      
+##  [9] stringi_1.7.8   cachem_1.0.6    rlang_1.0.5     cli_3.3.0      
+## [13] rstudioapi_0.14 jquerylib_0.1.4 bslib_0.4.0     tools_4.2.0    
+## [17] stringr_1.4.1   xfun_0.33       fastmap_1.1.0   compiler_4.2.0 
+## [21] htmltools_0.5.3 sass_0.4.2</code></pre>
+<pre><code>## [1] &quot;2022-10-07 12:46:57 MDT&quot;</code></pre>
 </div>
 
 
