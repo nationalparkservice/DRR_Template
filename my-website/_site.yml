@@ -1,0 +1,19 @@
+name: "my-website"
+title: "NPS Data Release Reports"
+description: |
+  NPS Data Release Reports
+output_dir: "../docs"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+    - text: "Creating DRRs"
+      menu:
+          - text: "Purpose & Scope"
+            href: PurposeAndScope.html
+          - text: "How to Use The Tempalte"
+            href: HowToUseThisTemplate.html
+
+output: distill::distill_article
