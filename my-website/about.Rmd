@@ -1,0 +1,29 @@
+---
+title: "National Park Service Data Release Reports"
+author:
+- name: Robert Baker
+  affiliation: National Park Service
+  affiliation_url: https://www.nps.gov
+  orcid_id: 0000-0001-7591-5035
+- name: Joe DeVivo
+  affiliation: National Park Service
+  affiliation_url: https://www.nps.gov
+- name: Judd Patterson
+  affiliation: National Park Service
+  affiliation url: https://www.nps.gov
+  orcid_id: 0000-0002-0951-7917
+date: "November 20, 2022"
+description: |
+  Resources and Guides for generating NPS DRRs associated with data packages
+citation_url: https://nationalparkservice.github.io/DRR_Template/
+bibliography: biblio.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+The NPS DRR Template is an R Template and accompanying documentation to facilitate generating Data Release Reports associated with NPS packages for publication to DataStore.
+
+To report bugs or request enhancements, please use post an  [issue](https://github.com/nationalparkservice/DRR_Template/issues) on github or email [Rob Baker](mailto:robert_baker@nps.gov%20?subject="DRR_Template")

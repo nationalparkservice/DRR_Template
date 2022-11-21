@@ -1,6 +1,6 @@
 ---
 title: "Purpose and Scope of Data Release Reports"
-date: "03 October, 2022"
+date: "20 November, 2022"
 output:
   html_document:
     df_print: kable
@@ -244,7 +244,7 @@ of general study data may be reused or contribute to other scientific work
 may be used as ancillary data to explain monitoring observations).
 
 <div class="figure" style="text-align: center">
-<img src="common/WorkflowModelGeneral.png" alt="**Figure 1.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
+<img src="../vignettes/common/WorkflowModelGeneral.png" alt="**Figure 1.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
 <p class="caption">**Figure 1.** Workflow for data collection, processing, dissemination, and use for general studies. Teal-colored boxes are subject to reproducibility requirements.</p>
 </div>
 
@@ -262,7 +262,7 @@ for secondary purposes including synthesis reports and condition assessments,
 and portions of monitoring data may contribute to inventories.
 
 <div class="figure" style="text-align: center">
-<img src="common/WorkflowModelMonitoring.png" alt="**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital sign monitoring efforts. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
+<img src="../vignettes/common/WorkflowModelMonitoring.png" alt="**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital sign monitoring efforts. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
 <p class="caption">**Figure 2.** Workflow for data collection, processing, dissemination, and use for vital sign monitoring efforts. Teal-colored boxes are subject to reproducibility requirements.</p>
 </div>
 
@@ -277,7 +277,7 @@ study data are expected to be reused to meet broader inventory level goals, but
 may also support other scientific work and decision support.
 
 <div class="figure" style="text-align: center">
-<img src="common/WorkflowModelInventories.png" alt="**Figure 3.** Workflow for data collection, processing, dissemination, and use for inventory studies. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
+<img src="../vignettes/common/WorkflowModelInventories.png" alt="**Figure 3.** Workflow for data collection, processing, dissemination, and use for inventory studies. Teal-colored boxes are subject to reproducibility requirements." width="70%" />
 <p class="caption">**Figure 3.** Workflow for data collection, processing, dissemination, and use for inventory studies. Teal-colored boxes are subject to reproducibility requirements.</p>
 </div>
 
