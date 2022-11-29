@@ -77,13 +77,16 @@ dataPackage_fileDescript <- c(
 
 
 ```{r setup_do_not_edit, include=FALSE}
-RRpackages <- c("markdown", "rmarkdown", "pander", "knitr", "yaml")
+RRpackages <- c("markdown", "rmarkdown", "pander", "knitr", "yaml", "devtools")
 
 inst <- RRpackages %in% installed.packages()
 if (length(RRpackages[!inst]) > 0) {
   install.packages(RRpackages[!inst], dep = TRUE, repos = "https://cloud.r-project.org")
 }
 lapply(RRpackages, library, character.only = TRUE)
+
+devtools::install_github("nationalparkservice/QCkit")
+library(QCkit)
 ```
 
 *`r (paste0("https://doi.org/10.38750/", DRR_DSRefID))`*
@@ -164,6 +167,45 @@ data_flags<-data.frame(flags, def, app)
 
 knitr::kable(data_flags, caption = "**Description of data quality flags**", col.names=c("Flag", "Definition", "Useage"), format="pandoc")
 ```
+
+```{r data_package_flagging, echo=FALSE, eval=TRUE}
+#if your package is not in your working directory, you need to specify the directory:
+path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
+dp_flags <- QCkit::get_dp_flags(directory = path, force=TRUE)
+
+#calculate Unweighted Response Rates:
+dp_flags$RRU<-(dp_flags$Cell_count - dp_flags$AE_flag - dp_flags$P_flag - dp_flags$R_flag)/dp_flags$Cell_count
+
+#generate table:
+knitr::kable(dp_flags, caption = 'Summary of data quality flags for the data package.', col.names = c("A", "AE", "R", "P", "Total", "RRU"), format = "pandoc")
+
+```
+
+```{r data_file_flagging, echo=FALSE, eval=TRUE}
+#set directory to the location of your data package
+path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
+df_flags <- QCkit::get_df_flags(directory = path, force = TRUE)
+
+#Calculate the Unweighted Response Rates:
+df_flags$RRU <- (df_flags$Cell_count - df_flags$AE_flag - df_flags$P_flag - df_flags$R_flag)/df_flags$Cell_count
+
+#Generate the table
+knitr::kable(df_flags, caption = 'Summary of data quality flags for each data file within the data package.', col.names = c("File Name", "A", "AE", "R", "P", "Total", "RRU"), format = "pandoc")
+```
+
+```{r data_column_flagging, echo=FALSE, eval=TRUE}
+#set directory to the location of your data package:
+path <- "../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
+dc_flags <- QCkit::get_dc_flags(directory = path, force = TRUE)
+
+#Calculate the Unweighted Response Rates:
+dc_flags$RRU <- (dc_flags$Cell_count - dc_flags$AE_flag - dc_flags$P_flag - dc_flags$R_flag)/dc_flags$Cell_count
+
+#Generate the table:
+knitr::kable(dc_flags, caption = 'Summary of data quality flags for each column where flagging was applied.', col.names = c("File Name", "Flagged Column", "A", "AE", "R", "P", "Total", "RRU"), format = "pandoc")
+```
+
+Unweighted Response Rates (RRU) is calculated as number of accepted (A) data values divided by the total number of values. Note that all unflagged values in addition to those flagged as "A" are considered accepted, which may appear to inflate the RRU value.
 
 Possible content **strongly Suggested to Include**
 
