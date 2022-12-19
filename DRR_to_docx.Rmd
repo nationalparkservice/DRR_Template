@@ -288,6 +288,7 @@ kableExtra::kbl(dp_flags, caption = '**Table 3.1: Summary of data quality flags 
 #set directory to the location of your data package
 path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
 df_flags <- QCkit::get_custom_flags(directory = path, output="files")
+df_flags$filename <- gsub(".csv", "", df_flags$filename)
 
 #Generate the table
 knitr::kable(df_flags, caption = '**Table 3.2: Summary of data quality flags for each data file within the data package**', col.names = c("File Name", "A", "AE", "P", "R", "Missing (mean)", "Missing (SD)", "RRU (Mean)", "RRU (SD)"), format = "pandoc", digits=2)
@@ -301,6 +302,8 @@ knitr::kable(df_flags, caption = '**Table 3.2: Summary of data quality flags for
 #set directory to the location of your data package:
 path <- "../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
 dc_flags <- QCkit::get_custom_flags(directory = path, output="columns")
+dc_flags$filename <- gsub(".csv", "", dc_flags$filename)
+dc_flags$column <- gsub("_flag", "", dc_flags$column)
 
 #Generate the table:
 knitr::kable(dc_flags, caption = '**Table 3.3: Summary of data quality flags for each column**', col.names = c("File Name", "Flagged Column", "A", "AE", "R", "P", "Total", "Missing (percent)", "RRU"), format = "pandoc", digits=2)
