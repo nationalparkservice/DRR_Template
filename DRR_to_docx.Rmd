@@ -15,31 +15,38 @@ reportNumber <- ": get this number from Joe DeVivo"
 # This should match the Data Store Reference ID for this DRR. Eventually we should be able to pull this directly from the data package metadata.
 DRR_DSRefID <- 7654321
 
-# Can eventually pull authors from data package metadata, but that assumes data package authors and DRR authors are the same so there will always need to be an option for manually entering author info.
+#Author names and affiliations:
 
-# list the authors.
+#One way to think of the author information is that you are building a table:
+
+# Author | Affiliation | ORCID
+# Jane   | Institute 1 | 0000-1111-2222-3333
+# Jane   | Institute 2 | 0000-1111-2222-3333
+# John   | Institute 2 | NA
+
+#once the table is built, authors can be associated with the appropriate institute via relevant superscripts and the institutes can be listed only once in the DRR.
+
+# list the authors. If an author has multiple institutional affiliations, you must list the author multiple times. In this example, Jane Doe is listed twice because she has two affiliations.
 authorNames <- c(
+  "Jane Doe",
   "Jane Doe",
   "John Doe"
 )
 
-# List author affiliations. The order of author affiliations must match the order of the authors in AuthorNames. Note that the entirety of each affiliation is enclosed in quotations. Line breaks are indicated with the tag <br>. Do not worry about indentation or word wrapping.
+# List author affiliations. The order of author affiliations must match the order of the authors in AuthorNames. If an author has multiple affiliations, the author must be listed 2 (or more) times under authorNames (above) and each affiliation should be listed in order. If authors share the same affiliation, the affiliation should be listed once for each author. In this case, Managed Business Solutions (MBS) is listed twice because it is associated with two authors. MBS will only print to the DRR once.
+
+#Note that the entirety of each affiliation is enclosed in quotations. Do not worry about indentation or word wrapping.
 authorAffiliations <- c(
-  "NPS Inventory and Monitory Division<br>
-1201 Oakridge Dr, Suite 150<br>
-Fort Collins, Colorado",
-  "Managed Business Solutions (MBS), a Sealaska Company<br>
-Contractor to the National Park Service<br>
-Natural Resource Stewardship and Science Directorate<br>
-1201 Oakridge Dr, Suite 150<br>
-Fort Collins, Colorado"
+  "NPS Inventory and Monitory Division, 1201 Oakridge Dr, Suite 150, Fort Collins, Colorado", 
+  "Managed Business Solutions (MBS), a Sealaska Company, Contractor to the National Park Service, Natural Resource Stewardship and Science Directorate, 1201 Oakridge Dr, Suite 150, Fort Collins, Colorado",
+  "Managed Business Solutions (MBS), a Sealaska Company, Contractor to the National Park Service, Natural Resource Stewardship and Science Directorate, 1201 Oakridge Dr, Suite 150, Fort Collins, Colorado"
 )
 
-# List the ORCID iDs for each author in the format "xxxx-xxxx-xxxx-xxxx". If an author does not have an ORCID iD, specify NA (no quotes). For more information on ORCID iDs and to register an ORCID iD, see https://www.orcid.org. The order of the ORCID iDs must match the order of authors in AuthorNames.In this example, Jane Doe has an ORCID iD but John Doe does not.
+# List the ORCID iDs for each author in the format "xxxx-xxxx-xxxx-xxxx". If an author does not have an ORCID iD, specify NA (no quotes). If an author is listed more than once (for instance because they have multiple institutional affiliations), the ORCID iD must also be listed more than once. For more information on ORCID iDs and to register an ORCID iD, see https://www.orcid.org. 
+
+#The order of the ORCID iDs must match the order of authors in AuthorNames.In this example, Jane Doe has an ORCID iD but John Doe does not. Jane's ORCID iD is listed twice because she her name is listed twice in authorNames(because she has two authorAffiliations).
 authorORCID <- c(
-  "0000-1111-2222-3333",
-  NA
-)
+  "0000-1111-2222-3333", "0000-1111-2222-3333", NA)
 
 # Replace the text below with your abstract.
 DRRabstract <- "Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attention to non-standard characters, line breaks (<br>), carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
@@ -77,7 +84,14 @@ dataPackage_fileDescript <- c(
 
 
 ```{r setup_do_not_edit, include=FALSE}
-RRpackages <- c("markdown", "rmarkdown", "pander", "knitr", "yaml", "devtools")
+RRpackages <- c("markdown",
+                "rmarkdown",
+                "pander",
+                "knitr",
+                "yaml",
+                "kableExtra",
+                "devtools",
+                "tidyverse")
 
 inst <- RRpackages %in% installed.packages()
 if (length(RRpackages[!inst]) > 0) {
@@ -91,6 +105,7 @@ library(QCkit)
 
 *`r (paste0("https://doi.org/10.38750/", DRR_DSRefID))`*
 
+
 ```{r title_do_not_edit, echo=FALSE, results="asis"}
 date <- format(Sys.time(), "%d %B, %Y")
 cat("#", title, "\n")
@@ -101,23 +116,104 @@ if (!is.null(reportNumber)) {
 ```
 
 ```{r authors_do_not_edit, echo=FALSE, results="asis"}
-contact <- data.frame(authorNames, authorAffiliations, authorORCID)
+author_list <- data.frame(authorNames, authorAffiliations, authorORCID)
+unique_authors <- author_list %>% distinct(authorNames,
+                                           .keep_all = TRUE)
+unique_affiliation <- author_list %>% distinct(authorAffiliations,
+                                              .keep_all = TRUE)
 
-for (i in seq_along(authorNames)) {
-  curr <- contact[i, ]
-  cat("####", curr$authorNames, " ")
-  if (is.na(curr$authorORCID)) {
-    cat("\n")
-  }
-  if (!is.na(curr$authorORCID)) {
-    # Consider re-write to use the actual downloaded icon and not fontawesome.For some reason fill isn't rendering in chrome (but does in edge). Maybe move fill to CSS?
-    orc <- paste0("https://orcid.org/", curr$authorORCID)
+#single author documents:
+if(length(seq_along(unique_authors$authorNames)) == 1){
+  cat("#### ", unique_authors$authorNames, sep="")
+  if(!is.na(authorORCID)){
+    orc <- paste0("https://orcid.org/", unique_authors$authorORCID, " ")
     cat({{ orc }})
   }
-  cat("\n")
-  cat(curr$authorAffiliations, "\n\n")
+  cat("#### ", unique_authors$authorAffiliations, sep="")
 }
 
+#multi author documents:
+if(length(seq_along(unique_authors$authorNames)) > 1){
+  for (i in seq_along(unique_authors$authorNames)) {
+    curr <- unique_authors[i, ]
+    
+    #find all author affiliations
+    aff <- author_list[which(authorNames == curr$authorNames),]
+    aff <- aff$authorAffiliations  
+    
+    #identify order of affiliation(s) in a unique list of affiliations
+    #build the superscripts for author affiliations
+    super_script <- unique_affiliation$authorAffiliations %in% aff 
+    super <- which(super_script == TRUE)
+    script <- super
+    
+    if(length(seq_along(super)) > 1){
+      script <- NULL
+      j <- 1
+      while(j < length(seq_along(super))){
+        script <- append(script, paste0(super[j],","))
+        j <- j+1
+      }
+      if(j == length(seq_along(super))){
+        script <- append(script, super[j])
+      }
+    }
+    
+    # if NOT the second-to-last author:
+    if(i < (length(seq_along(unique_authors$authorNames)) - 1)){
+      cat("#### ", curr$authorNames, ",", "^",script,"^", " ", " ", sep="")
+        if (is.na(curr$authorORCID)) {
+        }
+        if (!is.na(curr$authorORCID)) {
+          orc <- paste0("https://orcid.org/", curr$authorORCID, " ")
+          cat({{ orc }})
+        }
+    }
+    
+    # if IS the second-to-last author
+    if(i == (length(seq_along(unique_authors$authorNames)) - 1)){ 
+       
+      #if 3 or more authors, include a comma before the "and":
+      if(length(seq_along(unique_authors$authorNames)) > 2){
+        cat(curr$authorNames, ",","^",script,"^ ", sep="")
+        if (is.na(curr$authorORCID)) {
+        }
+        if (!is.na(curr$authorORCID)) {
+          orc <- paste0("https://orcid.org/", curr$authorORCID, " ")
+          cat({{ orc }})
+        }
+        cat("and ", sep="")
+      }
+      
+      #If only 2 authors, omit comma before "and":
+      if(length(seq_along(unique_authors$authorNames)) == 2){
+        cat("#### ", curr$authorNames, "^",script,"^ ", sep="")
+        if (is.na(curr$authorORCID)) {
+        }
+        if (!is.na(curr$authorORCID)) {
+          orc <- paste0("https://orcid.org/", curr$authorORCID, " ")
+          cat({{ orc }})
+        }
+        cat("and ", sep="")
+      }
+    }
+    
+    # if IS the Last author :
+    if(i == length(seq_along(unique_authors$authorNames))){
+      cat(curr$authorNames, "^", script, "^", sep="")
+        if (is.na(curr$authorORCID)) {
+        }
+        if (!is.na(curr$authorORCID)) {
+          orc <- paste0(" https://orcid.org/", curr$authorORCID, " ")
+          cat({{ orc }})
+        }
+    }
+  }
+}
+cat("\n\n")
+for(i in 1:nrow(unique_affiliation)){
+  cat("^",i,"^ ", unique_affiliation[i,2], "\n\n", sep="")
+  }
 ```
 
 #### `r date` <!-- publication date - defaults to current system date -->
@@ -142,7 +238,7 @@ This DRR describes the data package `r dataPackageTitle` which contains a metada
 ```{r FileTable, echo=FALSE}
 filelist <- data.frame(dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript)
 
-knitr::kable(filelist, caption = paste0("**", dataPackageTitle, ": List of data files**"), col.names = c("File Name", "Size", "Description"), format = "pandoc")
+knitr::kable(filelist, caption = paste0("**Table 1: ", dataPackageTitle, ": List of data files**"), col.names = c("File Name", "Size", "Description"), format = "pandoc")
 ```
 
 See Appendix for additional notes and examples.
@@ -159,53 +255,55 @@ The data within the data records listed above have been reviewed by staff in the
 
 *Required Table*
 
-```{r dataFlaggingTable, echo=FALSE}
-flags<-c("A", "AE", "R")
-def<-c("Accepted", "Accepted, estimated", "Rejected")
-app<-rep("columns ending \"_flag\"", 3)
+```{r dataFlaggingTable, echo=FALSE, eval=TRUE}
+#Generates a table with definitions for the data flags, A, AE, P, or R. Honestly not super useful and can probably be turned off (set eval=FALSE) if these are defined elsewhere in text.
+flags<-c("A", "AE", "P", "R")
+def<-c("Accepted", "Accepted, estimated", "Provisional", "Rejected")
+app<-rep("columns ending \"_flag\"", 4)
 data_flags<-data.frame(flags, def, app)
 
-knitr::kable(data_flags, caption = "**Description of data quality flags**", col.names=c("Flag", "Definition", "Useage"), format="pandoc")
+knitr::kable(data_flags, caption = "**Table2: Description of data quality flags**", col.names=c("Flag", "Definition", "Useage"), format="pandoc")
 ```
 
 ```{r data_package_flagging, echo=FALSE, eval=TRUE}
+# To turn off, set eval=FALSE.
+# Generates a table with a single row summarizing data quality across all flagged columns of the entire data package. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or column numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. 
+
 #if your package is not in your working directory, you need to specify the directory:
 path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
-dp_flags <- QCkit::get_dp_flags(directory = path, force=TRUE)
-
-#calculate Unweighted Response Rates:
-dp_flags$RRU<-(dp_flags$Cell_count - dp_flags$AE_flag - dp_flags$P_flag - dp_flags$R_flag)/dp_flags$Cell_count
+dp_flags <- QCkit::get_custom_flags(directory = path, output="package")
 
 #generate table:
-knitr::kable(dp_flags, caption = 'Summary of data quality flags for the data package.', col.names = c("A", "AE", "R", "P", "Total", "RRU"), format = "pandoc")
+kableExtra::kbl(dp_flags, caption = '**Table 3.1: Summary of data quality flags for the data package**', col.names = c("A", "AE", "P", "R", "Missing (mean)", "Missing (SD)", "RRU (Mean)", "RRU (SD)"), format = "pandoc", digits=2)
 
 ```
 
 ```{r data_file_flagging, echo=FALSE, eval=TRUE}
+# To turn off, set eval=FALSE.
+# Generates a table summarizing data quality across all flagged columns of each data file. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as "NA".
+
 #set directory to the location of your data package
 path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
-df_flags <- QCkit::get_df_flags(directory = path, force = TRUE)
-
-#Calculate the Unweighted Response Rates:
-df_flags$RRU <- (df_flags$Cell_count - df_flags$AE_flag - df_flags$P_flag - df_flags$R_flag)/df_flags$Cell_count
+df_flags <- QCkit::get_custom_flags(directory = path, output="files")
 
 #Generate the table
-knitr::kable(df_flags, caption = 'Summary of data quality flags for each data file within the data package.', col.names = c("File Name", "A", "AE", "R", "P", "Total", "RRU"), format = "pandoc")
+knitr::kable(df_flags, caption = '**Table 3.2: Summary of data quality flags for each data file within the data package**', col.names = c("File Name", "A", "AE", "P", "R", "Missing (mean)", "Missing (SD)", "RRU (Mean)", "RRU (SD)"), format = "pandoc", digits=2)
+
 ```
 
 ```{r data_column_flagging, echo=FALSE, eval=TRUE}
+# To turn off, set eval=FALSE.
+# Generates a table summarizing QC at the column level within each file. All flagged columns are included. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted.  If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as "NA".
+
 #set directory to the location of your data package:
 path <- "../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
-dc_flags <- QCkit::get_dc_flags(directory = path, force = TRUE)
-
-#Calculate the Unweighted Response Rates:
-dc_flags$RRU <- (dc_flags$Cell_count - dc_flags$AE_flag - dc_flags$P_flag - dc_flags$R_flag)/dc_flags$Cell_count
+dc_flags <- QCkit::get_custom_flags(directory = path, output="columns")
 
 #Generate the table:
-knitr::kable(dc_flags, caption = 'Summary of data quality flags for each column where flagging was applied.', col.names = c("File Name", "Flagged Column", "A", "AE", "R", "P", "Total", "RRU"), format = "pandoc")
+knitr::kable(dc_flags, caption = '**Table 3.3: Summary of data quality flags for each column**', col.names = c("File Name", "Flagged Column", "A", "AE", "R", "P", "Total", "Missing (percent)", "RRU"), format = "pandoc", digits=2)
 ```
 
-Unweighted Response Rates (RRU) is calculated as number of accepted (A) data values divided by the total number of values. Note that all unflagged values in addition to those flagged as "A" are considered accepted, which may appear to inflate the RRU value.
+Unweighted Response Rates (RRU) is calculated as number of accepted (A and AE) data values divided by the total number of values (not including missing values). Note that all unflagged values are considered accepted. Means are geometric, SD is standard deviation.
 
 Possible content **strongly Suggested to Include**
 
@@ -240,7 +338,7 @@ Specific data inputs and outputs should be explicitly cited in the text and incl
 
 Authors are encouraged to consider creating a figure that outlines the experimental workflow(s) used to generate and analyse the data output(s) (Figure 1).
 
-```{r figure1, echo=FALSE, fig.align="center", fig.cap="Example general workflow to include in the methods section."}
+```{r figure1, echo=FALSE, fig.cap="Example general workflow to include in the methods section."}
 include_graphics("vignettes/common/ProcessingWorkflow.png")
 ```
 
