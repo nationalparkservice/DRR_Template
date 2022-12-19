@@ -257,10 +257,10 @@ The data within the data records listed above have been reviewed by staff in the
 
 ```{r dataFlaggingTable, echo=FALSE, eval=TRUE}
 #Generates a table with definitions for the data flags, A, AE, P, or R. Honestly not super useful and can probably be turned off (set eval=FALSE) if these are defined elsewhere in text.
-flags<-c("A"," ", "AE", "P", "R")
-def<-c("Accepted"," ", "Accepted, estimated", "Provisional", "Rejected")
+flags<-c("A"," ", "AE", "P", "R", "NA")
+def<-c("Accepted"," ", "Accepted, estimated", "Provisional", "Rejected", "Missing")
 app<-c("columns ending \"_flag\"", "unflagged data", 
-       rep("columns ending \"_flag\"", 3))
+       rep("columns ending \"_flag\"", 3), "All data")
 data_flags<-data.frame(flags, def, app)
 
 knitr::kable(data_flags, caption = "**Table 2: Description of data quality flags**", col.names=c("Flag", "Definition", "Useage"), format="pandoc")
