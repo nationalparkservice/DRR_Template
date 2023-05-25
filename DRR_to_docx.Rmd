@@ -1,8 +1,8 @@
 ---
 output:
-  word_document: default
   html_document:
     df_print: paged
+  word_document: default
 ---
 
 ```{r user_edited_parameterss, include=FALSE}
@@ -46,7 +46,8 @@ authorAffiliations <- c(
 
 #The order of the ORCID iDs must match the order of authors in AuthorNames.In this example, Jane Doe has an ORCID iD but John Doe does not. Jane's ORCID iD is listed twice because she her name is listed twice in authorNames(because she has two authorAffiliations).
 authorORCID <- c(
-  "0000-1111-2222-3333", "0000-1111-2222-3333", NA)
+  "0000-1111-2222-3333", "0000-1111-2222-3333", NA
+  )
 
 # Replace the text below with your abstract.
 DRRabstract <- "Abstract Should go here. Multiple Lines are okay; it'll format correctly. Pay careful attention to non-standard characters, line breaks (<br>), carriage returns, and curly-quotes. You may find it useful to write the abstract in NotePad++ or some other text editor and not a word processor (such as Microsoft Word).\n\n
@@ -124,14 +125,48 @@ unique_affiliation <- author_list %>% distinct(authorAffiliations,
 
 #single author documents:
 if(length(seq_along(unique_authors$authorNames)) == 1){
-  cat("#### ", unique_authors$authorNames, sep="")
-  if(!is.na(authorORCID)){
-    orc <- paste0("https://orcid.org/", unique_authors$authorORCID, " ")
-    cat({{ orc }})
-  }
-  cat("#### ", unique_authors$authorAffiliations, sep="")
-}
 
+  for (i in seq_along(unique_authors$authorNames)) {
+    curr <- unique_authors[i, ]
+    
+    #find all author affiliations
+    aff <- author_list[which(authorNames == curr$authorNames),]
+    aff <- aff$authorAffiliations  
+    
+    #identify order of affiliation(s) in a unique list of affiliations
+    #build the superscripts for author affiliations
+    super_script <- unique_affiliation$authorAffiliations %in% aff 
+    super <- which(super_script == TRUE)
+    script <- super
+    
+    if(length(seq_along(super)) > 1){
+      script <- NULL
+      j <- 1
+      while(j < length(seq_along(super))){
+        script <- append(script, paste0(super[j],","))
+        j <- j+1
+      }
+      if(j == length(seq_along(super))){
+        script <- append(script, super[j])
+      }
+    }
+  }
+   cat("#### ", curr$authorNames, ",", "^",script,"^", " ", " ", sep="")
+        if (is.na(curr$authorORCID)) {
+        }
+        if (!is.na(curr$authorORCID)) {
+          orc <- paste0("https://orcid.org/", curr$authorORCID, " ")
+          cat({{ orc }})
+        }
+  
+  #cat("#### ", unique_authors$authorNames, "^1^", sep="")
+  #if(!is.na(authorORCID)){
+  #  orc <- paste0(" https://orcid.org/", unique_authors$authorORCID)
+  #  cat({{ orc }}, "\n")
+  #}
+  #cat("#### ", unique_authors$authorAffiliations, sep="")
+}
+  
 #multi author documents:
 if(length(seq_along(unique_authors$authorNames)) > 1){
   for (i in seq_along(unique_authors$authorNames)) {
@@ -226,14 +261,14 @@ for(i in 1:nrow(unique_affiliation)){
 
 # Data Records (required)
 
-## Data inputs (optional)
+## Data Inputs (optional)
 If the data package being described was generated based on one or more pre-existing datasets, cite those datasets here.
 
-## Summary of datasets created (required)
+## Summary of Datasets Created (required)
 
 The Data Records section should be used to explain each data record associated with this work (for instance, a data package), including the DOI indicating where this information is stored, and provide an overview of the data files and their formats. Each external data record should be cited. Below is some sample text:
 
-This DRR describes the data package `r dataPackageTitle` which contains a metadata file and `r length(dataPackage_fileNames)` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackageDOI` (see Table 1).
+This DRR describes the data package *`r dataPackageTitle`* which contains a metadata file and `r length(dataPackage_fileNames)` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackageDOI` (see Table 1).
 
 ```{r FileTable, echo=FALSE}
 filelist <- data.frame(dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript)
@@ -263,9 +298,7 @@ app<-c("columns ending \"_flag\"", "unflagged data",
        rep("columns ending \"_flag\"", 3), "All data")
 data_flags<-data.frame(flags, def, app)
 
-knitr::kable(data_flags, caption = "**Table 2: Description of data quality flags**", col.names=c("Flag", "Definition", "Useage"), format="pandoc")
-
-
+knitr::kable(data_flags, caption = "**Table 2: Description of data quality flags**", col.names=c("Flag", "Definition", "Usage"), format="pandoc")
 ```
 
 ```{r data_package_flagging, echo=FALSE, eval=TRUE}
@@ -273,11 +306,11 @@ knitr::kable(data_flags, caption = "**Table 2: Description of data quality flags
 # Generates a table with a single row summarizing data quality across all flagged columns of the entire data package. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or column numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. 
 
 #if your package is not in your working directory, you need to specify the directory:
-path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
+path<-"../../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
 dp_flags <- QCkit::get_custom_flags(directory = path, output="package")
 
 #generate table:
-kableExtra::kbl(dp_flags, caption = '**Table 3.1: Summary of data quality flags for the data package**', col.names = c("A", "AE", "P", "R", "Missing (mean)", "Missing (SD)", "RRU (Mean)", "RRU (SD)"), format = "pandoc", digits=2)
+kableExtra::kbl(dp_flags, caption = '**Table 3.1: Summary of data quality flags for the data package**', col.names = c("A", "AE", "P", "R", "% Missing (Mean)", "RRU (Mean)", "RRU (SD)"), format = "pandoc", digits=2)
 
 ```
 
@@ -286,13 +319,23 @@ kableExtra::kbl(dp_flags, caption = '**Table 3.1: Summary of data quality flags 
 # Generates a table summarizing data quality across all flagged columns of each data file. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as "NA".
 
 #set directory to the location of your data package
-path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
+path<-"../../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
 df_flags <- QCkit::get_custom_flags(directory = path, output="files")
 df_flags$filename <- gsub(".csv", "", df_flags$filename)
+colnames(df_flags) <- c("File Name", "A", "AE", "P", "R", "% Missing (Mean)", "RRU (Mean)", "RRU (SD)")
+colnames(df_flags)[1] <- paste0("File Name", "^1^")
+colnames(df_flags)[2] <- paste0("A", "^2^")
+colnames(df_flags)[6] <- paste0("% Missing (Mean)", "^3^")
+colnames(df_flags)[7] <- paste0("RRU (Mean)", "^3,4^")
+colnames(df_flags)[8] <- paste0("RRU (SD)", "^4,5^")
 
 #Generate the table
-knitr::kable(df_flags, caption = '**Table 3.2: Summary of data quality flags for each data file within the data package**', col.names = c("File Name", "A", "AE", "P", "R", "Missing (mean)", "Missing (SD)", "RRU (Mean)", "RRU (SD)"), format = "pandoc", digits=2)
-
+kableExtra::kable(df_flags, caption = '**Table 3.2: Summary of data quality flags for each data file within the data package**', format = "pandoc", digits=2) %>%
+kableExtra::add_footnote(c("NAs for a given fi(le indicates no quality controlled data were found.",
+               "All non-missing data in specified unflagged columns are considered accepted.",
+               "Means are geometric means.",
+               "RRU (unweighted relative response) is calculated as the number of accepted (where A and AE are both considered accepted) divided by the total number of observations plus the number of missing observations.", 
+               "SD is standard deviation."), notation = "number")
 ```
 
 ```{r data_column_flagging, echo=FALSE, eval=TRUE}
@@ -300,13 +343,22 @@ knitr::kable(df_flags, caption = '**Table 3.2: Summary of data quality flags for
 # Generates a table summarizing QC at the column level within each file. All flagged columns are included. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted.  If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as "NA".
 
 #set directory to the location of your data package:
-path <- "../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
+path <- "../../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
 dc_flags <- QCkit::get_custom_flags(directory = path, output="columns")
 dc_flags$filename <- gsub(".csv", "", dc_flags$filename)
 dc_flags$column <- gsub("_flag", "", dc_flags$column)
+colnames(dc_flags)<-c("File Name", "Column", "A", "AE", "R", "P", "Total", "% Missing", "RRU")
+colnames(dc_flags)[1]<-paste0("File Name", "^1^")
+colnames(dc_flags)[2]<-paste0("Colum", "^2^")
+colnames(dc_flags)[3]<-paste0("A", "^3^")
+colnames(dc_flags)[9]<-paste0("RRU", "^4^")
 
 #Generate the table:
-knitr::kable(dc_flags, caption = '**Table 3.3: Summary of data quality flags for each column**', col.names = c("File Name", "Flagged Column", "A", "AE", "R", "P", "Total", "Missing (percent)", "RRU"), format = "pandoc", digits=2)
+kableExtra::kable(dc_flags, caption = '**Table 3.3: Summary of data quality flags for each column**', col.names = , format = "pandoc", digits=2) %>%
+kableExtra::add_footnote(c("NAs for a given file indicates no quality controlled data were found.",
+               "The '_flag' suffix has been omitted from column names for brevity.",
+               "All non-missing data in specified unflagged columns are considered accepted.",
+               "RRU (unweighted relative response) is calculated as the number of accepted (where A and AE are both considered accepted) divided by the total number of observations plus the number of missing observations."), notation = "number")
 ```
 
 Unweighted Response Rates (RRU) is calculated as number of accepted (A and AE) data values divided by the total number of values (not including missing values). Note that all unflagged values are considered accepted. Means are geometric, SD is standard deviation.
@@ -412,7 +464,7 @@ Conant, B., and J. I. Hodges. 1995. Western brant population estimates. U.S. Fis
 
 Conant, B., and J. F. Voelzer. 2001. Winter waterfowl survey: Mexico west coast and Baja California. U.S. Fish and Wildlife Service Unpublished Report, Juneau, Alaska.
 
-###Thesis/Dissertation Examples 
+### Thesis/Dissertation Examples 
 Diong, C. H. 1982. Population and biology of the feral pig (Sus scrofa L) in Kipahulu Valley, Mau’i. Dissertation. University of Hawai’i, Honolulu, Hawai’i.
 
 McTigue, K. M. 1992. Nutrient pulses and herbivory: Integrative control of primary producers in lakes. Thesis. University of Wisconsin, Madison, Wisconsin.
