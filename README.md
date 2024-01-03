@@ -24,7 +24,9 @@ New projects can be established using this template by downloading a zip file of
 
 2. [The DRR_Template](DRR_to_docx.Rmd) the file you make changes to to generate a DRR. Note: this is not a stand-alone file. To create a DRR please download the [zipped template](https://github.com/nationalparkservice/IMD_DRR_Template/zipball/master) with all associated files and folders.
 
-3. [DRR_Report](DRR_to_docx.docx) an example of the .docx output file that takes into account your edits and changes to DRR_to_docx.Rmd (assuming you have saved and/or knit the .Rmd) 
+3. [Bibtex reference file](reference.bib) is used if you want to automate your citations. Add each citation in bibtex format to this file and save it. Add in-text citations to the DRR Template and your References section will automatically be generated for you when you knit the .Rmd to .docx. You should still visually check the final format in the .docx file for accuracy, completion, and formatting. If you would prefer to manually format your citations, feel free to continue doing so.
+
+4. [DRR_Report](DRR_to_docx.docx) an example of the .docx output file that takes into account your edits and changes to DRR_to_docx.Rmd (assuming you have saved and/or knit the .Rmd) 
 
 # Examples
 More will be provided as they are published. The following examples are post-formatting and should be used as examples for content generation only.
