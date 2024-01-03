@@ -1,8 +1,9 @@
 ---
 output:
-  html_document:
-    df_print: paged
   word_document: default
+  pdf_document: default
+bibliography: references.bib
+csl: national-park-service-DRR.csl
 ---
 
 ```{r user_edited_parameterss, include=FALSE}
@@ -83,7 +84,6 @@ dataPackage_fileDescript <- c(
   "This is a short description of my_data2.csv.")
 ```
 
-
 ```{r setup_do_not_edit, include=FALSE}
 RRpackages <- c("markdown",
                 "rmarkdown",
@@ -105,7 +105,6 @@ library(QCkit)
 ```
 
 *`r (paste0("https://doi.org/10.38750/", DRR_DSRefID))`*
-
 
 ```{r title_do_not_edit, echo=FALSE, results="asis"}
 date <- format(Sys.time(), "%d %B, %Y")
@@ -259,9 +258,16 @@ for(i in 1:nrow(unique_affiliation)){
 
 <hr>
 
+# Using citations in this document:
+
+To automate citations, add the citation to in bibtex format to the file "references.bib". Each bibtex citation should start with a unique identifier; the example reference in the supplied references.bib file has the unique identifier "@article{Scott1994,". Using the "Source" view in Rstudio, insert the reference in your text, by combining the "at" symbol with the portion of the unique identifier after the curly bracket: @Scott1994 . You can put a citation in parentheses using square brackets: [@Scott1994]. This will be rendered as (Scott, et al. 1994) in text. You can add mutiple authors works a single parenthetical citation by separating them with a semi-colon. You can suppress the author and cite just the year by using a - symbol before the @ : [-@Scott1994]. Alternatively, from the "Visual" view in Rstudio, simply type the "at" symbol and select the citation you want to insert into the text. Regardless of the citation method, the full citation, properly formatted, will be included in a "References" section at the end of the rendered MS Word document.
+
+If you would like to format your citations manually, please feel free to do that also. Make sure to check out the References section for how to properly format each citation type.
+
 # Data Records (required)
 
 ## Data Inputs (optional)
+
 If the data package being described was generated based on one or more pre-existing datasets, cite those datasets here.
 
 ## Summary of Datasets Created (required)
@@ -306,7 +312,7 @@ knitr::kable(data_flags, caption = "**Table 2: Description of data quality flags
 # Generates a table with a single row summarizing data quality across all flagged columns of the entire data package. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or column numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. 
 
 #if your package is not in your working directory, you need to specify the directory:
-path<-"../../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
+path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
 dp_flags <- QCkit::get_custom_flags(directory = path, output="package")
 
 #generate table:
@@ -319,7 +325,7 @@ kableExtra::kbl(dp_flags, caption = '**Table 3.1: Summary of data quality flags 
 # Generates a table summarizing data quality across all flagged columns of each data file. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as "NA".
 
 #set directory to the location of your data package
-path<-"../../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
+path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
 df_flags <- QCkit::get_custom_flags(directory = path, output="files")
 df_flags$filename <- gsub(".csv", "", df_flags$filename)
 colnames(df_flags) <- c("File Name", "A", "AE", "P", "R", "% Missing (Mean)", "RRU (Mean)", "RRU (SD)")
@@ -343,7 +349,7 @@ kableExtra::add_footnote(c("NAs for a given fi(le indicates no quality controlle
 # Generates a table summarizing QC at the column level within each file. All flagged columns are included. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted.  If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as "NA".
 
 #set directory to the location of your data package:
-path <- "../../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
+path <- "../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
 dc_flags <- QCkit::get_custom_flags(directory = path, output="columns")
 dc_flags$filename <- gsub(".csv", "", dc_flags$filename)
 dc_flags$column <- gsub("_flag", "", dc_flags$column)
@@ -418,13 +424,17 @@ For all studies using custom code in the generation or processing of datasets, a
 
 # References (required)
 
-Provide sufficient information to locate the resource. If the citation has a DOI, include the DOI at the end of the citation, including the https://doi.org prefix. If you are citing documents that have unregistered DOIs (such as a data package that you are working on concurrently) still include the DOI. Electronic resources data and data services or web sites should include the date they were accessed.
+Provide sufficient information to locate the resource. If the citation has a DOI, include the DOI at the end of the citation, including the <https://doi.org> prefix. If you are citing documents that have unregistered DOIs (such as a data package that you are working on concurrently) still include the DOI. Electronic resources data and data services or web sites should include the date they were accessed. Keep the following line of code if you would like to automate generating and formatting references:
 
-Include bibliographic information for any works cited (including the data package the DRR is describing) in the above sections, using the standard *NPS NR Publication Series* referencing style. 
+::: {#refs}
+:::
+
+If you would like to manually format your references, delete the preceding two lines and use the following examples instead: Include bibliographic information for any works cited (including the data package the DRR is describing) in the above sections, using the standard *NPS NR Publication Series* referencing style.
 
 See the following examples:
 
-### Agency, Company, etc. as Author Examples 
+### Agency, Company, etc. as Author Examples
+
 Fung Associates Inc. and SWCA Environmental Consultants. 2010. Assessment of natural resources and watershed conditions for Kalaupapa National Historical Park. Natural Resource Report. NPS/NPRC/WRD/NRR—2010/261. National Park Service, Fort Collins, Colorado.
 
 Greater Yellowstone Whitebark Pine Monitoring Working Group. 2014. Monitoring whitebark pine in the Greater Yellowstone Ecosystem: 2013 annual report. Natural Resource Data Series. NPS/GRYN/NRDS—2014/631. National Park Service. Fort Collins, Colorado.
@@ -433,73 +443,78 @@ National Park Service (NPS). 2016. State of the park report for Zion National Pa
 
 U.S. Forest Service (USFS). 1993. ECOMAP. National hierarchical framework of ecological units. U. S. Forest Service, Washington, D.C.
 
-### Traditional Journal Article Examples 
-Bradbury, J. W., S. L. Vehrencamp, K. E. Clifton, and L. M. Clifton. 1996. The relationship between bite rate and local forage abundance in wild Thompson’s gazelles. Ecology 77:2237–2255. https://doi.org/10.2307/2265717
+### Traditional Journal Article Examples
 
-Oakley, K. L., L. P. Thomas, and S. G. Fancy. 2003. Guidelines for long-term monitoring 
-protocols. Wildlife Society Bulletin 31(4):1000–1003.
+Bradbury, J. W., S. L. Vehrencamp, K. E. Clifton, and L. M. Clifton. 1996. The relationship between bite rate and local forage abundance in wild Thompson’s gazelles. Ecology 77:2237–2255. <https://doi.org/10.2307/2265717>
 
-Sawaya, M. A., T. K. Ruth, S. Creel, J. J. Rotella, J. B. Stetz, H. B. Quigley, and S. T. 
-Kalinowski. 2011. Evaluation of noninvasive genetic sampling methods for cougars in Yellowstone National Park. The Journal of Wildlife Management 75(3):612–622. https://doi.org/10.1002/jwmg.92
+Oakley, K. L., L. P. Thomas, and S. G. Fancy. 2003. Guidelines for long-term monitoring protocols. Wildlife Society Bulletin 31(4):1000–1003.
 
-### Book Example 
+Sawaya, M. A., T. K. Ruth, S. Creel, J. J. Rotella, J. B. Stetz, H. B. Quigley, and S. T. Kalinowski. 2011. Evaluation of noninvasive genetic sampling methods for cougars in Yellowstone National Park. The Journal of Wildlife Management 75(3):612–622. <https://doi.org/10.1002/jwmg.92>
+
+### Book Example
+
 Harvill, A. M., Jr., T. R. Bradley, C. E. Stevens, T. F. Wieboldt, D. M. E. Ware, D. W. Ogle, and G. W. Ramsey. 1992. Atlas of the Virginia flora, third edition. Virginia Botanical Associates, Farmville, Virginia.
 
-### Book Chapter Examples 
+### Book Chapter Examples
+
 McCauly, E. 1984. The estimation of abundance and biomass of zooplankton in samples. Pages 228–265 in J. A. Dowling and F. H. Rigler, editors. A manual on methods for the assessment of secondary productivity in fresh waters. Blackwell Scientific, Oxford, UK.
 
 Watson, P. J. 2004. Of caves and shell mounds in west-central Kentucky. Pages 159–164 in Of caves and shell mounds. The University of Alabama Press, Tuscaloosa, Alabama.
 
-### Published Report Examples 
+### Published Report Examples
+
 Bass, S., R. E. Gallipeau, Jr., M. Van Stappen, J. Kumer, M. Wessner, S. Petersburg, L. L. Hays, J. Milstone, M. Soukup, M. Fletcher, L. G. Adams, and others. 1988. Highlights of natural resource management 1987. National Park Service, Denver, Colorado.
 
-Holthausen, R. S., M. G. Raphael, K. S. McKelvey, E. D. Forsman, E. E. Starkey, and D. E. Seaman. 1994. The contribution of federal and nonfederal habitats to the persistence of the northern spotted owl on the Olympic Peninsula, Washington. General Technical Report PNW–GTR–352. U.S. Forest Service, Corvallis, Oregon.
-https://doi.org/10.2737/PNW-GTR-352
+Holthausen, R. S., M. G. Raphael, K. S. McKelvey, E. D. Forsman, E. E. Starkey, and D. E. Seaman. 1994. The contribution of federal and nonfederal habitats to the persistence of the northern spotted owl on the Olympic Peninsula, Washington. General Technical Report PNW–GTR–352. U.S. Forest Service, Corvallis, Oregon. <https://doi.org/10.2737/PNW-GTR-352>
 
-Jackson, L. L., and L. P. Gough. 1991. Seasonal and spatial biogeochemical trends for chaparral vegetation and soil geochemistry in the Santa Monica Mountains National Recreation Area. U.S. Geological Survey, Denver. Open File Report 91–0005. 
-https://doi.org/10.3133/ofr915
+Jackson, L. L., and L. P. Gough. 1991. Seasonal and spatial biogeochemical trends for chaparral vegetation and soil geochemistry in the Santa Monica Mountains National Recreation Area. U.S. Geological Survey, Denver. Open File Report 91–0005. <https://doi.org/10.3133/ofr915>
 
-### Unpublished Report Examples 
+### Unpublished Report Examples
+
 Conant, B., and J. I. Hodges. 1995. Western brant population estimates. U.S. Fish and Wildlife Service Unpublished Report, Juneau, Alaska.
 
 Conant, B., and J. F. Voelzer. 2001. Winter waterfowl survey: Mexico west coast and Baja California. U.S. Fish and Wildlife Service Unpublished Report, Juneau, Alaska.
 
-### Thesis/Dissertation Examples 
+### Thesis/Dissertation Examples
+
 Diong, C. H. 1982. Population and biology of the feral pig (Sus scrofa L) in Kipahulu Valley, Mau’i. Dissertation. University of Hawai’i, Honolulu, Hawai’i.
 
 McTigue, K. M. 1992. Nutrient pulses and herbivory: Integrative control of primary producers in lakes. Thesis. University of Wisconsin, Madison, Wisconsin.
 
-### Conference Proceedings Examples 
+### Conference Proceedings Examples
+
 Gunther, K. A. 1994. Changing problems in bear management: Yellowstone National Park twenty-plus years after the dumps. Ninth International Conference on Bear Research and Management. Missoula, MT, International Association for Bear Research and Management, Bozeman, Montana, February 1992:549–560.
 
-Webb, J. R., and J. N. Galloway. 1991. Potential acidification of streams in Mid-Appalachian Highlands: A problem with generalized assessments. Southern Appalachian Man and Biosphere Conference. Gatlinburg, Tennessee. 
+Webb, J. R., and J. N. Galloway. 1991. Potential acidification of streams in Mid-Appalachian Highlands: A problem with generalized assessments. Southern Appalachian Man and Biosphere Conference. Gatlinburg, Tennessee.
 
-### General Internet Examples 
-Colorado Native Plant Society. 2016. Colorado Native Plant Society website. Available at: https://conps.org/ (accessed 07 March 2016).
+### General Internet Examples
 
-National Park Service (NPS). 2016a. IRMA Portal (Integrated Resource Management Applications) website. Available at: https://irma.nps.gov (accessed 07 March 2016),
+Colorado Native Plant Society. 2016. Colorado Native Plant Society website. Available at: <https://conps.org/> (accessed 07 March 2016).
 
-National Park Service (NPS). 2016b. Natural Resource Publications Management website. Available at: http://www.nature.nps.gov/publications/nrpm/ (accessed 07 March 2016).
+National Park Service (NPS). 2016a. IRMA Portal (Integrated Resource Management Applications) website. Available at: <https://irma.nps.gov> (accessed 07 March 2016),
 
-United Sates Fish and Wildlife Service (USFWS). 2016. Endangered Species website. Available at: http://www.fws.gov/endangered/ (accessed 07 March 2016).
+National Park Service (NPS). 2016b. Natural Resource Publications Management website. Available at: <http://www.nature.nps.gov/publications/nrpm/> (accessed 07 March 2016).
+
+United Sates Fish and Wildlife Service (USFWS). 2016. Endangered Species website. Available at: <http://www.fws.gov/endangered/> (accessed 07 March 2016).
 
 ### Online Data Warehouse Sites (sites that allow you see and download data from multiple sources)
-National Oceanographic and Atmospheric Association (NOAA). 2016. NOAA National Climatic Data Center website. Available at: http://www.ncdc.noaa.gov/ (accessed 07 March 2016).
 
-Environmental Protection Agency (EPA). 2016. Storage and Retrieval Data Warehouse website (STORET). Available at: http://www.epa.gov/storet/ (accessed 07 March 2016).
+National Oceanographic and Atmospheric Association (NOAA). 2016. NOAA National Climatic Data Center website. Available at: <http://www.ncdc.noaa.gov/> (accessed 07 March 2016).
 
-National Park Service (NPS). 2016c. NPScape Landscape Dynamics Metric Viewer website. Available at: http://science.nature.nps.gov/im/monitor/npscape/viewer/ (accessed 07 March 2016).
+Environmental Protection Agency (EPA). 2016. Storage and Retrieval Data Warehouse website (STORET). Available at: <http://www.epa.gov/storet/> (accessed 07 March 2016).
 
-National Park Service (NPS). 2016d. NPSpecies online application. Available at: https://irma.nps.gov/NPSpecies/ (accessed 07 March 2016).
+National Park Service (NPS). 2016c. NPScape Landscape Dynamics Metric Viewer website. Available at: <http://science.nature.nps.gov/im/monitor/npscape/viewer/> (accessed 07 March 2016).
 
-United States Geologic Survey (USGS). 2016. BioData - Aquatic Bioassessment Data for the Nation. Available at: https://aquatic.biodata.usgs.gov/ (accessed 07 March 2016). 
+National Park Service (NPS). 2016d. NPSpecies online application. Available at: <https://irma.nps.gov/NPSpecies/> (accessed 07 March 2016).
 
+United States Geologic Survey (USGS). 2016. BioData - Aquatic Bioassessment Data for the Nation. Available at: <https://aquatic.biodata.usgs.gov/> (accessed 07 March 2016).
 
 # Acknowledgements (optional)
 
 The Acknowledgements should contain text acknowledging non-author contributors. Acknowledgements should be brief, and should not include thanks to anonymous referees and editors or effusive comments. Grant or contribution numbers may be acknowledged.
 
 # Appendix A. Code Listing
+
 In most cases, Code listing is not required. If all QA/QC and data manipulations were performed elsewhere, you should cite that code in the methods (and leave the "Listing" code chunk as the default settings: eval=FALSE and echo=FALSE). If you have developed custom scripts, you can add those to DataStore with the reference type "Script" and cite them in the DRR. Some people have developed code to perform QA/QC or data manipulation within the DRR itself. In that case, you must set the "Listing" code chunk to eval=TRUE and echo=TRUE to fully document the QA/QC process.
 
 ```{r Listing, ref.label=knitr::all_labels(), echo=TRUE, eval=TRUE}
@@ -509,11 +524,10 @@ In most cases, Code listing is not required. If all QA/QC and data manipulations
 \pagebreak
 
 # Appendix B. Session and Version Information
-In most cases you do not need to report session info (leave the "session-info" code chunk parameters in their default state: eval=FALSE). Session and version information is only necessary if you have set the "Listing" code chunk to eval=TRUE in appendix A. In that case, change the "session-info" code chunk parameters to eval=TRUE. 
+
+In most cases you do not need to report session info (leave the "session-info" code chunk parameters in their default state: eval=FALSE). Session and version information is only necessary if you have set the "Listing" code chunk to eval=TRUE in appendix A. In that case, change the "session-info" code chunk parameters to eval=TRUE.
 
 ```{r session-info, eval=TRUE, echo=FALSE, cache=FALSE}
 sessionInfo()
 Sys.time()
 ```
-
-
