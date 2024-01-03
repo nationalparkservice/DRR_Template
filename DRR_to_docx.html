@@ -1522,6 +1522,28 @@ if (window.hljs) {
 
 
 
+<style type="text/css">
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+}
+.hanging div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+}
+</style>
 
 
 
@@ -1638,8 +1660,8 @@ Contractor to the National Park Service, Natural Resource Stewardship
 and Science Directorate, 1201 Oakridge Dr, Suite 150, Fort Collins,
 Colorado</p>
 </div>
-<div id="may-2023" class="section level4">
-<h4>25 May, 2023
+<div id="january-2024" class="section level4">
+<h4>03 January, 2024
 <!-- publication date - defaults to current system date --></h4>
 </div>
 </div>
@@ -1665,7 +1687,15 @@ allowed in this section.
 <div id="data-inputs-optional" class="section level2">
 <h2>Data Inputs (optional)</h2>
 <p>If the data package being described was generated based on one or
-more pre-existing datasets, cite those datasets here.</p>
+more pre-existing datasets, cite those datasets here. To automate
+citations, add the citationto in bibtex format to the file
+“references.bib”. Each bibtex citation should start with a unique
+identifier; the example reference in the supplied references.bib file
+has the unique identifier “<span class="citation">@article</span>{Scott1994,”. To insert the reference in
+your text, the unique identifier in square brackets: <span class="citation">[@Scott1994]</span>. This will be rendered as (Scott,
+1994) in text. The full citation, properly formatted, will be included
+in a “References” section at the end of the rendered MS Word
+document.</p>
 </div>
 <div id="summary-of-datasets-created-required" class="section level2">
 <h2>Summary of Datasets Created (required)</h2>
@@ -1722,7 +1752,7 @@ staff in the NPS Inventory and Monitoring Division to ensure accuracy,
 completeness, and consistency with documented data quality standards, as
 well as for usability and reproducibility. The <em>Data Package
 Title</em> is suitable for its intended use as of the date of processing
-(2023-05-25).</p>
+(2024-01-03).</p>
 <p><em>Required Table</em></p>
 <table>
 <caption><strong>Table 2: Description of data quality
@@ -2063,10 +2093,19 @@ including the <a href="https://doi.org" class="uri">https://doi.org</a>
 prefix. If you are citing documents that have unregistered DOIs (such as
 a data package that you are working on concurrently) still include the
 DOI. Electronic resources data and data services or web sites should
-include the date they were accessed.</p>
-<p>Include bibliographic information for any works cited (including the
-data package the DRR is describing) in the above sections, using the
-standard <em>NPS NR Publication Series</em> referencing style.</p>
+include the date they were accessed. Keep the following line of code if
+you would like to automate generating and formatting references:</p>
+<div id="refs">
+
+</div>
+<div>
+
+</div>
+<p>If you would like to manually format your references, delete the
+preceding two lines and use the following examples instead: Include
+bibliographic information for any works cited (including the data
+package the DRR is describing) in the above sections, using the standard
+<em>NPS NR Publication Series</em> referencing style.</p>
 <p>See the following examples:</p>
 <div id="agency-company-etc.-as-author-examples" class="section level3">
 <h3>Agency, Company, etc. as Author Examples</h3>
@@ -2365,7 +2404,7 @@ lapply(RRpackages, library, character.only = TRUE)</code></pre>
 ## [21] &quot;graphics&quot;   &quot;grDevices&quot;  &quot;utils&quot;      &quot;datasets&quot;   &quot;methods&quot;   
 ## [26] &quot;base&quot;</code></pre>
 <pre class="r"><code>devtools::install_github(&quot;nationalparkservice/QCkit&quot;)</code></pre>
-<pre><code>## Skipping install of &#39;QCkit&#39; from a github remote, the SHA1 (23478752) has not changed since last install.
+<pre><code>## Skipping install of &#39;QCkit&#39; from a github remote, the SHA1 (930652d3) has not changed since last install.
 ##   Use `force = TRUE` to force installation</code></pre>
 <pre class="r"><code>library(QCkit)
 date &lt;- format(Sys.time(), &quot;%d %B, %Y&quot;)
@@ -2594,7 +2633,7 @@ flags</strong></caption>
 # Generates a table with a single row summarizing data quality across all flagged columns of the entire data package. To add additional non-flagged columns, specify them with column names: cols=(&quot;my_unflagged_data1&quot;, &quot;my_unflagged_data2)&quot; or column numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. 
 
 #if your package is not in your working directory, you need to specify the directory:
-path&lt;-&quot;../../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example&quot;
+path&lt;-&quot;../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example&quot;
 dp_flags &lt;- QCkit::get_custom_flags(directory = path, output=&quot;package&quot;)
 
 #generate table:
@@ -2629,7 +2668,7 @@ package</strong></caption>
 # Generates a table summarizing data quality across all flagged columns of each data file. To add additional non-flagged columns, specify them with column names: cols=(&quot;my_unflagged_data1&quot;, &quot;my_unflagged_data2)&quot; or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as &quot;NA&quot;.
 
 #set directory to the location of your data package
-path&lt;-&quot;../../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example&quot;
+path&lt;-&quot;../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example&quot;
 df_flags &lt;- QCkit::get_custom_flags(directory = path, output=&quot;files&quot;)
 df_flags$filename &lt;- gsub(&quot;.csv&quot;, &quot;&quot;, df_flags$filename)
 colnames(df_flags) &lt;- c(&quot;File Name&quot;, &quot;A&quot;, &quot;AE&quot;, &quot;P&quot;, &quot;R&quot;, &quot;% Missing (Mean)&quot;, &quot;RRU (Mean)&quot;, &quot;RRU (SD)&quot;)
@@ -2706,7 +2745,7 @@ deviation.</p>
 # Generates a table summarizing QC at the column level within each file. All flagged columns are included. To add additional non-flagged columns, specify them with column names: cols=(&quot;my_unflagged_data1&quot;, &quot;my_unflagged_data2)&quot; or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted.  If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as &quot;NA&quot;.
 
 #set directory to the location of your data package:
-path &lt;- &quot;../../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example&quot;
+path &lt;- &quot;../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example&quot;
 dc_flags &lt;- QCkit::get_custom_flags(directory = path, output=&quot;columns&quot;)
 dc_flags$filename &lt;- gsub(&quot;.csv&quot;, &quot;&quot;, dc_flags$filename)
 dc_flags$column &lt;- gsub(&quot;_flag&quot;, &quot;&quot;, dc_flags$column)
@@ -2829,11 +2868,12 @@ observations.</p>
 <pre class="r"><code>include_graphics(&quot;vignettes/common/ProcessingWorkflow.png&quot;)</code></pre>
 <p><img src="data:image/png;base64,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" width="275" /></p>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 4.2.3 (2023-03-15 ucrt)
+<pre><code>## R version 4.3.2 (2023-10-31 ucrt)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
 ## Running under: Windows 10 x64 (build 19045)
 ## 
 ## Matrix products: default
+## 
 ## 
 ## locale:
 ## [1] LC_COLLATE=English_United States.utf8 
@@ -2842,38 +2882,43 @@ observations.</p>
 ## [4] LC_NUMERIC=C                          
 ## [5] LC_TIME=English_United States.utf8    
 ## 
+## time zone: America/Denver
+## tzcode source: internal
+## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] QCkit_0.1.0.4    lubridate_1.9.2  forcats_1.0.0    stringr_1.5.0   
-##  [5] dplyr_1.1.0      purrr_1.0.1      readr_2.1.4      tidyr_1.3.0     
-##  [9] tibble_3.1.8     ggplot2_3.4.1    tidyverse_2.0.0  devtools_2.4.5  
-## [13] usethis_2.1.6    kableExtra_1.3.4 yaml_2.3.7       knitr_1.42      
-## [17] pander_0.6.5     rmarkdown_2.20   markdown_1.2    
+##  [1] QCkit_0.1.3           lubridate_1.9.3       forcats_1.0.0        
+##  [4] stringr_1.5.1         dplyr_1.1.4           purrr_1.0.2          
+##  [7] readr_2.1.4           tidyr_1.3.0           tibble_3.2.1         
+## [10] ggplot2_3.4.4         tidyverse_2.0.0       devtools_2.4.5       
+## [13] usethis_2.2.2         kableExtra_1.3.4.9000 yaml_2.3.8           
+## [16] knitr_1.45            pander_0.6.5          rmarkdown_2.25       
+## [19] markdown_1.11        
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] httr_1.4.4        sass_0.4.5        pkgload_1.3.1     bit64_4.0.5      
-##  [5] vroom_1.6.1       jsonlite_1.8.4    viridisLite_0.4.1 bslib_0.4.2      
-##  [9] shiny_1.7.2       highr_0.10        remotes_2.4.2     sessioninfo_1.2.2
-## [13] pillar_1.8.1      glue_1.6.2        digest_0.6.29     promises_1.2.0.1 
-## [17] rvest_1.0.3       colorspace_2.0-3  plyr_1.8.8        htmltools_0.5.4  
-## [21] httpuv_1.6.6      pkgconfig_2.0.3   xtable_1.8-4      scales_1.2.1     
-## [25] webshot_0.5.4     processx_3.7.0    svglite_2.1.0     later_1.3.0      
-## [29] tzdb_0.3.0        timechange_0.2.0  generics_0.1.3    ellipsis_0.3.2   
-## [33] cachem_1.0.6      withr_2.5.0       cli_3.4.1         magrittr_2.0.3   
-## [37] crayon_1.5.2      mime_0.12         memoise_2.0.1     evaluate_0.20    
-## [41] ps_1.7.1          fs_1.5.2          fansi_1.0.3       xml2_1.3.3       
-## [45] pkgbuild_1.4.0    profvis_0.3.7     tools_4.2.3       prettyunits_1.1.1
-## [49] hms_1.1.2         lifecycle_1.0.3   munsell_0.5.0     callr_3.7.2      
-## [53] compiler_4.2.3    jquerylib_0.1.4   systemfonts_1.0.4 rlang_1.0.6      
-## [57] grid_4.2.3        rstudioapi_0.14   htmlwidgets_1.5.4 miniUI_0.1.1.1   
-## [61] gtable_0.3.1      curl_4.3.3        R6_2.5.1          bit_4.0.5        
-## [65] fastmap_1.1.0     utf8_1.2.2        stringi_1.7.8     parallel_4.2.3   
-## [69] Rcpp_1.0.9        png_0.1-7         vctrs_0.5.2       tidyselect_1.2.0 
-## [73] xfun_0.36         urlchecker_1.0.1</code></pre>
+##  [1] tidyselect_1.2.0  viridisLite_0.4.2 fastmap_1.1.1     promises_1.2.1   
+##  [5] digest_0.6.33     timechange_0.2.0  mime_0.12         lifecycle_1.0.4  
+##  [9] ellipsis_0.3.2    processx_3.8.2    magrittr_2.0.3    compiler_4.3.2   
+## [13] rlang_1.1.2       sass_0.4.8        tools_4.3.2       utf8_1.2.4       
+## [17] prettyunits_1.2.0 htmlwidgets_1.6.4 bit_4.0.5         pkgbuild_1.4.2   
+## [21] curl_5.2.0        plyr_1.8.9        xml2_1.3.6        pkgload_1.3.3    
+## [25] miniUI_0.1.1.1    withr_2.5.2       grid_4.3.2        fansi_1.0.6      
+## [29] urlchecker_1.0.1  profvis_0.3.8     xtable_1.8-4      colorspace_2.1-0 
+## [33] scales_1.3.0      cli_3.6.2         crayon_1.5.2      generics_0.1.3   
+## [37] remotes_2.4.2.1   rstudioapi_0.15.0 httr_1.4.7        tzdb_0.4.0       
+## [41] sessioninfo_1.2.2 cachem_1.0.8      rvest_1.0.3       parallel_4.3.2   
+## [45] vctrs_0.6.5       webshot_0.5.5     jsonlite_1.8.8    callr_3.7.3      
+## [49] hms_1.1.3         bit64_4.0.5       archive_1.1.6     systemfonts_1.0.5
+## [53] jquerylib_0.1.4   glue_1.6.2        ps_1.7.5          stringi_1.8.3    
+## [57] gtable_0.3.4      later_1.3.1       munsell_0.5.0     pillar_1.9.0     
+## [61] htmltools_0.5.7   R6_2.5.1          vroom_1.6.5       evaluate_0.23    
+## [65] shiny_1.8.0       highr_0.10        png_0.1-8         memoise_2.0.1    
+## [69] httpuv_1.6.12     bslib_0.6.1       Rcpp_1.0.11       svglite_2.1.2    
+## [73] xfun_0.41         fs_1.6.3          pkgconfig_2.0.3</code></pre>
 <pre class="r"><code>Sys.time()</code></pre>
-<pre><code>## [1] &quot;2023-05-25 13:10:26 MDT&quot;</code></pre>
+<pre><code>## [1] &quot;2024-01-03 10:21:34 MST&quot;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div id="appendix-b.-session-and-version-information" class="section level1">
@@ -2883,11 +2928,12 @@ observations.</p>
 eval=FALSE). Session and version information is only necessary if you
 have set the “Listing” code chunk to eval=TRUE in appendix A. In that
 case, change the “session-info” code chunk parameters to eval=TRUE.</p>
-<pre><code>## R version 4.2.3 (2023-03-15 ucrt)
+<pre><code>## R version 4.3.2 (2023-10-31 ucrt)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
 ## Running under: Windows 10 x64 (build 19045)
 ## 
 ## Matrix products: default
+## 
 ## 
 ## locale:
 ## [1] LC_COLLATE=English_United States.utf8 
@@ -2896,37 +2942,45 @@ case, change the “session-info” code chunk parameters to eval=TRUE.</p>
 ## [4] LC_NUMERIC=C                          
 ## [5] LC_TIME=English_United States.utf8    
 ## 
+## time zone: America/Denver
+## tzcode source: internal
+## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] QCkit_0.1.0.4    lubridate_1.9.2  forcats_1.0.0    stringr_1.5.0   
-##  [5] dplyr_1.1.0      purrr_1.0.1      readr_2.1.4      tidyr_1.3.0     
-##  [9] tibble_3.1.8     ggplot2_3.4.1    tidyverse_2.0.0  devtools_2.4.5  
-## [13] usethis_2.1.6    kableExtra_1.3.4 yaml_2.3.7       knitr_1.42      
-## [17] pander_0.6.5     rmarkdown_2.20   markdown_1.2    
+##  [1] QCkit_0.1.3           lubridate_1.9.3       forcats_1.0.0        
+##  [4] stringr_1.5.1         dplyr_1.1.4           purrr_1.0.2          
+##  [7] readr_2.1.4           tidyr_1.3.0           tibble_3.2.1         
+## [10] ggplot2_3.4.4         tidyverse_2.0.0       devtools_2.4.5       
+## [13] usethis_2.2.2         kableExtra_1.3.4.9000 yaml_2.3.8           
+## [16] knitr_1.45            pander_0.6.5          rmarkdown_2.25       
+## [19] markdown_1.11        
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] httr_1.4.4        sass_0.4.5        pkgload_1.3.1     bit64_4.0.5      
-##  [5] vroom_1.6.1       jsonlite_1.8.4    viridisLite_0.4.1 bslib_0.4.2      
-##  [9] shiny_1.7.2       highr_0.10        remotes_2.4.2     sessioninfo_1.2.2
-## [13] pillar_1.8.1      glue_1.6.2        digest_0.6.29     promises_1.2.0.1 
-## [17] rvest_1.0.3       colorspace_2.0-3  plyr_1.8.8        htmltools_0.5.4  
-## [21] httpuv_1.6.6      pkgconfig_2.0.3   xtable_1.8-4      scales_1.2.1     
-## [25] webshot_0.5.4     processx_3.7.0    svglite_2.1.0     later_1.3.0      
-## [29] tzdb_0.3.0        timechange_0.2.0  generics_0.1.3    ellipsis_0.3.2   
-## [33] cachem_1.0.6      withr_2.5.0       cli_3.4.1         magrittr_2.0.3   
-## [37] crayon_1.5.2      mime_0.12         memoise_2.0.1     evaluate_0.20    
-## [41] ps_1.7.1          fs_1.5.2          fansi_1.0.3       xml2_1.3.3       
-## [45] pkgbuild_1.4.0    profvis_0.3.7     tools_4.2.3       prettyunits_1.1.1
-## [49] hms_1.1.2         lifecycle_1.0.3   munsell_0.5.0     callr_3.7.2      
-## [53] compiler_4.2.3    jquerylib_0.1.4   systemfonts_1.0.4 rlang_1.0.6      
-## [57] grid_4.2.3        rstudioapi_0.14   htmlwidgets_1.5.4 miniUI_0.1.1.1   
-## [61] gtable_0.3.1      curl_4.3.3        R6_2.5.1          bit_4.0.5        
-## [65] fastmap_1.1.0     utf8_1.2.2        stringi_1.7.8     parallel_4.2.3   
-## [69] Rcpp_1.0.9        png_0.1-7         vctrs_0.5.2       tidyselect_1.2.0 
-## [73] xfun_0.36         urlchecker_1.0.1</code></pre>
-<pre><code>## [1] &quot;2023-05-25 13:10:26 MDT&quot;</code></pre>
+##  [1] tidyselect_1.2.0  viridisLite_0.4.2 fastmap_1.1.1     promises_1.2.1   
+##  [5] digest_0.6.33     timechange_0.2.0  mime_0.12         lifecycle_1.0.4  
+##  [9] ellipsis_0.3.2    processx_3.8.2    magrittr_2.0.3    compiler_4.3.2   
+## [13] rlang_1.1.2       sass_0.4.8        tools_4.3.2       utf8_1.2.4       
+## [17] prettyunits_1.2.0 htmlwidgets_1.6.4 bit_4.0.5         pkgbuild_1.4.2   
+## [21] curl_5.2.0        plyr_1.8.9        xml2_1.3.6        pkgload_1.3.3    
+## [25] miniUI_0.1.1.1    withr_2.5.2       grid_4.3.2        fansi_1.0.6      
+## [29] urlchecker_1.0.1  profvis_0.3.8     xtable_1.8-4      colorspace_2.1-0 
+## [33] scales_1.3.0      cli_3.6.2         crayon_1.5.2      generics_0.1.3   
+## [37] remotes_2.4.2.1   rstudioapi_0.15.0 httr_1.4.7        tzdb_0.4.0       
+## [41] sessioninfo_1.2.2 cachem_1.0.8      rvest_1.0.3       parallel_4.3.2   
+## [45] vctrs_0.6.5       webshot_0.5.5     jsonlite_1.8.8    callr_3.7.3      
+## [49] hms_1.1.3         bit64_4.0.5       archive_1.1.6     systemfonts_1.0.5
+## [53] jquerylib_0.1.4   glue_1.6.2        ps_1.7.5          stringi_1.8.3    
+## [57] gtable_0.3.4      later_1.3.1       munsell_0.5.0     pillar_1.9.0     
+## [61] htmltools_0.5.7   R6_2.5.1          vroom_1.6.5       evaluate_0.23    
+## [65] shiny_1.8.0       highr_0.10        png_0.1-8         memoise_2.0.1    
+## [69] httpuv_1.6.12     bslib_0.6.1       Rcpp_1.0.11       svglite_2.1.2    
+## [73] xfun_0.41         fs_1.6.3          pkgconfig_2.0.3</code></pre>
+<pre><code>## [1] &quot;2024-01-03 10:21:34 MST&quot;</code></pre>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
 </div>
 
 
