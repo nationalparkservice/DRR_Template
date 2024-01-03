@@ -119,9 +119,18 @@ The YAML header helps format the DRR. You should not need to edit any of the YAM
 
 - `session-info` is the information about the versions of R and packages used in generating the report. In most cases, you do not need to report session info (leave the session-info code chunk parameters in their default state: eval=FALSE). Session and version information is only necessary if you have set the "Listing" code chunk in appendix A to eval=TRUE. In that case, change the "session info" code chunk parameters to eval=TRUE.
 
-## Text 
+## Citations
 
-The following text in the body of the DRR template will need to be edited to customize it to each data package:
+### Automating Citations
+
+To automate citations, add the citation to in bibtex format to the file "references.bib". Each bibtex citation should start with a unique identifier; the example reference in the supplied references.bib file has the unique identifier "@article{Scott1994,". Using the "Source" view in Rstudio, insert the reference in your text, by combining the "at" symbol with the portion of the unique identifier after the curly bracket: @Scott1994 . You can put a citation in parentheses using square brackets: [@Scott1994]. This will be rendered as (Scott, et al. 1994) in text. You can add multiple works a single parenthetical citation by separating them with a semi-colon. You can suppress the author and cite just the year by using a - symbol before the @: [-@Scott1994]. This will be rendered as (1994). Alternatively, from the "Visual" view in Rstudio, simply type the "@" symbol and select the citation you want to insert into the text. Regardless of the citation method, the full citation, properly formatted, will be included in a "References" section at the end of the rendered MS Word document. . . though it is also worth visually inspecting the .docx for citation completeness and formatting.
+
+### Manual citations
+
+If you would like to format your citations manually, please feel free to do that also. Make sure to check out the References section for how to properly format each citation type.
+
+
+The following text in the body of the DRR template will need to be edited to customize it to each data package.
 
 ### Data Records
 This is a required section and consists of two subheadings:
