@@ -276,7 +276,7 @@ supplied references.bib file has the unique identifier
 reference in your text, by combining the "at" symbol with the portion of
 the unique identifier after the curly bracket: @Scott1994 .
 
-| syntax                                                               | result (depending on chosen csl style)                                      |
+| Syntax                                                               | Result                                       |
 |------------------------------------|-----------------------------------|
 | `@Scott1994` concludes that ...                                      | Scott et al., 1994 concludes that ...                                       |
 | `@Scott1994[p.33]` concludes that ...                                | Scott (1994, p.33) concludes that ...                                       |
@@ -285,18 +285,17 @@ the unique identifier after the curly bracket: @Scott1994 .
 | delineate multiple authors with colon: `[@Scott1994; @aberdeen1958]` | delineate multiple authors with colon: (Scott et al., 1994; Aberdeen, 1958) |
 | Scott et al. conclude that .... [-@Scott1994]                        | Scott et al. conclude that . . . (1994)                                     |
 
-Alternatively, from the "Visual" view in Rstudio, simply type the "\@"
-symbol and select the citation you want to insert into the text.
-Regardless of the citation method, the full citation, properly
-formatted, will be included in a "References" section at the end of the
-rendered MS Word document. . . though it is also worth visually
+
+The full citation, properly formatted, will be included in a "References" section at the end of the rendered MS Word document. . . though it is also worth visually
 inspecting the .docx for citation completeness and formatting.
 
 ### Manual citations
 
 If you would like to format your citations manually, please feel free to
-do that also. Make sure to check out the References section for how to
+do so. Make sure to look at the References section for how to
 properly format each citation type.
+
+# Editing the Text 
 
 The following text in the body of the DRR template will need to be
 edited to customize it to each data package.
