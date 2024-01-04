@@ -5,6 +5,13 @@ output:
 bibliography: references.bib
 csl: national-park-service-DRR.csl
 ---
+<!--- For more information on using this template, please see the accompanying documentation at: 
+
+Overview of DRR Templates: https://nationalparkservice.github.io/DRR_Template/
+
+Specific Instructions on filling out this template:
+https://nationalparkservice.github.io/DRR_Template/HowToUseThisTemplate.html
+--->
 
 ```{r user_edited_parameterss, include=FALSE}
 # The title of your DRR. Should all DRR start with "Data Release Report:"? Should we enforce titles specifically referencing the data package(s) they the report is about?
@@ -260,9 +267,13 @@ for(i in 1:nrow(unique_affiliation)){
 
 # Using citations in this document:
 
-To automate citations, add the citation to in bibtex format to the file "references.bib". Each bibtex citation should start with a unique identifier; the example reference in the supplied references.bib file has the unique identifier "@article{Scott1994,". Using the "Source" view in Rstudio, insert the reference in your text, by combining the "at" symbol with the portion of the unique identifier after the curly bracket: @Scott1994 . You can put a citation in parentheses using square brackets: [@Scott1994]. This will be rendered as (Scott, et al. 1994) in text. You can add mutiple authors works a single parenthetical citation by separating them with a semi-colon. You can suppress the author and cite just the year by using a - symbol before the @ : [-@Scott1994]. Alternatively, from the "Visual" view in Rstudio, simply type the "at" symbol and select the citation you want to insert into the text. Regardless of the citation method, the full citation, properly formatted, will be included in a "References" section at the end of the rendered MS Word document.
+To automate citations, add the citation to in bibtex format to the file "references.bib". You can manually copy and paste the bibtex for each reference in, or you can search for it from within Rstudio. From within Rstudio, make sure you are editing this document using the "Visual" view (as opposed to "Source"). From the "Insert" drop-down menu, select "\@ Citation..." (shortcut: Cntrl-Shift-F8). This will open a tool where you can view all the citations in your reference.bib file as well as search multiple databases for references, automatically insert the bibtex for the reference into your references.bib file (and customize the unique identifier if you'd like) and insert the in-text citation into the DRR template.
 
-If you would like to format your citations manually, please feel free to do that also. Make sure to check out the References section for how to properly format each citation type.
+Once a reference is in your references.bib file, from within this template you can simply type the '\@' symbol and select which reference to insert in the text.
+
+If you need to edit how the citation is displayed after inserting it into the text, switch back to the "Source" view. Each bibtex citation should start with a unique identifier; the example reference in the supplied references.bib file has the unique identifier "@article{Scott1994,". Using the "Source" view in Rstudio, insert the reference in your text, by combining the "at" symbol with the portion of the unique identifier after the curly bracket: @Scott1994 . You can put a citation in parentheses using square brackets: [@Scott1994]. This will be rendered as (Scott, et al. 1994) in text. You can add multiple authors works a single parenthetical citation by separating them with a semi-colon. You can suppress the author and cite just the year by using a - symbol before the \@ : [-@Scott1994].
+
+If you would like to format your citations manually, please feel free to do that instead. Make sure to examine the References section for examples of how to manually format each citation type.
 
 # Data Records (required)
 
