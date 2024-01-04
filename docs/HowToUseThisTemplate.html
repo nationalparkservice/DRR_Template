@@ -2102,8 +2102,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
   <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
   <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-  <link href="site_libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
-  <script src="site_libs/bsTable-3.3.7/bootstrapTable.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2182,12 +2180,15 @@ Creating DRRs
 <ul>
 <li><a href="#automating-citations" id="toc-automating-citations">Automating Citations</a></li>
 <li><a href="#manual-citations" id="toc-manual-citations">Manual citations</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#editing-the-text" id="toc-editing-the-text">Editing the Text</a>
+<ul>
 <li><a href="#data-records" id="toc-data-records">Data Records</a></li>
 <li><a href="#data-quality" id="toc-data-quality">Data Quality</a></li>
 <li><a href="#usage-notes" id="toc-usage-notes">Usage Notes</a></li>
 <li><a href="#methods" id="toc-methods">Methods</a></li>
 <li><a href="#references" id="toc-references">References</a></li>
-</ul></li>
 <li><a href="#figures" id="toc-figures">Figures</a></li>
 <li><a href="#tables" id="toc-tables">Tables</a></li>
 </ul></li>
@@ -2387,14 +2388,23 @@ references.bib file (and customize the unique identifier if you’d like)
 and insert the in-text citation into the DRR template.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig2"></span>
-<img src="RMD_vis_source.PNG" alt="Adding Citations: Source vs. Visual editing of the Template and how to access the citation manager." width="75%" />
+<img src="RMD_vis_source.PNG" alt="Adding Citations - Source vs. Visual editing of the Template and how to access the citation manager." width="75%" />
 <p class="caption">
-Figure 2: Adding Citations: Source vs. Visual editing of the Template and how to access the citation manager.
+Figure 2: Adding Citations - Source vs. Visual editing of the Template and how to access the citation manager.
 </p>
 </div>
 </div>
-<p>Once a reference is in your references.bib file, using the Visual view of the template you can simply type the ‘@’ symbol and select which reference
-to insert in the text.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig3"></span>
+<img src="R_citation_manager.PNG" alt="Adding Citations - Using the citation manager." width="75%" />
+<p class="caption">
+Figure 3: Adding Citations - Using the citation manager.
+</p>
+</div>
+</div>
+<p>Once a reference is in your references.bib file, using the Visual view
+of the template you can simply type the ‘@’ symbol and select which
+reference to insert in the text.</p>
 <p>If you need to edit how the citation is displayed after inserting it
 into the text, switch back to the “Source” view. Each bibtex citation
 should start with a unique identifier; the example reference in the
@@ -2409,8 +2419,8 @@ the unique identifier after the curly bracket: <span class="citation" data-cites
 </colgroup>
 <thead>
 <tr class="header">
-<th>syntax</th>
-<th>result (depending on chosen csl style)</th>
+<th>Syntax</th>
+<th>Result</th>
 </tr>
 </thead>
 <tbody>
@@ -2440,16 +2450,13 @@ the unique identifier after the curly bracket: <span class="citation" data-cites
 </tr>
 </tbody>
 </table>
-<p>Alternatively, from the “Visual” view in Rstudio, simply type the “@”
-symbol and select the citation you want to insert into the text.
-Regardless of the citation method, the full citation, properly
-formatted, will be included in a “References” section at the end of the
-rendered MS Word document. . . though it is also worth visually
+<p>The full citation, properly formatted, will be included in a “References” section at the end of the rendered MS Word document. . . though it is also worth visually
 inspecting the .docx for citation completeness and formatting.</p>
 <h3 id="manual-citations">Manual citations</h3>
 <p>If you would like to format your citations manually, please feel free to
-do that also. Make sure to check out the References section for how to
+do so. Make sure to look at the References section for how to
 properly format each citation type.</p>
+<h1 id="editing-the-text">Editing the Text</h1>
 <p>The following text in the body of the DRR template will need to be
 edited to customize it to each data package.</p>
 <h3 id="data-records">Data Records</h3>
@@ -2517,10 +2524,10 @@ caption to the figure’s “alt text” tag, making it 508-compliant.</p>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>Results in:</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig3"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig4"></span>
 <img src="ProcessingWorkflow.png" alt="Example general workflow to incude in the methods section." width="70%" />
 <p class="caption">
-Figure 3: Example general workflow to incude in the methods section.
+Figure 4: Example general workflow to incude in the methods section.
 </p>
 </div>
 </div>
