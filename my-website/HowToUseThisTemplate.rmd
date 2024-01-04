@@ -257,11 +257,11 @@ references.bib file (and customize the unique identifier if you'd like)
 and insert the in-text citation into the DRR template.
 
 ```{r fig2, echo=FALSE, out.width="75%",  fig.align="center", fig.cap="Adding Citations - Source vs. Visual editing of the Template and how to access the citation manager."}
-knitr::include_graphics("RMD_vis_source.PNG")
+knitr::include_graphics("RMD_vis_source.png")
 ```
 
 ```{r fig3, echo=FALSE, out.width="75%",  fig.align="center", fig.cap="Adding Citations - Using the citation manager."}
-knitr::include_graphics("R_citation_manager.PNG")
+knitr::include_graphics("R_citation_manager.png")
 ```
 
 Once a reference is in your references.bib file, using the Visual view
