@@ -422,6 +422,10 @@ The Usage Notes should contain brief instructions to assist other researchers wi
 
 For studies involving privacy or safety controls on public access to the data, this section should describe in detail these controls, including how authors can apply to access the data, what criteria will be used to determine who may access the data, and any limitations on data use.
 
+## Acquiring the Data Package
+
+This data package is available for download from the NPS DataStore at `r dataPackageDOI` and can be directly imported into R data frames using the NPSutils package https://doi.org/10.57830/2300651
+
 # Methods
 
 Ideally these methods are identical to the methods listed in the metadata accompanying the data package that the DRR describes.Future versions of this template will pull directly from metadata.
