@@ -45,9 +45,9 @@ authorNames <- c(
 
 #Note that the entirety of each affiliation is enclosed in quotations. Do not worry about indentation or word wrapping.
 authorAffiliations <- c(
-  "NPS Inventory and Monitory Division, 1201 Oakridge Dr, Suite 150, Fort Collins, Colorado", 
-  "Managed Business Solutions (MBS), a Sealaska Company, Contractor to the National Park Service, Natural Resource Stewardship and Science Directorate, 1201 Oakridge Dr, Suite 150, Fort Collins, Colorado",
-  "Managed Business Solutions (MBS), a Sealaska Company, Contractor to the National Park Service, Natural Resource Stewardship and Science Directorate, 1201 Oakridge Dr, Suite 150, Fort Collins, Colorado"
+  "NPS Inventory and Monitoring Division, 1201 Oakridge Dr., Suite 150, Fort Collins, Colorado", 
+  "Managed Business Solutions (MBS), a Sealaska Company, Contractor to the National Park Service, Natural Resource Stewardship and Science Directorate, 1201 Oakridge Dr., Suite 150, Fort Collins, Colorado",
+  "Managed Business Solutions (MBS), a Sealaska Company, Contractor to the National Park Service, Natural Resource Stewardship and Science Directorate, 1201 Oakridge Dr., Suite 150, Fort Collins, Colorado"
 )
 
 # List the ORCID iDs for each author in the format "(xxxx-xxxx-xxxx-xxxx)". If an author does not have an ORCID iD, specify NA (no quotes). If an author is listed more than once (for instance because they have multiple institutional affiliations), the ORCID iD must also be listed more than once. For more information on ORCID iDs and to register an ORCID iD, see https://www.orcid.org. 
@@ -343,32 +343,6 @@ data_criteria %>%
 
 ```
 
-
-
-```{r data_file_flagging, echo=FALSE, eval=TRUE}
-# To turn off, set eval=FALSE.
-# Generates a table summarizing data quality across all flagged columns of each data file. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as "NA".
-
-#set directory to the location of your data package
-path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
-df_flags <- QCkit::get_custom_flags(directory = path, output="files")
-df_flags$filename <- gsub(".csv", "", df_flags$filename)
-colnames(df_flags) <- c("File Name", "A", "AE", "P", "R", "% Missing (Mean)", "RRU (Mean)", "RRU (SD)")
-colnames(df_flags)[1] <- paste0("File Name", "^1^")
-colnames(df_flags)[2] <- paste0("A", "^2^")
-colnames(df_flags)[6] <- paste0("% Missing (Mean)", "^3^")
-colnames(df_flags)[7] <- paste0("RRU (Mean)", "^3,4^")
-colnames(df_flags)[8] <- paste0("RRU (SD)", "^4,5^")
-
-#Generate the table
-kableExtra::kable(df_flags, caption = '**Table 3.2: Summary of data quality flags for each data file within the data package**', format = "pandoc", digits=2) %>%
-kableExtra::add_footnote(c("NAs for a given fi(le indicates no quality controlled data were found.",
-               "All non-missing data in specified unflagged columns are considered accepted.",
-               "Means are geometric means.",
-               "RRU (unweighted relative response) is calculated as the number of accepted (where A and AE are both considered accepted) divided by the total number of observations plus the number of missing observations.", 
-               "SD is standard deviation."), notation = "number")
-```
-
 ```{r data_column_flagging, echo=FALSE, eval=TRUE}
 # To turn off, set eval=FALSE.
 # Generates a table summarizing QC at the column level within each file. All flagged columns are included. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted.  If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as "NA".
@@ -399,6 +373,32 @@ kableExtra::add_footnote(
   ) 
 
 ```
+
+
+```{r data_package_flagging, echo=FALSE, eval=TRUE}
+# To turn off, set eval=FALSE.
+# Generates a table summarizing data quality across all flagged columns of each data file. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as "NA".
+
+#set directory to the location of your data package
+path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
+df_flags <- QCkit::get_custom_flags(directory = path, output="files")
+df_flags$filename <- gsub(".csv", "", df_flags$filename)
+colnames(df_flags) <- c("File Name", "A", "AE", "P", "R", "% Missing (Mean)", "RRU (Mean)", "RRU (SD)")
+colnames(df_flags)[1] <- paste0("File Name", "^1^")
+colnames(df_flags)[2] <- paste0("A", "^2^")
+colnames(df_flags)[6] <- paste0("% Missing (Mean)", "^3^")
+colnames(df_flags)[7] <- paste0("RRU (Mean)", "^3,4^")
+colnames(df_flags)[8] <- paste0("RRU (SD)", "^4,5^")
+
+#Generate the table
+kableExtra::kable(df_flags, caption = '**Table 3.2: Summary of data quality flags for each data file within the data package**', format = "pandoc", digits=2) %>%
+kableExtra::add_footnote(c("NAs for a given fi(le indicates no quality controlled data were found.",
+               "All non-missing data in specified unflagged columns are considered accepted.",
+               "Means are geometric means.",
+               "RRU (unweighted relative response) is calculated as the number of accepted (where A and AE are both considered accepted) divided by the total number of observations plus the number of missing observations.", 
+               "SD is standard deviation."), notation = "number")
+```
+
 
 Possible content **strongly Suggested to Include**
 
