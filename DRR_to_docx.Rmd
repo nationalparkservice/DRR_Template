@@ -310,6 +310,39 @@ The Data Quality Evaluation section should present any analyses that are needed 
 
 *Required Table*
 
+```{r dataAcceptanceCriteria, echo=FALSE, eval=TRUE}
+# To turn off, set eval=FALSE.
+# Generates a table of acceptance criteria for each of the data quality fields in your data package. Mitigations taken when data did not meet the acceptance criteria should be described textually in the Data Quality Evaluation section.
+
+# Specify which columns in your data package are data quality fields in the dataQualityFields variable. In the example below, data quality fields/columns in the data package are listed in the format [FieldName]_flag. These data quality fields relate to the respective temporal, taxonomic, and  geographic data.
+
+dataQualityFields <- c(
+  "eventDate_flag", 
+  "scientificName_flag", 
+  "coordinate_flag"
+  )
+
+# Brief description of the acceptance criteria for each respective data quality field. The order of the acceptance criteria must match the order of the data quality fields. 
+
+dataQualityAcceptanceCriteria <- c(
+  "Sampling event date within the start and end dates of the project",
+  "Taxon exists within Integrated Taxonomic Information System and GBIF",
+  "Sampling location is within the park unit boundaries"
+  )
+
+
+install.packages("remotes")
+devtools::install_github("EmilyMarkowitz-NOAA/NMFSReports")
+library(NMFSReports)
+
+data_criteria<-data.frame(dataQualityFields = str_remove(dataQualityFields, "_flag"), dataQualityAcceptanceCriteria)
+
+data_criteria %>% 
+  NMFSReports::format_cells(1:3, 1, "bold") %>% 
+  knitr::kable(caption = "**Table 2. Acceptance criteria for data evaluated.**", col.names=c("**Field**", "**Acceptance Criteria**"), format="pandoc", align = 'c') 
+
+```
+
 ```{r dataFlaggingTable, echo=FALSE, eval=TRUE}
 #Generates a table with definitions for the data flags, A, AE, P, or R. Honestly not super useful and can probably be turned off (set eval=FALSE) if these are defined elsewhere in text.
 flags<-c("A"," ", "AE", "P", "R", "NA")
