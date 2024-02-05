@@ -308,10 +308,6 @@ The Data Quality Evaluation section should present any analyses that are needed 
 
 **Required elements for this section**
 
-*Stock Text to include:*
-
-The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *`r dataPackageTitle`* is suitable for its intended use as of the date of processing (`r Sys.Date()`).
-
 *Required Table*
 
 ```{r dataFlaggingTable, echo=FALSE, eval=TRUE}
@@ -385,8 +381,6 @@ kableExtra::add_footnote(c("NAs for a given file indicates no quality controlled
                "RRU (unweighted relative response) is calculated as the number of accepted (where A and AE are both considered accepted) divided by the total number of observations plus the number of missing observations."), notation = "number")
 ```
 
-Unweighted Response Rates (RRU) is calculated as number of accepted (A and AE) data values divided by the total number of values (not including missing values). Note that all unflagged values are considered accepted. Means are geometric, SD is standard deviation.
-
 Possible content **strongly Suggested to Include**
 
 -   Occurrence rates or patterns in data that do not meet established standards or data quality objectives.
@@ -403,6 +397,10 @@ Generally, this **should not include:**
 -   follow-up experiments aimed at testing or supporting an interpretation of the data
 -   statistical hypothesis testing (e.g. tests of statistical significance, identifying deferentially expressed genes, trend analysis, etc.)
 -   exploratory computational analyses like clustering and annotation enrichment (e.g. GO analysis).
+
+*Stock Text to include:*
+
+The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility (Table 3). Of the data that were evaluated for quality, XX.X% of fields in this data package met data quality standards. The *`r dataPackageTitle`* is suitable for its intended use as of the date of processing (`r Sys.Date()`).
 
 # Usage Notes (required)
 
