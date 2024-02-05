@@ -268,6 +268,10 @@ for(i in 1:nrow(unique_affiliation)){
 
 <hr>
 
+# Acknowledgements (optional)
+
+The Acknowledgements should contain text acknowledging non-author contributors. Acknowledgements should be brief, and should not include thanks to anonymous referees and editors or effusive comments. Grant or contribution numbers may be acknowledged.
+
 # Using citations in this document:
 
 To automate citations, add the citation to in bibtex format to the file "references.bib". You can manually copy and paste the bibtex for each reference in, or you can search for it from within Rstudio. From within Rstudio, make sure you are editing this document using the "Visual" view (as opposed to "Source"). From the "Insert" drop-down menu, select "\@ Citation..." (shortcut: Cntrl-Shift-F8). This will open a tool where you can view all the citations in your reference.bib file as well as search multiple databases for references, automatically insert the bibtex for the reference into your references.bib file (and customize the unique identifier if you'd like) and insert the in-text citation into the DRR template.
@@ -522,10 +526,6 @@ National Park Service (NPS). 2016c. NPScape Landscape Dynamics Metric Viewer web
 National Park Service (NPS). 2016d. NPSpecies online application. Available at: <https://irma.nps.gov/NPSpecies/> (accessed 07 March 2016).
 
 United States Geologic Survey (USGS). 2016. BioData - Aquatic Bioassessment Data for the Nation. Available at: <https://aquatic.biodata.usgs.gov/> (accessed 07 March 2016).
-
-# Acknowledgements (optional)
-
-The Acknowledgements should contain text acknowledging non-author contributors. Acknowledgements should be brief, and should not include thanks to anonymous referees and editors or effusive comments. Grant or contribution numbers may be acknowledged.
 
 # Appendix A. Code Listing
 
