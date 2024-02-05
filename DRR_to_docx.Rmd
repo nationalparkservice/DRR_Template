@@ -343,6 +343,8 @@ data_criteria %>%
 
 ```
 
+
+
 ```{r data_file_flagging, echo=FALSE, eval=TRUE}
 # To turn off, set eval=FALSE.
 # Generates a table summarizing data quality across all flagged columns of each data file. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as "NA".
@@ -374,20 +376,28 @@ kableExtra::add_footnote(c("NAs for a given fi(le indicates no quality controlle
 #set directory to the location of your data package:
 path <- "../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
 dc_flags <- QCkit::get_custom_flags(directory = path, output="columns")
-dc_flags$filename <- gsub(".csv", "", dc_flags$filename)
-dc_flags$column <- gsub("_flag", "", dc_flags$column)
-colnames(dc_flags)<-c("File Name", "Column", "A", "AE", "R", "P", "Total", "% Missing", "RRU")
-colnames(dc_flags)[1]<-paste0("File Name", "^1^")
-colnames(dc_flags)[2]<-paste0("Colum", "^2^")
-colnames(dc_flags)[3]<-paste0("A", "^3^")
-colnames(dc_flags)[9]<-paste0("RRU", "^4^")
+dc_flags$`File Name` <- gsub(".csv", "", dc_flags$`File Name`)
+
+
+colnames(dc_flags)[2]<-paste0("Measure", "^1^")
+colnames(dc_flags)[4]<-paste0("A", "^2^")
+colnames(dc_flags)[8]<-paste0("% Accepted", "^3^")
 
 #Generate the table:
-kableExtra::kable(dc_flags, caption = '**Table 3.3: Summary of data quality flags for each column**', col.names = , format = "pandoc", digits=2) %>%
-kableExtra::add_footnote(c("NAs for a given file indicates no quality controlled data were found.",
-               "The '_flag' suffix has been omitted from column names for brevity.",
-               "All non-missing data in specified unflagged columns are considered accepted.",
-               "RRU (unweighted relative response) is calculated as the number of accepted (where A and AE are both considered accepted) divided by the total number of observations plus the number of missing observations."), notation = "number")
+dc_flags %>% 
+  knitr::kable(
+    caption = '**Table 3: Summary of data quality flags for each column [A – Accepted; AE – Accepted but Estimated; P – Provisional; R – Rejected.]**',  
+    format = "pandoc", 
+    digits = 2, 
+    align = 'c', 
+    col.names = c("**File Name**", "**Measure^1^**", "**Number of Reocrds**", "**A^2^**", "**AE**", "**R**", "**P**", "**% Accepted^3^**")) %>%
+kableExtra::add_footnote(
+  c("The '_flag' suffix has been omitted from column names for brevity.",
+    "All non-missing data in specified unflagged columns are considered accepted.",
+    "% Accepted is calculated as the number of accepted (where A and AE are both considered accepted) divided by the total number of observations plus the number of missing observations."), 
+  notation = "number"
+  ) 
+
 ```
 
 Possible content **strongly Suggested to Include**
