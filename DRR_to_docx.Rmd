@@ -343,17 +343,6 @@ data_criteria %>%
 
 ```
 
-```{r dataFlaggingTable, echo=FALSE, eval=TRUE}
-#Generates a table with definitions for the data flags, A, AE, P, or R. Honestly not super useful and can probably be turned off (set eval=FALSE) if these are defined elsewhere in text.
-flags<-c("A"," ", "AE", "P", "R", "NA")
-def<-c("Accepted"," ", "Accepted, estimated", "Provisional", "Rejected", "Missing")
-app<-c("columns ending \"_flag\"", "unflagged data", 
-       rep("columns ending \"_flag\"", 3), "All data")
-data_flags<-data.frame(flags, def, app)
-
-knitr::kable(data_flags, caption = "**Table 2: Description of data quality flags**", col.names=c("Flag", "Definition", "Usage"), format="pandoc")
-```
-
 ```{r data_package_flagging, echo=FALSE, eval=TRUE}
 # To turn off, set eval=FALSE.
 # Generates a table with a single row summarizing data quality across all flagged columns of the entire data package. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or column numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. 
