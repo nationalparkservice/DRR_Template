@@ -262,8 +262,6 @@ for(i in 1:nrow(unique_affiliation)){
   }
 ```
 
-#### `r date` <!-- publication date - defaults to current system date -->
-
 # Abstract
 
 `r DRRabstract` <!-- pulls from the abstract you supplied is user_edited_parameters - don't edit here! -->
