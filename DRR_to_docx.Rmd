@@ -343,19 +343,6 @@ data_criteria %>%
 
 ```
 
-```{r data_package_flagging, echo=FALSE, eval=TRUE}
-# To turn off, set eval=FALSE.
-# Generates a table with a single row summarizing data quality across all flagged columns of the entire data package. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or column numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. 
-
-#if your package is not in your working directory, you need to specify the directory:
-path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
-dp_flags <- QCkit::get_custom_flags(directory = path, output="package")
-
-#generate table:
-kableExtra::kbl(dp_flags, caption = '**Table 3.1: Summary of data quality flags for the data package**', col.names = c("A", "AE", "P", "R", "% Missing (Mean)", "RRU (Mean)", "RRU (SD)"), format = "pandoc", digits=2)
-
-```
-
 ```{r data_file_flagging, echo=FALSE, eval=TRUE}
 # To turn off, set eval=FALSE.
 # Generates a table summarizing data quality across all flagged columns of each data file. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as "NA".
