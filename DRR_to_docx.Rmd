@@ -440,19 +440,19 @@ Authors are encouraged to consider creating a figure that outlines the experimen
 include_graphics("vignettes/common/ProcessingWorkflow.png")
 ```
 
-### Data Collection and Sample Processing Methods (optional)
+## Data Collection and Sample Processing Methods (optional)
 
 Include a description of field methods and sample processing
 
-### Additional Data Sources (optional)
+## Additional Data Sources (optional)
 
 Provide descriptions (with citations) of other data sources used.
 
-### Data Processing (required if done)
+## Data Processing (required if done)
 
 Summarize process and results of any QC processes done that manipulate, change, or qualify data.
 
-### Code Availability (required)
+## Code Availability (required)
 
 For all studies using custom code in the generation or processing of datasets, a statement must be included indicating whether and how the code can be accessed and any restrictions to access. This section should also include information on the versions of any software used, if relevant, and any specific variables or parameters used to generate, test, or process the current dataset. Actual analytical code should be provided in Appendices.
 
@@ -467,7 +467,7 @@ If you would like to manually format your references, delete the preceding two l
 
 See the following examples:
 
-### Agency, Company, etc. as Author Examples
+## Agency, Company, etc. as Author Examples
 
 Fung Associates Inc. and SWCA Environmental Consultants. 2010. Assessment of natural resources and watershed conditions for Kalaupapa National Historical Park. Natural Resource Report. NPS/NPRC/WRD/NRR—2010/261. National Park Service, Fort Collins, Colorado.
 
@@ -477,7 +477,7 @@ National Park Service (NPS). 2016. State of the park report for Zion National Pa
 
 U.S. Forest Service (USFS). 1993. ECOMAP. National hierarchical framework of ecological units. U. S. Forest Service, Washington, D.C.
 
-### Traditional Journal Article Examples
+## Traditional Journal Article Examples
 
 Bradbury, J. W., S. L. Vehrencamp, K. E. Clifton, and L. M. Clifton. 1996. The relationship between bite rate and local forage abundance in wild Thompson’s gazelles. Ecology 77:2237–2255. <https://doi.org/10.2307/2265717>
 
@@ -485,17 +485,17 @@ Oakley, K. L., L. P. Thomas, and S. G. Fancy. 2003. Guidelines for long-term mon
 
 Sawaya, M. A., T. K. Ruth, S. Creel, J. J. Rotella, J. B. Stetz, H. B. Quigley, and S. T. Kalinowski. 2011. Evaluation of noninvasive genetic sampling methods for cougars in Yellowstone National Park. The Journal of Wildlife Management 75(3):612–622. <https://doi.org/10.1002/jwmg.92>
 
-### Book Example
+## Book Example
 
 Harvill, A. M., Jr., T. R. Bradley, C. E. Stevens, T. F. Wieboldt, D. M. E. Ware, D. W. Ogle, and G. W. Ramsey. 1992. Atlas of the Virginia flora, third edition. Virginia Botanical Associates, Farmville, Virginia.
 
-### Book Chapter Examples
+## Book Chapter Examples
 
 McCauly, E. 1984. The estimation of abundance and biomass of zooplankton in samples. Pages 228–265 in J. A. Dowling and F. H. Rigler, editors. A manual on methods for the assessment of secondary productivity in fresh waters. Blackwell Scientific, Oxford, UK.
 
 Watson, P. J. 2004. Of caves and shell mounds in west-central Kentucky. Pages 159–164 in Of caves and shell mounds. The University of Alabama Press, Tuscaloosa, Alabama.
 
-### Published Report Examples
+## Published Report Examples
 
 Bass, S., R. E. Gallipeau, Jr., M. Van Stappen, J. Kumer, M. Wessner, S. Petersburg, L. L. Hays, J. Milstone, M. Soukup, M. Fletcher, L. G. Adams, and others. 1988. Highlights of natural resource management 1987. National Park Service, Denver, Colorado.
 
@@ -503,25 +503,25 @@ Holthausen, R. S., M. G. Raphael, K. S. McKelvey, E. D. Forsman, E. E. Starkey, 
 
 Jackson, L. L., and L. P. Gough. 1991. Seasonal and spatial biogeochemical trends for chaparral vegetation and soil geochemistry in the Santa Monica Mountains National Recreation Area. U.S. Geological Survey, Denver. Open File Report 91–0005. <https://doi.org/10.3133/ofr915>
 
-### Unpublished Report Examples
+## Unpublished Report Examples
 
 Conant, B., and J. I. Hodges. 1995. Western brant population estimates. U.S. Fish and Wildlife Service Unpublished Report, Juneau, Alaska.
 
 Conant, B., and J. F. Voelzer. 2001. Winter waterfowl survey: Mexico west coast and Baja California. U.S. Fish and Wildlife Service Unpublished Report, Juneau, Alaska.
 
-### Thesis/Dissertation Examples
+## Thesis/Dissertation Examples
 
 Diong, C. H. 1982. Population and biology of the feral pig (Sus scrofa L) in Kipahulu Valley, Mau’i. Dissertation. University of Hawai’i, Honolulu, Hawai’i.
 
 McTigue, K. M. 1992. Nutrient pulses and herbivory: Integrative control of primary producers in lakes. Thesis. University of Wisconsin, Madison, Wisconsin.
 
-### Conference Proceedings Examples
+## Conference Proceedings Examples
 
 Gunther, K. A. 1994. Changing problems in bear management: Yellowstone National Park twenty-plus years after the dumps. Ninth International Conference on Bear Research and Management. Missoula, MT, International Association for Bear Research and Management, Bozeman, Montana, February 1992:549–560.
 
 Webb, J. R., and J. N. Galloway. 1991. Potential acidification of streams in Mid-Appalachian Highlands: A problem with generalized assessments. Southern Appalachian Man and Biosphere Conference. Gatlinburg, Tennessee.
 
-### General Internet Examples
+## General Internet Examples
 
 Colorado Native Plant Society. 2016. Colorado Native Plant Society website. Available at: <https://conps.org/> (accessed 07 March 2016).
 
@@ -531,7 +531,7 @@ National Park Service (NPS). 2016b. Natural Resource Publications Management web
 
 United Sates Fish and Wildlife Service (USFWS). 2016. Endangered Species website. Available at: <http://www.fws.gov/endangered/> (accessed 07 March 2016).
 
-### Online Data Warehouse Sites (sites that allow you see and download data from multiple sources)
+## Online Data Warehouse Sites (sites that allow you see and download data from multiple sources)
 
 National Oceanographic and Atmospheric Association (NOAA). 2016. NOAA National Climatic Data Center website. Available at: <http://www.ncdc.noaa.gov/> (accessed 07 March 2016).
 
