@@ -50,11 +50,11 @@ authorAffiliations <- c(
   "Managed Business Solutions (MBS), a Sealaska Company, Contractor to the National Park Service, Natural Resource Stewardship and Science Directorate, 1201 Oakridge Dr, Suite 150, Fort Collins, Colorado"
 )
 
-# List the ORCID iDs for each author in the format "xxxx-xxxx-xxxx-xxxx". If an author does not have an ORCID iD, specify NA (no quotes). If an author is listed more than once (for instance because they have multiple institutional affiliations), the ORCID iD must also be listed more than once. For more information on ORCID iDs and to register an ORCID iD, see https://www.orcid.org. 
+# List the ORCID iDs for each author in the format "(xxxx-xxxx-xxxx-xxxx)". If an author does not have an ORCID iD, specify NA (no quotes). If an author is listed more than once (for instance because they have multiple institutional affiliations), the ORCID iD must also be listed more than once. For more information on ORCID iDs and to register an ORCID iD, see https://www.orcid.org. 
 
 #The order of the ORCID iDs must match the order of authors in AuthorNames.In this example, Jane Doe has an ORCID iD but John Doe does not. Jane's ORCID iD is listed twice because she her name is listed twice in authorNames(because she has two authorAffiliations).
 authorORCID <- c(
-  "0000-1111-2222-3333", "0000-1111-2222-3333", NA
+  "(0000-1111-2222-3333)", "(0000-1111-2222-3333)", NA
   )
 
 # Replace the text below with your abstract.
@@ -157,13 +157,14 @@ if(length(seq_along(unique_authors$authorNames)) == 1){
       }
     }
   }
-   cat("#### ", curr$authorNames, ",", "^",script,"^", " ", " ", sep="")
+   cat("#### ", curr$authorNames, sep="")
         if (is.na(curr$authorORCID)) {
         }
         if (!is.na(curr$authorORCID)) {
-          orc <- paste0("https://orcid.org/", curr$authorORCID, " ")
+          orc <- paste0(" ", curr$authorORCID, "")
           cat({{ orc }})
         }
+   cat(" ^",script,"^", " ", " ", sep="")
   
   #cat("#### ", unique_authors$authorNames, "^1^", sep="")
   #if(!is.na(authorORCID)){
@@ -202,13 +203,14 @@ if(length(seq_along(unique_authors$authorNames)) > 1){
     
     # if NOT the second-to-last author:
     if(i < (length(seq_along(unique_authors$authorNames)) - 1)){
-      cat("#### ", curr$authorNames, ",", "^",script,"^", " ", " ", sep="")
+      cat("#### ", curr$authorNames, " ", sep="")
         if (is.na(curr$authorORCID)) {
         }
         if (!is.na(curr$authorORCID)) {
-          orc <- paste0("https://orcid.org/", curr$authorORCID, " ")
+          orc <- paste0(" ", curr$authorORCID, " ")
           cat({{ orc }})
         }
+      cat( " ^", script, "^", ", ", " ", sep = "")
     }
     
     # if IS the second-to-last author
@@ -216,38 +218,41 @@ if(length(seq_along(unique_authors$authorNames)) > 1){
        
       #if 3 or more authors, include a comma before the "and":
       if(length(seq_along(unique_authors$authorNames)) > 2){
-        cat(curr$authorNames, ",","^",script,"^ ", sep="")
+        cat(curr$authorNames, sep="")
         if (is.na(curr$authorORCID)) {
         }
         if (!is.na(curr$authorORCID)) {
-          orc <- paste0("https://orcid.org/", curr$authorORCID, " ")
+          orc <- paste0(" ", curr$authorORCID, " ")
           cat({{ orc }})
         }
+        cat(" ^",script,"^", ", ", sep="")
         cat("and ", sep="")
       }
       
       #If only 2 authors, omit comma before "and":
       if(length(seq_along(unique_authors$authorNames)) == 2){
-        cat("#### ", curr$authorNames, "^",script,"^ ", sep="")
+        cat("#### ", curr$authorNames, sep="")
         if (is.na(curr$authorORCID)) {
         }
         if (!is.na(curr$authorORCID)) {
-          orc <- paste0("https://orcid.org/", curr$authorORCID, " ")
+          orc <- paste0(" ", curr$authorORCID, " ")
           cat({{ orc }})
         }
+        cat(" ^",script,"^ ", sep = "")
         cat("and ", sep="")
       }
     }
     
     # if IS the Last author :
     if(i == length(seq_along(unique_authors$authorNames))){
-      cat(curr$authorNames, "^", script, "^", sep="")
+      cat(curr$authorNames, sep="")
         if (is.na(curr$authorORCID)) {
         }
         if (!is.na(curr$authorORCID)) {
-          orc <- paste0(" https://orcid.org/", curr$authorORCID, " ")
+          orc <- paste0(" ", curr$authorORCID, " ")
           cat({{ orc }})
         }
+      cat(" ^", script, "^", sep = "")
     }
   }
 }
