@@ -292,12 +292,12 @@ If the data package being described was generated based on one or more pre-exist
 
 The Data Records section should be used to explain each data record associated with this work (for instance, a data package), including the DOI indicating where this information is stored, and provide an overview of the data files and their formats. Each external data record should be cited. Below is some sample text:
 
-This DRR describes the data package *`r dataPackageTitle`* which contains a metadata file and `r length(dataPackage_fileNames)` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackageDOI` (see Table 1).
+This DRR describes the data package *`r dataPackageTitle`* which contains a metadata file and `r length(dataPackage_fileNames)` data files. These data were compiled and processed for dissemination by the National Park Service Inventory and Monitoring Division (IMD) and are available at `r dataPackageDOI` (see Table 1).
 
 ```{r FileTable, echo=FALSE}
 filelist <- data.frame(dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript)
 
-knitr::kable(filelist, caption = paste0("**Table 1: ", dataPackageTitle, ": List of data files**"), col.names = c("File Name", "Size", "Description"), format = "pandoc")
+knitr::kable(filelist, caption = paste0("**Table 1. ", dataPackageTitle, ": List of data files.**"), col.names = c("**File Name**", "**Size**", "**Description**"), format = "pandoc")
 ```
 
 See Appendix for additional notes and examples.
