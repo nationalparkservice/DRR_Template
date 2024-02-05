@@ -381,22 +381,17 @@ kableExtra::add_footnote(
 
 #set directory to the location of your data package
 path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
-df_flags <- QCkit::get_custom_flags(directory = path, output="files")
-df_flags$filename <- gsub(".csv", "", df_flags$filename)
-colnames(df_flags) <- c("File Name", "A", "AE", "P", "R", "% Missing (Mean)", "RRU (Mean)", "RRU (SD)")
-colnames(df_flags)[1] <- paste0("File Name", "^1^")
-colnames(df_flags)[2] <- paste0("A", "^2^")
-colnames(df_flags)[6] <- paste0("% Missing (Mean)", "^3^")
-colnames(df_flags)[7] <- paste0("RRU (Mean)", "^3,4^")
-colnames(df_flags)[8] <- paste0("RRU (SD)", "^4,5^")
+dp_flags <- get_custom_flags(directory = path, output="files")
 
-#Generate the table
-kableExtra::kable(df_flags, caption = '**Table 3.2: Summary of data quality flags for each data file within the data package**', format = "pandoc", digits=2) %>%
-kableExtra::add_footnote(c("NAs for a given fi(le indicates no quality controlled data were found.",
-               "All non-missing data in specified unflagged columns are considered accepted.",
-               "Means are geometric means.",
-               "RRU (unweighted relative response) is calculated as the number of accepted (where A and AE are both considered accepted) divided by the total number of observations plus the number of missing observations.", 
-               "SD is standard deviation."), notation = "number")
+#generate table:
+dp_flags %>% 
+  kableExtra::kbl(caption = '**Table 4: Summary of data quality flags for the data package [A – Accepted; AE – Accepted but Estimated; P – Provisional; R – Rejected.]**',
+                  format = "pandoc", 
+                  col.names = c("**File Name**", "**A^1^**", "**AE**", "**R**", "**P**", "**% Accepted^2^**"),
+                  digits=2, 
+                  align = 'c') %>% 
+  kableExtra::add_footnote(c("All non-missing data in specified unflagged columns are considered accepted.",
+                             "% Accepted is calculated as the number of accepted (where A and AE are both considered accepted) divided by the total number of observations plus the number of missing observations."), notation = "number") 
 ```
 
 
