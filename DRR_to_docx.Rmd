@@ -45,16 +45,16 @@ authorNames <- c(
 
 #Note that the entirety of each affiliation is enclosed in quotations. Do not worry about indentation or word wrapping.
 authorAffiliations <- c(
-  "NPS Inventory and Monitory Division, 1201 Oakridge Dr, Suite 150, Fort Collins, Colorado", 
-  "Managed Business Solutions (MBS), a Sealaska Company, Contractor to the National Park Service, Natural Resource Stewardship and Science Directorate, 1201 Oakridge Dr, Suite 150, Fort Collins, Colorado",
-  "Managed Business Solutions (MBS), a Sealaska Company, Contractor to the National Park Service, Natural Resource Stewardship and Science Directorate, 1201 Oakridge Dr, Suite 150, Fort Collins, Colorado"
+  "NPS Inventory and Monitoring Division, 1201 Oakridge Dr., Suite 150, Fort Collins, Colorado", 
+  "Managed Business Solutions (MBS), a Sealaska Company, Contractor to the National Park Service, Natural Resource Stewardship and Science Directorate, 1201 Oakridge Dr., Suite 150, Fort Collins, Colorado",
+  "Managed Business Solutions (MBS), a Sealaska Company, Contractor to the National Park Service, Natural Resource Stewardship and Science Directorate, 1201 Oakridge Dr., Suite 150, Fort Collins, Colorado"
 )
 
-# List the ORCID iDs for each author in the format "xxxx-xxxx-xxxx-xxxx". If an author does not have an ORCID iD, specify NA (no quotes). If an author is listed more than once (for instance because they have multiple institutional affiliations), the ORCID iD must also be listed more than once. For more information on ORCID iDs and to register an ORCID iD, see https://www.orcid.org. 
+# List the ORCID iDs for each author in the format "(xxxx-xxxx-xxxx-xxxx)". If an author does not have an ORCID iD, specify NA (no quotes). If an author is listed more than once (for instance because they have multiple institutional affiliations), the ORCID iD must also be listed more than once. For more information on ORCID iDs and to register an ORCID iD, see https://www.orcid.org. 
 
 #The order of the ORCID iDs must match the order of authors in AuthorNames.In this example, Jane Doe has an ORCID iD but John Doe does not. Jane's ORCID iD is listed twice because she her name is listed twice in authorNames(because she has two authorAffiliations).
 authorORCID <- c(
-  "0000-1111-2222-3333", "0000-1111-2222-3333", NA
+  "(0000-1111-2222-3333)", "(0000-1111-2222-3333)", NA
   )
 
 # Replace the text below with your abstract.
@@ -157,13 +157,14 @@ if(length(seq_along(unique_authors$authorNames)) == 1){
       }
     }
   }
-   cat("#### ", curr$authorNames, ",", "^",script,"^", " ", " ", sep="")
+   cat("#### ", curr$authorNames, sep="")
         if (is.na(curr$authorORCID)) {
         }
         if (!is.na(curr$authorORCID)) {
-          orc <- paste0("https://orcid.org/", curr$authorORCID, " ")
+          orc <- paste0(" ", curr$authorORCID, "")
           cat({{ orc }})
         }
+   cat(" ^",script,"^", " ", " ", sep="")
   
   #cat("#### ", unique_authors$authorNames, "^1^", sep="")
   #if(!is.na(authorORCID)){
@@ -202,13 +203,14 @@ if(length(seq_along(unique_authors$authorNames)) > 1){
     
     # if NOT the second-to-last author:
     if(i < (length(seq_along(unique_authors$authorNames)) - 1)){
-      cat("#### ", curr$authorNames, ",", "^",script,"^", " ", " ", sep="")
+      cat("#### ", curr$authorNames, " ", sep="")
         if (is.na(curr$authorORCID)) {
         }
         if (!is.na(curr$authorORCID)) {
-          orc <- paste0("https://orcid.org/", curr$authorORCID, " ")
+          orc <- paste0(" ", curr$authorORCID, " ")
           cat({{ orc }})
         }
+      cat( " ^", script, "^", ", ", " ", sep = "")
     }
     
     # if IS the second-to-last author
@@ -216,38 +218,41 @@ if(length(seq_along(unique_authors$authorNames)) > 1){
        
       #if 3 or more authors, include a comma before the "and":
       if(length(seq_along(unique_authors$authorNames)) > 2){
-        cat(curr$authorNames, ",","^",script,"^ ", sep="")
+        cat(curr$authorNames, sep="")
         if (is.na(curr$authorORCID)) {
         }
         if (!is.na(curr$authorORCID)) {
-          orc <- paste0("https://orcid.org/", curr$authorORCID, " ")
+          orc <- paste0(" ", curr$authorORCID, " ")
           cat({{ orc }})
         }
+        cat(" ^",script,"^", ", ", sep="")
         cat("and ", sep="")
       }
       
       #If only 2 authors, omit comma before "and":
       if(length(seq_along(unique_authors$authorNames)) == 2){
-        cat("#### ", curr$authorNames, "^",script,"^ ", sep="")
+        cat("#### ", curr$authorNames, sep="")
         if (is.na(curr$authorORCID)) {
         }
         if (!is.na(curr$authorORCID)) {
-          orc <- paste0("https://orcid.org/", curr$authorORCID, " ")
+          orc <- paste0(" ", curr$authorORCID, " ")
           cat({{ orc }})
         }
+        cat(" ^",script,"^ ", sep = "")
         cat("and ", sep="")
       }
     }
     
     # if IS the Last author :
     if(i == length(seq_along(unique_authors$authorNames))){
-      cat(curr$authorNames, "^", script, "^", sep="")
+      cat(curr$authorNames, sep="")
         if (is.na(curr$authorORCID)) {
         }
         if (!is.na(curr$authorORCID)) {
-          orc <- paste0(" https://orcid.org/", curr$authorORCID, " ")
+          orc <- paste0(" ", curr$authorORCID, " ")
           cat({{ orc }})
         }
+      cat(" ^", script, "^", sep = "")
     }
   }
 }
@@ -257,13 +262,15 @@ for(i in 1:nrow(unique_affiliation)){
   }
 ```
 
-#### `r date` <!-- publication date - defaults to current system date -->
-
 # Abstract
 
 `r DRRabstract` <!-- pulls from the abstract you supplied is user_edited_parameters - don't edit here! -->
 
 <hr>
+
+# Acknowledgements (optional)
+
+The Acknowledgements should contain text acknowledging non-author contributors. Acknowledgements should be brief, and should not include thanks to anonymous referees and editors or effusive comments. Grant or contribution numbers may be acknowledged.
 
 # Using citations in this document:
 
@@ -285,12 +292,12 @@ If the data package being described was generated based on one or more pre-exist
 
 The Data Records section should be used to explain each data record associated with this work (for instance, a data package), including the DOI indicating where this information is stored, and provide an overview of the data files and their formats. Each external data record should be cited. Below is some sample text:
 
-This DRR describes the data package *`r dataPackageTitle`* which contains a metadata file and `r length(dataPackage_fileNames)` data files. These data were compiled by the National Park Service Biological Resources Division and are available at `r dataPackageDOI` (see Table 1).
+This DRR describes the data package *`r dataPackageTitle`* which contains a metadata file and `r length(dataPackage_fileNames)` data files. These data were compiled and processed for dissemination by the National Park Service Inventory and Monitoring Division (IMD) and are available at `r dataPackageDOI` (see Table 1).
 
 ```{r FileTable, echo=FALSE}
 filelist <- data.frame(dataPackage_fileNames, dataPackage_fileSizes, dataPackage_fileDescript)
 
-knitr::kable(filelist, caption = paste0("**Table 1: ", dataPackageTitle, ": List of data files**"), col.names = c("File Name", "Size", "Description"), format = "pandoc")
+knitr::kable(filelist, caption = paste0("**Table 1. ", dataPackageTitle, ": List of data files.**"), col.names = c("**File Name**", "**Size**", "**Description**"), format = "pandoc")
 ```
 
 See Appendix for additional notes and examples.
@@ -301,58 +308,39 @@ The Data Quality Evaluation section should present any analyses that are needed 
 
 **Required elements for this section**
 
-*Stock Text to include:*
-
-The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility. The *`r dataPackageTitle`* is suitable for its intended use as of the date of processing (`r Sys.Date()`).
-
 *Required Table*
 
-```{r dataFlaggingTable, echo=FALSE, eval=TRUE}
-#Generates a table with definitions for the data flags, A, AE, P, or R. Honestly not super useful and can probably be turned off (set eval=FALSE) if these are defined elsewhere in text.
-flags<-c("A"," ", "AE", "P", "R", "NA")
-def<-c("Accepted"," ", "Accepted, estimated", "Provisional", "Rejected", "Missing")
-app<-c("columns ending \"_flag\"", "unflagged data", 
-       rep("columns ending \"_flag\"", 3), "All data")
-data_flags<-data.frame(flags, def, app)
-
-knitr::kable(data_flags, caption = "**Table 2: Description of data quality flags**", col.names=c("Flag", "Definition", "Usage"), format="pandoc")
-```
-
-```{r data_package_flagging, echo=FALSE, eval=TRUE}
+```{r dataAcceptanceCriteria, echo=FALSE, eval=TRUE}
 # To turn off, set eval=FALSE.
-# Generates a table with a single row summarizing data quality across all flagged columns of the entire data package. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or column numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. 
+# Generates a table of acceptance criteria for each of the data quality fields in your data package. Mitigations taken when data did not meet the acceptance criteria should be described textually in the Data Quality Evaluation section.
 
-#if your package is not in your working directory, you need to specify the directory:
-path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
-dp_flags <- QCkit::get_custom_flags(directory = path, output="package")
+# Specify which columns in your data package are data quality fields in the dataQualityFields variable. In the example below, data quality fields/columns in the data package are listed in the format [FieldName]_flag. These data quality fields relate to the respective temporal, taxonomic, and  geographic data.
 
-#generate table:
-kableExtra::kbl(dp_flags, caption = '**Table 3.1: Summary of data quality flags for the data package**', col.names = c("A", "AE", "P", "R", "% Missing (Mean)", "RRU (Mean)", "RRU (SD)"), format = "pandoc", digits=2)
+dataQualityFields <- c(
+  "eventDate_flag", 
+  "scientificName_flag", 
+  "coordinate_flag"
+  )
 
-```
+# Brief description of the acceptance criteria for each respective data quality field. The order of the acceptance criteria must match the order of the data quality fields. 
 
-```{r data_file_flagging, echo=FALSE, eval=TRUE}
-# To turn off, set eval=FALSE.
-# Generates a table summarizing data quality across all flagged columns of each data file. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as "NA".
+dataQualityAcceptanceCriteria <- c(
+  "Sampling event date within the start and end dates of the project",
+  "Taxon exists within Integrated Taxonomic Information System and GBIF",
+  "Sampling location is within the park unit boundaries"
+  )
 
-#set directory to the location of your data package
-path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
-df_flags <- QCkit::get_custom_flags(directory = path, output="files")
-df_flags$filename <- gsub(".csv", "", df_flags$filename)
-colnames(df_flags) <- c("File Name", "A", "AE", "P", "R", "% Missing (Mean)", "RRU (Mean)", "RRU (SD)")
-colnames(df_flags)[1] <- paste0("File Name", "^1^")
-colnames(df_flags)[2] <- paste0("A", "^2^")
-colnames(df_flags)[6] <- paste0("% Missing (Mean)", "^3^")
-colnames(df_flags)[7] <- paste0("RRU (Mean)", "^3,4^")
-colnames(df_flags)[8] <- paste0("RRU (SD)", "^4,5^")
 
-#Generate the table
-kableExtra::kable(df_flags, caption = '**Table 3.2: Summary of data quality flags for each data file within the data package**', format = "pandoc", digits=2) %>%
-kableExtra::add_footnote(c("NAs for a given fi(le indicates no quality controlled data were found.",
-               "All non-missing data in specified unflagged columns are considered accepted.",
-               "Means are geometric means.",
-               "RRU (unweighted relative response) is calculated as the number of accepted (where A and AE are both considered accepted) divided by the total number of observations plus the number of missing observations.", 
-               "SD is standard deviation."), notation = "number")
+install.packages("remotes")
+devtools::install_github("EmilyMarkowitz-NOAA/NMFSReports")
+library(NMFSReports)
+
+data_criteria<-data.frame(dataQualityFields = str_remove(dataQualityFields, "_flag"), dataQualityAcceptanceCriteria)
+
+data_criteria %>% 
+  NMFSReports::format_cells(1:3, 1, "bold") %>% 
+  knitr::kable(caption = "**Table 2. Acceptance criteria for data evaluated.**", col.names=c("**Field**", "**Acceptance Criteria**"), format="pandoc", align = 'c') 
+
 ```
 
 ```{r data_column_flagging, echo=FALSE, eval=TRUE}
@@ -362,23 +350,50 @@ kableExtra::add_footnote(c("NAs for a given fi(le indicates no quality controlle
 #set directory to the location of your data package:
 path <- "../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
 dc_flags <- QCkit::get_custom_flags(directory = path, output="columns")
-dc_flags$filename <- gsub(".csv", "", dc_flags$filename)
-dc_flags$column <- gsub("_flag", "", dc_flags$column)
-colnames(dc_flags)<-c("File Name", "Column", "A", "AE", "R", "P", "Total", "% Missing", "RRU")
-colnames(dc_flags)[1]<-paste0("File Name", "^1^")
-colnames(dc_flags)[2]<-paste0("Colum", "^2^")
-colnames(dc_flags)[3]<-paste0("A", "^3^")
-colnames(dc_flags)[9]<-paste0("RRU", "^4^")
+dc_flags$`File Name` <- gsub(".csv", "", dc_flags$`File Name`)
+
+
+colnames(dc_flags)[2]<-paste0("Measure", "^1^")
+colnames(dc_flags)[4]<-paste0("A", "^2^")
+colnames(dc_flags)[8]<-paste0("% Accepted", "^3^")
 
 #Generate the table:
-kableExtra::kable(dc_flags, caption = '**Table 3.3: Summary of data quality flags for each column**', col.names = , format = "pandoc", digits=2) %>%
-kableExtra::add_footnote(c("NAs for a given file indicates no quality controlled data were found.",
-               "The '_flag' suffix has been omitted from column names for brevity.",
-               "All non-missing data in specified unflagged columns are considered accepted.",
-               "RRU (unweighted relative response) is calculated as the number of accepted (where A and AE are both considered accepted) divided by the total number of observations plus the number of missing observations."), notation = "number")
+dc_flags %>% 
+  knitr::kable(
+    caption = '**Table 3: Summary of data quality flags for each column [A – Accepted; AE – Accepted but Estimated; P – Provisional; R – Rejected.]**',  
+    format = "pandoc", 
+    digits = 2, 
+    align = 'c', 
+    col.names = c("**File Name**", "**Measure^1^**", "**Number of Reocrds**", "**A^2^**", "**AE**", "**R**", "**P**", "**% Accepted^3^**")) %>%
+kableExtra::add_footnote(
+  c("The '_flag' suffix has been omitted from column names for brevity.",
+    "All non-missing data in specified unflagged columns are considered accepted.",
+    "% Accepted is calculated as the number of accepted (where A and AE are both considered accepted) divided by the total number of observations plus the number of missing observations."), 
+  notation = "number"
+  ) 
+
 ```
 
-Unweighted Response Rates (RRU) is calculated as number of accepted (A and AE) data values divided by the total number of values (not including missing values). Note that all unflagged values are considered accepted. Means are geometric, SD is standard deviation.
+
+```{r data_package_flagging, echo=FALSE, eval=TRUE}
+# To turn off, set eval=FALSE.
+# Generates a table summarizing data quality across all flagged columns of each data file. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as "NA".
+
+#set directory to the location of your data package
+path<-"../../DataPackageWorkflow/dataPackages/BICY_Veg_Data_Package_Example"
+dp_flags <- get_custom_flags(directory = path, output="files")
+
+#generate table:
+dp_flags %>% 
+  kableExtra::kbl(caption = '**Table 4: Summary of data quality flags for the data package [A – Accepted; AE – Accepted but Estimated; P – Provisional; R – Rejected.]**',
+                  format = "pandoc", 
+                  col.names = c("**File Name**", "**A^1^**", "**AE**", "**R**", "**P**", "**% Accepted^2^**"),
+                  digits=2, 
+                  align = 'c') %>% 
+  kableExtra::add_footnote(c("All non-missing data in specified unflagged columns are considered accepted.",
+                             "% Accepted is calculated as the number of accepted (where A and AE are both considered accepted) divided by the total number of observations plus the number of missing observations."), notation = "number") 
+```
+
 
 Possible content **strongly Suggested to Include**
 
@@ -397,11 +412,19 @@ Generally, this **should not include:**
 -   statistical hypothesis testing (e.g. tests of statistical significance, identifying deferentially expressed genes, trend analysis, etc.)
 -   exploratory computational analyses like clustering and annotation enrichment (e.g. GO analysis).
 
+*Stock Text to include:*
+
+The data within the data records listed above have been reviewed by staff in the NPS Inventory and Monitoring Division to ensure accuracy, completeness, and consistency with documented data quality standards, as well as for usability and reproducibility (Table 3). Of the data that were evaluated for quality, XX.X% of fields in this data package met data quality standards. The *`r dataPackageTitle`* is suitable for its intended use as of the date of processing (`r Sys.Date()`).
+
 # Usage Notes (required)
 
 The Usage Notes should contain brief instructions to assist other researchers with reuse of the data. This may include discussion of software packages (with appropriate citations) that are suitable for analysing the assay data files, suggested downstream processing steps (e.g. normalization, etc.), or tips for integrating or comparing the data records with other datasets. Authors are encouraged to provide code, programs or data-processing workflows if they may help others understand or use the data.
 
 For studies involving privacy or safety controls on public access to the data, this section should describe in detail these controls, including how authors can apply to access the data, what criteria will be used to determine who may access the data, and any limitations on data use.
+
+## Acquiring the Data Package
+
+This data package is available for download from the NPS DataStore at `r dataPackageDOI` and can be directly imported into R data frames using the NPSutils package https://doi.org/10.57830/2300651
 
 # Methods
 
@@ -417,19 +440,19 @@ Authors are encouraged to consider creating a figure that outlines the experimen
 include_graphics("vignettes/common/ProcessingWorkflow.png")
 ```
 
-### Data Collection and Sample Processing Methods (optional)
+## Data Collection and Sample Processing Methods (optional)
 
 Include a description of field methods and sample processing
 
-### Additional Data Sources (optional)
+## Additional Data Sources (optional)
 
 Provide descriptions (with citations) of other data sources used.
 
-### Data Processing (required if done)
+## Data Processing (required if done)
 
 Summarize process and results of any QC processes done that manipulate, change, or qualify data.
 
-### Code Availability (required)
+## Code Availability (required)
 
 For all studies using custom code in the generation or processing of datasets, a statement must be included indicating whether and how the code can be accessed and any restrictions to access. This section should also include information on the versions of any software used, if relevant, and any specific variables or parameters used to generate, test, or process the current dataset. Actual analytical code should be provided in Appendices.
 
@@ -444,7 +467,7 @@ If you would like to manually format your references, delete the preceding two l
 
 See the following examples:
 
-### Agency, Company, etc. as Author Examples
+## Agency, Company, etc. as Author Examples
 
 Fung Associates Inc. and SWCA Environmental Consultants. 2010. Assessment of natural resources and watershed conditions for Kalaupapa National Historical Park. Natural Resource Report. NPS/NPRC/WRD/NRR—2010/261. National Park Service, Fort Collins, Colorado.
 
@@ -454,7 +477,7 @@ National Park Service (NPS). 2016. State of the park report for Zion National Pa
 
 U.S. Forest Service (USFS). 1993. ECOMAP. National hierarchical framework of ecological units. U. S. Forest Service, Washington, D.C.
 
-### Traditional Journal Article Examples
+## Traditional Journal Article Examples
 
 Bradbury, J. W., S. L. Vehrencamp, K. E. Clifton, and L. M. Clifton. 1996. The relationship between bite rate and local forage abundance in wild Thompson’s gazelles. Ecology 77:2237–2255. <https://doi.org/10.2307/2265717>
 
@@ -462,17 +485,17 @@ Oakley, K. L., L. P. Thomas, and S. G. Fancy. 2003. Guidelines for long-term mon
 
 Sawaya, M. A., T. K. Ruth, S. Creel, J. J. Rotella, J. B. Stetz, H. B. Quigley, and S. T. Kalinowski. 2011. Evaluation of noninvasive genetic sampling methods for cougars in Yellowstone National Park. The Journal of Wildlife Management 75(3):612–622. <https://doi.org/10.1002/jwmg.92>
 
-### Book Example
+## Book Example
 
 Harvill, A. M., Jr., T. R. Bradley, C. E. Stevens, T. F. Wieboldt, D. M. E. Ware, D. W. Ogle, and G. W. Ramsey. 1992. Atlas of the Virginia flora, third edition. Virginia Botanical Associates, Farmville, Virginia.
 
-### Book Chapter Examples
+## Book Chapter Examples
 
 McCauly, E. 1984. The estimation of abundance and biomass of zooplankton in samples. Pages 228–265 in J. A. Dowling and F. H. Rigler, editors. A manual on methods for the assessment of secondary productivity in fresh waters. Blackwell Scientific, Oxford, UK.
 
 Watson, P. J. 2004. Of caves and shell mounds in west-central Kentucky. Pages 159–164 in Of caves and shell mounds. The University of Alabama Press, Tuscaloosa, Alabama.
 
-### Published Report Examples
+## Published Report Examples
 
 Bass, S., R. E. Gallipeau, Jr., M. Van Stappen, J. Kumer, M. Wessner, S. Petersburg, L. L. Hays, J. Milstone, M. Soukup, M. Fletcher, L. G. Adams, and others. 1988. Highlights of natural resource management 1987. National Park Service, Denver, Colorado.
 
@@ -480,25 +503,25 @@ Holthausen, R. S., M. G. Raphael, K. S. McKelvey, E. D. Forsman, E. E. Starkey, 
 
 Jackson, L. L., and L. P. Gough. 1991. Seasonal and spatial biogeochemical trends for chaparral vegetation and soil geochemistry in the Santa Monica Mountains National Recreation Area. U.S. Geological Survey, Denver. Open File Report 91–0005. <https://doi.org/10.3133/ofr915>
 
-### Unpublished Report Examples
+## Unpublished Report Examples
 
 Conant, B., and J. I. Hodges. 1995. Western brant population estimates. U.S. Fish and Wildlife Service Unpublished Report, Juneau, Alaska.
 
 Conant, B., and J. F. Voelzer. 2001. Winter waterfowl survey: Mexico west coast and Baja California. U.S. Fish and Wildlife Service Unpublished Report, Juneau, Alaska.
 
-### Thesis/Dissertation Examples
+## Thesis/Dissertation Examples
 
 Diong, C. H. 1982. Population and biology of the feral pig (Sus scrofa L) in Kipahulu Valley, Mau’i. Dissertation. University of Hawai’i, Honolulu, Hawai’i.
 
 McTigue, K. M. 1992. Nutrient pulses and herbivory: Integrative control of primary producers in lakes. Thesis. University of Wisconsin, Madison, Wisconsin.
 
-### Conference Proceedings Examples
+## Conference Proceedings Examples
 
 Gunther, K. A. 1994. Changing problems in bear management: Yellowstone National Park twenty-plus years after the dumps. Ninth International Conference on Bear Research and Management. Missoula, MT, International Association for Bear Research and Management, Bozeman, Montana, February 1992:549–560.
 
 Webb, J. R., and J. N. Galloway. 1991. Potential acidification of streams in Mid-Appalachian Highlands: A problem with generalized assessments. Southern Appalachian Man and Biosphere Conference. Gatlinburg, Tennessee.
 
-### General Internet Examples
+## General Internet Examples
 
 Colorado Native Plant Society. 2016. Colorado Native Plant Society website. Available at: <https://conps.org/> (accessed 07 March 2016).
 
@@ -508,7 +531,7 @@ National Park Service (NPS). 2016b. Natural Resource Publications Management web
 
 United Sates Fish and Wildlife Service (USFWS). 2016. Endangered Species website. Available at: <http://www.fws.gov/endangered/> (accessed 07 March 2016).
 
-### Online Data Warehouse Sites (sites that allow you see and download data from multiple sources)
+## Online Data Warehouse Sites (sites that allow you see and download data from multiple sources)
 
 National Oceanographic and Atmospheric Association (NOAA). 2016. NOAA National Climatic Data Center website. Available at: <http://www.ncdc.noaa.gov/> (accessed 07 March 2016).
 
@@ -519,10 +542,6 @@ National Park Service (NPS). 2016c. NPScape Landscape Dynamics Metric Viewer web
 National Park Service (NPS). 2016d. NPSpecies online application. Available at: <https://irma.nps.gov/NPSpecies/> (accessed 07 March 2016).
 
 United States Geologic Survey (USGS). 2016. BioData - Aquatic Bioassessment Data for the Nation. Available at: <https://aquatic.biodata.usgs.gov/> (accessed 07 March 2016).
-
-# Acknowledgements (optional)
-
-The Acknowledgements should contain text acknowledging non-author contributors. Acknowledgements should be brief, and should not include thanks to anonymous referees and editors or effusive comments. Grant or contribution numbers may be acknowledged.
 
 # Appendix A. Code Listing
 
