@@ -5,6 +5,8 @@ output:
 bibliography: references.bib
 csl: national-park-service-DRR.csl
 ---
+
+```{=html}
 <!--- For more information on using this template, please see the accompanying documentation at: 
 
 Overview of DRR Templates: https://nationalparkservice.github.io/DRR_Template/
@@ -12,7 +14,7 @@ Overview of DRR Templates: https://nationalparkservice.github.io/DRR_Template/
 Specific Instructions on filling out this template:
 https://nationalparkservice.github.io/DRR_Template/HowToUseThisTemplate.html
 --->
-
+```
 ```{r user_edited_parameterss, include=FALSE}
 # The title of your DRR. Should all DRR start with "Data Release Report:"? Should we enforce titles specifically referencing the data package(s) they the report is about?
 title <- "DRR Title"
@@ -107,6 +109,8 @@ if (length(RRpackages[!inst]) > 0) {
 }
 lapply(RRpackages, library, character.only = TRUE)
 
+devtools::install_github("EmilyMarkowitz-NOAA/NMFSReports")
+library(NMFSReports)
 devtools::install_github("nationalparkservice/QCkit")
 library(QCkit)
 ```
@@ -278,7 +282,7 @@ To automate citations, add the citation to in bibtex format to the file "referen
 
 Once a reference is in your references.bib file, from within this template you can simply type the '\@' symbol and select which reference to insert in the text.
 
-If you need to edit how the citation is displayed after inserting it into the text, switch back to the "Source" view. Each bibtex citation should start with a unique identifier; the example reference in the supplied references.bib file has the unique identifier "@article{Scott1994,". Using the "Source" view in Rstudio, insert the reference in your text, by combining the "at" symbol with the portion of the unique identifier after the curly bracket: @Scott1994 . You can put a citation in parentheses using square brackets: [@Scott1994]. This will be rendered as (Scott, et al. 1994) in text. You can add multiple authors works a single parenthetical citation by separating them with a semi-colon. You can suppress the author and cite just the year by using a - symbol before the \@ : [-@Scott1994].
+If you need to edit how the citation is displayed after inserting it into the text, switch back to the "Source" view. Each bibtex citation should start with a unique identifier; the example reference in the supplied references.bib file has the unique identifier "\@article{Scott1994,". Using the "Source" view in Rstudio, insert the reference in your text, by combining the "at" symbol with the portion of the unique identifier after the curly bracket: @Scott1994 . You can put a citation in parentheses using square brackets: [@Scott1994]. This will be rendered as (Scott, et al. 1994) in text. You can add multiple authors works a single parenthetical citation by separating them with a semi-colon. You can suppress the author and cite just the year by using a - symbol before the \@ : [-@Scott1994].
 
 If you would like to format your citations manually, please feel free to do that instead. Make sure to examine the References section for examples of how to manually format each citation type.
 
@@ -330,11 +334,6 @@ dataQualityAcceptanceCriteria <- c(
   "Sampling location is within the park unit boundaries"
   )
 
-
-install.packages("remotes")
-devtools::install_github("EmilyMarkowitz-NOAA/NMFSReports")
-library(NMFSReports)
-
 data_criteria<-data.frame(dataQualityFields = str_remove(dataQualityFields, "_flag"), dataQualityAcceptanceCriteria)
 
 data_criteria %>% 
@@ -374,7 +373,6 @@ kableExtra::add_footnote(
 
 ```
 
-
 ```{r data_package_flagging, echo=FALSE, eval=TRUE}
 # To turn off, set eval=FALSE.
 # Generates a table summarizing data quality across all flagged columns of each data file. To add additional non-flagged columns, specify them with column names: cols=("my_unflagged_data1", "my_unflagged_data2)" or numbers: cols=c(1:4). All non-missing data in unflagged columns is assumed accepted. If a file has no flagged columns and no specified custom columns, all values for that data file will be listed as "NA".
@@ -393,7 +391,6 @@ dp_flags %>%
   kableExtra::add_footnote(c("All non-missing data in specified unflagged columns are considered accepted.",
                              "% Accepted is calculated as the number of accepted (where A and AE are both considered accepted) divided by the total number of observations plus the number of missing observations."), notation = "number") 
 ```
-
 
 Possible content **strongly Suggested to Include**
 
@@ -424,7 +421,7 @@ For studies involving privacy or safety controls on public access to the data, t
 
 ## Acquiring the Data Package
 
-This data package is available for download from the NPS DataStore at `r dataPackageDOI` and can be directly imported into R data frames using the NPSutils package https://doi.org/10.57830/2300651
+This data package is available for download from the NPS DataStore at `r dataPackageDOI` and can be directly imported into R data frames using the NPSutils package <https://doi.org/10.57830/2300651>
 
 # Methods
 
@@ -525,7 +522,7 @@ Webb, J. R., and J. N. Galloway. 1991. Potential acidification of streams in Mid
 
 Colorado Native Plant Society. 2016. Colorado Native Plant Society website. Available at: <https://conps.org/> (accessed 07 March 2016).
 
-National Park Service (NPS). 2016a. IRMA Portal (Integrated Resource Management Applications) website. Available at: <https://irma.nps.gov> (accessed 07 March 2016),
+National Park Service (NPS). 2016a. IRMA Portal (Integrated Resource Management Applications) website. Available at: <https://irma.nps.gov> (accessed 07 March 2016).
 
 National Park Service (NPS). 2016b. Natural Resource Publications Management website. Available at: <http://www.nature.nps.gov/publications/nrpm/> (accessed 07 March 2016).
 
