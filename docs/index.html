@@ -2099,7 +2099,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2166,39 +2166,16 @@ Creating DRRs
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#drrs-background" id="toc-drrs-background">DRRs: Background</a></li>
-<li><a href="#about-this-template" id="toc-about-this-template">About this Template</a></li>
-<li><a href="#how-to-start-a-drr" id="toc-how-to-start-a-drr">How to Start a DRR</a></li>
-<li><a href="#examples" id="toc-examples">Examples</a></li>
-<li><a href="#tips-faqs-and-errata" id="toc-tips-faqs-and-errata">Tips, FAQs, and Errata</a></li>
+<li><a href="#this-repo-has-been-deprecated" id="toc-this-repo-has-been-deprecated">This repo has been deprecated</a></li>
 </ul>
 </nav>
 </div>
 <!-- badges: start -->
-<p><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental" /></a>
+<p><a href="https://www.tidyverse.org/lifecycle/#deprecated"><img src="https://img.shields.io/badge/lifecycle-deprecated-red.svg" alt="Lifecycle: deprecated" /></a>
 <!-- badges: end --></p>
-<h1 id="drrs-background">DRRs: Background</h1>
-<p><a href="PurposeAndScope.html">Purpose and Scope of Data Release Reports</a></p>
-<p>This is a template is for use when drafting Data Release Reports. DRRs are created by the National Park Service and provide detailed descriptions of valuable research datasets, including the methods used to collect the data and technical analyses supporting the quality of the measurements. Data Release Reports focus on helping others reuse data rather than presenting results, testing hypotheses, or presenting new interpretations and in-depth analyses.</p>
-<h1 id="about-this-template">About this Template</h1>
-<p>This template contains an rmarkdown template file, default folder structure for project files, and all the necessary template files to generate an unformatted .docx file. The file will be ingested by EXstyles, converted to an .xml file and fully formatted according to NPS branding upon final publication. The goal of this process is to relieve data producers, managers, and scientists from the burden of formatting and allow them to focus primarily on content. The content should document the collection, processing, quality control, of NPS data packages and evaluate their of utility.</p>
-<p>This template is under active development to improve style and 508 compliance.</p>
-<h1 id="how-to-start-a-drr">How to Start a DRR</h1>
-<p>New projects can be established using this template by downloading a zip file of the template and associated files and folders from: <a href="https://github.com/nationalparkservice/DRR_Template/zipball/master">This Link</a></p>
-<ol type="1">
-<li><p><a href="HowToUseThisTemplate.html">How to Use this Template</a> line-by-line instructions and descriptions for how to use the DRR Template.</p></li>
-<li><p><a href="https://github.com/nationalparkservice/DRR_Template/blob/master/DRR_to_docx.Rmd">The DRR_Template</a> the file you make changes to to generate a DRR. Note: this is not a stand-alone file. To create a DRR please download the <a href="https://github.com/nationalparkservice/DRR_Template/zipball/master">zipped template</a> with all associated files and folders.</p></li>
-<li><p><a href="https://github.com/nationalparkservice/DRR_Template/raw/master/reference.bib">Bibtex reference file</a> is used if you want to automate your citations. Add each citation in bibtex format to this file and save it. Add in-text citations to the DRR Template and your References section will automatically be generated for you when you knit the .Rmd to .docx. You should still visually check the final format in the .docx file for accuracy, completion, and formatting. If you would prefer to manually format your citations, feel free to continue doing so.</p></li>
-<li><p><a href="https://github.com/nationalparkservice/DRR_Template/raw/master/DRR_to_docx.docx">DRR_Report</a> an example of the .docx output file that takes into account your edits and changes to DRR_to_docx.Rmd (assuming you have saved and/or knit the .Rmd to .docx format in Rstudio).</p></li>
-</ol>
-<h1 id="examples">Examples</h1>
-<p>More will be provided as they are published. The following examples are post-formatting and should be used as examples for content generation only.</p>
-<ol type="1">
-<li><p><a href="DRAFT_2019_Report_NationalMeanDailyFlowsDataSummary.html">DRR for tabular (csv) datasets</a> of hydrologic data used for calculating hydrologic metrics as a part of the national Environmental Settings monitoring protocol.</p></li>
-<li><p><a href="NPS-NRSS-DRR-2020-1.html">DRR for geospatial (file geodatabase) data</a> continuing custom areas of analysis used for Environmental Settings monitoring protocol. Report created in Microsoft Word and ported to the template.</p></li>
-</ol>
-<h1 id="tips-faqs-and-errata">Tips, FAQs, and Errata</h1>
-<p>(coming soon)</p>
+<h1 id="this-repo-has-been-deprecated">This repo has been deprecated</h1>
+<p>The scripts and documentation in this repo are no longer being maintained and are very likely out of date.</p>
+<p>The contents of this repo including the EML creation script and all documentation can now be found in the R package <a href="https://nationalparkservice.github.io/QCkit/">QCkit</a>, which is part of the <a href="https://nationalparkservice.github.io/NPSdataverse/">NPSdataverse</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
